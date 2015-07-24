@@ -1,0 +1,97 @@
+= WebDiscovery Ruby API README
+
+					
+== What's this program for? 
+This program is designed for the web application asset discovery and tracking. It was originally developed in house 
+to cover the gaps of Veracode's Discovery service, where we have to provide both the input and screen the output of such 
+service. Over the time it grows to be a more capable and complete replacement of Veracode's Discovery service. 
+
+In return, this program's output help shape Veracode's Discovery service into to a more mature service over the time.
+
+
+== Credits
+Beside being inspired by the Veracode's service, the program also inherit the spirit of then Barclays Pentest team's 
+'Domain Footprinting' project in its early development days. The similar efforts were made with much limited 
+resources back then. None-less it should also be credited here to be fair.  
+
+
+== Program Version
+The latest release is Beta version 1.5.x as of fall 2014. Please refer to the CHANGELOG.md for the program's history information.
+
+ 
+== Author Contact
+This program is designed and developed by Yang Li. You can reach him by Email. <yang.li@owasp.org> or Phone <917.667.1972>
+
+
+== Installation 
+The easiest way to install ruby-prof is by using Ruby Gems.  To install from the local gem file:
+
+  gem install wmap --no-rdoc
+  
+  
+== Requirements?
+You need the Ruby 1.9.2 or above in order to use this program. In addition, I developed and tested the code in a Ubantu Linux VM with Ruby 1.9.3.
+1. You need to setup Ruby 1.9.x environment. In my test environment, I was able to set it up with RVM. Please refer to this page for more installation information:
+http://www.ruby-lang.org/en/downloads/
+
+2. In addition, the following Ruby GEM dependency are needed by different components of this software:
+	require "uri"
+	require "open-uri"
+	require "open_uri_redirections"
+	require "nokogiri"
+	require "net/http"
+	require "httpclient"
+	require "net/ping"
+	require "netaddr"
+	require "socket"
+	require "openssl"
+	require "whois"
+	require "resolv"
+	require "geoip"
+	require "parallel"
+	require "dnsruby"
+
+3. Ruby-whois gem patches
+This software depends on a patched version of Ruby gem ruby-whois-2.7.0 (http://www.ruby-whois.org/) for the domain whois lookup feature. For better result, you could manually add the patches into your local whois gem installation directory as shown below:
+  $ cp whois_patches/* [Your_ruby_whois_gem_path]/whois/lib/whois/record/parser/
+Or you can directly download the branched whois gem from this repository - https://github.com/yangsec888/whois
+
+  
+== Automatic Discovery and Tracking
+
+  $ wmap <seed file | target host | target url | target IP or network cidr>
+
+The above executable is intelligent enough to take argument as either a seed file, or a string such as a host, an IP, a network block, or a URL. The new discoveries will be automatically tracked in the data file 'lib/wmap/data/target_sites'.  
+    Note:
+	seed file - mix of url, cidr and domain seed, one entry per line.
+	url seed - known URL(s) for further discovery via the web crawler.
+	cidr seed - list of known network blocks, for discovering web service via port scanning; it is also used to validate if the web service has a known IP (internal hosted).
+	domain seed - validated internet domain to be used for DNS record brute-forcing; it is also used to validate the ownership of found web service. 
+	
+== Dump Out Discovery Database
+
+  $ wdump [output file]
+
+The above executable will dump out the discovery database into a single file as program output. Currently, the supported file format is Comma-separated Value (.csv) and Extensible Markup Language (.xml)
+  
+  
+== More Usage Cases:
+There are more examples under the 'demos' folder of this package. The examples show how to use the 'wmap' API to get your job done easily. Please check out the code - they should be easy and straightforward to be understood.
+ 
+
+== More document(s):
+The software comes with the Ruby doc during your installation as shown above. For your convenience, the Ruby doc is also distributed in a separate package 'wmap-x.x.x-doc.tar.gz'. You can unzip the package, navigate to the 'doc' folder, and click the 'index.html' to open the start page in your favorite browser. 
+
+If you need additional documentation / information other than this README file and the Ruby document package, please be patient - as I'm still working on it :)  
+
+
+== How do I report the bugs, or maybe require some new features? 
+Contact the author Yang Li directly at email 'yang.li@owasp.org',  or phone me directly on my cell (917) 667.1972. 
+
+
+== Internal Distribution Only
+Currently the code base is indented to be distributed internally. It's not available from the Internet. Please contact me directly if you need the latest version of the gem. 
+
+
+== Legal Disclaimer: 
+This software is provided strictly 'as-if' without any implied warranty. You're free to copy or modify the codes anyway you want - a reference back to this software will be appreciated. Please refer to the 'LICENSE.txt' file for more information.

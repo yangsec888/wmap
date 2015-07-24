@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+# Wmap data repository Dump - Dump out a list of unique websites stored in the current tracking data repository.  
+# Usage: wdump <output file>
+require "wmap"
+
+def print_usage
+	puts "Program to dump out unique website assets from the local repository. Usage: wdump <output file>"
+end
+
+puts Wmap.banner
+Log_dir=File.dirname(__FILE__)+'/../logs/'
+Wmap.wlog("Execute the command: wdump #{ARGV[0]}","wdump",Log_dir+"wmap.log")
+
+unless ARGV.length==1
+	print_usage  
+	abort "Program argument error. Please check your input and try again. " 
+end
+# dump out the unique target list in .csv format
+continue=Wmap.dump(ARGV[0]+".csv")
+# continue to dump out the list in the .xml format if previous step is successful
+Wmap.dump_xml(ARGV[0]+".xml") if continue

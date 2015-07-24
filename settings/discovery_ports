@@ -1,0 +1,24 @@
+# Default Common TCP ports for HTTP(S) service discovery
+# Used by the Wmap::PortScanner class
+80
+81
+443
+591
+901
+2086
+2087
+2095
+2096
+3128
+4443
+8000
+8001
+8080
+8118
+8443
+8888
+9000
+9090
+9443
+9999
+20720

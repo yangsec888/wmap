@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+# Executable to perform port scanning by using build-in tcp port scanner
+# This is useful to detect the web service
+require "wmap"
+
+def print_usage
+	puts "Program to port scanning remote hops(s) or IP(s). Usage: wscan [IP | File with list of IPs]"
+end
+
+puts Wmap.banner
+print_usage
+Log_dir=File.dirname(__FILE__)+'/../logs/'
+Wmap.wlog("Execute the command: wscan #{ARGV[0]}","wscan",Log_dir+"wmap.log")
+
+sites=Array.new
+ps=Wmap::PortScanner.new
+abort "Incorrect program argument!" unless ARGV.length==1 
+
+# Evaluate the argument and update the data psore accordingly
+if File.exist?(ARGV[0])
+	targets=ps.file_2_list(ARGV[0])
+	sites=ps.scans(targets)
+elsif ps.is_ip?(ARGV[0]) or ps.is_fqdn?(ARGV[0])
+	sites=ps.scan(ARGV[0])
+else
+	print_usage and abort "Unknown argument format: #{ARGV[0]}."
+end
+ps=nil
+if sites.count>0
+	puts "Done. Discovered sites:"
+	sites.map {|x| puts x} 
+end

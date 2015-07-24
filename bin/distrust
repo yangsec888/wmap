@@ -1,0 +1,38 @@
+#!/usr/bin/env ruby
+# Executable to remove entry from the ring of the trust. I.E. the trusted domain or CIDR 
+require "wmap"
+
+def print_usage
+	puts "Program to remove trust authority entry. Usage: distrust [domain | netblock]"
+end
+
+puts Wmap.banner
+print_usage
+Log_dir=File.dirname(__FILE__)+'/../logs/'
+Wmap.wlog("Execute the command: distrust #{ARGV[0]}","distrust",Log_dir+"wmap.log")
+
+dt=Wmap::DomainTracker.instance
+ct=Wmap::CidrTracker.new(:verbose=>false)
+abort "Incorrect program argument! Proper Usage: distrust [domain | netblock]" unless ARGV.length==1 && (dt.is_fqdn?(ARGV[0]) || ct.is_cidr?(ARGV[0]))
+
+puts "Start the demonizing ..."
+
+
+if dt.is_domain?(ARGV[0]) 
+	result=dt.delete(ARGV[0])
+	unless result.nil?
+		dt.save!
+		abort "Domain #{ARGV[0]} is successfully demonized!"
+	end
+end
+dt=nil
+
+if ct.is_cidr?(ARGV[0].to_s)
+	result=ct.delete(ARGV[0].to_s)
+	unless result.nil?
+		ct.save!
+		abort "Net block #{ARGV[0]} is successfully demonized!"
+	end
+end
+ct=nil
+

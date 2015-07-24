@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+# Executable to add a fully qualified domain name into the prime host tracking data repository
+# This is useful as a self-correction mechanism to flag out unique website in a constant way
+require "wmap"
+
+def print_usage
+	puts "Program to add a primary host entry in the local data repository. Usage: prime [hostname]"
+end
+
+puts Wmap.banner
+print_usage
+Log_dir=File.dirname(__FILE__)+'/../logs/'
+Wmap.wlog("Execute the command: prime #{ARGV[0]}","prime",Log_dir+"wmap.log")
+
+# Update primary host store
+ph=Wmap::HostTracker::PrimaryHost.instance
+abort "Incorrect program argument! Proper Usage: prime [fully qualified domain name]" unless ARGV.length==1 && ph.is_fqdn?(ARGV[0])
+
+ph.add(ARGV[0])
+ph.save!
+ph=nil

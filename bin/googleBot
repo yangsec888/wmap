@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+# Using the Google scraper module to query Google engines on different geographic locations, then work through the google results to update site store
+require 'wmap'
+
+def print_usage
+	puts "Program to discovery website assets from Google search engines. Usage: googleBot"
+end
+
+puts Wmap.banner
+print_usage
+Log_dir=File.dirname(__FILE__)+'/../logs/'
+Wmap.wlog("Execute the command: googleBot","googleBot",Log_dir+"wmap.log")
+
+abort "Incorrect program argument - no argument needed! Proper Usage: googleBot " unless ARGV.length==0
+
+puts "Start the Google search scraper. This may take a while, please be patient ..."
+dis=Wmap::GoogleSearchScraper.new
+dis.workers
+sites=dis.discovered_sites_from_scraper.keys
+puts "Update Google search results into the data repository:"
+k=Wmap::SiteTracker.instance
+k.adds(sites)
+k.save!

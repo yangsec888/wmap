@@ -1,0 +1,2646 @@
+# Content based on http://www.quackit.com/domain-names/country_domain_extensions.cfm
+# Corrected and reformatted to support the proper parsing and loading by the WebDiscovery API
+#    by Yang Li, Last modification date: 05/12/2013
+
+Afghanistan
+Domain registrations at the second-level are unrestricted, but more expensive. Third-level names have restrictions based on which second-level name they are beneath 
+
+    .af - Registrations are taken directly at the second level or at the third level beneath the following domain extensions.
+    .com.af - Commercial entities (Trade license / Business authorization or approval from the Ministry of Commerce.)
+    .edu.af - Educational institutions
+    .gov.af - Government and agencies
+    .net.af - Network providers
+    .org.af - Non-commercial entities
+
+Aland Islands
+The country domain extension for the Åland Islands is .ax. Registrants must be connected with the Åland Islands.
+
+    .ax - Registrations are taken directly at the second-level.
+
+
+Note: Previously, most Åland Islands websites were registered at the third level under the aland.fi subdomain (Åland Islands are part of Finland).
+Albania
+These are the country extensions for Albania. Registrants must be an organization with legal representative in Albania. There is a limit of one domain per organization, and it must be under an appropriate subdomain. Registrations are made at the third-level, beneath one of the following subdomains.
+
+    .gov.al - For government institutions
+    .edu.al - For academic and R&D institutions
+    .org.al - For non-government organizations
+    .com.al - For enterprises & commercial organizations
+    .net.al - For organizations dedicated on networking
+
+Note: In the past, registrations were not permitted directly at the second level, but a few existing names were "grandfathered"; they were uniti.al,tirana.al, soros.al, upt.al and inima.al.
+Algeria
+Registrants must have Algerian presence; name must be related to company or organization name or trademark.
+
+    .dz - Registrations are taken directly at second-level or at third-level beneath the following second-level domains.
+    .com.dz - Commercial enterprises
+    .org.dz - Organizations
+    .net.dz - ISPs
+    .gov.dz - Government
+    .edu.dz - Academic or scientific establishments
+    .asso.dz - Associations
+    .pol.dz - Political institutions
+    .art.dz - Culture and arts
+
+American Samoa
+The country domain extension for American Samoa is .as. There is no restriction on the nationality of registrants, although domains may not be used for pornographic or racist material. The domain registry has right of refusal for all applications.
+
+    .as - Registrations are taken directly at second level.
+
+Andorra
+Registrations must be pre-approved by Office for State Emblems and Signs, are generally limited to residents of Andorra or Andorran trademark holders with an agent in Andorra, and the number of registrations per person is limited. 
+
+    .ad - Country code top-level domain (ccTLD) for Andorra. Names can be registered directly at the second level (i.e. example.ad).
+    .nom.ad - Country domain extension for personal websites.
+
+Angola
+Here are the country domain extensions for Angola. Domain name registrations in Angola is limited to registrants within Angola, with one exception: The .it.ao domain extension is for international institutions. Registrations are at third-level, under one of the following subdomains.
+
+    .ed.ao - Educational institutions. (Seated in Angola.)
+    .gv.ao - Governmental institutions. (Seated in Angola.)
+    .og.ao - Any other organisations (Seated in Angola.)
+    .co.ao - Commercial institutions (Seated in Angola.)
+    .pb.ao - Publishing (Seated in Angola.)
+    .it.ao - International institutions (Outside Angola.)
+
+Anguilla
+These are the country domain extensions for Anguilla. There are no restrictions on registering domain names with the .ai extension.
+
+    .ai - Unrestricted
+    .com.ai- Unrestricted
+    .net.ai - Unrestricted
+    .off.ai - Unrestricted
+    .org.ai - Unrestricted
+
+Antarctica
+The country domain for Antarctica is .aq. This top-level domain is reserved for organizations that conduct work in Antarctica or promote the Antarctic and Southern Ocean regions. Must have physical presence in Antarctica or be a governmental organization signatory to the Antarctic Treaty.
+
+    .aq - Registrations are taken at the second level. 
+
+Antigua and Barbuda
+These are the country domain extensions for Antigua and Barbuda. There are no restrictions on registering domain names with the .ag extension.
+
+    .ag - Unrestricted
+    .com.ag - Unrestricted
+    .edu.ag - Unrestricted
+    .co.ag - Unrestricted
+    .net.ag - Unrestricted
+    .nom.ag - Unrestricted
+    .org.ag - Unrestricted
+
+Argentina
+Below are the country extensions for Argentina. Registrants must have a contact with an address in Argentina, but registrant may be foreign. Some subdomains have restrictions. Registrations are at the third level, under one of the following subdomains:
+
+    .com.ar - General purpose
+    .edu.ar - Educational entities
+    .gob.ar - Government entities, homonym for .gov.ar (.gob stands for "gobierno", government in Spanish)
+    .gov.ar - Government entities
+    .int.ar - International organizations
+    .mil.ar - Military forces
+    .net.ar - Locally based ISPs
+    .org.ar - Non-profit organizations
+    .tur.ar - Officially registered tourism agencies
+
+Although domain names must be registered at the third level, some public and governmental organizations own second level domains. These domain names include argentina.ar, educ.ar, gobiernoelectronico.ar, nic.ar, promocion.ar, retina.ar, uba.ar
+Armenia
+The top-level country code for Armenia is .am. Some generic names are reserved. Except for reserved names like .com.am, .net.am, .org.am and others, any person in the world can register a .am domain for a fee. Registrations are subject to review.
+
+    .am  - Registrations are made directly at the second-level. 
+
+Aruba
+The country domain extension for Aruba is .aw. Registrations are directly at second level, or beneath the .com.aw subdomain.
+
+    .aw - Unrestricted
+    .com.aw - Intended for use with commercial websites.
+
+Ascension Island
+To register a domain name with any of  the .ac country domain extensions, second-level registrants must have professional or academic qualifications. Third-level registrants must resident on Ascension Island.
+
+    .ac - Registrations are taken directly at the second level or at third level beneath the following second-level domains.
+    .com.ac - Commercial Entities
+    .net.ac - Network Service Providers
+    .gov.ac - Government
+    .org.ac - Non-commercial Organizations
+    .mil.ac - Military
+
+Australia
+The domain extension for Australia is .au. Registration is limited to individuals, companies, and organizations located in Australia. Different subdomains have various other restrictions. Names may be registered only at the third level within generic second-level categories.
+Second-Level Domains
+
+    .com.au - Commercial entities
+    .net.au - Commercial entities (historically only ISPs, but the use has been broadened)
+    .org.au - Associations and non-profit organisation (historically only for organisations that did not fit in other categories)
+    .edu.au - Educational institutions (see Third-level domains, below)
+    .gov.au - Governments and their departments (see Third-level domains, below)
+    .csiro.au - CSIRO (Commonwealth Scientific and Industrial Research Organisation)
+    .asn.au - Associations and non-profit organisations
+    .id.au - Individuals (by real name or common alias)
+
+
+The following region-specific second-level domains are also available:
+
+    .act.au - Australian Capital Territory
+    .nsw.au - New South Wales
+    .nt.au - Northern Territory
+    .qld.au - Queensland
+    .sa.au - South Australia
+    .tas.au - Tasmania
+    .vic.au - Victoria
+    .wa.au - Western Australia
+
+Third-Level Domains
+
+Australia also uses third-level domains for government departments and educational institutions. The use of .gov.au and .edu.au is split up into state-based categories. State governments and schools use a domain name that reflect their locale, and these state-based third-level domains are managed independently by the states. For example, a school in New South Wales would register schoolname.nsw.edu.au, whereas a Queensland government department would use departmentname.qld.gov.au.
+Historic Second-Level Domains
+
+Some second-level domain names are no longer actively used. Whilst registrations are grand-fathered for some, no new registrations are accepted.
+
+    .archie.au - Host of the Archie information service of the early 1990s. Has since been deleted
+    .conf.au - Conferences and other short-lived events
+    .gw.au - Gateways and miscellaneous AARNet routing equipment. Has since been deleted
+    .info.au - General information
+    .otc.au - A mapping domain for X.400 addresses; was obsoleted by telememo.au
+    .oz.au - Historical domain name for Australian sites. Australia's original top-level domain for use in the store-and-forward Internet messaging system MHSnet was .oz. The top-level domain later officially became .au and those domains in .oz were moved to .oz.au
+    .telememo.au - A mapping domain for X.400 addresses
+
+Other Australian Territories
+Australia also has also been assigned the following top-level domain names (due to the fact that these islands are Australian territory).
+
+    .cc - Cocos (Keeling) Islands
+    .cx - Christmas Island
+    .hm - Heard and McDonald Islands
+    .nf - Norfolk Island
+
+Austria
+Here are the domain extensions for Austria. There are no restrictions on who can register domains under these extensions, with the exception of the .gv.at and .ac.at subdomains.
+
+    .at - Unrestricted.
+    .gv.at - For governmental institutions (registration is handled by the Austrian Federal Chancellery)
+    .ac.at - For academic and educational institutions (registration is handled by the University of Vienna)
+    .co.at - For companies (unrestricted registration)
+    .or.at - For organizations (unrestricted registration)
+
+Azerbaijan
+The country extension for Azerbaijan is .az. There are no restrictions on who can register a .az domain name, but it is more expensive for non-residents.
+
+    .az - Registrations are directly at second level, or at third level beneath the second-level domains.
+    .com.az
+    .net.az
+    .int.az
+    .gov.az
+    .org.az
+    .edu.az
+    .info.az
+    .pp.az
+    .mil.az
+    .name.az
+    .pro.az
+    .biz.az
+
+Bahamas
+Here are the domain country extensions for the Bahamas. Generally, there are no restrictions on who can register a .bs domain name, although some second-level domains do carry restrictions (i.e. .gov.bs).
+
+    .bs - Registrations are taken directly at the second level, or at the third level beneath various second-level domains.
+    .com.bs - Commercial Entities
+    .net.bs - Network Providers
+    .org.bs - Non-commercial Organizations
+    .edu.bs - Educational Institutions
+    .gov.bs - Government Ministries and Agencies
+
+Bahrain
+Here are the domain extensions for Bahrain. Registrants must be a registered business in Bahrain and have a Bahrain telephone account registration may be billed to.
+
+    .bh - Registrations are available directly at the second level, or at third level beneath one of the following subdomains.
+    .com.bh - Commercial Entities
+    .info.bh - Informational Sites
+    .cc.bh
+    .edu.bh - Educational Institutions
+    .biz.bh - Businesses
+    .net.bh - Network Providers
+    .org.bh - Non-commercial Organizations
+    .gov.bh - Government and Governmental System
+
+Bangladesh
+Here are the domain extensions for Bangladesh. Some subdomains (.gov.bd and .mil.bd) are restricted; others are open. Some generic names are prohibited from being registered. Registrations are at third level under one of the following second-level domains.
+
+    .com.bd - Generally unrestricted
+    .edu.bd - Generally unrestricted
+    .ac.bd - Generally unrestricted
+    .net.bd - Generally unrestricted
+    .gov.bd - Government entities
+    .org.bd - Generally unrestricted
+    .mil.bd - Government entities
+
+Barbados
+Below are the domain extensions for Barbados. The top-level domain is .bb. Registration is limited to residents of Barbados and companies registered there.
+
+    .bb - Domain registrations are permitted directly at the second level, or below one of the following subdomains.
+    .com.bb
+    .net.bb
+    .org.bb
+    .gov.bb
+    .info.bb
+    .co.bb
+    .store.bb
+    .tv.bb
+    .biz.bb
+
+Belarus
+Here is the top-level domain for Belarus. Registration is limited to Belarus residents. Third-level subdomains have specific restrictions.
+
+    .by - Domain names can be registered at the second-level, or at the third-level, beneath several second-level domains.
+
+Belgium
+Belgium's top-level domain is .be. Names can be registered directly at second level, or at the third level, under various second-level domains. There are no restrictions on who can register a .be domain name.
+
+    .be - Domains are registered directly at the second level. Some institutions have domains registered at the third-level under an appropriate second-level domain.
+
+Belize
+Here are the country extensions for Belize. There are no restrictions on who can register .bz domain names.
+
+    .bz - Domain names can be registered at the second-level, or at the third-level, beneath the following second-level domains.
+    .com.bz - Commercial
+    .edu.bz - Educational
+    .gov.bz - Government
+    .net.bz - Networking
+    .org.bz - Organizations
+
+Benin
+Here are the domain extensions for Benin. To register a .bj domain name you need an administrative contact in Benin.
+
+    .bj - Registrations are available directly at the second level, or beneath one of the following subdomains.
+    .gouv.bj
+    .mil.bj
+    .edu .bj
+    .gov .bj
+    .asso.bj
+    .barreau.bj
+    .com .bj
+
+Bermunda
+The top-level domain name for Bermuda is .bm. To register a .bm domain name, you must be a company or organization registered in Bermuda.
+
+    .bm - Registrations are permitted directly at second level or at third level beneath various second-level domains
+
+Bhutan
+The top-level domain for Bhutan is .bt. Registrants must have a local presence in Bhutan, and a valid trade license.
+
+    .bt - Registrations are available at third level beneath some second-level labels; direct second-level registrations are planned in the future.
+
+Bolivia
+Here are the country domain extensions for Bolivia. There are no restrictions on who can register .bo domains.
+
+    .bo - Can be registered directly at the second-level, but this is more expensive. 
+    .com.bo - Commercial entities
+    .net.bo - Network service providers
+    .org.bo - Organizations
+    .tv.bo - TV media organizations
+    .mil.bo - Military institutions
+    .int.bo - International Organizations
+    .gob.bo - Government (Gobierno)
+    .gov.bo - Government institutions
+    .edu.bo - Educational institutions
+
+Bosnia and Herzegovina
+Here are the domain extensions for Bosnia and Herzegovina. To register a domain name with one of these extensions, you must be located in Bosnia or Herzegovina or have representative there.
+
+    .ba - Registrations are directly at second level, or at third level beneath one of the following subdomains.
+    .org.ba - Non-profit organizations
+    .net.ba - Telecommunications providers
+    .edu.ba - Education
+    .gov.ba - Any of the governments (local, regional or national) 
+    .mil.ba - Military
+    .unsa.ba - University of Sarajevo
+    .untz.ba - University of Tuzla
+    .unmo.ba - University of Mostar "Džemal Bijedic"
+    .unbi.ba - University of Bihac
+    .unze.ba - University of Zenica
+    .co.ba - Maintained by a company called Sayber, located in Sarajevo.
+    .com.ba - Administered by BIHnet, a subsidiary of BH Telecom.
+    .rs.ba - Administered by SARnet Centar (Academic and Research Center of Republika Srpska) in Banja Luka. Third-level domain names can be registered under this second-level domain free of charge by anybody within Republika Srpska in Bosnia and Herzegovina.
+
+Botswana
+Here are the domain extensions for Botswana. Registrants must submit registration form by paper mail. Registrations are mostly at the third level beneath various second-level names, but some second-level registrations exist.
+
+    .bw
+    .co.bw
+    .org.bw
+
+Brazil
+Here are the country domain extensions for Brazil. Brazil has a top-level domain of .br, with a large number of second-level domains.
+
+There are registrictions on who can register a domain name with these extensions. The restrictions are based on which second-level name registration is within.
+
+Registrations are at third level beneath various categories and they were allowed at the second level for institutions of third level education until 2000; a wide variety of second-level categories exist, but .com.br is still much more popular than others.
+
+Registrations of domain names with Portuguese characters are also accepted.
+
+    .adm.br - Administrators
+    .adv.br - Lawyers
+    .agr.br - Agriculture-related companies and/or websites
+    .am.br - AM radio companies, licenced by the Brazilian Communications Ministry
+    .arq.br - Architecture
+    .art.br - Art: music, folklore, etc.
+    .ato.br - Actors
+    .bio.br - Biologists
+    .blog.br - Blogs
+    .bmd.br - Biomedics
+    .cim.br - Brokers
+    .cng.br - Scenographers
+    .cnt.br - Accountants
+    .com.br - Commercial websites in general
+    .coop.br - Cooperatives
+    .ecn.br - Economy
+    .edu.br - Higher education institutions
+    .eng.br - Engineers
+    .esp.br - Sports
+    .etc.br - Entities that do not fit in previous categories
+    .eti.br - I.T. specialists
+    .far.br - Pharmacies and drugstores
+    .flog.br - Photologs
+    .fm.br - FM radio companies, licenced by the Brazilian Communications Ministry
+    .fnd.br - Phonoaudiologists
+    .fot.br - Photographers
+    .fst.br - Physiotherapists
+    .g12.br - K12 education institutions
+    .ggf.br - Geographers
+    .gov.br - Government entities
+    .imb.br - Real estate
+    .ind.br - Industries
+    .inf.br - Media and information
+    .jor.br - Journalists
+    .jus.br - Brazilian Judiciary Branch of the State.
+    .lel.br - Auctioneers
+    .mat.br - Mathematicians and statisticians
+    .med.br - Medics
+    .mil.br - Brazilian armed forces
+    .mus.br - Musicians
+    .net.br - Exclusively for providers of physical communication means, legally habilitated for the prestation of public telecommunication services
+    .nom.br - People
+    .not.br - Notaries
+    .ntr.br - Nutritionists
+    .odo.br - Dentists
+    .org.br - Non-profit non-governmental entities
+    .ppg.br - Publicity specialists and marketeers
+    .pro.br - Teachers
+    .psc.br - Psychologists
+    .psi.br - Online service providers
+    .qsl.br - Radio amateurs
+    .rec.br - Recreational activities, entertainment, leisure, games, etc.
+    .slg.br - Sociologists
+    .srv.br - Services providers
+    .tmp.br - Temporary events, such as fairs and exhibitions
+    .trd.br - Translators
+    .tur.br - Tourism
+    .tv.br - Sound and image broadcasters, licenced by the Brazilian Communications Ministry
+    .vet.br - Veterinarians
+    .vlog.br - Videologs
+    .wiki.br - Wikis
+    .zlg.br - Zoologists
+
+British Indian Ocean Territory
+Here is the country extension for the British Indian Ocean Territory. There are no restrictions for second-level registrations. Third-level registrants must be a resident of the British Indian Ocean Territory.
+
+    .io -  Registrations are taken directly at the second level or at third level beneath various second-level labels.
+
+British Virgin Islands
+Here is the top-level domain for the British Virgin Islands. There are no restrictions on registering domain names with this extension.
+
+    .vg - Domain name registrations are taken directly at the second-level.
+
+Brunei Darussalam
+To register a .bn domain name, you must be a company or organization registered in Brunei. Registrations are made beneath one of the following subdomains.
+
+    .com.bn
+    .edu.bn
+    .org.bn
+    .net.bn
+
+Bulgaria
+Here's the top-level domain for Bulgaria. Can be registered by Bulgarian companies and organizations, or foreign companies that have registered branches or commercial representatives in Bulgaria. The domain name has to represent the company name or its abbreviation.
+
+    .bg - Registrations are taken at second level or third level, under various subdomains.
+
+Burkina Faso
+Here is the country domain extension for Burkina Faso. It is currently unclear whether there are any restrictions on who can register a .bg domain name.
+
+    .bf - Domains are registered directly at the second-level. Some governement sites are registered at third-level beneath .gov.bf.
+
+Burma (Union of Myanmar)
+Here are the domain extensions for Burma. Note that, although there are some functional sites in Burma under this domain, there is relatively little Internet activity in the country. Registrations are at third level beneath the following second-level categories.
+
+    .net.mm
+    .com.mm
+    .edu.mm
+    .org.mm
+    .gov.mm
+
+Burundi
+Here is the top-level domain for Burundi. Anyone in the world can register a .bi domain name, however, use for misleading purposes is discouraged.
+
+    .bi  - Registrations are taken directly at second-level or at third-level beneath one of several second-level domains. 
+
+Cambodia
+Here are the country code extensions for Cambodia. Note that offensive or inappropriate names may be refused registration. Registrations are at third level beneath the following second-level labels.
+
+    .per.kh - Personal names
+    .com.kh - Commercial entities
+    .edu.kh - Educational institutions
+    .gov.kh - Government entities
+    .mil.kh - Military entities
+    .net.kh - Network infrastructure
+    .org.kh - Noncommercial organizations
+
+Cameroon
+Here are the country domain extensions for Cameroon. Local presence is required before you can register a .cm domain name.
+
+    .cm - Registrations are made directly at the second level (except for government sites, as indicated below).
+    .gov.cm - For government websites.
+
+Canada
+Here are the country domain extensions for Canada. To register a .ca domain name, you must meet the Canadian Presence Requirements as specified by the registry.
+
+    .ca - registrants can either register their domain names directly at the second-level, or at the third-level, under one of the (geographic) second-level domains below. 
+    .ab.ca - Alberta
+    .bc.ca - British Columbia
+    .mb.ca - Manitoba
+    .nb.ca - New Brunswick
+    .nf.ca - Newfoundland (no longer accepting new registrations, replaced by .nl.ca)
+    .nl.ca - Newfoundland and Labrador
+    .ns.ca - Nova Scotia
+    .nt.ca - Northwest Territories
+    .nu.ca - Nunavut
+    .on.ca - Ontario
+    .pe.ca - Prince Edward Island
+    .qc.ca - Quebec
+    .sk.ca - Saskatchewan
+    .yk.ca - Yukon
+
+Examples of entities that meet the Canadian Presence Requirements include:
+
+    a Canadian citizen of the age of majority,
+    a permanent resident of Canada,
+    a legally recognized Canadian organization,
+    an Inuit, First Nation, Métis or other people indigenous to Canada,
+    an Indian Band as defined in the Indian Act of Canada,
+    a foreign resident of Canada that holds a registered Canadian trademark,
+    An executor, administrator or other legal representative of a person or organization that meets the requirements,
+    a division of the government,
+    Queen Elizabeth II in her capacity as head of state of Canada
+
+Cape Verde
+Must have working DNS for domain set up first before registering.
+
+    .cv - Domain name registrations are directly at second-level.
+
+Cayman Islands
+Here are the domain extensions for the Cayman Islands. Domain registration is limited to residents and registered companies in the Cayman Islands. A local address and phone number is required for the registrant and administrative contact.
+
+    .ky - Registrations are made directly at second level, or at third level beneath the following second-level names.
+    .com.ky
+    .org.ky
+    .net.ky
+    .edu.ky - Restricted to educational institutions
+    .gov.ky - Restricted to governmental entities
+
+Central African Republic
+Here's the top-level domain for the Central African Republic. It is intended for entities connected with the Central African Republic.
+
+    .cf - Domain registrations are done directly at the second-level
+
+Chad (French: Tchad) 
+Here is the top-level domain for Chad. There are no restrictions on registering domain names with this extension.
+
+    .td - Registrations are made directly at the second-level. Note that registrations were not accepted by the registry at the time of writing.
+
+Chile
+Here are the domain extensions for Chile. Anyone can register a .cl domain name, however a foreign registration must have a domestic representative who has a RUT (RUT, which stands for Rol Único Tributario, is the Chilean national identification number).
+
+    .cl - Registrations are made directly at the second level (except for government sites, as indicated below). 
+    .gov.cl - For government websites.
+    .gob.cl - For government websites.
+
+China
+Here are the country domain extensions for China. Second-level and most third-level names are unrestricted; .gov.cn and .edu.cn are limited to qualified entities.
+
+    .cn - Domain names may be registered directly at the second level or at the third level beneath the following second-level domains.
+
+Generic Second-Level Domains
+
+    .ac.cn - Academic or scientific research institutions
+    .com.cn - Commercial
+    .edu.cn - Educational institutions
+    .gov.cn - Government agencies
+    .net.cn - Internet oriented organizations
+    .org.cn - Organizations
+
+Second-Level Domains for Chinese Provinces
+
+    .ah.cn - Anhui
+    .bj.cn - Beijing
+    .cq.cn - Chongqing
+    .fj.cn - Fujian
+    .gd.cn - Guangdong
+    .gs.cn - Gansu
+    .gz.cn - Guizhou
+    .gx.cn - Guangxi
+    .ha.cn - Henan
+    .hb.cn - Hubei
+    .he.cn - Hebei
+    .hi.cn - Hainan
+    .hl.cn - Heilongjiang
+    .hn.cn - Hunan
+    .jl.cn - Jilin
+    .js.cn - Jiangsu
+    .jx.cn - Jiangxi
+    .ln.cn - Liaoning
+    .nm.cn - Inner Mongolia
+    .nx.cn - Ningxia
+    .qh.cn - Qinghai
+    .sc.cn - Sichuan
+    .sd.cn - Shandong
+    .sh.cn - Shanghai
+    .sn.cn - Shaanxi
+    .sx.cn - Shanxi
+    .tj.cn - Tianjin
+    .tw.cn - Taiwan
+    .xj.cn - Xinjiang
+    .xz.cn - Xizang
+    .yn.cn - Yunnan
+    .zj.cn - Zhejiang
+
+Christmas Island
+Here's the top-level domain name for Christmas Island. There is no restriction on who can register a domain name with this extension.
+
+    .cx - Registrations can be made directly at second level. Some third-level domain names exist for Christmas Island websites such as governmental sites in .gov.cx.
+
+Cocos (Keeling) Islands
+The top-level domain for Cocos (Keeling) Islands  is .cc. There are no restrictions on who can register .cc domain names.
+
+    .cc - Registration is done directly at the second-level
+
+Columbia
+Here are the country domain extensions for Columbia. Registration is limited to registrants located in Colombia. Further restrictions vary by each second-level subdomain. Domain name registration is only permitted at the third level.
+
+    .com.co - Commercial
+    .org.co - Organizations
+    .edu.co - Educational
+    .gov.co - Government
+    .net.co - Network infrastructure
+    .mil.co - Military
+    .nom.co - Private person
+
+Comoros
+Below are the country domain extensions for Comoros. Second-level registrations are subject to restrictions and local presence requirements.
+Third-level registrations are unrestricted in .com.km if the name is not already registered elsewhere within the .km extension. Various category-specific restrictions apply to each of the other third-level domains. Personal name .nom.km registrations are limited to island residents and to citizens resident abroad. Also, various categories corresponding to the individual professions each require the applicant hold a license to practise that profession.
+
+    .km - Registration is available directly at second-level and under the following sub-domains
+    .com.km - companies - unrestricted use
+    .coop.km - co-operatives
+    .asso.km - associations
+    .nom.km - individuals ("nom" means "name")
+    .presse.km - press organisations
+    .tm.km - trademark owners
+    .medecin.km - medical doctors
+    .notaires.km - notaries
+    .pharmaciens.km - pharmacists
+    .veterinaire.km - veterinarians
+    .edu.km - universities and professional institutes
+    .gouv.km - government
+    .mil.km - registered at no charge, for the military
+
+Congo, Democratic Republic of the
+Here's the top-level domain for the Democratic Republic of the Congo. There is no restriction on who can register a domain under this extension.
+
+    .cd - Registration is done directly at the second-level
+
+Congo, Republic of the
+Here's the top-level domain for the Republic of Congo. Registration is unrestricted - anyone can register a domain name under this extension. Republic of the Congo citizens get one free domain name registration.
+
+    .cg - Registration is done directly at the second-level. 
+
+Cook Islands
+Here are the domain extensions for the Cook Islands.
+
+Companies can only register a domain name based on their legal name. Non-Resident domain applications cost $150.00(USD) for a minimum of 2 years, and must be renewed every 2 years thereafter. Registrations are made at the third level beneath second-level categories.
+
+Note that .ck domains are monitored on the web, on a regular basis for profanity on the Internet if it is found to be doing so, or if the site is deemed inappropriate, the domain will be terminated without notification or refund.
+
+    .co.ck - Business organisations
+    .org.ck - Not-for-profit organisations
+    .edu.ck - Educational institutions
+    .gov.ck - Government agencies
+    .net.ck - Internet Service Providers
+    .gen.ck
+    .biz.ck - Business related pages for the Cook Islands
+    .info.ck - Information pages relating to the Cook Islands
+
+Costa Rica
+Here are the domain name extensions for Costa Rica. There are varying restrictions based on which second-level domain is used.
+
+    .cr - Registrations are directly at second level, or at third level beneath one of the following second-level domains.
+    .ac.cr - Academic/universities
+    .co.cr - Commercial
+    .ed.cr - Educational
+    .fi.cr - Financial institutions
+    .go.cr - Governmental
+    .or.cr - Non-profit organizations
+    .sa.cr - Health related institutions
+
+Côte d'Ivoire
+Here's the top-level domain for Côte d'Ivoire. Registrants name must match official name of company, organization, or trademark.
+
+    .ci - Registrations are made directly at the second level, or at third level beneath some second-level domain.
+
+Croatia
+Here's the country code top-level domain for Croatia. Registration is limited to Croatian citizens, residents, and companies/organizations. There are various rules and restrictions based on categories of registrants.
+
+    .hr - Domain registrations are taken directly at the second level, or under various subdomains such as .com.hr and .iz.hr.
+
+Cuba
+Here's the top-level domain for Cuba. Registrations are limited to people and companies located in Cuba. Also, third-level registrations may have other limitations based on which second-level domain they are within. 
+
+    .cu - May register at second-level or at the third-level, beneath generic second-level domains. 
+
+Cyprus, Republic of
+Limited to Cyprus residents and registered companies/organizations. There are further restrictions for different subdomains
+
+    .ac.cy - Academic and research institutions.
+    .net.cy - Internet or Network service providers.
+    .gov.cy - Governmental institutions.
+    .org.cy - Not for profit organisations.
+    .pro.cy - Professional organizations.
+    .name.cy - Natural persons.
+    .ekloges.cy - Organizations or persons related to elections.
+    .tm.cy - Officially registered trademarks.
+    .ltd.cy - Private and public limited companies.
+    .biz.cy - Any other registered company.
+    .press.cy - Organizations and entities connected to the press.
+    .parliament.cy - The Cyprus Parliament and associated entities.
+    .com.cy - Commercial entities (unrestricted registration for Cypriot entities).
+
+Czech Republic
+Here is the domain extension for the Czech Republic. Businesses must provide tax registration number when registering a domain name with this extension.
+
+    .cz - Domain names can be registered directly at second level. 
+
+Denmark
+Here's the top-level domain for Denmark. There are no restrictions on who can register domain names with this extension.
+
+    .dk - Domain names can be registered directly at second level. 
+
+Djibouti
+Here's the top-level domain for Djbouti. There are no restrictions on who can register domain names with this extension, although some names are reserved or subject to famous trademark owners having first registration rights.
+
+    .dj - Domain names can be registered directly at second level. 
+
+Dominica
+Here are the domain extensions for Dominica. There are no restrictions on who can register domain names with this extension. Third-level names in .com.dm, .net.dm, and .org.dm are included automatically upon registration of all .dm domain names.
+
+    .dm - Domain registrations are taken directly at second level.
+    .com.dm - Included automatically upon registration at the second-level (i.e. yourdomain.dm).
+    .net.dm - Included automatically upon registration at the second-level (i.e. yourdomain.dm).
+    .org.dm - Included automatically upon registration at the second-level (i.e. yourdomain.dm).
+
+Dominican Republic
+There are generally no restrictions for .do domains, although .gov.do domains require a signed letter from a government agency.  Domain name registrations are taken at the third level beneath the following second-level names:
+
+    .edu.do - Academic institutions
+    .gob.do - Governmental institutions
+    .gov.do - Governmental institutions
+    .com.do - Commercial organizations
+    .sld.do - Institutions of health
+    .org.do - Nongovernmental institutions
+    .net.do - Internet service providers
+    .web.do - Web development and services
+    .mil.do - Military institutions
+    .art.do - Arts institutions
+
+East Timor
+Here is the top-level domain for East Timor. Domain registrations must not be used for any purpose that is obscene, indecent, or spam-related.
+
+    .tl - Registrations are taken at the second-level and beneath the following subdomains.
+    .com.tl - For commercial use (although there are currently no restrictions, other than the ones as above).
+    .gov.tl - Some government websites are located beneath this second-level domain.
+
+Ecuador
+Some third-level registrations have restrictions depending on second-level name they are within.
+
+    .ec - Registrations are made directly at the second level, or at third level beneath one of the following second-level domains.
+    .com.ec - Commercial use
+    .info.ec - General information
+    .net.ec - Providers of internet services
+    .fin.ec - Financial institutions and services
+    .med.ec - Medical and health-related entities
+    .pro.ec - Professionals such as lawyers, architects, accountants, etc.
+    .org.ec - Non-profit organizations and entities.
+    .edu.ec - Educational entities.
+    .gov.ec - Government of Ecuador
+    .mil.ec - Ecuadorian military
+
+Eygypt
+Any entity who wants to register a domain name ending with .eg must have a local representative or the domain name has to be hosted on Egyptian DNS servers
+
+    .com.eg - Commercial sites.
+    .edu.eg - Educational sites.
+    .eun.eg - Egyptian Universities Network.
+    .gov.eg - Governmental sites.
+    .mil.eg - Military sites.
+    .name.eg - Personal "name" websites.
+    .net.eg - Networking.
+    .org.eg - Egyptian organizations.
+    .sci.eg - Scientific sites.
+
+El Salvador
+Below are the domain extensions for El Salvador. Registrants must have a local contact. Registrations are at third level beneath the following second-level names.
+
+    .edu.sv - Education and/or research institutions
+    .gob.sv - National governmental institutions
+    .com.sv - Commercial entities and other not included in the rest
+    .org.sv - Non-profit Organizations
+    .red.sv - National network administration
+
+Equatorial Guinea
+Here's the top-level domain for Equatorial Guinea. Registration details are unclear at the time of writing. It's unclear whether there are any restrictions surrounding registration of domain names under this extension.
+
+    .gq - It's unclear whether domains are registered at second level or third level (or both)
+
+Eritrea
+Registrations are at third level beneath the following second-level domains.
+
+    .com.er - presumably for commercial organisations
+    .edu.er - presumably for academic/educational organisations
+    .gov.er - presumably for governmental organisations
+    .mil.er - presumably for military organisations, empty zone unchanged since August 2004
+    .net.er - presumably for networking organisations
+    .org.er - presumably for non-governmental organisations
+    .ind.er - unknown, empty zone unchanged since August 2004
+    .rochest.er - (lame delegation - delegated servers have no such zone)
+    .w.er - unknown (mx record only, unchanged since 2005)
+
+Estonia
+Registrants ust be Estonian. Some subdomains have further restrictions. Limit of one domain per legal entity. Name servers must be configured prior to registration.
+
+    .ee - Registrations are taken directly at the second level, or at the third level beneath various second-level domains.
+
+Ethiopia
+Domain name registrations for Ethiopia are made at the third level beneath the following subdomains:
+
+    .com.et - For Commercial Companies
+    .gov.et - For Governmental Organizations
+    .org.et - For Non-Profit Organizations and NGO's
+    .edu.et - For Educational Institutions
+    .net.et - For network related companies
+    .biz.et - For businesses
+    .name.et - For individuals
+    .info.et - For all uses
+
+European Union
+The European Union (EU) is an economic and political union of 27 member states, located primarily in Europe. Registrants for .eu domain names must be located within the EU.
+
+    .eu - Domain names are registered directly at the second level.
+
+Falkland Islands
+Here are the domain extensions for the Falkland Islands. Only entities resident in Falkland Islands may register a domain name. Second-level registrations prohibited; registration is at the third level under the following second level domains.
+
+    .co.fk - For commercial organizations
+    .org.fk - For non-commercial organizations
+    .gov.fk - For government organizations
+    .ac.fk - For academic organizations
+    .nom.fk - For private individuals
+    .net.fk - For ISP and similar network organizations
+
+Faroe Islands
+Here is the top-level domain for the Faroe Islands.
+
+Any domain name should correspond to a trademark of the registrant (for Type A applications). For Type B applications, you are allowed to register a domain name without owning a matching trademark. Any entity that owns such a trademark can fill an opposition within 20 days after the domain registration and have the domain transferred into their name.
+
+    .fo - Registrations are available directly at second level.
+
+Federated States of Micronesia
+Here is the top-level domain for Federated States of Micronesia. There are no restrictions on who can register domain names with the .fm extension.
+
+    .fm - Registrations are available directly at second level.
+
+Fiji
+These are the country domain extensions for Fiji. Generally, there are no restrictions on who can register domain names with these extensions, however, some are restricted (such as .ac.fj for academic institutions).
+
+Registrations are only taken under the following second-level domains:
+
+    .ac.fj
+    .biz.fj
+    .com.fj
+    .info.fj
+    .mil.fj
+    .name.fj
+    .net.fj
+    .org.fj
+    .pro.fj
+
+Finland
+Here's the top-level domain for Finland. Registration is limited to companies and organizations registered in Finland and Finnish nationals.
+
+    .fi - Registrations are taken directly at second level.
+
+France
+Here are the country domain extensions for France. There is a French presence requirement and an administrative contact address must be in France. There are also further restrictions on some of the subdomains.
+
+    .fr - Registrations are taken directly at the second level or at the third level beneath one of the following subdomains.
+    .tm.fr - for owners of trademarks
+    .asso.fr - for associations
+    .nom.fr - for surnames
+    .prd.fr - for research and development programs
+    .presse.fr - for press publications
+    .com.fr - open to all applicants without justification of the requested name
+    .gouv.fr - for the French administration
+
+French Guiana
+Here is the country code top-level domain for French Guiana. The domain is intended for entities connected with French Guiana. It's unclear whether there are any restrictions regarding who can use this extension.
+
+    .gf - It's unclear whether domains are registered directly at second level or at thrid level (or both).
+
+French Polynesia
+Here are the country domain extensions for French Polynesia. Local presence is required in order to register a domain name with this extension.
+
+    .pf - Registrations are accepted directly at the second-level or beneath the following subdomain.
+    .com.pf
+
+French Southern and Antarctic Lands (France) 
+Here is the top-level domain for French Southern and Antarctic Lands. A local administrative contact with proof of address in French Southern Territory is required.
+
+    .tf - Registrations are made directly at the second-level. Note that an unofficial service makes free, redirected domains available at third level.
+
+Gabon
+Here is the country code top-level domain for Gabon. It is unclear whether there are any restrictions on registering domain names with this extension.
+
+    .ga - Domain names are registered directly at the second level.
+
+The Gambia
+Here's the country code top-level domain for The Gambia. Company must be registered in The Gambia or have strong ties to it. The domain name must be connected to that of the company or organization requesting it.
+
+    .gm - Registrations are made directly at the second level.
+
+Georgia
+Here is the country code top-level domain for Georgia. Domain name registrations are limited to persons and companies located in Georgia. Third-level registrations have various restrictions depending on which second-level name they are within.
+
+    .ge - Registrations are available directly at second level as well as at third level beneath some second-level domains.
+
+Germany
+Here's the top-level domain for Germany. Registrants must have administrative contact resident in Germany.
+
+    .de - domain names can be registered directly at second level. 
+
+Ghana
+Below are the domain extensions for Ghana. Companies wishing to use this extension must be registered in Ghana, and the domain administrator must be located there. Second-level registrations are no longer accepted. Registrations must now be at third level beneath second-level labels..
+
+    .com.gh - For companies
+    .edu.gh - For schools
+    .gov.gh - For government
+    .org.gh - For organizations
+    .mil.gh - For military
+
+Gibraltar
+Here is the country code top-level domain for Gibralter. Second-level names are limited to Gibraltar companies and organizations. Third-level names have various restrictions.
+
+    .gi - Registrations are made directly at the second level or at the third level beneath some second-level labels.
+
+Greece
+Here are the country domain extensions for Greece. Second-level domains and .com.gr domain names can be registered without restrictions. Some restrictions apply on some of the subdomains.
+
+    .gr - Registrations are taken directly at the second level or beneath one of the following subdomains.
+    .com.gr - For those engaging in commercial activities
+    .edu.gr - For educational institutions
+    .net.gr - Internet Service Providers (ISPs) and network providers
+    .org.gr - Non-profit organizations
+    .gov.gr - Exclusively for governmental organizations
+
+Greenland
+Below is the country code top-level domain for Greenland. There are no restrictions on registering domain names using this extension.
+
+    .gl - Domain names can be registered directly at the second level.
+
+Grenada
+Here is the country code top-level domain for Grenada. There are no restrictions on who can register domain names with this extension.
+
+    .gd - Domain names are registered directly at the second level.
+
+Guadeloupe
+Below are the domain extensions for Guadeloupe. Domain names with this extension is available worldwide but more expensive for non-Guadeloupe residents. 
+
+    .gp - Registrations are directly at second level, or at third level beneath the following second-level categories.
+    .com.gp
+    .net.gp
+    .mobi.gp
+    .edu.gp
+    .asso.gp
+    .org.gp
+
+Guam
+The country code top-level domain for Guam is .gu. Registrants must have a contact in Guam to register domain names under this extension..
+
+    .com.gu - Registrations are only accepted at the third level, under various second level domains including this one.
+
+Guatemala
+Here are the domain extensions for Guatemala. Domain registrations are generally made at the third level under the following second level domains..
+
+    .com.gt - Commercial entities
+    .edu.gt - Educational institutions
+    .net.gt - Networks; unrestricted in registration
+    .gob.gt - Guatemalan governmental entities
+    .org.gt - Organizations; unrestricted in registration
+    .mil.gt - Guatemalan military entities
+    .ind.gt - Individuals
+
+Guernsey
+Below are the domain extensions for Guernsey. There are no restrictions on who can register domain names under this extension.
+
+    .gg - Can be registered directly at second level, or under one of the following subdomains.
+    .ac.gg - Guernsey academic institutions only
+    .co.gg - commercial/personal domains
+    .gov.gg - governments of Guernsey, Alderney, and Sark
+    .net.gg - Internet service providers and commercial
+    .sch.gg - schools
+    .org.gg - organisations
+
+Guinea
+Below are the country domain extensions for Guinea. Registrants must have presence in Guinea and demonstrable intent to use name; two name servers must be in different networks. Domain name registrations are at third level beneath second-level categories.
+
+    .com.gn - Commercial
+    .ac.gn - Academic
+    .gov.gn - Government
+    .org.gn - Not-for-profit
+    .net.gn - Network infrastructure
+
+Guinea-Bissau
+Here is the country code top-level domain for Guinea-Bissau. The only restriction on domain names is: no porn.
+
+    .gw - Registrations can be done directly at the second level.
+
+Guyana
+Here's the country code top-level domain for Guyana. You do not need physical presence in Guyana to register a domain name using any of its extensions.
+
+    .gy - Registrations can take place at the second level or at the third level under one of the following subdomains.
+    .co.gy
+    .com.gy
+    .net.gy
+
+Haiti
+Here is the country code top-level domain for Haiti. Anyone can register a domain with this country extension.
+
+    .ht - Registrations are taken directly at the second level.
+
+Heard and McDonald Islands
+Here's the country code top-level domain for the Heard and McDonald Islands. Anyone can register a domain with this country extension.
+
+    .hm - Registrations are taken directly at the second level.
+
+Honduras
+Here's the country code top-level domain for the Honduras. Anyone can register a domain with this country extension.
+
+    .hn - Registrations are taken directly at the second level.
+
+Hong Kong
+Below are the domain extensions for Hong Kong. Second-level registrations are open to all. Specific third-level registrations require identity documents depending on varying rules for each sector. Both English and Chinese characters are allowed.
+
+    .hk - Registrations are accepted directly at the second level or under one of the following subdomains.
+    .com.hk / ??.hk - commercial entities
+    .edu.hk / ??.hk - educational institutions
+    .gov.hk / ??.hk - government departments
+    .idv.hk / ??.hk - HKID cardholders aged 11 or above
+    .net.hk / ??.hk - network service providers
+    .org.hk / ??.hk - non-profit organizations
+
+Hungary
+Below are the country domain extensions for Hungary. Open to persons and companies in Hungary or the European Union. If you are not an EU citizen then you need to have a valid trademark in Hungary. Internationalized domain name registrations are also accepted.
+
+    .hu - Domain name registrations can be made directly at the second level or beneath the following subdomains.
+    .2000.hu
+    .agrar.hu
+    .bolt.hu
+    .casino.hu
+    .city.hu
+    .co.hu
+    .erotica.hu
+    .erotika.hu
+    .film.hu
+    .forum.hu
+    .games.hu
+    .hotel.hu
+    .info.hu
+    .ingatlan.hu
+    .jogasz.hu
+    .konyvelo.hu
+    .lakas.hu
+    .media.hu
+    .news.hu
+    .org.hu
+    .priv.hu
+    .reklam.hu
+    .sex.hu
+    .shop.hu
+    .sport.hu
+    .suli.hu
+    .szex.hu
+    .tm.hu
+    .tozsde.hu
+    .utazas.hu
+    .video.hu
+
+Iceland
+Here is the top-level country code domain for Iceland. Generally, anyone can register a domain name with this extension, however, foreign entities must appoint a local representative in Iceland (Administrative Contact of the domain).
+
+    .is - Registrations are directly at second level.
+
+India
+Below are the country domain extensions for India. There are no restrictions on who can register second-level domains or most third-level domains. There are some restrictions under some specialized subdomains.
+
+    .in - Available to anyone; used by companies, individuals, and organizations in India
+    .co.in - Originally for banks, registered companies, and trademarks
+    .firm.in - Originally for shops, partnerships, liaison offices, sole proprietorships
+    .net.in - Originally for Internet service providers
+    .org.in - Originally for non-profit organizations
+    .gen.in - Originally for general/miscellaneous use
+    .ind.in - Originally for individuals
+
+Six zones are reserved for use by qualified organizations in India:
+
+    .ac.in - Academic institutions
+    .edu.in - Educational institutions
+    .res.in - Indian research institutes
+    .gov.in - Indian government
+    .mil.in - Indian military
+    .nic.in - Reserved for India's National Informatics Centre, but in practice most Indian government agencies have domains with this extension..
+
+Indonesia
+The country code top-level domain for Indonesia is .id. Domain name registrations are at the third level under the existing second-level domains. International entities can register under the .web.id subdomain. Other subdomains have specific requirements. Also restricted are domain names containing geographical names, trademarks without permissions from the trademark's owner, ethnic slurs etc.
+
+    .ac.id - Academic Institutions
+    .co.id - Commercial Entities
+    .net.id - Communication/ISP Company
+    .or.id - Formal Organizations/Community
+    .web.id - Informal Organizations/Personal
+    .sch.id - School
+    .mil.id - Military
+    .go.id - Government and Governmental System
+
+Iran
+Below are the country domain extensions for Iran. These domains are generally restricted to Iranian-related entities. Third-level registrations under subdomains have varied restrictions.
+
+    .ir - Public. May register at second level or at third level beneath the following generic second-level domains.
+    .ac.ir - Academic (tertiary education and research establishments) and learned societies.
+    .co.ir - Commercial/companies
+    .gov.ir - Government (Islamic Republic of Iran)
+    .id.ir - Personal
+    .net.ir - ISPs and network companies approved by IRTCT
+    .org.ir - Non-profit organisations
+    .sch.ir - Schools, primary and secondary education
+
+Iraq
+Here are the domain extensions for Iraq. No online registrations are known to be taking place at the time of writing. 
+
+    .iq - General
+    .gov.iq - Governmental entities
+    .edu.iq - Educational Institutions
+    .com.iq - Commercial entitites
+    .mil.iq - Military Institutions
+    .org.iq - Non-profit organizations
+
+Ireland
+Below is the country code top-level domain for Ireland. Registrants must have a "real and substantive" connection with Ireland, or have a European Union trademark. The applicant must prove their connection to the desired domain name. Personal domains of individuals are limited to initials and a number.
+
+    .ie - Domain name registrations are done directly at the second level.
+
+Israel
+Below are the domain extensions for Israel. Restrictions vary based on which second-level domain is used. The registry reserves right to screen and reject applications. Also, there is a llimit of 10 domain names per owner unless exception granted. Domain name registrations are made at the third level beneath the second level domains.
+
+    .ac.il - Academic Institutions; administration delegated to the Inter-University Computation Center.
+    .co.il - Commercial Entities; administration delegated to five private registrars.
+    .org.il - Non-commercial Organizations; administration delegated to five private registrars.
+    .net.il - Israeli Internet service providers; available only to licensed providers by the Israel Internet Association.
+    .k12.il - Schools and Kindergartens
+    .gov.il - Government and Governmental System; administration delegated to ministry of finance.
+    .muni.il - Municipal Government
+    .idf.il - Israel Defense Forces; administration delegated to the army's Center of Computing and Information Systems.
+
+Isle of Man
+Below are the country domain extensions for Isle of Man. Restrictions apply to some extensions.  Some second-level domains such as gov.im are reserved for third-level domains representing entities in the Isle of Man.
+
+    .im - Direct second-level registrations are allowed.
+    .plc.co.im
+    .net.im
+    .co.im
+    .org.im
+    .ac.im
+    .ltd.co.im
+    .com.im
+    .gov.im
+
+Italy
+Here's the country code top-level domain for Italy.  Registrants must be a resident of an EU country to register a domain name with this extension. Registration requires sending a paper or fax letter which must be completed in Italian.
+
+    .it - Registrations are at second level or third level under various second-level domains. Most second-level domains represent a province, region, or municipality. There is also .gov.it for government organizations.  
+
+Jamaica
+Below are the country domain extensions for Jamaica. There are no restrictions on who can register domain names with this extension, however, it is more expensive for non-residents. It is also cheaper for government departments and non-profit organizations. And it is free for schools and educational institutions.
+
+    .com.jm
+    .net.jm
+    .org.jm
+    .edu.jm
+    .gov.jm
+    .mil.jm
+
+Japan
+Here are the country domain extensions for Japan. Second-level registrations require a Japanese mailing address, and third-level registrations have varying rules depending on which second-level name they are beneath.
+
+    .jp - Domain registrations taken at the second level and at third level beneath the following second-level labels.
+    .ac.jp - Higher level academic institutions, such as universities
+    .ad.jp - JPNIC members
+    .co.jp - Most forms of incorporated companies, including foreign companies registered in Japan
+    .ed.jp - Educational institutions for individuals under 18
+    .go.jp - Japanese government ministries and their endeavours
+    .gr.jp - Groups of two or more people, or groups of registered companies
+    .lg.jp - Local government authorities
+    .ne.jp - Network service providers
+    .or.jp - Registered organizations and non-profit organizations
+
+Jersey
+Here is the country code top-level domain for Jersey. There are no restrictions on who can register domain names with this extension.
+
+    .je - Registrations are directly at second level or under the following second level generic categories
+    .co.je - Commercial and Personal Domains
+    .org.je - Organizations
+    .net.je - ISP and commercial use
+    .sch.je - Jersey Grid for Learning (Schools in the Bailiwick of Jersey)
+    .gov.je - Official use only by the States of Jersey and Jersey parishes
+
+Jordan
+Here are the domain extensions for Jordan. A local contact is required to register a domain with this extension. Also, you must submit official documentation.
+
+    .jo - Domain registrations taken at the second level and at third level beneath the following second-level labels.
+    .com.jo - Companies, Organizations
+    .net.jo - Network Providers
+    .gov.jo - Government
+    .edu.jo - Colleges, Universities, Schools,Educational Institutes
+    .org.jo - Non Profit Organizations
+    .mil.jo - Military
+    .name.jo - Individuals
+    .sch.jo - Schools
+
+Kazakhstan
+Here are the country domain extensions for Kazakhstan. There are no restrictions for second-level domain names. There are some restrictions at the third-level, depending on which second-level name it is under.
+
+    .org.kz - Nonprofit organizations
+    .edu.kz - Licensed educational organizations
+    .net.kz - Licensed networks of data communications
+    .gov.kz - Governmental organizations
+    .mil.kz - Ministry of Defense
+    .com.kz - Commercial organizations; registered trademark protection
+
+Kenya
+Below are the domain extensions for Kenya. Some extensions require supporting documentation.
+
+    .co.ke - For Companies
+    .or.ke - For Not-for-Profit-Making Organisations or NGO's
+    .ne.ke - For Network Devices
+    .go.ke - For Government Entities. Requires Supporting Documents
+    .ac.ke - For Institutions of Higher Education. Requires Supporting Documents
+    .sc.ke - For Lower and Middle Institutes of Learning. Requires Supporting Documents
+
+Kiribati
+Here are the domain extensions fro Kiribati. Domain names with this extension are generally unrestricted.
+
+    .com.ki
+    .biz.ki
+    .net.ki
+    .info.ki
+    .org.ki
+    .gov.ki
+    .edu.ki
+    .mob.ki
+    .tel.ki
+    .phone.ki
+
+
+Note that the registrant of de.ki offers free redirected subdomains beneath this address (to the German-speaking market), and this currently accounts for a large number of the current uses of the .ki extension.
+Korea, North (Democratic People's Republic of Korea)
+Here's the country code top-level domain for North Korea. At the time of writing, there are only two known websites using this domain extension. This extension is not yet available for registration.
+
+    .kp - Not yet available for registration.
+
+Korea, South (Republic of Korea)
+Here are the domain extensions for South Korea. Registrants must have a local presence within South Korea. Varying restrictions exist for registration under different second-level names. Standard domain names must be registered under one of the second-level domains. Internationalized domain names must be registered at the second-level (directly under the top-level domain).
+
+    .kr - Commercial (Organizations or individuals)
+    .co.kr - Commercial (Organizations or individuals)
+    .ne.kr - Network (Organizations or individuals)
+    .or.kr - Non-commercial (Organizations or individuals)
+    .re.kr - Research (Organizations or individuals)
+    .pe.kr - Personal (Individuals)
+    .go.kr - Government
+    .mil.kr - Military    
+    .ac.kr - Colleges or universities
+    .hs.kr - High schools
+    .ms.kr - Middle schools
+    .es.kr - Elementary schools
+    .sc.kr - Other education organizations
+    .kg.kr - Kindergartens
+
+Organizations or individuals that have connection with relevant areas:
+
+    .seoul.kr - Seoul    
+    .busan.kr - Busan
+    .daegu.kr - Daegu
+    .incheon.kr - Incheon
+    .gwangju.kr - Gwangju
+    .daejeon.kr - Daejeon
+    .ulsan.kr - Ulsan
+    .gyeonggi.kr - Gyeonggi-do
+    .gangwon.kr - Gangwon-do
+    .chungbuk.kr - Chungcheongbuk-do
+    .chungnam.kr - Chungcheongnam-do
+    .jeonbuk.kr - Jeollabuk-do
+    .jeonnam.kr - Jeollanam-do
+    .gyeongbuk.kr - Gyeongsangbuk-do
+    .gyeongnam.kr - Gyeongsangnam-do
+    .jeju.kr - Jeju-do
+    #.??.kr - Unlimited (Organizations or individuals)
+
+Kuwait
+Below are the domain extensions for Kuwait. Domain registration under this extension is limited to Kuwaiti citizens, companies, and organizations. Registrants must show appropriate documents to prove status. Some third-level names have additional restrictions. Registrations are made at third level beneath the following second-level domains.
+
+    .edu.kw - Academic & Research Institutions
+    .com.kw - Commercial Entities & Individuals
+    .net.kw - Commercial Entities & Individuals
+    .org.kw - Non-Profit Organizations
+    .gov.kw - Government Entities
+
+Kyrgyzstan
+Here is the country code top-level domain for Kyrgyzstan.
+
+    .kg - Domain registrations are directly at second level, but there are some special third-level registrations such as those below.
+    .gov.kg - Governement organizations.
+    .mil.kg - Military.
+
+Laos
+Here's the top-level domain for Laos. There are no restrictions for registering domain names with this extension, however, some "premium" names have been reserved and are available at an extra cost. Although this is a country code top-level domain for Laos, the domain registrar is currently marketing it for the city of Los Angeles.
+
+    .la - Domain resistrations are taken directly at the second-level.
+
+Latvia
+Below are the country domain extensions for Latvia. There are no restrictions on the top-level domain, however, some subdomains may carry restrictions.
+
+    .lv - Registrations are made directly at the second-level, or beneath one of the following subdomains.
+    .com.lv - Commercial entities
+    .edu.lv - Educational institutions
+    .gov.lv - Government and semi-government entities.
+    .org.lv - Various forms of affiliation groups
+    .mil.lv - Defense entities of Latvia
+    .id.lv - Individuals
+    .net.lv - Network infrastructure providers
+    .asn.lv - Associations
+    .conf.lv - Conferences and exhibitions requiring short duration Internet connectivity
+
+Lebanon
+Here are the domain extensions for Lebanon. Registrant must have Lebanese trademark certificate for the exact name being registered. There are also specific restrictions for each second-level subdomain. Also, registered names are required to be unique within the entire top-level domain (i.e. mydomain.com.lb and mydomain.org.lb cannot co-exist). Domain name registrations are at the third level beneath the existing second-level domains.
+
+    .com.lb - Commercial
+    .edu.lb - Educational
+    .gov.lb - Government
+    .net.lb - Network infrastructure
+    .org.lb - Organizations
+
+Lesotho
+Here's the country code top-level domain for Lesotho. There are no restrictions for registering domain names with this extension.
+
+    .ls - Registrations are mostly at the third level beneath .co.ls and .org.ls, though some other names exist mostly for use by the government of Lesotho or the national university.
+    .co.ls
+    .org.ls
+
+Liberia
+Here are the domain extensions for Liberia. Registrants must have local presence and intent to use domain. Registrations are made at the third level beneath second-level names.
+
+    .com.lr - Commercial
+    .edu.lr - Schools granting baccalaureate degrees
+    .gov.lr - Governmental entities
+    .org.lr - Not for profit organizations
+    .net.lr - Network infrastructure (i.e.routers) only
+
+Libya
+Here are the domain extensions for Libya. Note that any .ly domain name may be registered, except domains containing obscene and indecent names/phrases, including words of a sexual nature. Furthermore domain names may not contain words/phrases or abbreviations insulting religion or politics, or be related to gambling and lottery industry or be contrary to Libyan law or Islamic morality.
+
+    .ly - Domain names can be registered directly at the second-level or beneath one of the following subdomains. Note that second-level registrations are much more expensive than third-level.
+    .com.ly - Commercial services
+    .net.ly - Internet-related services
+    .gov.ly - Government and ministries
+    .plc.ly - State-owned companies
+    .edu.ly - Educational and training institutions
+    .sch.ly - Schools
+    .med.ly - Health-related services
+    .org.ly - Non-profit organizations
+    .id.ly - Individuals.
+
+Liechtenstein
+Here is the country code top-level domain for Liechtenstein. There are no restrictions on registering domain names with this extension. Internationalized domain names are accepted.
+
+    .li - Registrations are made directly at the second-level.
+
+Lithuania
+Here is the country code top-level domain for Lithuania. There are no restrictions on registering domain names with this extension.
+
+    .lt - Registrations are made directly at the second level
+
+Luxembourg
+Below is the country code top-level domain for Luxembourg. To register a domain with this extension, the administrative contact must be in Luxembourg.
+
+    .lu - Domain registrations are made directly at the second level.
+
+Macau
+Here are the domain extensions for Macau. Registrations are limited to local businesses and organizations in Macau. The primary name server must also be in Macau. Subdomains have specific restrictions.
+
+    .mo - Second-level registrations are available to registrants who already have the same name at third level.
+    .com.mo - Commercial entities
+    .edu.mo - Educational institutions
+    .gov.mo - Government
+    .net.mo - Network service providers
+    .org.mo - Non-profit organizations
+
+Macedonia (Republic of Macedonia)
+Here are the country domain extensions for Macedonia. Registration is unrestricted, but it is intended to be used for commercial organizations.
+
+    .mk
+    .com.mk
+    .org.mk
+    .net.mk
+    .edu.mk
+    .gov.mk
+    .inf.mk
+    .name.mk
+
+Madagascar
+Below are the country domain extensions for Madagascar. For some subdomains, registrants must show registration of company, organization, or trademark.
+
+    .mg - Registrations are taken directly at the second level, or at the third level beneath the following second level names:
+    .org.mg - Organizations
+    .nom.mg - Individuals
+    .gov.mg - Government entities
+    .prd.mg - Research projects or programs
+    .tm.mg - Registered trademarks
+    .edu.mg - Educational institutions
+    .mil.mg - Military entities
+    .com.mg - Commercial (unrestricted registration)
+
+Malawi
+Below are the domain extensions for Malawi. There are no restrictions on registering domain names with this extension. Registrations are taken at the third-level, beneath the following subdomains.
+
+    .ac.mw - Academic institutions
+    .co.mw - Commercial organisations
+    .com.mw - An alternative for commercial organisations
+    .coop.mw - Cooperative associations
+    .edu.mw - Degree granting academic institutions
+    .gov.mw - Restricted to government preferably Malawi Government
+    .int.mw - International treaty organisations
+    .museum.mw - Museums, historical, documentation or diplay organisations
+    .net.mw - Networking organisations
+    .org.mw - Non-profit making organisations
+
+Malaysia
+Below are the country domain extensions for Malaysia. Registrants must have Malaysian presence. There are also various restrictions specific to different subdomains.
+
+    .my - Registrations are taken at the second-level and beneath the following subdomains.
+    .com.my - Commercial organisations or activities.
+    .net.my - Network-related organisations or activities.
+    .org.my - Organisations or activities that do not fall under other categories.
+    .gov.my - Malaysian government organisations only.
+    .edu.my - Malaysian educational organisations only.
+    .sch.my - Malaysian schools only.
+    .mil.my - Malaysian military organisations only.
+    .name.my - Malaysian individuals' personal use only.
+
+Maldives (Republic of Maldives)
+Here are the domain extensions for the Maldives. There are no restrictions for .com.mv and .org.mv domain names, but other subdomains may have restrictions. Registrations are taken under the following extensions.
+
+    .aero.mv - Aviation
+    .biz.mv - Business organization
+    .com.mv - Commercial
+    .coop.mv - Cooperative organization
+    .edu.mv - Educational institutions
+    .gov.mv - Government
+    .info.mv - Information
+    .int.mv - International Organization
+    .mil.mv - Military
+    .museum.mv - Museums
+    .name.mv - Personal
+    .net.mv - Networks
+    .org.mv - Organizations
+    .pro.mv - Professionals
+
+Mali
+Here are the domain extensions for Mali. There are varying requirements for registrations under different second-level names; generally, local presence is required. Registrations are at the third level beneath the following subdomains:
+
+    .com.ml - Local companies and trademark registrants; may reflect legal or brand name (must show registration)
+    .net.ml - Internet providers
+    .org.ml - Associations (must show registration); international organizations permitted, but must be registered with the local administration
+    .edu.ml - Local schools
+    .gov.ml - Governmental organisations
+    .presse.ml - Local press
+
+Malta
+Here are the country domain extensions for Malta. Registrants must declare their right to use the domain name as trademark or business name in accordance with Maltese law. Domain name registrations are taken at the third-level, beneath the following second-level domains.
+
+    .com.mt - Commercial entities
+    .org.mt - Non-profit entities
+    .net.mt - Internet-related network service providers
+    .edu.mt - Educational institutions
+    .gov.mt - Malta government entity
+
+Martinique
+Here is the top-level domain for Martinique. It is unclear of whether there are any restrictions on this extension.
+
+    .mq - Names are currently registered directly at second level.
+
+Marshall Islands
+Here is the country code top-level domain for the Marshall Islands. The registrar is not currently accepting registrations with this extension.
+
+    .mh - Domain names with this extension are currently not available.
+
+Mauritania
+This is the top-level domain for Mauritania. A local contact is required in order to register a domain name with this extension.
+
+    .mr - Registrations are taken directly at second-level (although government sites are taken at .gov.mr)
+    .gov.mr - Government sites.
+
+Mauritius
+Here are the country domain extensions for Mauritius. There are no restrictions on registering domains under this extension.
+
+    .mu - Domain name registration is available directly at the second level or at third level beneath the following second-level labels.
+    .com.mu - Commercial entities
+    .net.mu - Network entities
+    .org.mu - Non-profit organizations
+    .gov.mu - Government organizations
+    .ac.mu - Academic institutions
+    .co.mu - Commercial entities (No longer available for new registration by most registrars)
+    .or.mu - Non-profit organizations (No longer available for new registration by most registrars)
+
+Mexico
+Below are the domain extensions for Mexico. There are no restrictions for .com.mx domains. Other subdomains may have restrictions. Domain name registrations are only taken at the third-level beneath the following subdomains.
+
+    .com.mx - Commercial entities (actually unrestricted, like .com)
+    .net.mx - Network providers (registration limited to qualifying entities)
+    .org.mx - Non-profit organizations (registration limited to qualifying entities)
+    .edu.mx - Educational institutions (registration limited to qualifying entities)
+    .gob.mx - Governmental entities (Mexican federal, state, or local)
+
+Moldova
+Here is the country code top-level domain for Moldova. There are no restrictions on registering domain names with this extension.
+
+    .md - Domain name registrations are taken directly at the second level.
+
+Monaco
+Here are the domain extensions for Monaco. Registrants must show registration of company, organization, or trademark.
+
+    .mc - Domain registrations are made directly at the second-level, or at the third level under one of the following second-level domains.
+    .tm.mc - Registered trademarks - registered in Monaco or internationally with World Intellectual Property Organization (WIPO)
+    .asso.mc - Associations (must be chartered in Monaco)
+
+Mongolia
+Below are the country domain extensions for Mongolia. The only restriction is that individual registrants must be over 18 years old.
+
+    .mn - Registrations are usually directly at the second-level. Some institutions will use the following subdomains.
+    .gov.mn - government institutions
+    .edu.mn - educational institutions
+    .org.mn - non-profit organisations
+
+Montenegro
+Below are the domain extensions for Montenegro. Second-level registrations available worldwide; third-level registrations under certain second-level names available within Montenegro.
+
+    .me - Domain registration is available directly at second-level or beneath the following subdomains.
+    .co.me - Unlimited registration, but appropriate for corporations
+    .net.me - Unlimited registration, but appropriate for providers of Internet services
+    .org.me - Unlimited registration, but appropriate for civil organizations and associations
+    .edu.me - Educational institutions, such as primary and high schools
+    .ac.me - Academic and post-secondary organizations such as universities; University of Montenegro has ucg.ac.me as its primary domain
+    .gov.me - State and Government authorities
+    .its.me  - Unlimited registration, but appropriate for personal use
+    .priv.me - Unlimited registration, but appropriate for personal use
+
+Montserrat
+Here is the top-level domain for Montserrat. There are no restrictions on registering domain names using this extension.
+
+    .ms - Domain name registrations are taken directly at the second-level.
+
+Morocco
+Below are the domain extensions for Morocco. To register a domain name with this extension, you must have a local contact.
+
+    .ma - General use. Domain registrations are made directly at the second-level or under one of the following subdomains.
+    .net.ma - Internet providers
+    .ac.ma - Educational institutions
+    .org.ma - Organizations
+    .gov.ma - Governmental entities
+    .press.ma - The press and publications
+    .co.ma - Commercial entities
+
+Mozambique
+Here are the domain extensions for Mozambique. Registrants must have working nameservers and a bona fide intention to actually use the domain name. Domain name registrations are taken at the third-level beneath the following second-level domains.
+
+    .co.mz
+    .org.mz
+    .gov.mz
+    .edu.mz
+
+Namibia
+Here is the top-level domain for Namibia. There are no restrictions on registering domain names with this extension.
+
+    .na - Domain name registrations are taken at the second-level and the third-level, beneath the following subdomains.
+    .com.na
+    .co.na
+    .org.na
+    .edu.na
+    .alt.na
+    .in.na
+    .info.na
+    .mobi.na
+    .ws.na
+
+Nauru
+Here are the domain extensions for Nauru. The .gov.nr and .edu.nr extensions are restricted to appropriate institutions in Nauru, all other extensions are unrestricted.
+
+    .nr - Domain names are registered directly at the second-level and under the following subdomains.
+    .edu.nr (restricted)
+    .gov.nr (restricted)
+    .biz.nr (unrestricted)
+    .info.nr (unrestricted)
+    .net.nr (unrestricted)
+    .org.nr (unrestricted)
+    .com.nr (unrestricted)
+
+Nepal
+Here are the domain extensions for Nepal.  Local presence is required. Domain names must be based on company/organization or brand name. Domain names are registered under the following third-level domains.
+
+    .com.np
+    .org.np
+    .edu.np
+    .net.np
+    .gov.np
+    .mil.np
+
+Netherlands
+Here is the top-level domain for the Netherlands. Registrants must provide contact address in Netherlands.
+
+    .nl - Registrations are taken directly at the second-level.
+
+Netherlands Antilles
+The top-level country code for the Netherlands Antilles is .an.  Registrations must correspond to name or trademark of registrant; proof of identity must be shown on registration.
+
+    .an - Registrations are taken directly at the second-level or at the third-level beneath some second-level domains.
+
+New Caledonia
+Here is the top-level domain for New Caledonia. Registrants must be a registered company or organization in New Caledonia with a local contact; individuals are not eligible to register domain names with this extension.
+
+    .nc - Registrations are made directly at the second level.
+
+New Zealand
+Here are the domain extensions for New Zealand. There are no restrictions under most second-level names, however, some are "moderated" - eligibility is checked before registration is granted. Names are registered at the third-level within the generic second-level categories.
+Moderated Domains
+
+    .ac.nz - Tertiary educational institutions and related organisations
+    .co.nz - Organisations pursuing commercial aims and purposes
+    .geek.nz - For people who are concentrative, technically skilled and imaginative who are generally adept with computers
+    .gen.nz - Individuals and other organisations not covered elsewhere
+    .maori.nz - Maori people, groups, and organisations
+    .net.nz - Organisations and service providers directly related to the NZ Internet
+    .org.nz - Not-for-profit organisations
+    .school.nz - Primary, secondary and pre-schools and related organisations
+
+Unmoderated Domains
+
+    .cri.nz - Crown Research Institutes.
+    .govt.nz - National, regional and local government organisations operating with statutory powers. Registration is only available through the government registrar, DNS.govt.nz, and there is a government portal at www.govt.nz
+    .iwi.nz - A traditional Maori tribe, hapu, or Taurahere group. Available from register.iwi.nz.
+    .parliament.nz - Reserved for parliamentary agencies, Offices of Parliament, and parliamentary political parties and their elected members.
+    .mil.nz - the military organisation of the NZ Government - the New Zealand Defence Force.
+
+Nicaragua
+Here are the domain extensions for Nicaragua.
+
+    .ni - Although there are websites at the second-level, most domains are registered at the third-level, under the following subdomains.
+    .gob.ni - Nicaraguan government
+    .co.ni - .com.ni: Commercial entities
+    .ac.ni - .edu.ni: Educational institutions
+    .org.ni - Non-governmental organizations
+    .nom.ni - Personal domains of individuals
+    .net.ni - Networks
+    .mil.ni - Military institutions in Nicaragua
+
+Niger
+Here's the top-level domain for Niger. To register a domain name, your company must be registered with Niger's authority, and in most cases the domain name must resemble the company name.
+
+    .ne - Registrations are taken directly at the second-level
+
+Nigeria
+Here are the country domain extensions for Nigeria. Must have presence in Nigeria and intent to use name. Each organization can only register one domain name. Registrations are taken at second-level under the following subdomains.
+
+    .com.ng - Commercial entities and businesses
+    .org.ng - Non-commercial organizations
+    .gov.ng - Governmental organizations
+    .edu.ng - Degree awarding institutions
+    .net.ng - ISP infrastructure
+
+Niue
+Here is the top-level domain for the island state of Niue. There are no restrictions on registering domain names with this extension.
+
+    .nu - Registrations are taken directly at the second-level.
+
+Norfolk Island
+Here are the domain extensions for Norfolk Island. Domain registrations are unrestricted.
+
+Note that Norfolk Island domain names are very expensive. Second-level domains are more expensive than third-level domains. At the time of writing, second-level domains are $995 per year and third-level domains are $577 per year.
+
+    .nf - Registrations are taken directly at the second-level and under the following extensions.
+    .com.nf
+    .net.nf
+    .per.nf
+    .rec.nf
+    .web.nf
+    .arts.nf
+    .firm.nf
+    .info.nf
+    .other.nf
+    .store.nf
+
+Northern Mariana Islands
+Here is the top-level domain for the Northern Mariana Islands. Although there are no registration restrictions, free personal sites are hosted on registry's own servers and must be built using the chi.mp system. Purchased domains have no restrictions.
+
+    .mp - Registrations are directly at second level (although there are a few sites related to the Northern Mariana Islands in third level domains under such second level names as .gov.mp and .org.mp).
+
+Norway
+The registrant must be a registered organisation in Norway, except under .priv.no, which is open to registration by individuals. Specific subdomains have varied requirements. There is a limit of 20 second-level registrations per domain holder.
+
+    .no - Domain names are usually registered directly at the second-level, but some may be registered under various second-level domains.
+
+Oman
+Below are the country code domain extensions for Oman. There is a local nexus requirement for each registrant. Administrative contact must be physically in Oman. Also, sale or transfer of Oman domain names is prohibited. Although some second-level domain names exist, registrations are made at the third level beneath the following second-level labels.
+
+    .com.om - Commercial Company, trading company, registered at the Ministry of Commerce and Industry of the Sultanate of Oman
+    .co.om - Commercial Company, trading company, registered at the Ministry of Commerce and Industry of the sultanate of Oman
+    .edu.om - Educational institutions, e.g., universities and colleges, registered at the Ministry of Higher Education of the Sultanate of Oman
+    .ac.om - Academic Organization (e.g. university, college), registered at the Ministry of Higher Education of the Sultanate of Oman
+    .sch.om - Elementary schools, secondary schools, and high schools with valid licenses from Ministry of Education
+    .gov.om - Government Departments and Ministries of the Sultanate of Oman
+    .net.om - Intended to hold only the computers of network providers that are the NIC and NOC computers, the administrative computers, and the network node computers, registered at the Ministry of Transportation and communications or registered at Oman Telecommunication Company.
+    .org.om - Non-profit organizations, registered at Ministry of Social Affairs, Labour and Vocational Training
+    .mil.om - Ministry of Defense establishments
+    .museum.om - For Museums
+    .biz.om - Commercial Company, trading company, registered at the Ministry of Commerce and Industry of the Sultanate of Oman
+    .pro.om - Professionals, and Professionals Association.
+    .med.om - Hospitals and medical clinics with valid licenses from Ministry of Health.
+
+Pakistan
+Here are the domain extensions for Pakistan. Some domains are restricted whilst others aren't.
+
+    .pk - Available to anyone; used by companies, individuals, and organizations in Pakistan.
+    .net.pk - For network related businesses and Internet service providers
+    .edu.pk - For educational institutes
+    .org.pk - For non-profit organizations
+    .fam.pk - For individuals
+    .biz.pk - For general business use
+    .web.pk - Originally for websites
+    .gov.pk - Government of Pakistan
+    .gob.pk - Domains for the Government of Balochistan
+    .gok.pk - Domains for the Government of Azad Kashmir
+    .gon.pk - Domains for the Government of NWFP
+    .gop.pk - Domains for the Government of Punjab
+    .gos.pk - Domains for the Government of Sindh
+
+Palau
+Below are the domain extensions for Palau. There are no restrictions for registering domain names with this extension.
+
+Registrants can obtain third level registrations of the form firstname.lastname.pw along with the corresponding e-mail address of firstname@lastname.pw. Second-level domain registrations are not permitted, so that the registry can reserve all second-level names for use in constructing these addresses. Registrations are for third-level names and their corresponding e-mail addresses within second-level names.
+
+    .com.pw - For commercial use; use is not restricted
+    .net.pw - For technology service providers; use is not restricted
+    .org.pw - For non-commercial organizations; organizations must be registered at the Office of Corporate Registrar
+    .edu.pw - For educational institutions; Ministry of Education certification required
+    .gov.pw - For governmental agencies only
+    .belau.pw - For indigenous art, history and culture use, tourism and general purposes; use is not restricted
+
+Palestinian Territory, Occupied
+Below are the domain extensions for the Palestinian Territory. Second-level registrations are unrestricted. Third-level registrations may have limitations based on which second-level domain they are within.
+
+    .ps - Registrations are available at the second-level and under the following subdomains.
+    .com.ps - Commercial Entities
+    .biz.ps - Businesses
+    .net.ps - Network Service Providers
+    .edu.ps - Post-secondary Educational Institutions
+    .gov.ps - Government
+    .sch.ps - Schools and Kindergartens
+    .mun.ps - Municipal Government
+
+Panama
+Here are the country domain extensions for Panama. Primary and secondary name servers must be geographically separated.
+Registrations are at third level beneath the following second-level labels.
+
+    .net.pa - Reserved for internet service providers.
+    .com.pa
+    .ac.pa
+    .sld.pa
+    .gob.pa
+    .edu.pa
+    .org.pa
+    .abo.pa
+    .ing.pa
+    .med.pa
+    .nom.pa
+
+Papua New Guinea
+Here are the country extensions for Papua New Guinea. Registrants must have a local presence or interests in Papua New Guinea. Registrations are made at the third level beneath the following second-level labels.
+
+    .com.pg
+    .net.pg
+    .ac.pg
+    .gov.pg
+    .mil.pg
+    .org.pg
+
+Paraguay
+Below are the domain extensions for Paraguay. Registrants must have a contact in Paraguay. Subdomains have various restrictions. All domain name applications are subject to approval by the registry. Registrations are at third level beneath the following second-level domains.
+
+    .org.py
+    .edu.py
+    .mil.py
+    .gov.py
+    .net.py
+    .com.py
+    .una.py (In Spanish: National University of Asuncion)
+
+Peru
+Here are the domain extensions for Peru. Generally, there are no restrictions, however, some names may be prohibited for use as a second-level domain.
+
+    .pe - Registrations are accepted directly at the second-level and beneath the following subdomains.
+    .edu.pe - Educational Institutions of Peru
+    .gob.pe - Government of Peru
+    .nom.pe - Individuals from Peru
+    .mil.pe - Military of Peru
+    .sld.pe - Health System of Peru
+    .org.pe - Organizations of Peru
+    .com.pe - Commercial entities of Peru
+    .net.pe - Network providers of Peru
+
+Philippines
+Below are the domain extensions for the Philippines. Generally, there are no restrictions, but some subdomains may have restrictions.
+
+    .ph - Domain names can be registered at the second-level and beneath the following subdomains.
+    .com.ph - Businesses/commercial entities
+    .net.ph - Internet-oriented organizations
+    .org.ph - Non-commercial organizations
+    .mil.ph - Military
+    .ngo.ph - Philippine non-governmental organizations
+    .i.ph - Domains for individuals
+    .gov.ph - Government agencies
+    .edu.ph - Educational institutions
+
+Pitcairn Islands
+Here is the top-level domain for the Pitcairn Islands. There are no restrictions on registering domain names with this extension.
+
+    .pn - Registrations are taken at the second-level and under the following subdomains.
+    .in.pn
+    .co.pn
+    .eu.pn
+	.org.pn
+	.net.pn
+	.me.pn
+    .{firstname}.{lastname}.pn - Individuals can register domains with their first name as a third-level domain, and their last name as the second-level domain.
+
+Poland
+Below are the country domain extensions for Poland. There are no restrictions for registering domain names with this extension, however applicants are asked to "describe their rights to use this domain name".
+
+    .pl - Domains can be registered directly at the second level and beneath the following subdomains.
+    .com.pl - Commercial
+    .biz.pl - Commerce
+    .net.pl - Network infrastructure
+    .art.pl - Art
+    .edu.pl - Education
+    .org.pl - Organizations
+    .ngo.pl - Organizations
+    .gov.pl - Government
+    .info.pl - Information
+    .mil.pl - Military
+    .waw.pl - Warsaw
+    .warszawa.pl - Warsaw
+    .wroc.pl - Wroclaw
+    .wroclaw.pl - Wroclaw
+    .krakow.pl - Kraków
+    .katowice.pl - Katowice
+    .poznan.pl - Poznan
+    .lodz.pl - Lódz
+    .gda.pl - Gdansk
+    .gdansk.pl - Gdansk
+    .slupsk.pl - Slupsk
+    .radom.pl - Radom
+    .szczecin.pl - Szczecin
+    .lublin.pl - Lublin
+    .bialystok.pl - Bialystok
+    .olsztyn.pl - Olsztyn
+    .torun.pl - Torun
+    .gorzow.pl - Gorzów Wielkopolski
+    .zgora.pl - Zielona Góra
+
+Portugal
+Below are the domain extensions for Portugal. There are various restrictions for each subdomain, however the .com.pt extension is unrestricted.
+
+    .pt - Domain registrations are available directly at the second-level and beneath the following second-level domains.
+    .com.pt - No restrictions; online registration
+    .edu.pt - Education
+    .gov.pt - Government of Portugal
+    .int.pt - International organizations or diplomatic missions in Portugal
+    .net.pt - Telecommunications providers
+    .nome.pt - Individuals (nome is Portuguese for name)
+    .org.pt - Non-profit organizations
+    .publ.pt - Publications (e.g. newspapers)
+
+Puerto Rico
+Here are the country domain extensions for Puerto Rico. Some subdomains have restrictions. Domain names with the .isla.pr extension are cheaper, but are restricted to residents of Puerto Rico.
+
+    .pr - For businesses, professionals, individuals, companies, public relations, etc (costs for direct second-level domains are currently more expensive at $1,000/yr).
+    .biz.pr - For businesses
+    .com.pr - For companies, but not restricted to
+    .edu.pr - For educational institutions with presence in Puerto Rico
+    .gov.pr - For agencies of the government of Puerto Rico
+    .info.pr - For informative websites
+    .isla.pr - For people with presence in Puerto Rico
+    .name.pr - For individuals
+    .net.pr - For network oriented entities (but not restricted to)
+    .org.pr - For organizations (but not restricted to)
+    .pro.pr - For professionals
+    .est.pr - For university students
+    .prof.pr - For university professors 
+    .ac.pr - For academics
+
+Qatar
+Here are the domain extensions for Qatar.
+
+Registrants must adhere to certain rules and regulations. The first character of the domain name must be a letter. Special characters, such as a hyphen symbol, are not permitted at the beginning or end of the .qa domain name. Domain names containing words, abbreviations, or phrases that are potentially offensive, obscene, indecent, or contrary to the Qatari Law or Islamic morality must be avoided.
+
+Also, a letter requesting the domain name registration and signed Power of Attorney (notarized and legalized up to the Qatari Consulate) are required for getting a .qa registration.
+
+Domains are registered at the third-level under the following second-level domains.
+
+    .com.qa - For commercial sites
+    .org.qa - For not-for-profit organizations
+    .edu.qa - For educational institutions
+    .gov.qa - For governmental entities
+    .net.qa - For network providers
+
+Romania
+Below are the country domain extensions for Romania. There are no restrictions for second-level domains. Some restrictions apply for third-level domains.
+
+    .ro - Registrations are taken directly at the second-level and at the third-level below the following subdomains.
+    .arts.ro
+    .com.ro
+    .firm.ro
+    .info.ro
+    .nom.ro
+    .nt.ro
+    .org.ro
+    .rec.ro
+    .store.ro
+    .tm.ro
+    .www.ro
+
+Réunion
+Here are the country domain extensions for Réunion. Registrants are required to have local presence.
+
+    .re - Domain names are registered directly at the second-level and at the third-level under the following subdomains.
+    .asso.re - Associations
+    .nom.re - Surnames
+    .com.re - Commercial (unrestricted registration)
+
+Russia (Russian Federation)
+Below are the country domain extensions for Russia. There are no restrictions on second-level domains, but there are for the third-level domains.
+
+    .ru - Domain name registrations are taken at the second-level as well as beneath the following subdomains.
+    .com.ru - Commercial. Was suspended by the NIC at the time of writing.
+    .net.ru - For organizations that take part in the developing the Internet for the purpose of realization of Internet development projects..
+    .org.ru - Non-commercial organizations.
+    .pp.ru - For individuals (including non-residents)
+
+Rwanda
+Below are the domain extensions for Rwanda. The first domain name registration is free for citizens and companies/organizations based in Rwanda. Others can register for a fee.
+
+    .rw - Registrations are directly at second level.
+
+Reserved Second-Level Domains
+The following second-level domains have been reserved by the registry and could be used for third-level registrations in the future.
+
+    .gov.rw
+    .net.rw
+    .edu.rw
+    .ac.rw
+    .com.rw
+    .co.rw
+    .int.rw
+    .mil.rw
+    .gouv.rw
+
+Saint Helena
+Here are the domain extensions for Saint Helena. Second-level registrants must have professional or academic qualification (although this doesn't appear to be enforced). Third-level registrants must be a resident of Saint Helena.
+
+    .sh - Registrations can be made at the second-level or under the following subdomains.
+    .co.sh - Commercial Entities
+    .com.sh - Commercial Entities
+    .org.sh - Non-profit Organizations
+    .gov.sh - Government Departments & Agencies
+    .edu.sh - Educational Institutions
+    .net.sh - Network Service Providers
+    .nom.sh - Non-island websites
+
+Saint Kitts and Nevis
+Below are the domain extensions for Saint Kitts and Nevis. There are no restrictions, except for those domains under the edu.kn and gov.kn extensions.
+
+    .kn - Registrations are made directly at second level, or at third level beneath the following second-level names.
+    .org.kn - Organizations (unrestricted)
+    .net.kn - Networks (unrestricted)
+    .gov.kn - Governmental organizations
+    .edu.kn - Educational institutions.
+
+Saint Lucia
+The following extension represents the island nation of Saint Lucia in the Eastern Caribbean. These extensions are available worldwide. It is currently being marketed as a good choice for Limited Companies (LC). For example, mycompany.lc, mycompany.l.lc, or mycompany.p.lc.
+
+    .lc - Registrations are made directly at the second-level, or beneath one of the following subdomains.
+    .com.lc
+    .org.lc
+    .net.lc
+    .co.lc
+    .l.lc
+    .p.lc
+
+Saint Vincent and the Grenadines
+Here is the top-level domain for Saint Vincent and the Grenadines. There are no restrictions on registering domain names with this extension.
+
+    .vc - Registrations are made directly at the second-level or at the third level beneath the following second-level names
+    .com.vc
+    .net.vc
+    .org.vc - For non-profit organizations only.
+
+Samoa
+Here are the domain extensions for Samoa. There are no restrictions on registering domain names with this extension.
+
+Unrestricted:
+
+    .ws - Registrations are available at the second-level or beneath the following subdomains.
+    .com.ws
+    .net.ws
+
+Restricted:
+
+    .org.ws
+    .gov.ws
+    .edu.ws
+
+San Marino
+Here is the top-level domain for San Marino. The domain name must be the same as the company name or trademark. There is a limit of 50 domain registrations per year, per company. Individuals and other organizations are limited to one registration in total.
+
+    .sm - Domain name registrations are made directly at the second-level.
+
+São Tomé and Príncipe
+Here is the top-level domain for São Tomé and Príncipe. There are no restrictions on registering domain names with this extension.
+
+    .st - Registrations are made directly at the second-level, although the following second-level domains have been reserved for future use..
+
+Reserved Second-Level Domains
+The following second-level domains have been reserved by the registry for future use.
+
+    .gov.st - Government of São Tomé and Príncipe
+    .saotome.st - Island of São Tomé
+    .principe.st - Island of Principe
+    .consulado.st - São Tomé and Príncipe consulates
+    .embaixada.st - São Tomé and Príncipe embassies
+    .org.st
+    .edu.st
+    .net.st
+    .com.st
+    .store.st
+    .mil.st
+    .co.st
+
+Saudi Arabia
+Below are the domain extensions for Saudi Arabia. Registrants must have Saudi presence, a local representative, or trademark registered in Saudi Arabia, and must show legal papers verifying identity. Registrations are taken at the third-level under the following second-level domains.
+
+    .com.sa - Commercial entitites and registered trademarks
+    .edu.sa - Educational institutions
+    .sch.sa - Elementary and secondary schools
+    .med.sa - Health services (hospitals, clinics, etc.)
+    .gov.sa - Governmental entities
+    .net.sa - Internet-related services (ISPs, web hosting, portal sites, etc.)
+    .org.sa - Non-profit organizations
+    .pub.sa - Entities or individuals that do not fit in other categories, including personal names.
+
+Senegal
+Here is the top-level domain for Senegal. There are no restrictions on registering domain names with this extension.
+
+    .sn - Registrations are made directly at the second-level.
+
+Serbia
+Here are the domain extensions for Serbia. There are no restrictions at the second-level, but there are some on the third-level depending on category.
+
+    .rs - Registrations are made at the second-level and third-level under the following subdomains.
+    .co.rs - Corporations
+    .org.rs - Civil organizations and associations
+    .edu.rs - Educational institutions and organizations (outside of ac.rs sub-domain)
+    .ac.rs - Academic and research network of Serbia (delegated)
+    .gov.rs - State and Government authorities (delegated)
+    .in.rs - Personal use
+
+Seychelles
+Here are the country domain extensions for Seychelles. Priority is given to Seychelles-based entities for domain name registrations. There are varying restrictions for different third-level registrations.
+
+    .sc - Registrations can be directly at the second-level or under the following subdomains.
+    .com.sc - commercial, for-profit organizations
+    .net.sc - network infrastructure machines and organizations
+    .edu.sc - educational institutions
+    .gov.sc - governmental institutions
+    .org.sc - miscellaneous, usually non-profit, organizations
+
+Sierra Leone
+Below are the country domain extensions for Sierra Leone. The registry reserves the right to screen and reject applications.
+
+    .sl - General (may be registered by anyone)
+    .com.sl - Commercial entities, e.g. companies
+    .net.sl - Commercial entities with relation to networking (such as ISPs, cable companies etc)
+    .org.sl - Charities and non-profit organisations
+    .edu.sl - For educational institutions registered in Sierra Leone
+    .gov.sl - State and local government entities (requires authorization letter from the local Minister of Information Office)
+
+Singapore
+Below are the country domain extensions for Singapore. Singapore presence is required in order to register a domain name with this extension.Third-level names have various restrictions depending on which second level label they are under.
+
+    .sg - Domain name registrations are available at the second level and under the following subdomains.
+    .com.sg - Commercial entities
+    .net.sg - Network providers and info-com operators
+    .org.sg - Organisations in the Registry of Societies
+    .gov.sg - Government organizations
+    .edu.sg - Educational institutions
+    .per.sg - Personal domain names
+    .idn.sg - Chinese & Tamil Domain Names (IDN stands for Internationalized Domain Names).
+
+Slovakia
+Here is the top-level domain for Slovakia. Domain name registration is restricted to companies registered within the republic of Slovakia. For companies without local presence, a local administrative contact is required. There is a maximum of 5 domain names per Slovak company.
+
+    .sk - Domain name registrations are taken at the second-level.
+
+Slovenia
+Here is the top-level domain for Slovenia. There are no restrictions on registering domain names with this extension.
+
+    .si - Domain name registrations are taken directly at the second-level.
+
+Solomon Islands
+Here are the domain extensions for the Solomon Islands. The com.sb and net.sb extensions are unrestricted. The other extensions have some restrictions including local presence requirement. Registrations are at the third-level under the following subdomains.
+
+    .com.sb - Unrestricted.
+    .net.sb - Unrestricted.
+    .edu.sb - Restricted.
+    .org.sb - Restricted.
+    .gov.sb - Restricted.
+
+South Africa
+Below are the domain extensions for South Africa. There are no restrictions for .co.za but there various restrictions under the other subdomains. Registrations are only taken at the third-level, beneath the following subdomains.
+
+Active Second (and Third) Level Domains
+
+    .ac.za - Academic and tertiary societies
+    .city.za - For municipal governments. Domain registration coming soon.
+    .co.za - Commercial, general use
+    .edu.za - For distance learning institutions
+    .gov.za - Government departments
+    .law.za - For legal firms
+    .mil.za - Military institutions
+    .nom.za - For personal names, not organizations
+    .org.za - For non-commercial entities.
+    .school.za - For schools in South Africa
+        .ecape.school.za - Eastern Cape
+        .fs.school.za - Free State
+        .gp.school.za - Gauteng
+        .kzn.school.za - Kwazulu-Natal
+        .mpm.school.za - Mpumalanga
+        .ncape.school.za - Northern Cape
+        .lp.school.za - Limpopo
+        .nw.school.za - North West
+        .wcape.school.za - Western Cape
+
+Dormant Second-Level Domains
+
+    .alt.za - Historical registrants
+    .net.za - Network infrastructure.
+    .ngo.za - For non-governmental organizations. New registrations pending .za DNA public consultation process
+    .tm.za - For trademarks. On hold pending establishment of the .ZA DNA
+    .web.za - For web servers. New registration system under development.
+
+Private Second-Level Domains
+
+    .agric.za - ARC & Company
+    .cybernet.za - Infront Investments Five cc
+    .grondar.za - Mark R V Murray
+    .iaccess.za - Compustat
+    .inca.za - Internetworking Cape
+    .nis.za - Network Information Systems
+    .olivetti.za - Olivetti/Mark Elkins
+    .pix.za - Proxima Information Exchange
+
+South Georgia and the South Sandwich Islands
+Here is the country code top-level domain for South Georgia and the South Sandwich Islands. There are no restrictions regarding registrations of domain name using this extension.
+
+    .gs - Domain registrations are made directly at second level.
+
+Soviet Union
+Here is the top-level domain for the Soviet Union. This extension is still in use today, despite the fact that the Soviet Union no longer exists. There are no restrictions on registering domain names with this extension.
+
+    .su - Registrations are made directly at the second-level.
+
+Spain
+There are no longer any restrictions on the .es top-level domain. Some second-level domains carry restrictions.
+
+    .es - Registrations are taken directly at the second level or at the third level beneath the following second-level domains.
+    .com.es - open to all applicants (intended for commercial entities)
+    .nom.es - open to all applicants (intended for personal names)
+    .org.es - open to all applicants (intended for noncommercial organizations)
+    .gob.es - for governmental entities
+    .edu.es - for educational institutions
+
+Sri Lanka
+Below are the domain extensions for Sri Lanka. Registrants must provide clear justification for registering particular domain name. Some third-level names restricted by category. Registrants must have local presence, otherwise, they can only reserve a domain name (but not actually register it).
+Open registration:
+
+    .com.lk - Commercial entities
+    .org.lk - Noncommercial organizations
+    .edu.lk - Educational sites
+    .ngo.lk - Non-governmental organizations
+    .soc.lk - Registered societies
+    .web.lk - Web sites
+    .ltd.lk - Limited liability companies
+    .assn.lk - Associations
+    .grp.lk - Groups of companies
+    .hotel.lk - Hotels
+
+Restricted registration:
+
+    .gov.lk - Governmental departments of Sri Lanka (Automatically reserves name at second level and under all other second level names)
+    .sch.lk - Registered schools in Sri Lanka
+    .net.lk - Licensed Internet Service Providers in Sri Lanka
+    .int.lk - International treaty organizations
+
+Sudan
+Below are the domain extensions for Sudan. Applications are screened by the registry; and may be restricted based on which second-level category they are under.
+
+    .sd - Registrations can be made directly at the second-level or under the following subdomains.
+    .com.sd - Companies
+    .net.sd - Network Providers, ISP
+    .org.sd - Sudanese NGOs
+    .edu.sd - Sudanese Universities and Colleges
+    .med.sd - Medical
+    .tv.sd - Media
+    .gov.sd - Sudanese government and Ministries
+    .info.sd - Newspapers, Information & Media
+
+Suriname
+Here is the top-level domain for Suriname. There are no restrictions on registering domain names with this extension.
+
+    .sr - Registrations are made directly at the second-level.
+
+Swaziland
+Here are the domain extensions for Swaziland. Registrants must have local presence and a bona fide intention to use name on a regular basis.
+
+    .sz - Registrations are directly at the second-level or third-level  below one of the following subdomains.
+    .co.sz - Commercial Entities
+    .ac.sz - Academic Institutions
+    .org.sz - Non-commercial Organizations
+
+Sweden
+Below are the domain extensions for Sweden. Some third-level domains are restricted. Internationalized Domain Names are accepted.
+
+    .se - Registrations can be made directly at the second-level or under the following subdomains.
+    .a.se - Stockholm City
+    .b.se - Stockholm County
+    .ac.se - Västerbotten County
+    .bd.se - Norrbotten County
+    .c.se - Uppsala County
+    .d.se - Södermanland County
+    .e.se - Östergötland County
+    .f.se - Jönköping County
+    .g.se - Kronoberg County
+    .h.se - Kalmar County
+    .i.se - Gotland County
+    .k.se - Blekinge County
+    .l.se - Kristianstad County
+    .m.se - Skåne County
+    .n.se - Halland County
+    .o.se - Västra Götaland County
+    .p.se - Älvsborg County
+    .r.se - Skaraborg County
+    .s.se - Värmland County
+    .t.se - Örebro County
+    .u.se - Västmanland County
+    .w.se - Dalarna County
+    .x.se - Gävleborg County
+    .y.se - Västernorrland County
+    .z.se - Jämtland County
+    .org.se - Non-profit Organizations
+    .pp.se - Private Persons
+    .tm.se - Trade Marks
+    .parti.se - Political Parties
+    .press.se - Periodical Publications
+
+Switzerland
+Here's the top-level domain for Switzerland. Registration is unrestricted - anyone can register a domain name under this extension.
+
+    .ch - Registration is done directly at the second-level.
+
+The .ch comes from Confoederatio Helvetica (Helvetic (Swiss) Confederation), the Latin name for the country. All Swiss coins are also stamped with this name.
+Syria
+Below are the domain extensions for Syria. There are no restrictions on registering domain names with this extension.
+
+    .sy - Registrations are directly at second-level or under the following subdomains.
+    .edu.sy
+    .gov.sy
+    .net.sy
+    .mil.sy
+    .com.sy
+    .org.sy
+    .news.sy
+
+Taiwan (Republic of China)
+Below are the country domain extensions for Taiwan. Requirements vary depending on which second-level name registration is within. Non-residents are allowed to register domain names under several subdomains.
+
+    .tw - Unrestricted. Registrations are made directly at second level and beneath the following subdomains. 
+    .edu.tw - For educational and academic institutions
+    .gov.tw - For Republic of China government agencies
+    .mil.tw - For the Military of the Republic of China
+    .com.tw - For companies or firms (Taiwanese or foreign) registered under the laws of their country
+    .net.tw - For network or telecommunications license holders
+    .org.tw - For non-profit organizations (Taiwanese or foreign) established according to the laws of their country
+    .idv.tw - For individuals (must verify their identity by e-mail)
+    .game.tw - Unrestricted (but registrant must verify their identity by e-mail)
+    .ebiz.tw - Unrestricted (but registrant must verify their identity by e-mail)
+    .club.tw - Unrestricted (but registrant must verify their identity by e-mail)
+
+Tajikistan
+Here are the domain extensions for Tajikistan. There are no restrictions on registering domain names with this extension, however, residents of Tajikistan have priority in the event there's a dispute over a name.
+
+    .tj - Registrations can be made at the second-level or under the following subdomains.
+    .ac.tj
+    .aero.tj
+    .biz.tj
+    .co.tj
+    .com.tj
+    .coop.tj
+    .dyn.tj
+    .edu.tj
+    .go.tj
+    .gov.tj
+    .info.tj
+    .int.tj
+    .mil.tj
+    .museum.tj
+    .my.tj
+    .name.tj
+    .net.tj
+    .org.tj
+    .per.tj
+    .pro.tj
+    .web.tj
+
+Tanzania
+Below are the country domain extensions for Tanzania. Registrants must have presence in Tanzania and demonstrable intent to use the domain name on the Internet. Vanity and placemark registrations are not permitted. One registration per organization. Must have secondary name server on a different backbone. Registrations are at third level beneath the following second-level labels.
+
+    .co.tz - Commercial
+    .ac.tz - Schools granting baccalaureate degrees
+    .go.tz - Governmental entities
+    .or.tz - Not-for-profit organizations
+    .ne.tz - Network infrastructure
+
+Thailand
+Here are the country domain extensions for Thailand. There are various restrictions on registering domain names with this extension. The restrictions depend on which extension the domain name is being registered under. Registrations are under the following extensions.
+
+    .ac.th - Academic
+    .co.th - Commercial
+    .in.th - Individuals (or organizations)
+    .go.th - Governmental
+    .mi.th - Military
+    .or.th - Non-profit organizations
+    .net.th - Internet provider
+
+Togo
+Here is the top-level domain for Togo. There are no restrictions on registering domain names with this extension.
+
+    .tg - Registrations are made directly at the second-level.
+
+Tokelau
+Here is the top-level domain for Tokelau - a territory of New Zealand located in the South Pacific. There are no restrictions on registering domain names with this extension. Some free domain names are available, hosted with the registry. Extenal hosting is available with paid domains.
+
+    .tk - Registrations are made directly at the second-level.
+
+Tonga
+Here is the second-level domain for Tonga. Registrations are open to everyone but obscene words and spam are prohibited.
+
+    .to - Registrations are permitted at the second-level. Some subdomains exists such as .gov.to for government departments.
+
+Trinidad and Tobago
+Below are the country domain extensions for Trinidad and Tobago. There are no restrictions on registering domain names with these extensions (except under .gov.tt, .mil.tt and .edu.tt).
+Unrestricted
+
+    .tt - Registrations are taken directly at second-level and under the following subdomains.
+    .co.tt
+    .com.tt
+    .org.tt
+    .net.tt
+    .biz.tt
+    .info.tt
+    .pro.tt
+    .name.tt
+
+Restricted
+
+    .edu.tt - For educational institutions in Trinidad and Tobago
+    .gov.tt - For agencies of the government of Trinidad and Tobago
+
+Tunisia
+Below are the domain extensions for Tunisia. Registrants must be a local resident.
+
+    .tn - Registrations are taken directly at the second-level or beneath the following subdomains.
+    .com.tn
+    .ens.tn
+    .fin.tn
+    .gov.tn
+    .ind.tn
+    .intl.tn
+    .nat.tn
+    .net.tn
+    .org.tn
+    .info.tn
+    .perso.tn
+    .tourism.tn
+    .edunet.tn
+    .rnrt.tn
+    .rns.tn
+    .rnu.tn
+    .mincom.tn
+    .agrinet.tn
+    .defense.tn
+
+Turkey
+Below are the domain extensions for Turkey. Proof of company registration or trademark is required. There is further restrictions depending on which second-level domain is used. Registration is at the third-level under the following subdomains.
+
+    .com.tr
+    .gen.tr
+    .org.tr
+    .biz.tr
+    .info.tr
+    .av.tr
+    .dr.tr
+    .pol.tr
+    .bel.tr
+    .mil.tr
+    .tsk.tr
+    .bbs.tr
+    .k12.tr
+    .edu.tr
+    .name.tr
+    .net.tr
+    .gov.tr
+    .web.tr
+    .tel.tr
+    .tv.tr
+
+Turkmenistan
+Here is the top-level domain for Turkmenistan. There are no restrictions at second-level but third-level registrants must be a resident of Turkmenistan.
+
+    .tm - Registration is taken directly at the second-level or under various subdomains.
+
+Turks and Caicos Islands
+Here is the top-level domain for Turks and Caicos Islands. There are no restrictions on registering domain names with this extension.
+
+    .tc - Registrations are made directly at the second-level.
+
+Tuvalu
+Here is the country code top-level domain for the island nation of Tuvalu. There are no restrictions on the second-level domain names, however, some second-level names are reserved (i.e. .com.tv, .net.tv, .org.tv, .gov.tv). The .tv domain has been a popular choice for websites for television shows.
+
+    .tv - Registrations are directly at the second-level. 
+
+Uganda
+Below are the domain extensions for Uganda. There are no restrictions on registering domain names with this extension.
+
+    .ug - Domain names can be registered directly at the second-level or beneath the following subdomains.
+    .co.ug - Commercial entities
+    .ac.ug - Educational Institution offering Diplomas, Degrees and higher Academic awards
+    .sc.ug - Primary. secondary and lower educational branches
+    .go.ug - Government Agencies and independent authorities under government
+    .ne.ug - Network providers or special equipment for network provision
+    .or.ug - Non Governmental Institutions
+
+Ukraine
+Here are the domain extensions for Ukraine. To register a domain name, the registry requests a trademark from Ukraine or a trademark registered under the Madrid agreement that covers Ukraine.
+
+    .ua - Registrations are taken at the second-level and beneath the following second-level domains.
+    .com.ua - Commercial organisations
+    .gov.ua - Governmental organisations
+    .net.ua - Network service providers
+    .edu.ua - Educational organisations
+    .org.ua - Other organisations (non-commercial)
+    .in.ua - Domains for individuals
+
+United Arab Emirates
+These are the country domain extensions for the United Arab Emirates. Second-level registrations are generally unrestricted. Third-level registrations require local presence and documentation (business registration), and if applicable, certificate from relevant ministry (for org, mil, gov, sch and ac).
+
+    .ae - Companies, Organizations or Individuals. Domain names can be registered directly at the second-level or at the third-level, under one of the following extensions. 
+    .co.ae - Companies -- was deprecated by UAEnic in 2003 and reintroduced by .aeDA (domain registrar for the .ae ccTLD) in 2008
+    .net.ae - Network Providers
+    .gov.ae - Government and Ministries
+    .ac.ae - Colleges, Universities or Academic Institute
+    .sch.ae - Public and Private Schools
+    .org.ae - Non Profit Organizations
+    .mil.ae - Military Entities
+    .pro.ae - Professionals -- was deprecated by .aeDA in 2008
+    .name.ae - Individuals -- was deprecated by .aeDA in 2008
+
+United Kingdom
+Below are the country domain extensions for the United Kingdom (UK). There are no restrictions on registering domain names with the .co.uk and .org.uk extensions, but the other extensions have varying restrictions. Registration is at the third level, beneath the generic-category second-level domains, except under .sch.uk where registration is at fourth level. There are no second-level registrations, although some second-level domains have been grandfathered.
+
+    .ac.uk - Academic (tertiary education and research establishments) and learned societies.
+    .co.uk - Commercial/general
+    .gov.uk - Government (central and local)
+    .ltd.uk - Limited companies
+    .me.uk - Personal
+    .mod.uk - Ministry of Defence and HM Forces public sites
+    .net.uk - ISPs and network companies
+    .nic.uk - Network use only
+    .nhs.uk - National Health Service institutions
+    .org.uk - Non-profit organisations
+    .plc.uk - Public limited companies
+    .police.uk - Police
+    .sch.uk - Local education authorities, schools, primary and secondary education, community education
+
+United States of America
+Below are the country domain extensions for the United States. Registrants of .us domains must be United States citizens, residents, or organizations, or a foreign entity with a presence in the United States. Originally registrations were within third or fourth level hierarchy, but currently direct second-level registrations are allowed. Also, the kids.us extension allows third-level registrations for child-friendly sites.
+
+Second-Level Domains for Each State
+
+    .ak.us - Alaska
+    .al.us - Alabama
+    .ar.us - Arkansas
+    .az.us - Arizona
+    .ca.us - California
+    .co.us - Colorado
+    .ct.us - Connecticut
+    .de.us - Delaware
+    .fl.us - Florida
+    .ga.us - Georgia
+    .hi.us - Hawaii
+    .ia.us - Iowa
+    .id.us - Idaho
+    .il.us - Illinois
+    .in.us - Indiana
+    .ks.us - Kansas
+    .ky.us - Kentucky
+    .la.us - Louisiana
+    .ma.us - Massachusetts
+    .md.us - Maryland
+    .me.us - Maine
+    .mi.us - Michigan
+    .mn.us - Minnesota
+    .mo.us - Missouri
+    .ms.us - Mississippi
+    .mt.us - Montana
+    .nc.us - North Carolina
+    .nd.us - North Dakota
+    .ne.us - Nebraska
+    .nh.us - New Hampshire
+    .nj.us - New Jersey
+    .nm.us - New Mexico
+    .nv.us - Nevada
+    .ny.us - New York
+    .oh.us - Ohio
+    .ok.us - Oklahoma
+    .or.us - Oregon
+    .pa.us - Pennsylvania
+    .ri.us - Rhode Island
+    .sc.us - South Carolina
+    .sd.us - South Dakota
+    .tn.us - Tennessee
+    .tx.us - Texas
+    .ut.us - Utah
+    .va.us - Virginia
+    .vt.us - Vermont
+    .wa.us - Washington
+    .wi.us - Wisconsin
+    .wv.us - West Virginia
+    .wy.us - Wyoming
+
+Federal District and Territories
+
+    .dc.us - District of Columbia
+    .as.us - Territory of American Samoa - an alternate for the .as country code top-level domain
+    .gu.us - Territory of Guam - an alternate for the .gu country code top-level domain
+    .mp.us - Commonwealth of the Northern Mariana Islands - an alternate for the .mp country code top-level domain
+    .pr.us - Commonwealth of Puerto Rico - an alternate for the .pr country code top-level domain
+    .vi.us - Territory of the United States Virgin Islands - an alternate for the .vi country code top-level domain
+
+Other Second-Level .US Domains
+
+    .dni.us - Distributed national institutes
+    .fed.us - Federal government agencies (an alternative to .gov)
+    .isa.us - Interstate agency (only used for the Interstate Mining Compact Commission, imcc.isa.us)
+    .kids.us - Content "suitable for children under 13"
+    .nsn.us - Native sovereign nations (federally recognized Native American tribes)
+
+Uruguay
+Here are the domain extensions for Uruguay. Registrants must be a customer of Amtel (Uruguay's government-owned telecommunications company). Registrations are at third level beneath the following second-level names.
+
+    .com.uy - For commercial companies (a local billing contact is required for foreign registrants).
+    .edu.uy - For local educational entities.
+    .gub.uy - For local governmental entities.
+    .net.uy - For local Internet service providers.
+    .mil.uy - For local military.
+    .org.uy - For non-profit organisations.
+
+U.S. Virgin Islands
+Here is the top-level domain for the U.S Virgin Islands. Second-level names are restricted to entities with local presence.
+
+    .vi - Domain name registrations are taken directly at the second-level or at the third-level under the following subdomains.
+    .co.vi
+    .com.vi
+
+Uzbekistan
+Below are the country domain extensions for Uzbekistan. There are no restrictions with registering domain names with this extension.
+
+    .uz - Registrations are available at the second-level and under the following subdomains.
+    .co.uz
+    .com.uz
+
+Vanuatu
+Here is the domain extension for Vanuatu. There is no restriction on registering domain names with this extension.
+
+    .vu - Domain registrations are taken directly at the second-level. Some subdomains exist such as .gov.vu etc
+
+Vatican (State of Vatican City)
+Here is the top-level domain for the Vatican. No public registrations are available, as this domain extension is solely for use by official websites of the Vatican.  Only official sites of the Vatican are in this domain; they are at second-level names, as well as within vatican.va.
+
+    .va - No public registrations are available.
+
+Venezuela
+Below are the domain extensions for Venezuela. There are no restrictions on registering domain names with this extension. Registrations are at the third-level under the following subdomains.
+
+    .com.ve - Venezuelan commercial entity
+    .edu.ve - Venezuela based educational institutions
+    .gob.ve - Government-related websites
+    .mil.ve - Venezuelan military institution
+    .net.ve - Network service providers
+    .org.ve - Non-profit organizations
+    .info.ve - Informational sites
+    .co.ve - A website originally ".com" ported to Venezuelan Spanish
+    .web.ve - Individuals
+
+Vietnam
+Here are the domain extensions for Vietnam. There are no restrictions on registering domain names with this extension.
+
+    .vn - Domain names are registered directly at the third level or under the following subdomains.
+    .com.vn - commercial
+    .biz.vn - business, equivalent to domain name ".com.vn"
+    .edu.vn - education and training
+    .gov.vn - government (central and local)
+    .net.vn - establishment and provision of online services.
+    .org.vn - organizations involved in political, cultural and social activities.
+    .int.vn - Vietnam-based international organizations.
+    .ac.vn - organizations and individuals involved in research activities.
+    .pro.vn - organizations and individuals involved in highly-specialized domains.
+    .info.vn - organizations and individuals involved in the creation, distribution and supply of information.
+    .health.vn - organizations and individuals involved in pharmaceutical and medical activities.
+    .name.vn - proper names of individuals involved in Internet-related activities.
+
+Wallis and Futuna Islands
+Here is the top-level domain for Wallis and Futuna Islands. Note that the registry is not currently accepting registrations at this time.
+
+    .wf - Registry is not currently accepting registrations.
+
+Yemen
+Here are the domain extensions for Yemen. Registrants must have a local contact in Yemen.Registrations are taken at the third-level beneath the following second-level domains.
+
+    .com.ye - Commercial Entities
+    .co.ye - Companies
+    .ltd.ye - Limited Companies
+    .me.ye - Private Individuals
+    .net.ye - Network Providers
+    .org.ye - Non-commercial Organizations
+    .plc.ye
+    .gov.ye - Government and Governmental System 
+
+Zambia
+Here are the domain extensions for Zambia. Local presence is required to register domain names with this extension.
+
+    .ac.zm - Academic Institutions
+    .co.zm - Commercial Entities
+    .com.zm
+    .org.zm - Non-commercial Organizations
+
+Zimbabwe
+Here is the domain extension for Zimbabwe. There are no restrictions with registering domain names with this extension. Registrations are only taken at the third-level beneath the following subdomain.
+
+    .co.zw

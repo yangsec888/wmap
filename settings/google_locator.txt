@@ -1,0 +1,23 @@
+# Default list of all major Google search engines for our google discovery, in one entry per line format
+# To be used by the Wmap::GoogleSearchScraper class
+# Refer to: http://seobabes.blog.com/seo/list-of-all-google-search-engines-in-different-country/ for more details
+
+http://www.google.ca/
+http://www.google.ch/
+http://www.google.co.in/
+http://www.google.co.jp/
+http://www.google.co.kr/
+http://www.google.com/
+http://www.google.com.au/
+http://www.google.com.hk/
+http://www.google.co.nz/
+http://www.google.co.uk/
+http://www.google.co.za/
+http://www.google.de/
+http://www.google.es/
+http://www.google.fr/
+http://www.google.ie/
+http://www.google.lt/
+http://www.google.nl/
+http://www.google.ru/
+http://www.google.se/

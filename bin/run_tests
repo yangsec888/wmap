@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+# Ruby MiniTest Unit-test Auto Runner
+require "wmap"
+
+def print_usage
+	puts "Program to run all the build-in unit tests under /test. Usage: run_tests"
+end
+
+puts Wmap.banner
+print_usage
+Log_dir=File.dirname(__FILE__)+'/../logs/'
+Wmap.wlog("Execute the command: run_tests","run_tests",Log_dir+"wmap.log")
+
+spec = Gem::Specification.find_by_name("wmap")
+Dir[spec.gem_dir+'/test/*.rb'].map { |test| puts "Executing test file: #{test}";system('ruby', test) }
+

@@ -1,0 +1,25 @@
+# Generic Top Level Domain List
+# Refer to: http://en.wikipedia.org/wiki/Generic_top-level_domain
+aero
+asia
+biz
+cat
+com
+coop
+edu
+gov
+info
+int
+jobs
+mil
+mobi
+museum
+name
+net
+org
+post
+pro
+tel
+travel
+tm
+xxx

@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+# Executable to check the current status of a new site 
+# This is useful as a self-correction mechanism to flag out unique website in a constant way
+require "wmap"
+
+def print_usage
+	puts "Program to quick check the status of a remote URL. Usage: wcheck [URL]"
+end
+
+puts Wmap.banner
+
+Log_dir=File.dirname(__FILE__)+'/../logs/'
+Wmap.wlog("Execute the command: wcheck #{ARGV[0]}","wcheck",Log_dir+"wmap.log")
+
+checker=Wmap::UrlChecker.new(:verbose=>false)
+unless ARGV.length==1 
+	print_usage
+	abort "Incorrect program argument!" 
+end
+
+# Evaluate the argument and update the data store accordingly
+if checker.is_url?(ARGV[0])
+	status=checker.url_worker(ARGV[0])
+	puts status
+else
+	print_usage
+	abort "Invalid URL format: #{ARGV[0]}"
+end

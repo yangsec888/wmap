@@ -1,0 +1,15 @@
+# The following improvements would be nice to have:
+
+
+1. Add unit test cases for all major modules / classes (Note: Jan. 2015, Wmap::Utils module unit tests added).
+2. Add Google search capability (Note: Oct. 2013, partial done, need Google API licensing /fee in order for the full implementation test. )
+3. Better documentations / man pages for executables / operation manuals, in addition to the 'README' and 'rdoc'
+4. Port the local data repository to a relational DB (for support of multi user sessions in the future)
+5. Implement a RoR web interface for better user experience. 
+6. Implement a report engine for better metric reporting. 
+7. Improve the crawler, such as supporting link extraction in AJAX, FLASH and other rich HTML5 format
+8. Improve the build-in port scanner 'wscan'. So it could eventually replace 'nmap' in the larget scale network blocks scanning process. 
+9. Add vulnerability scanner engine.
+10.Add vulnerability life cycle management. 
+
+

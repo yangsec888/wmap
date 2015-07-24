@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+# Executable to bulk add sites into the tracking data repository
+require "wmap"
+
+def print_usage
+	puts "Program to add sites from a file into local data repository. Usage: wadds [file_sites]"
+end
+
+puts Wmap.banner
+print_usage
+Log_dir=File.dirname(__FILE__)+'/../logs/'
+Wmap.wlog("Execute the command: wadds #{ARGV[0]}","wadds",Log_dir+"wmap.log")
+
+st=Wmap::SiteTracker.instance
+abort "Incorrect program argument!" unless ARGV.length==1 && File.exist?(ARGV[0])
+
+# Evaluate the argument and update the data store accordingly
+sites=st.file_2_list(ARGV[0]).map { |x| st.url_2_site(x) }
+if sites.length > 0
+	news=st.adds(sites)
+	puts news
+	st.save! if news.length>0
+	st=nil
+else
+	abort "No site entry found in file: #{ARGV[0]}. Please check your file format to ensure one site per line."
+end
