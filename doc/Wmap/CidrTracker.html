@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>class Wmap::CidrTracker - RDoc Documentation</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script src="../js/jquery.js"></script>
+<script src="../js/darkfish.js"></script>
+
+<link href="../css/fonts.css" rel="stylesheet">
+<link href="../css/rdoc.css" rel="stylesheet">
+
+
+
+<body id="top" role="document" class="class">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="../index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="../table_of_contents.html#pages">Pages</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="class-metadata">
+    
+    <div id="parent-class-section" class="nav-section">
+  <h3>Parent</h3>
+
+  
+  <p class="link"><a href="../Object.html">Object</a>
+  
+</div>
+
+    <div id="includes-section" class="nav-section">
+  <h3>Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><a class="include" href="Utils.html">Wmap::Utils</a>
+  
+  
+  </ul>
+</div>
+
+    
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-add">#add</a>
+    
+    <li ><a href="#method-i-cidr_known-3F">#cidr_known?</a>
+    
+    <li ><a href="#method-i-cidr_lookup">#cidr_lookup</a>
+    
+    <li ><a href="#method-i-cidr_trusted-3F">#cidr_trusted?</a>
+    
+    <li ><a href="#method-i-cidr_worker">#cidr_worker</a>
+    
+    <li ><a href="#method-i-count">#count</a>
+    
+    <li ><a href="#method-i-counts">#counts</a>
+    
+    <li ><a href="#method-i-del">#del</a>
+    
+    <li ><a href="#method-i-delete">#delete</a>
+    
+    <li ><a href="#method-i-get_cidr_netname">#get_cidr_netname</a>
+    
+    <li ><a href="#method-i-get_cidr_ref">#get_cidr_ref</a>
+    
+    <li ><a href="#method-i-inspect">#inspect</a>
+    
+    <li ><a href="#method-i-ip_trusted-3F">#ip_trusted?</a>
+    
+    <li ><a href="#method-i-is_known-3F">#is_known?</a>
+    
+    <li ><a href="#method-i-is_trusted-3F">#is_trusted?</a>
+    
+    <li ><a href="#method-i-lookup">#lookup</a>
+    
+    <li ><a href="#method-i-print">#print</a>
+    
+    <li ><a href="#method-i-print_known_cidr_blks">#print_known_cidr_blks</a>
+    
+    <li ><a href="#method-i-print_known_cidr_blks_asce">#print_known_cidr_blks_asce</a>
+    
+    <li ><a href="#method-i-print_known_cidr_blks_desc">#print_known_cidr_blks_desc</a>
+    
+    <li ><a href="#method-i-query">#query</a>
+    
+    <li ><a href="#method-i-save-21">#save!</a>
+    
+    <li ><a href="#method-i-save_cidrs_to_file-21">#save_cidrs_to_file!</a>
+    
+    <li ><a href="#method-i-size">#size</a>
+    
+    <li ><a href="#method-i-track">#track</a>
+    
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="class-Wmap::CidrTracker">
+  <h1 id="class-Wmap::CidrTracker" class="class">
+    class Wmap::CidrTracker
+  </h1>
+
+  <section class="description">
+    
+<p>Class to track host/IP to the known (trusted) network CIDR blocks</p>
+
+  </section>
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <section class="constants-list">
+      <header>
+        <h3>Constants</h3>
+      </header>
+      <dl>
+      
+        <dt id="File_cidr_seeds">File_cidr_seeds
+        
+        <dd>
+        
+      
+      </dl>
+    </section>
+    
+
+    
+    <section class="attribute-method-details" class="method-section">
+      <header>
+        <h3>Attributes</h3>
+      </header>
+
+      
+      <div id="attribute-i-cidr_seeds" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">cidr_seeds</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-known_cidr_blks" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">known_cidr_blks</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-verbose" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">verbose</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+    </section>
+    
+
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Class Methods</h3>
+       </header>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(params = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Set class default variables</p>
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/wmap/cidr_tracker.rb, line 18</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span> (<span class="ruby-identifier">params</span> = {})
+        <span class="ruby-ivar">@verbose</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:verbose</span>, <span class="ruby-keyword">false</span>)
+        <span class="ruby-ivar">@known_cidr_blks</span>={}
+        <span class="ruby-ivar">@known_cidr_blks_desc_index</span>=[]
+        <span class="ruby-ivar">@known_cidr_blks_asce_index</span>=[]
+        <span class="ruby-comment"># Set default instance variables</span>
+        <span class="ruby-ivar">@cidr_seeds</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:cidr_seeds</span>, <span class="ruby-constant">File_cidr_seeds</span>)
+        <span class="ruby-comment"># Initialize the class variables</span>
+        <span class="ruby-identifier">load_cidr_blks_from_file</span>(<span class="ruby-ivar">@cidr_seeds</span>)         
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-add" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">add</span><span
+            class="method-args">(cidr,ref=nil,netname=nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>&#39;setter&#39; to add an entry to CIDR store @known_cidr_blks</p>
+          
+          
+
+          
+          <div class="method-source-code" id="add-source">
+            <pre><span class="ruby-comment"># File lib/wmap/cidr_tracker.rb, line 77</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">add</span> (<span class="ruby-identifier">cidr</span>,<span class="ruby-identifier">ref</span>=<span class="ruby-keyword">nil</span>,<span class="ruby-identifier">netname</span>=<span class="ruby-keyword">nil</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Load the entry into the CIDR store: #{cidr}&quot;</span> 
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Unknown CIDR format: #{cidr}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">is_cidr?</span>(<span class="ruby-identifier">cidr</span>)
+                <span class="ruby-comment"># Obtain the &#39;ref&#39; and &#39;netname&#39; value automatically in case not passed as method parameters </span>
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">ref</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">netname</span>.<span class="ruby-identifier">nil?</span>
+                        <span class="ruby-identifier">whois</span> = <span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">Whois</span>.<span class="ruby-identifier">new</span>
+                        <span class="ruby-comment"># Note 11/1/2014: Use IP instead of the CIDR to perform the query, as the current ruby-whois query does not support CIDR as query input</span>
+                        <span class="ruby-identifier">ip</span>=<span class="ruby-identifier">cidr</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;/&quot;</span>)[<span class="ruby-value">0</span>]
+                        <span class="ruby-identifier">ref</span>=<span class="ruby-identifier">whois</span>.<span class="ruby-identifier">get_net_desc</span>(<span class="ruby-identifier">ip</span>)
+                        <span class="ruby-identifier">netname</span>=<span class="ruby-identifier">whois</span>.<span class="ruby-identifier">get_netname</span>(<span class="ruby-identifier">ip</span>)
+                        <span class="ruby-identifier">whois</span>=<span class="ruby-keyword">nil</span>
+                <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-ivar">@known_cidr_blks</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">cidr</span>)
+                        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Skip! Entry is already exist: #{cidr}&quot;</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+                <span class="ruby-keyword">else</span>
+                        <span class="ruby-ivar">@known_cidr_blks</span>[<span class="ruby-identifier">cidr</span>] = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span> 
+                        <span class="ruby-ivar">@known_cidr_blks</span>[<span class="ruby-identifier">cidr</span>][<span class="ruby-string">&#39;ref&#39;</span>]=<span class="ruby-identifier">ref</span>
+                        <span class="ruby-ivar">@known_cidr_blks</span>[<span class="ruby-identifier">cidr</span>][<span class="ruby-string">&#39;netname&#39;</span>]=<span class="ruby-identifier">netname</span>
+                        <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Entry loaded!&quot;</span>
+                <span class="ruby-keyword">end</span>
+                <span class="ruby-comment"># Re-sort the blocks in order for better performance</span>
+                <span class="ruby-ivar">@known_cidr_blks_desc_index</span>=<span class="ruby-constant">NetAddr</span>.<span class="ruby-identifier">sort</span>(<span class="ruby-ivar">@known_cidr_blks</span>.<span class="ruby-identifier">keys</span>, <span class="ruby-value">:Desc=</span><span class="ruby-operator">&gt;</span><span class="ruby-keyword">true</span>) 
+                <span class="ruby-ivar">@known_cidr_blks_asce_index</span>=<span class="ruby-constant">NetAddr</span>.<span class="ruby-identifier">sort</span>(<span class="ruby-ivar">@known_cidr_blks</span>.<span class="ruby-identifier">keys</span>, <span class="ruby-value">:Desc=</span><span class="ruby-operator">&gt;</span><span class="ruby-keyword">false</span>)
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-comment"># if @verbose</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-cidr_known-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">cidr_known?</span><span
+            class="method-args">(cidr)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Determine if a CIDR entry is already known</p>
+          
+          
+
+          
+          <div class="method-source-code" id="cidr_known-3F-source">
+            <pre><span class="ruby-comment"># File lib/wmap/cidr_tracker.rb, line 209</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">cidr_known?</span> (<span class="ruby-identifier">cidr</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Determine if the CIDR is known: #{cidr}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-identifier">known</span>=<span class="ruby-keyword">false</span>
+        <span class="ruby-identifier">cidr</span>=<span class="ruby-identifier">cidr</span>.<span class="ruby-identifier">strip</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">cidr</span>.<span class="ruby-identifier">nil?</span>
+        <span class="ruby-identifier">cidr</span>=<span class="ruby-identifier">cidr</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;/32&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_ip?</span>(<span class="ruby-identifier">cidr</span>)
+        <span class="ruby-keyword">begin</span>                         
+                <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Invalid CIDR format: #{cidr}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">is_cidr?</span>(<span class="ruby-identifier">cidr</span>)
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@known_cidr_blks</span><span class="ruby-operator">==</span><span class="ruby-keyword">nil</span> 
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@known_cidr_blks</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">cidr</span>)
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">known</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+        <div class="aliases">
+          Also aliased as: <a href="CidrTracker.html#method-i-is_known-3F">is_known?</a>
+        </div>
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-cidr_lookup" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">cidr_lookup</span><span
+            class="method-args">(ip)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Return the matching CIDR block for a ip</p>
+          
+          
+
+          
+          <div class="method-source-code" id="cidr_lookup-source">
+            <pre><span class="ruby-comment"># File lib/wmap/cidr_tracker.rb, line 186</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">cidr_lookup</span> (<span class="ruby-identifier">ip</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Lookup the CIDR name from the known CIDR list for the IP: #{ip}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@known_cidr_blks</span><span class="ruby-operator">==</span><span class="ruby-keyword">nil</span>  
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;CIDR Lookup: #{ip} ...&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-ivar">@known_cidr_blks_desc_index</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
+                        <span class="ruby-identifier">first_octet_ip</span> = <span class="ruby-identifier">ip</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;.&#39;</span>).<span class="ruby-identifier">first</span>.<span class="ruby-identifier">to_i</span>
+                        <span class="ruby-identifier">first_octet_blk</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;.&#39;</span>).<span class="ruby-identifier">first</span>.<span class="ruby-identifier">to_i</span>
+                        <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">first_octet_blk</span> <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">first_octet_ip</span>
+                        <span class="ruby-identifier">cidr4</span> = <span class="ruby-constant">NetAddr</span><span class="ruby-operator">::</span><span class="ruby-constant">CIDR</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">line</span>)
+                        <span class="ruby-identifier">known</span> = <span class="ruby-identifier">cidr4</span>.<span class="ruby-identifier">contains?</span>(<span class="ruby-identifier">ip</span><span class="ruby-operator">+</span><span class="ruby-string">&#39;/32&#39;</span>)
+                        <span class="ruby-keyword">return</span> <span class="ruby-identifier">line</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">known</span>        
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+        <div class="aliases">
+          Also aliased as: <a href="CidrTracker.html#method-i-lookup">lookup</a>, <a href="CidrTracker.html#method-i-query">query</a>
+        </div>
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-cidr_trusted-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">cidr_trusted?</span><span
+            class="method-args">(cidr)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Determine if a cidr is within the range of our known network CIDR blocks</p>
+          
+          
+
+          
+          <div class="method-source-code" id="cidr_trusted-3F-source">
+            <pre><span class="ruby-comment"># File lib/wmap/cidr_tracker.rb, line 227</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">cidr_trusted?</span> (<span class="ruby-identifier">cidr</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Determine if the CIDR within our ranges: #{cidr}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-identifier">trusted</span>=<span class="ruby-keyword">false</span>
+        <span class="ruby-identifier">cidr</span>=<span class="ruby-identifier">cidr</span>.<span class="ruby-identifier">strip</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">cidr</span>.<span class="ruby-identifier">nil?</span>
+        <span class="ruby-identifier">cidr</span>=<span class="ruby-identifier">cidr</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;/32&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_ip?</span>(<span class="ruby-identifier">cidr</span>)
+        <span class="ruby-keyword">begin</span>                         
+                <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Invalid CIDR format: #{cidr}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">is_cidr?</span>(<span class="ruby-identifier">cidr</span>)
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@known_cidr_blks</span><span class="ruby-operator">==</span><span class="ruby-keyword">nil</span> 
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@known_cidr_blks</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">cidr</span>)
+                <span class="ruby-ivar">@known_cidr_blks_asce_index</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
+                        <span class="ruby-identifier">cidr4</span> = <span class="ruby-constant">NetAddr</span><span class="ruby-operator">::</span><span class="ruby-constant">CIDR</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">line</span>)
+                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">cidr4</span>.<span class="ruby-identifier">contains?</span>(<span class="ruby-identifier">cidr</span>)
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">trusted</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+        <div class="aliases">
+          Also aliased as: is_trusted?
+        </div>
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-cidr_worker" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">cidr_worker</span><span
+            class="method-args">(host)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Main worker method to retrieve known network information for a host / ip</p>
+          
+          
+
+          
+          <div class="method-source-code" id="cidr_worker-source">
+            <pre><span class="ruby-comment"># File lib/wmap/cidr_tracker.rb, line 30</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">cidr_worker</span> (<span class="ruby-identifier">host</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Starting tracking of known CIDR information for host: #{host}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">host</span>=<span class="ruby-identifier">host</span>.<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">downcase</span> 
+                <span class="ruby-identifier">ip</span>=<span class="ruby-identifier">host_2_ip</span>(<span class="ruby-identifier">host</span>)
+                <span class="ruby-identifier">cidr</span>=<span class="ruby-identifier">cidr_lookup</span>(<span class="ruby-identifier">ip</span>)
+                <span class="ruby-identifier">ref</span>=<span class="ruby-identifier">get_cidr_ref</span>(<span class="ruby-identifier">cidr</span>)
+                <span class="ruby-identifier">netname</span>=<span class="ruby-identifier">get_cidr_netname</span>(<span class="ruby-identifier">cidr</span>)
+                <span class="ruby-comment"># save the data</span>
+                <span class="ruby-identifier">tracker</span>=<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+                <span class="ruby-identifier">tracker</span>[<span class="ruby-string">&#39;host&#39;</span>]=<span class="ruby-identifier">host</span>                 
+                <span class="ruby-identifier">tracker</span>[<span class="ruby-string">&#39;ip&#39;</span>]=<span class="ruby-identifier">ip</span>
+                <span class="ruby-identifier">tracker</span>[<span class="ruby-string">&#39;cidr&#39;</span>]=<span class="ruby-identifier">cidr</span>
+                <span class="ruby-identifier">tracker</span>[<span class="ruby-string">&#39;ref&#39;</span>]=<span class="ruby-identifier">ref</span>
+                <span class="ruby-identifier">tracker</span>[<span class="ruby-string">&#39;netname&#39;</span>]=<span class="ruby-identifier">netname</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-identifier">tracker</span>               
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__} for host #{host}: #{ee}&quot;</span> <span class="ruby-comment"># if @verbose</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+        <div class="aliases">
+          Also aliased as: <a href="CidrTracker.html#method-i-track">track</a>
+        </div>
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-count" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">count</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Count numbers of CIDR object entries in the CIDR cache table</p>
+          
+          
+
+          
+          <div class="method-source-code" id="count-source">
+            <pre><span class="ruby-comment"># File lib/wmap/cidr_tracker.rb, line 130</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">count</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Counting number of entries in the CIDR cache table ...&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">cnt</span>=<span class="ruby-value">0</span>
+                <span class="ruby-ivar">@known_cidr_blks</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span>
+                        <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_cidr?</span>(<span class="ruby-identifier">key</span>)
+                                <span class="ruby-identifier">cnt</span>=<span class="ruby-identifier">cnt</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>
+                        <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">end</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Current number of CIDR object entries: #{cnt}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-identifier">cnt</span>   
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">end</span>           
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-counts" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">counts</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Count numbers of IPs within the trusted CIDR objects</p>
+          
+          
+
+          
+          <div class="method-source-code" id="counts-source">
+            <pre><span class="ruby-comment"># File lib/wmap/cidr_tracker.rb, line 147</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">counts</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Counting number of IPs within the CIDR store:&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">cnt</span>=<span class="ruby-value">0</span>
+                <span class="ruby-ivar">@known_cidr_blks</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span>
+                        <span class="ruby-identifier">cnt</span>=<span class="ruby-identifier">cnt</span><span class="ruby-operator">+</span><span class="ruby-identifier">size</span>(<span class="ruby-identifier">key</span>)
+                <span class="ruby-keyword">end</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Total number of trusted IPs: #{cnt}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-identifier">cnt</span>   
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">end</span>           
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-del" class="method-detail method-alias">
+        
+        <div class="method-heading">
+          <span class="method-name">del</span><span
+            class="method-args">(cidr,ref=nil,netname=nil)</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+        </div>
+
+        
+
+        
+        <div class="aliases">
+          Alias for: <a href="CidrTracker.html#method-i-delete">delete</a>
+        </div>
+        
+      </div>
+
+    
+      <div id="method-i-delete" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">delete</span><span
+            class="method-args">(cidr,ref=nil,netname=nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>&#39;setter&#39; to remove an entry to CIDR store @known_cidr_blks</p>
+          
+          
+
+          
+          <div class="method-source-code" id="delete-source">
+            <pre><span class="ruby-comment"># File lib/wmap/cidr_tracker.rb, line 108</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">delete</span> (<span class="ruby-identifier">cidr</span>,<span class="ruby-identifier">ref</span>=<span class="ruby-keyword">nil</span>,<span class="ruby-identifier">netname</span>=<span class="ruby-keyword">nil</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Remove the entry from the CIDR store: #{cidr}&quot;</span> 
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-comment">#cidr.strip!</span>
+                <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Unknown CIDR format: #{cidr}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">is_cidr?</span>(<span class="ruby-identifier">cidr</span>)
+                <span class="ruby-keyword">if</span> <span class="ruby-ivar">@known_cidr_blks</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">cidr</span>)
+                        <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Deleting ...&quot;</span>
+                        <span class="ruby-ivar">@known_cidr_blks</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">cidr</span>) 
+                        <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Entry cleared!&quot;</span>
+                <span class="ruby-keyword">else</span>
+                        <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Unknown CIDR entry: #{cidr}&quot;</span>
+                <span class="ruby-keyword">end</span>
+                <span class="ruby-comment"># Re-sort the blocks in order for better performance</span>
+                <span class="ruby-ivar">@known_cidr_blks_desc_index</span>=<span class="ruby-constant">NetAddr</span>.<span class="ruby-identifier">sort</span>(<span class="ruby-ivar">@known_cidr_blks</span>.<span class="ruby-identifier">keys</span>, <span class="ruby-value">:Desc=</span><span class="ruby-operator">&gt;</span><span class="ruby-keyword">true</span>) 
+                <span class="ruby-ivar">@known_cidr_blks_asce_index</span>=<span class="ruby-constant">NetAddr</span>.<span class="ruby-identifier">sort</span>(<span class="ruby-ivar">@known_cidr_blks</span>.<span class="ruby-identifier">keys</span>, <span class="ruby-value">:Desc=</span><span class="ruby-operator">&gt;</span><span class="ruby-keyword">false</span>)
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-comment"># if @verbose</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+        <div class="aliases">
+          Also aliased as: <a href="CidrTracker.html#method-i-del">del</a>
+        </div>
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-get_cidr_netname" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_cidr_netname</span><span
+            class="method-args">(cidr)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve the CIDR netname field for tracking purpose, if it&#39;s a known
+CIDR entry</p>
+          
+          
+
+          
+          <div class="method-source-code" id="get_cidr_netname-source">
+            <pre><span class="ruby-comment"># File lib/wmap/cidr_tracker.rb, line 270</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_cidr_netname</span> (<span class="ruby-identifier">cidr</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Lookup CIDR block #{cidr} netname ...&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-identifier">cidr</span>=<span class="ruby-identifier">cidr</span>.<span class="ruby-identifier">strip</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">cidr</span>.<span class="ruby-identifier">nil?</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@known_cidr_blks</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">cidr</span>)
+        <span class="ruby-keyword">return</span> <span class="ruby-ivar">@known_cidr_blks</span>[<span class="ruby-identifier">cidr</span>][<span class="ruby-string">&#39;netname&#39;</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-get_cidr_ref" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_cidr_ref</span><span
+            class="method-args">(cidr)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve the CIDR reference text for tracking purpose, if it&#39;s a known
+CIDR entry</p>
+          
+          
+
+          
+          <div class="method-source-code" id="get_cidr_ref-source">
+            <pre><span class="ruby-comment"># File lib/wmap/cidr_tracker.rb, line 262</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_cidr_ref</span> (<span class="ruby-identifier">cidr</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Lookup CIDR block #{cidr} reference text ...&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-identifier">cidr</span>=<span class="ruby-identifier">cidr</span>.<span class="ruby-identifier">strip</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">cidr</span>.<span class="ruby-identifier">nil?</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@known_cidr_blks</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">cidr</span>)
+        <span class="ruby-keyword">return</span> <span class="ruby-ivar">@known_cidr_blks</span>[<span class="ruby-identifier">cidr</span>][<span class="ruby-string">&#39;ref&#39;</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-inspect" class="method-detail method-alias">
+        
+        <div class="method-heading">
+          <span class="method-name">inspect</span><span
+            class="method-args">()</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+        </div>
+
+        
+
+        
+        <div class="aliases">
+          Alias for: <a href="CidrTracker.html#method-i-print_known_cidr_blks">print_known_cidr_blks</a>
+        </div>
+        
+      </div>
+
+    
+      <div id="method-i-ip_trusted-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">ip_trusted?</span><span
+            class="method-args">(ip)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Check if the specific IP within the range of a list of known CIDR blocks</p>
+          
+          
+
+          
+          <div class="method-source-code" id="ip_trusted-3F-source">
+            <pre><span class="ruby-comment"># File lib/wmap/cidr_tracker.rb, line 162</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">ip_trusted?</span> (<span class="ruby-identifier">ip</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Check if the IP within the range of the known CIDR blocks: #{ip}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-identifier">known</span> = <span class="ruby-keyword">false</span>
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@known_cidr_blks</span><span class="ruby-operator">==</span><span class="ruby-keyword">nil</span>
+                <span class="ruby-identifier">first_octet_ip</span> = <span class="ruby-identifier">ip</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;.&#39;</span>).<span class="ruby-identifier">first</span>.<span class="ruby-identifier">to_i</span>
+                <span class="ruby-ivar">@known_cidr_blks_desc_index</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>                           
+                        <span class="ruby-identifier">first_octet_blk</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;.&#39;</span>).<span class="ruby-identifier">first</span>.<span class="ruby-identifier">to_i</span>
+                        <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">first_octet_blk</span> <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">first_octet_ip</span>
+                        <span class="ruby-identifier">cidr4</span> = <span class="ruby-constant">NetAddr</span><span class="ruby-operator">::</span><span class="ruby-constant">CIDR</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">line</span>)
+                        <span class="ruby-identifier">known</span> = <span class="ruby-identifier">cidr4</span>.<span class="ruby-identifier">contains?</span>(<span class="ruby-identifier">ip</span><span class="ruby-operator">+</span><span class="ruby-string">&#39;/32&#39;</span>)
+                        <span class="ruby-keyword">break</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">known</span>      
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span>
+                <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">known</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+        <div class="aliases">
+          Also aliased as: <a href="CidrTracker.html#method-i-is_trusted-3F">is_trusted?</a>
+        </div>
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-is_known-3F" class="method-detail method-alias">
+        
+        <div class="method-heading">
+          <span class="method-name">is_known?</span><span
+            class="method-args">(cidr)</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+        </div>
+
+        
+
+        
+        <div class="aliases">
+          Alias for: <a href="CidrTracker.html#method-i-cidr_known-3F">cidr_known?</a>
+        </div>
+        
+      </div>
+
+    
+      <div id="method-i-is_trusted-3F" class="method-detail method-alias">
+        
+        <div class="method-heading">
+          <span class="method-name">is_trusted?</span><span
+            class="method-args">(ip)</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+        </div>
+
+        
+
+        
+        <div class="aliases">
+          Alias for: <a href="CidrTracker.html#method-i-ip_trusted-3F">ip_trusted?</a>
+        </div>
+        
+      </div>
+
+    
+      <div id="method-i-lookup" class="method-detail method-alias">
+        
+        <div class="method-heading">
+          <span class="method-name">lookup</span><span
+            class="method-args">(ip)</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+        </div>
+
+        
+
+        
+        <div class="aliases">
+          Alias for: <a href="CidrTracker.html#method-i-cidr_lookup">cidr_lookup</a>
+        </div>
+        
+      </div>
+
+    
+      <div id="method-i-print" class="method-detail method-alias">
+        
+        <div class="method-heading">
+          <span class="method-name">print</span><span
+            class="method-args">()</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+        </div>
+
+        
+
+        
+        <div class="aliases">
+          Alias for: <a href="CidrTracker.html#method-i-print_known_cidr_blks_asce">print_known_cidr_blks_asce</a>
+        </div>
+        
+      </div>
+
+    
+      <div id="method-i-print_known_cidr_blks" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">print_known_cidr_blks</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Print summary report of a list of known CIDR blocks</p>
+          
+          
+
+          
+          <div class="method-source-code" id="print_known_cidr_blks-source">
+            <pre><span class="ruby-comment"># File lib/wmap/cidr_tracker.rb, line 299</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">print_known_cidr_blks</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Print the known CIDR Netblocks in ascendant order&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Network CIDR, RIPE Reference Text, NETNAME&quot;</span>
+        <span class="ruby-ivar">@known_cidr_blks_asce_index</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">ref</span>=<span class="ruby-ivar">@known_cidr_blks</span>[<span class="ruby-identifier">key</span>][<span class="ruby-string">&#39;ref&#39;</span>]
+                <span class="ruby-identifier">netname</span>=<span class="ruby-ivar">@known_cidr_blks</span>[<span class="ruby-identifier">key</span>][<span class="ruby-string">&#39;netname&#39;</span>]
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{key}, #{ref}, #{netname}&quot;</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;End of the summary&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+        <div class="aliases">
+          Also aliased as: <a href="CidrTracker.html#method-i-inspect">inspect</a>
+        </div>
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-print_known_cidr_blks_asce" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">print_known_cidr_blks_asce</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Print summary report of a list of known CIDR blocks in the ascendant order</p>
+          
+          
+
+          
+          <div class="method-source-code" id="print_known_cidr_blks_asce-source">
+            <pre><span class="ruby-comment"># File lib/wmap/cidr_tracker.rb, line 319</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">print_known_cidr_blks_asce</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;\nIndex of known CIDR Net blocks in Ascending  Order:&quot;</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-ivar">@known_cidr_blks_asce_index</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;End of the Index&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+        <div class="aliases">
+          Also aliased as: <a href="CidrTracker.html#method-i-print">print</a>
+        </div>
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-print_known_cidr_blks_desc" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">print_known_cidr_blks_desc</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Print summary report of a list of known CIDR blocks in the descendant order</p>
+          
+          
+
+          
+          <div class="method-source-code" id="print_known_cidr_blks_desc-source">
+            <pre><span class="ruby-comment"># File lib/wmap/cidr_tracker.rb, line 312</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">print_known_cidr_blks_desc</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;\nIndex of known CIDR Net blocks in Descendant Order:&quot;</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-ivar">@known_cidr_blks_desc_index</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;End of the Index&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-query" class="method-detail method-alias">
+        
+        <div class="method-heading">
+          <span class="method-name">query</span><span
+            class="method-args">(ip)</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+        </div>
+
+        
+
+        
+        <div class="aliases">
+          Alias for: <a href="CidrTracker.html#method-i-cidr_lookup">cidr_lookup</a>
+        </div>
+        
+      </div>
+
+    
+      <div id="method-i-save-21" class="method-detail method-alias">
+        
+        <div class="method-heading">
+          <span class="method-name">save!</span><span
+            class="method-args">(file_cidrs=File_cidr_seeds)</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+        </div>
+
+        
+
+        
+        <div class="aliases">
+          Alias for: <a href="CidrTracker.html#method-i-save_cidrs_to_file-21">save_cidrs_to_file!</a>
+        </div>
+        
+      </div>
+
+    
+      <div id="method-i-save_cidrs_to_file-21" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">save_cidrs_to_file!</span><span
+            class="method-args">(file_cidrs=File_cidr_seeds)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Save the current cidr hash table into a file</p>
+          
+          
+
+          
+          <div class="method-source-code" id="save_cidrs_to_file-21-source">
+            <pre><span class="ruby-comment"># File lib/wmap/cidr_tracker.rb, line 278</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">save_cidrs_to_file!</span>(<span class="ruby-identifier">file_cidrs</span>=<span class="ruby-constant">File_cidr_seeds</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Saving the current cidrs cache table from memory to file: #{file_cidrs} ...&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">timestamp</span>=<span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+                <span class="ruby-identifier">f</span>=<span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">file_cidrs</span>, <span class="ruby-string">&#39;w&#39;</span>)
+                <span class="ruby-identifier">f</span>.<span class="ruby-identifier">write</span> <span class="ruby-node">&quot;# Local cidrs file created by Wmap::CidrTracker.save method at: #{timestamp}\n&quot;</span>
+                <span class="ruby-identifier">f</span>.<span class="ruby-identifier">write</span> <span class="ruby-string">&quot;Network CIDR, CIDR RIPE Reference Text, CIDR NETNAME\n&quot;</span>
+                <span class="ruby-ivar">@known_cidr_blks_asce_index</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span>
+                        <span class="ruby-identifier">ref</span>=<span class="ruby-identifier">get_cidr_ref</span>(<span class="ruby-identifier">key</span>)
+                        <span class="ruby-identifier">netname</span>=<span class="ruby-identifier">get_cidr_netname</span>(<span class="ruby-identifier">key</span>)
+                        <span class="ruby-identifier">f</span>.<span class="ruby-identifier">write</span> <span class="ruby-node">&quot;#{key},#{ref},#{netname}\n&quot;</span>
+                <span class="ruby-keyword">end</span>
+                <span class="ruby-identifier">f</span>.<span class="ruby-identifier">close</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;CIDR cache table is successfully saved: #{file_cidrs}&quot;</span>
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+        <div class="aliases">
+          Also aliased as: <a href="CidrTracker.html#method-i-save-21">save!</a>
+        </div>
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-size" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">size</span><span
+            class="method-args">(cidr)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>NetAddr wrapper to determine number of IPs within the CIDR object.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="size-source">
+            <pre><span class="ruby-comment"># File lib/wmap/cidr_tracker.rb, line 249</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">size</span> (<span class="ruby-identifier">cidr</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Determine the size of CIDR object: #{cidr}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">begin</span>                         
+                <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Invalid CIDR format: #{cidr}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">is_cidr?</span>(<span class="ruby-identifier">cidr</span>)
+                <span class="ruby-identifier">obj</span> = <span class="ruby-constant">NetAddr</span><span class="ruby-operator">::</span><span class="ruby-constant">CIDR</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">cidr</span>)
+                <span class="ruby-keyword">return</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">size</span>.<span class="ruby-identifier">to_i</span>
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-track" class="method-detail method-alias">
+        
+        <div class="method-heading">
+          <span class="method-name">track</span><span
+            class="method-args">(host)</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+        </div>
+
+        
+
+        
+        <div class="aliases">
+          Alias for: <a href="CidrTracker.html#method-i-cidr_worker">cidr_worker</a>
+        </div>
+        
+      </div>
+
+    
+    </section>
+  
+  </section>
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

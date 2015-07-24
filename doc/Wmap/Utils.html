@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>module Wmap::Utils - RDoc Documentation</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script src="../js/jquery.js"></script>
+<script src="../js/darkfish.js"></script>
+
+<link href="../css/fonts.css" rel="stylesheet">
+<link href="../css/rdoc.css" rel="stylesheet">
+
+
+
+<body id="top" role="document" class="module">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="../index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="../table_of_contents.html#pages">Pages</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="class-metadata">
+    
+    
+    <div id="includes-section" class="nav-section">
+  <h3>Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><a class="include" href="Utils/DomainRoot.html">Wmap::Utils::DomainRoot</a>
+  
+  
+  
+    <li><a class="include" href="Utils/UrlMagic.html">Wmap::Utils::UrlMagic</a>
+  
+  
+  
+    <li><a class="include" href="Utils/Logger.html">Wmap::Utils::Logger</a>
+  
+  
+  </ul>
+</div>
+
+    
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    
+    <li ><a href="#method-i-a_record-3F">#a_record?</a>
+    
+    <li ><a href="#method-i-cidr_2_ips">#cidr_2_ips</a>
+    
+    <li ><a href="#method-i-file_2_hash">#file_2_hash</a>
+    
+    <li ><a href="#method-i-file_2_list">#file_2_list</a>
+    
+    <li ><a href="#method-i-get_nameserver">#get_nameserver</a>
+    
+    <li ><a href="#method-i-get_nameservers">#get_nameservers</a>
+    
+    <li ><a href="#method-i-get_ns">#get_ns</a>
+    
+    <li ><a href="#method-i-host_2_ip">#host_2_ip</a>
+    
+    <li ><a href="#method-i-host_2_ips">#host_2_ips</a>
+    
+    <li ><a href="#method-i-ip_2_host">#ip_2_host</a>
+    
+    <li ><a href="#method-i-is_cidr-3F">#is_cidr?</a>
+    
+    <li ><a href="#method-i-is_fqdn-3F">#is_fqdn?</a>
+    
+    <li ><a href="#method-i-is_host-3F">#is_host?</a>
+    
+    <li ><a href="#method-i-is_ip-3F">#is_ip?</a>
+    
+    <li ><a href="#method-i-is_record-3F">#is_record?</a>
+    
+    <li ><a href="#method-i-is_valid_ip-3F">#is_valid_ip?</a>
+    
+    <li ><a href="#method-i-list_2_file">#list_2_file</a>
+    
+    <li ><a href="#method-i-ns_lookup">#ns_lookup</a>
+    
+    <li ><a href="#method-i-reverse_dns_lookup">#reverse_dns_lookup</a>
+    
+    <li ><a href="#method-i-sort_ips">#sort_ips</a>
+    
+    <li ><a href="#method-i-valid_dns_record-3F">#valid_dns_record?</a>
+    
+    <li ><a href="#method-i-zone_transferable-3F">#zone_transferable?</a>
+    
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="module-Wmap::Utils">
+  <h1 id="module-Wmap::Utils" class="module">
+    module Wmap::Utils
+  </h1>
+
+  <section class="description">
+    
+  </section>
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-a_record-3F" class="method-detail method-alias">
+        
+        <div class="method-heading">
+          <span class="method-name">a_record?</span><span
+            class="method-args">(hostname)</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+        </div>
+
+        
+
+        
+        <div class="aliases">
+          Alias for: <a href="Utils.html#method-i-valid_dns_record-3F">valid_dns_record?</a>
+        </div>
+        
+      </div>
+
+    
+      <div id="method-i-cidr_2_ips" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">cidr_2_ips</span><span
+            class="method-args">(cidr)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Convert a CIDR to a list of IPs:  Input is a CIDR expression such as
+&#39;192.168.1.1/30&#39;, output is an array of IPs</p>
+          
+          
+
+          
+          <div class="method-source-code" id="cidr_2_ips-source">
+            <pre><span class="ruby-comment"># File lib/wmap/utils/utils.rb, line 317</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">cidr_2_ips</span> (<span class="ruby-identifier">cidr</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Method to convert a CIDR block into a list of IPs: #{cidr}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">cidr4</span> = <span class="ruby-constant">NetAddr</span><span class="ruby-operator">::</span><span class="ruby-constant">CIDR</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">cidr</span>)
+                <span class="ruby-identifier">ips</span> = <span class="ruby-identifier">cidr4</span>.<span class="ruby-identifier">enumerate</span>(<span class="ruby-value">:Limit</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>, <span class="ruby-value">:Bitstep</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>)
+                <span class="ruby-comment">#ips2 = ips.slice!(1, (ips.length-2))</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-identifier">ips</span>
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+        <span class="ruby-keyword">end</span>   
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-file_2_hash" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">file_2_hash</span><span
+            class="method-args">(f,lc=true)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Load entries from a text file and return a hash</p>
+          
+          
+
+          
+          <div class="method-source-code" id="file_2_hash-source">
+            <pre><span class="ruby-comment"># File lib/wmap/utils/utils.rb, line 60</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">file_2_hash</span>(<span class="ruby-identifier">f</span>,<span class="ruby-identifier">lc</span>=<span class="ruby-keyword">true</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Loading records from file: #{f}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">hs</span>=<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+                <span class="ruby-identifier">file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">f</span>, <span class="ruby-string">&quot;r&quot;</span>)
+                <span class="ruby-identifier">file</span>.<span class="ruby-identifier">each_line</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
+                        <span class="ruby-identifier">line</span>=<span class="ruby-identifier">line</span>.<span class="ruby-identifier">chomp</span>.<span class="ruby-identifier">strip</span>
+                        <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">nil?</span>
+                        <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">empty?</span>
+                        <span class="ruby-identifier">line</span>=<span class="ruby-identifier">line</span>.<span class="ruby-identifier">downcase</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">lc</span><span class="ruby-operator">==</span><span class="ruby-keyword">true</span>
+                        <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">line</span> <span class="ruby-operator">=~</span> <span class="ruby-node">/^\s*#/</span> 
+                        <span class="ruby-identifier">hs</span>[<span class="ruby-identifier">line</span>]=<span class="ruby-keyword">true</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">hs</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">line</span>)
+                <span class="ruby-keyword">end</span>
+                <span class="ruby-identifier">file</span>.<span class="ruby-identifier">close</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-identifier">hs</span>
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__} on #{f}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-file_2_list" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">file_2_list</span><span
+            class="method-args">(f,lc=true)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Load entries from a text file and return an array</p>
+          
+          
+
+          
+          <div class="method-source-code" id="file_2_list-source">
+            <pre><span class="ruby-comment"># File lib/wmap/utils/utils.rb, line 21</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">file_2_list</span>(<span class="ruby-identifier">f</span>,<span class="ruby-identifier">lc</span>=<span class="ruby-keyword">true</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Loading records from file: #{f}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">list</span>=<span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
+                <span class="ruby-identifier">file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">f</span>, <span class="ruby-string">&quot;r&quot;</span>)
+                <span class="ruby-identifier">file</span>.<span class="ruby-identifier">each_line</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
+                        <span class="ruby-identifier">line</span>=<span class="ruby-identifier">line</span>.<span class="ruby-identifier">chomp</span>.<span class="ruby-identifier">strip</span>
+                        <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">nil?</span>
+                        <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">empty?</span>
+                        <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">line</span> <span class="ruby-operator">=~</span> <span class="ruby-node">/^\s*#/</span> 
+                        <span class="ruby-identifier">line</span>=<span class="ruby-identifier">line</span>.<span class="ruby-identifier">downcase</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">lc</span><span class="ruby-operator">==</span><span class="ruby-keyword">true</span>
+                        <span class="ruby-identifier">list</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">line</span>.<span class="ruby-identifier">chomp</span>.<span class="ruby-identifier">strip</span>)
+                <span class="ruby-keyword">end</span>
+                <span class="ruby-identifier">file</span>.<span class="ruby-identifier">close</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-identifier">list</span>
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__} for file #{f}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-get_nameserver" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_nameserver</span><span
+            class="method-args">(host)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve the first name server from the Internet whois data repository for
+the host / subdomain / domain</p>
+          
+          
+
+          
+          <div class="method-source-code" id="get_nameserver-source">
+            <pre><span class="ruby-comment"># File lib/wmap/utils/utils.rb, line 283</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_nameserver</span> (<span class="ruby-identifier">host</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Retrieve the first authoritative name server for: #{host}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">domain</span>=<span class="ruby-identifier">get_domain_root</span>(<span class="ruby-identifier">host</span>)
+                <span class="ruby-identifier">w</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">Whois</span>.<span class="ruby-identifier">new</span>
+                <span class="ruby-identifier">ns</span> = <span class="ruby-identifier">w</span>.<span class="ruby-identifier">query</span>(<span class="ruby-identifier">domain</span>).<span class="ruby-identifier">nameservers</span>.<span class="ruby-identifier">map!</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">name</span> }
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">ns</span>.<span class="ruby-identifier">empty?</span>
+                        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;No name server found for domain root: #{domain}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>                  
+                <span class="ruby-keyword">else</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-identifier">ns</span>.<span class="ruby-identifier">first</span>
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method get_nameservers for #{host}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+        <div class="aliases">
+          Also aliased as: <a href="Utils.html#method-i-get_ns">get_ns</a>
+        </div>
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-get_nameservers" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_nameservers</span><span
+            class="method-args">(host)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Retrieve a list of the authoritative name servers from the Internet whois
+data repository for the host / subdomain / domain</p>
+          
+          
+
+          
+          <div class="method-source-code" id="get_nameservers-source">
+            <pre><span class="ruby-comment"># File lib/wmap/utils/utils.rb, line 264</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_nameservers</span> (<span class="ruby-identifier">host</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Retrieve a list of authoritative name server for: #{host}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">domain</span>=<span class="ruby-identifier">get_domain_root</span>(<span class="ruby-identifier">host</span>)
+                <span class="ruby-identifier">w</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">Whois</span>.<span class="ruby-identifier">new</span>
+                <span class="ruby-identifier">ns</span> = <span class="ruby-identifier">w</span>.<span class="ruby-identifier">query</span>(<span class="ruby-identifier">domain</span>).<span class="ruby-identifier">nameservers</span>.<span class="ruby-identifier">map!</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">name</span> }
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">ns</span>.<span class="ruby-identifier">empty?</span>
+                        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;No name server found for domain root: #{domain}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>                  
+                <span class="ruby-keyword">else</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-identifier">ns</span>
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method get_nameservers for #{host}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-get_ns" class="method-detail method-alias">
+        
+        <div class="method-heading">
+          <span class="method-name">get_ns</span><span
+            class="method-args">(host)</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+        </div>
+
+        
+
+        
+        <div class="aliases">
+          Alias for: <a href="Utils.html#method-i-get_nameserver">get_nameserver</a>
+        </div>
+        
+      </div>
+
+    
+      <div id="method-i-host_2_ip" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">host_2_ip</span><span
+            class="method-args">(hostname)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Perform DNS query on a hostname.  Return the first resolved IP as a string</p>
+          
+          
+
+          
+          <div class="method-source-code" id="host_2_ip-source">
+            <pre><span class="ruby-comment"># File lib/wmap/utils/utils.rb, line 240</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">host_2_ip</span> (<span class="ruby-identifier">hostname</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Perform DNS query on host: #{hostname}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">ips</span>=<span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_ip?</span>(<span class="ruby-identifier">hostname</span>)
+                        <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;No change - same IP is returned. &quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-identifier">hostname</span>.<span class="ruby-identifier">strip</span>
+                <span class="ruby-keyword">else</span>
+                        <span class="ruby-identifier">ips</span>=<span class="ruby-constant">Resolv</span>.<span class="ruby-identifier">getaddresses</span>(<span class="ruby-identifier">hostname</span>)
+                        <span class="ruby-keyword">if</span> (<span class="ruby-identifier">ips</span>.<span class="ruby-identifier">empty?</span>) <span class="ruby-keyword">then</span>
+                                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Failed to resolve #{hostname}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                                <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+                        <span class="ruby-keyword">else</span>
+                                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;IP found: #{ips.first}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                                <span class="ruby-keyword">return</span> <span class="ruby-identifier">ips</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">strip</span>
+                        <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method host_2_ip for host #{hostname}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-host_2_ips" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">host_2_ips</span><span
+            class="method-args">(hostname)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Perform the DNS query on a hostname over the Internet. Return the resolved
+IP(s) in an array</p>
+          
+          
+
+          
+          <div class="method-source-code" id="host_2_ips-source">
+            <pre><span class="ruby-comment"># File lib/wmap/utils/utils.rb, line 217</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">host_2_ips</span> (<span class="ruby-identifier">hostname</span>)
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">ips</span>=<span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_ip?</span>(<span class="ruby-identifier">hostname</span>)
+                        <span class="ruby-identifier">ips</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">hostname</span>)
+                        <span class="ruby-keyword">return</span> <span class="ruby-identifier">ips</span>
+                <span class="ruby-keyword">else</span>
+                        <span class="ruby-identifier">ips</span> = <span class="ruby-constant">Resolv</span>.<span class="ruby-identifier">getaddresses</span>(<span class="ruby-identifier">hostname</span>)
+                        <span class="ruby-keyword">if</span> (<span class="ruby-identifier">ips</span>.<span class="ruby-identifier">empty?</span>) <span class="ruby-keyword">then</span>
+                                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Failed to resolve #{hostname}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                                <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+                        <span class="ruby-keyword">else</span>
+                                <span class="ruby-keyword">return</span> <span class="ruby-identifier">ips</span>
+                        <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method host_2_ips for host #{hostname}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+        <div class="aliases">
+          Also aliased as: <a href="Utils.html#method-i-ns_lookup">ns_lookup</a>
+        </div>
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-ip_2_host" class="method-detail method-alias">
+        
+        <div class="method-heading">
+          <span class="method-name">ip_2_host</span><span
+            class="method-args">(ip)</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+        </div>
+
+        
+
+        
+        <div class="aliases">
+          Alias for: <a href="Utils.html#method-i-reverse_dns_lookup">reverse_dns_lookup</a>
+        </div>
+        
+      </div>
+
+    
+      <div id="method-i-is_cidr-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">is_cidr?</span><span
+            class="method-args">(cidr)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Simple test to determine if the entry is in valid network cidr format</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_cidr-3F-source">
+            <pre><span class="ruby-comment"># File lib/wmap/utils/utils.rb, line 180</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">is_cidr?</span>(<span class="ruby-identifier">cidr</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Validate if the entry is valid CIDR format: #{cidr}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">begin</span>
+        <span class="ruby-identifier">cidr</span>=<span class="ruby-identifier">cidr</span>.<span class="ruby-identifier">strip</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">cidr</span> <span class="ruby-operator">=~</span>  <span class="ruby-regexp">/^(\d+\.\d+\.\d+.\d+)\/(\d+)$/</span>
+                        <span class="ruby-identifier">ip</span>=<span class="ruby-node">$1</span>
+                        <span class="ruby-identifier">mask</span>=<span class="ruby-node">$2</span>.<span class="ruby-identifier">to_i</span>
+                        <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_ip?</span>(<span class="ruby-identifier">ip</span>)
+                                <span class="ruby-keyword">if</span> <span class="ruby-identifier">mask</span> <span class="ruby-operator">&gt;</span><span class="ruby-value">0</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">mask</span> <span class="ruby-operator">&lt;=</span><span class="ruby-value">32</span>
+                                        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;confirmed as a valid CIDR entry: #{cidr}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
+                                <span class="ruby-keyword">else</span>
+                                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+                                <span class="ruby-keyword">end</span>
+                        <span class="ruby-keyword">else</span>
+                                <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+                        <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">else</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-is_fqdn-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">is_fqdn?</span><span
+            class="method-args">(host)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Simple test a host string format. Return true if it contains a valid
+internet domain sub-string. Note: Don&#39;t be confused with another method
+&#39;valid_dns_record?&#39;, which is a stricter and time-consuming test on
+the DNS server for a resolvable internet host.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_fqdn-3F-source">
+            <pre><span class="ruby-comment"># File lib/wmap/utils/utils.rb, line 160</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">is_fqdn?</span> (<span class="ruby-identifier">host</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Validate the host-name format is valid: #{host}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_ip?</span>(<span class="ruby-identifier">host</span>) <span class="ruby-keyword">or</span> <span class="ruby-identifier">is_url?</span>(<span class="ruby-identifier">host</span>)
+                <span class="ruby-identifier">domain</span>=<span class="ruby-identifier">get_domain_root</span>(<span class="ruby-identifier">host</span>)
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">domain</span>.<span class="ruby-identifier">nil?</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+                <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">is_domain_root?</span>(<span class="ruby-identifier">domain</span>)
+                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
+                <span class="ruby-keyword">else</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method is_fqdn? for #{host}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+        <div class="aliases">
+          Also aliased as: <a href="Utils.html#method-i-is_host-3F">is_host?</a>
+        </div>
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-is_host-3F" class="method-detail method-alias">
+        
+        <div class="method-heading">
+          <span class="method-name">is_host?</span><span
+            class="method-args">(host)</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+        </div>
+
+        
+
+        
+        <div class="aliases">
+          Alias for: <a href="Utils.html#method-i-is_fqdn-3F">is_fqdn?</a>
+        </div>
+        
+      </div>
+
+    
+      <div id="method-i-is_ip-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">is_ip?</span><span
+            class="method-args">(ip)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Test if it&#39;s a legitimate IP4 address</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_ip-3F-source">
+            <pre><span class="ruby-comment"># File lib/wmap/utils/utils.rb, line 138</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">is_ip?</span> (<span class="ruby-identifier">ip</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Validate the IP format is valid: #{ip}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">ip</span>=<span class="ruby-identifier">ip</span>.<span class="ruby-identifier">strip</span>
+                <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;This is an URL: #{ip}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_url?</span>(<span class="ruby-identifier">ip</span>)
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">ip</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/\d+\.\d+\.\d+.\d+/</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">ip</span> <span class="ruby-operator">!~</span> <span class="ruby-regexp">/\/\d+/</span>
+                        <span class="ruby-identifier">octs</span>=<span class="ruby-identifier">ip</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;.&#39;</span>)
+                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">octs</span>.<span class="ruby-identifier">size</span><span class="ruby-operator">==</span><span class="ruby-value">4</span>
+                        <span class="ruby-identifier">octs</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">&gt;=</span><span class="ruby-value">0</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">&lt;=</span><span class="ruby-value">255</span> }
+                <span class="ruby-keyword">else</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+                <span class="ruby-keyword">end</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Confirmed as a valid IP: #{ip}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method is_ip? for #{ip}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+        <div class="aliases">
+          Also aliased as: <a href="Utils.html#method-i-is_valid_ip-3F">is_valid_ip?</a>
+        </div>
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-is_record-3F" class="method-detail method-alias">
+        
+        <div class="method-heading">
+          <span class="method-name">is_record?</span><span
+            class="method-args">(hostname)</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+        </div>
+
+        
+
+        
+        <div class="aliases">
+          Alias for: <a href="Utils.html#method-i-valid_dns_record-3F">valid_dns_record?</a>
+        </div>
+        
+      </div>
+
+    
+      <div id="method-i-is_valid_ip-3F" class="method-detail method-alias">
+        
+        <div class="method-heading">
+          <span class="method-name">is_valid_ip?</span><span
+            class="method-args">(ip)</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+        </div>
+
+        
+
+        
+        <div class="aliases">
+          Alias for: <a href="Utils.html#method-i-is_ip-3F">is_ip?</a>
+        </div>
+        
+      </div>
+
+    
+      <div id="method-i-list_2_file" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">list_2_file</span><span
+            class="method-args">(list,file)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Save an array into a file</p>
+          
+          
+
+          
+          <div class="method-source-code" id="list_2_file-source">
+            <pre><span class="ruby-comment"># File lib/wmap/utils/utils.rb, line 43</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">list_2_file</span> (<span class="ruby-identifier">list</span>,<span class="ruby-identifier">file</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Save list #{list} to plain file #{file}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">f</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">file</span>, <span class="ruby-string">&quot;w&quot;</span>)
+                <span class="ruby-identifier">list</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ent</span><span class="ruby-operator">|</span>
+                        <span class="ruby-comment">#ent.strip!</span>
+                        <span class="ruby-comment"># Append the unix line break</span>
+                        <span class="ruby-identifier">f</span>.<span class="ruby-identifier">write</span>(<span class="ruby-node">&quot;#{ent}\n&quot;</span>)
+                <span class="ruby-keyword">end</span>
+                <span class="ruby-identifier">f</span>.<span class="ruby-identifier">close</span>
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__} for file #{file}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-ns_lookup" class="method-detail method-alias">
+        
+        <div class="method-heading">
+          <span class="method-name">ns_lookup</span><span
+            class="method-args">(hostname)</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+        </div>
+
+        
+
+        
+        <div class="aliases">
+          Alias for: <a href="Utils.html#method-i-host_2_ips">host_2_ips</a>
+        </div>
+        
+      </div>
+
+    
+      <div id="method-i-reverse_dns_lookup" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">reverse_dns_lookup</span><span
+            class="method-args">(ip)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Perform reverse dns lookup for an IP. Return the found &#39;hostname&#39;
+if found, or the original IP if not</p>
+          
+          
+
+          
+          <div class="method-source-code" id="reverse_dns_lookup-source">
+            <pre><span class="ruby-comment"># File lib/wmap/utils/utils.rb, line 303</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">reverse_dns_lookup</span> (<span class="ruby-identifier">ip</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Retrieve the hostname by the reverse DNS lookup on IP: #{ip}&quot;</span>
+        <span class="ruby-identifier">hostname</span> = <span class="ruby-identifier">ip</span>
+        <span class="ruby-keyword">begin</span> 
+                <span class="ruby-identifier">hostname</span> = <span class="ruby-constant">Socket</span>.<span class="ruby-identifier">gethostbyaddr</span>(<span class="ruby-identifier">ip</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;.&#39;</span>).<span class="ruby-identifier">collect</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">to_i</span>}.<span class="ruby-identifier">pack</span>(<span class="ruby-string">&quot;CCCC&quot;</span>))[<span class="ruby-value">0</span>]
+                <span class="ruby-keyword">return</span> <span class="ruby-identifier">hostname</span>.<span class="ruby-identifier">downcase</span>
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method reverse_dns_lookup: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-identifier">hostname</span>
+        <span class="ruby-keyword">end</span>           
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+        <div class="aliases">
+          Also aliased as: <a href="Utils.html#method-i-ip_2_host">ip_2_host</a>
+        </div>
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-sort_ips" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">sort_ips</span><span
+            class="method-args">(ips)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Sort an array of IPs in the ascendant order</p>
+          
+          
+
+          
+          <div class="method-source-code" id="sort_ips-source">
+            <pre><span class="ruby-comment"># File lib/wmap/utils/utils.rb, line 207</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">sort_ips</span> (<span class="ruby-identifier">ips</span>)
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-node">&quot;Sort the list of IP address in the ascendant order: #{ips}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-constant">NetAddr</span>.<span class="ruby-identifier">sort</span>(<span class="ruby-identifier">ips</span>)
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method sort_ips for IPs #{ips}: #{ee}&quot;</span> <span class="ruby-comment"># if @verbose</span>
+        <span class="ruby-keyword">end</span>           
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-valid_dns_record-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">valid_dns_record?</span><span
+            class="method-args">(hostname)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Query the name-server to see if the dns record is still valid</p>
+          
+          
+
+          
+          <div class="method-source-code" id="valid_dns_record-3F-source">
+            <pre><span class="ruby-comment"># File lib/wmap/utils/utils.rb, line 82</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">valid_dns_record?</span> (<span class="ruby-identifier">hostname</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Validate the hostname record: #{hostname}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">ips</span>=<span class="ruby-constant">Resolv</span>.<span class="ruby-identifier">getaddresses</span>(<span class="ruby-identifier">hostname</span>)
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">ips</span>.<span class="ruby-identifier">empty?</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+                <span class="ruby-keyword">else</span>
+                        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Found: #{hostname}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__} for host #{hostname}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+        <div class="aliases">
+          Also aliased as: <a href="Utils.html#method-i-is_record-3F">is_record?</a>, <a href="Utils.html#method-i-a_record-3F">a_record?</a>
+        </div>
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-zone_transferable-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">zone_transferable?</span><span
+            class="method-args">(domain)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Test the DNS server if zone transfer is allowed. If allowed, save the found
+hosts into the class variable.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="zone_transferable-3F-source">
+            <pre><span class="ruby-comment"># File lib/wmap/utils/utils.rb, line 101</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">zone_transferable?</span>(<span class="ruby-identifier">domain</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Check if the domain allows free zone transfer: #{domain}&quot;</span> 
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">transferable</span>=<span class="ruby-keyword">false</span>
+                <span class="ruby-identifier">domain</span>=<span class="ruby-identifier">domain</span>.<span class="ruby-identifier">downcase</span>
+                <span class="ruby-identifier">nameservers</span> = <span class="ruby-identifier">get_nameservers</span>(<span class="ruby-identifier">domain</span>)
+                <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Unable to determine the name servers for domain #{domain}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">nameservers</span>.<span class="ruby-identifier">nil?</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Retrieved name servers: #{nameservers}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-identifier">nameservers</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">nssrv</span><span class="ruby-operator">|</span>
+                        <span class="ruby-keyword">begin</span>
+                                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Attempt zone transfer on name server: #{nssrv}&quot;</span> 
+                                <span class="ruby-keyword">if</span> <span class="ruby-identifier">nssrv</span>.<span class="ruby-identifier">nil?</span>
+                                        <span class="ruby-identifier">abort</span> <span class="ruby-string">&quot;Method input variable error: no name server found!&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                                        <span class="ruby-keyword">next</span>
+                                <span class="ruby-keyword">end</span>                
+                                <span class="ruby-identifier">zt</span> = <span class="ruby-constant">Dnsruby</span><span class="ruby-operator">::</span><span class="ruby-constant">ZoneTransfer</span>.<span class="ruby-identifier">new</span>
+                                <span class="ruby-identifier">zt</span>.<span class="ruby-identifier">server</span>=(<span class="ruby-identifier">nssrv</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">nssrv!</span>=<span class="ruby-string">&quot;&quot;</span>                     
+                                <span class="ruby-identifier">records</span> = <span class="ruby-identifier">zt</span>.<span class="ruby-identifier">transfer</span>(<span class="ruby-identifier">domain</span>)
+                                <span class="ruby-keyword">if</span> <span class="ruby-identifier">records</span><span class="ruby-operator">==</span><span class="ruby-keyword">nil</span>
+                                        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{domain} zone transfer is not allowed on name server: #{nssrv}&quot;</span> 
+                                        <span class="ruby-keyword">next</span>
+                                <span class="ruby-keyword">else</span>
+                                        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{domain} zone transfer is allowed!&quot;</span>
+                                        <span class="ruby-identifier">transferable</span>=<span class="ruby-keyword">true</span>
+                                <span class="ruby-keyword">end</span>
+                        <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Exception</span>=<span class="ruby-operator">&gt;</span><span class="ruby-identifier">ee</span>
+                                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method zone_transferable? for domain #{domain}: #{ee}&quot;</span> 
+                        <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-identifier">transferable</span>
+        <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+        <span class="ruby-keyword">end</span>   
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+  </section>
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+
