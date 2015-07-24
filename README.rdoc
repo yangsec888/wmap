@@ -12,7 +12,7 @@ The latest release is Beta version 1.5.x as of fall 2014. Please refer to the CH
 
 
 == Author Contact
-This program is designed and developed by Yang Li. You can reach him by Email. <yang.li@owasp.org> or Phone <917.667.1972>
+This program is designed and developed by Yang Li. You can reach him by Email. <yang.li@owasp.org>
 
 
 == Installation
@@ -83,7 +83,7 @@ There are more examples under the 'demos' folder of this package. The examples s
 
 
 == More document(s):
-The software comes with the Ruby doc during your installation as shown above. For your convenience, the Ruby doc is also distributed in a separate package 'wmap-x.x.x-doc.tar.gz'. You can unzip the package, navigate to the 'doc' folder, and click the 'index.html' to open the start page in your favorite browser.
+The software comes with the Ruby doc during your installation as shown above. For your convenience, the Ruby doc is also distributed with this software. You can navigate to the 'doc' folder, and click the 'index.html' to open the start page in your favorite browser.
 
 If you need additional documentation / information other than this README file and the Ruby document package, please be patient - as I'm still working on it :)
 
