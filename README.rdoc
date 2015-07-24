@@ -16,9 +16,9 @@ This program is designed and developed by Yang Li. You can reach him by Email: <
 
 
 == Installation
-The easiest way to install WebMapper is by using Ruby Gems.  To install from the local gem file:
+The easiest way to install WebMapper is by using Ruby Gems. Download the latest gem 'wmap-x.x.x.gem' into the local file system. Then install it from there:
 
-  gem install wmap --no-rdoc
+  gem install wmap-x.x.x.gem --no-rdoc
 
 
 == Dependency
