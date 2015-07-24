@@ -23,8 +23,7 @@ The easiest way to install WebMapper is by using Ruby Gems. Download the latest 
 
 == Dependency
 You need the Ruby 1.9.2 or above in order to use this program. In addition, I developed and tested the code in a Ubantu Linux VM with Ruby 1.9.3.
-1. You need to setup Ruby 1.9.x environment. In my test environment, I was able to set it up with RVM. Please refer to this page for more installation information:
-http://www.ruby-lang.org/en/downloads/
+1. You need to setup Ruby 1.9.x environment. In my test environment, I was able to set it up with RVM. Please refer to this page for more installation information: http://www.ruby-lang.org/en/downloads/
 
 2. In addition, the following Ruby GEM dependency are needed by different components of this software:
 			require "uri"
