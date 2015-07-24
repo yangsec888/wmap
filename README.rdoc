@@ -1,4 +1,4 @@
-= WebDiscovery Ruby API README
+= WebMapper Ruby API README
 
 
 == What's this program for?
@@ -12,7 +12,7 @@ The latest release is Beta version 1.5.x as of fall 2014. Please refer to the CH
 
 
 == Author Contact
-This program is designed and developed by Yang Li. You can reach him by Email. <yang.li@owasp.org>
+This program is designed and developed by Yang Li. You can reach him by Email: <yang.li@owasp.org>
 
 
 == Installation
@@ -27,21 +27,21 @@ You need the Ruby 1.9.2 or above in order to use this program. In addition, I de
 http://www.ruby-lang.org/en/downloads/
 
 2. In addition, the following Ruby GEM dependency are needed by different components of this software:
-	require "uri"
-	require "open-uri"
-	require "open_uri_redirections"
-	require "nokogiri"
-	require "net/http"
-	require "httpclient"
-	require "net/ping"
-	require "netaddr"
-	require "socket"
-	require "openssl"
-	require "whois"
-	require "resolv"
-	require "geoip"
-	require "parallel"
-	require "dnsruby"
+			require "uri"
+			require "open-uri"
+			require "open_uri_redirections"
+			require "nokogiri"
+			require "net/http"
+			require "httpclient"
+			require "net/ping"
+			require "netaddr"
+			require "socket"
+			require "openssl"
+			require "whois"
+			require "resolv"
+			require "geoip"
+			require "parallel"
+			require "dnsruby"
 
 3. Ruby-whois gem patches
 This software depends on a patched version of Ruby gem ruby-whois-2.7.0 (http://www.ruby-whois.org/) for the domain whois lookup feature. For better result, you could manually add the patches into your local whois gem installation directory as shown below:
@@ -72,8 +72,8 @@ The above executable is intelligent enough to take argument as either a seed fil
 
 
 == Dump Out Discovery Database
-
-  $ wdump [output file]
+You can dump out the program output by using the build-in utility 'wdump' as shown below:
+  $ wdump [output file name from you]
 
 The above executable will dump out the discovery database into a single file as program output. Currently, the supported file format is Comma-separated Value (.csv) and Extensible Markup Language (.xml)
 
