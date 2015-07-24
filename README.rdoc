@@ -65,11 +65,10 @@ To add your public network block into the scope:
   $ wmap <seed file | target host | target url | target IP or network cidr>
 
 The above executable is intelligent enough to take argument as either a seed file, or a string such as a host, an IP, a network block, or a URL. The new discoveries will be automatically tracked in the data file 'lib/wmap/data/target_sites'.
-    Note:
-	seed file - mix of url, cidr and domain seed, one entry per line.
-	url seed - known URL(s) for further discovery via the web crawler.
-	cidr seed - list of known network blocks, for discovering web service via port scanning; it is also used to validate if the web service has a known IP (internal hosted).
-	domain seed - validated internet domain to be used for DNS record brute-forcing; it is also used to validate the ownership of found web service.
+  Note: seed file - mix of url, cidr and domain seed, one entry per line.
+				url seed - known URL(s) for further discovery via the web crawler.
+				cidr seed - list of known network blocks, for discovering web service via port scanning; it is also used to validate if the web service has a known IP (internal hosted).
+				domain seed - validated internet domain to be used for DNS record brute-forcing; it is also used to validate the ownership of found web service.
 
 
 == Dump Out Discovery Database
@@ -89,7 +88,7 @@ The software comes with the Ruby doc during your installation as shown above. Fo
 If you need additional documentation / information other than this README file and the Ruby document package, please be patient - as I'm still working on it :)
 
 == How do I report the bugs, or maybe require some new features?
-Contact the author Yang Li directly at email 'yang.li@owasp.org',  or phone me directly on my cell (917) 667.1972.
+Contact the author Yang Li directly at email 'yang.li@owasp.org'.
 
 
 == Legal Disclaimer:
