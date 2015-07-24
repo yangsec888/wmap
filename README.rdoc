@@ -16,7 +16,7 @@ This program is designed and developed by Yang Li. You can reach him by Email: <
 
 
 == Installation
-The easiest way to install ruby-prof is by using Ruby Gems.  To install from the local gem file:
+The easiest way to install WebMapper is by using Ruby Gems.  To install from the local gem file:
 
   gem install wmap --no-rdoc
 
