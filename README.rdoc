@@ -1,10 +1,9 @@
-= WebMapper Ruby API README
+= OWASP WebMapper Ruby API README
 
 
 == What's this program for?
 This program is designed for the web application asset discovery and tracking. It was originally developed to
-to cover the gaps of Veracode's Discovery service. Over the time it grows to be a more capable and complete replacement
-(IMHO).
+to cover the gaps of a similiar commercial product. Over the time it grows to be a more capable and complete replacement (IMHO).
 
 
 == Program Version
