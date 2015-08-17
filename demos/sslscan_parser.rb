@@ -1,7 +1,7 @@
 # Sample CIDR Tracker - Given a trusted IP, print out all tracked CIDR information  
 # Usage: ruby sslscan_parser.rb [list of xml report] [file_target]
 # version 0.2, Date 12/10/2014, by Yang Li
-require "Nokogiri"
+require "nokogiri"
 
 @verbose=false
 @ciphers=Hash.new
