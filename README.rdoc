@@ -3,7 +3,7 @@
 
 == What's this program for?
 This program is designed for the web application asset discovery and tracking. It was originally developed to
-to cover the gaps of a similiar commercial product. Over the time it grows to be a more capable and complete replacement (IMHO).
+to cover the gaps of a similar commercial product. Over the time it grows to be a more capable and complete replacement (IMHO).
 
 
 == Program Version
@@ -15,7 +15,7 @@ This program is designed and developed by Yang Li. You can reach him by Email: <
 
 
 == Installation
-The easiest way to install WebMapper is by using Ruby Gems. Download the latest gem 'wmap-x.x.x.gem' into the local file system. Then install it from there:
+To take full power of this program, you would need an *nix flavor machine with direct Internet access. I have installed it successfully on both Mac and Linux environment. The easiest way to install OWASP Web Mapper is by using Ruby Gems. Download the latest gem 'wmap-x.x.x.gem' into the local file system. Then install it from there:
 
   gem install wmap-x.x.x.gem --no-rdoc
 
