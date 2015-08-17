@@ -15,16 +15,15 @@ This program is designed and developed by Yang Li. You can reach him by Email: <
 
 
 == Installation
-To take full power of this program, you would need an *nix flavor machine with direct Internet access. I have installed it successfully on both Mac and Linux environment. The easiest way to install OWASP Web Mapper is by using Ruby Gems. Download the latest gem 'wmap-x.x.x.gem' into the local file system. Then install it from there:
+To take full power of this program, you would need an *nix flavor machine with direct Internet access. I have installed it successfully on both Mac and Linux machines. You'll also need the Ruby environment being setup properly. The easiest way to install OWASP Web Mapper is by using Ruby Gems. Download the latest gem 'wmap-x.x.x.gem' into the local file system. Then install it from command line there:
 
   gem install wmap-x.x.x.gem --no-rdoc
 
 
 == Dependency
-You need the Ruby 1.9.2 or above in order to use this program. In addition, I developed and tested the code in a Ubantu Linux VM with Ruby 1.9.3.
-1. You need to setup Ruby 1.9.x environment. In my test environment, I was able to set it up with RVM. Please refer to this page for more installation information: http://www.ruby-lang.org/en/downloads/
+You need the Ruby 1.9.2 or above in order to use this program. In my test environment, I was able to set it up with RVM. Please refer to this page for more installation information: http://www.ruby-lang.org/en/downloads/
 
-2. In addition, the following Ruby GEM dependency are needed by different components of this software:
+ In addition, the following Ruby GEM dependency are needed by different components of this software:
       require "digest/md5"
       require "dnsruby"
       require "geoip"
@@ -47,7 +46,7 @@ You need the Ruby 1.9.2 or above in order to use this program. In addition, I de
     To install "uri" gem for example, use the command below:
       $ gem install uri
 
-3. Ruby-whois gem patches
+== Ruby-whois gem patches
 This software depends on a patched version of Ruby gem ruby-whois-2.7.0 (http://www.ruby-whois.org/) for the domain whois lookup feature. For better result, you could manually add the patches into your local whois gem installation directory as shown below:
   $ cp whois_patches/* [Your_ruby_whois_gem_path]/whois/lib/whois/record/parser/
 Or you can directly download the branched whois gem from this repository - https://github.com/yangsec888/whois
