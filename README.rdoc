@@ -32,7 +32,7 @@ You need the Ruby 1.9.2 or above in order to use this program. In addition, I de
       require "net/http"
       require "net/ping"
       require "netaddr"
-      "require ""nokogiri""	"
+      require "nokogiri"
       require "open_uri_redirections"
       require "openssl"
       require "open-uri"
