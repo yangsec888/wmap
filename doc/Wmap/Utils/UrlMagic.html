@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>module Wmap::Utils::UrlMagic - RDoc Documentation</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../../";
+</script>
+
+<script src="../../js/jquery.js"></script>
+<script src="../../js/darkfish.js"></script>
+
+<link href="../../css/fonts.css" rel="stylesheet">
+<link href="../../css/rdoc.css" rel="stylesheet">
+
+
+
+<body id="top" role="document" class="module">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="../../index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="../../table_of_contents.html#pages">Pages</a>
+    <a href="../../table_of_contents.html#classes">Classes</a>
+    <a href="../../table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="class-metadata">
+    
+    
+    
+    
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    
+    <li ><a href="#method-i-create_absolute_url_from_base">#create_absolute_url_from_base</a>
+    
+    <li ><a href="#method-i-create_absolute_url_from_context">#create_absolute_url_from_context</a>
+    
+    <li ><a href="#method-i-host_2_url">#host_2_url</a>
+    
+    <li ><a href="#method-i-is_https-3F">#is_https?</a>
+    
+    <li ><a href="#method-i-is_site-3F">#is_site?</a>
+    
+    <li ><a href="#method-i-is_ssl-3F">#is_ssl?</a>
+    
+    <li ><a href="#method-i-is_url-3F">#is_url?</a>
+    
+    <li ><a href="#method-i-make_absolute">#make_absolute</a>
+    
+    <li ><a href="#method-i-normalize_url">#normalize_url</a>
+    
+    <li ><a href="#method-i-url_2_host">#url_2_host</a>
+    
+    <li ><a href="#method-i-url_2_path">#url_2_path</a>
+    
+    <li ><a href="#method-i-url_2_port">#url_2_port</a>
+    
+    <li ><a href="#method-i-url_2_site">#url_2_site</a>
+    
+    <li ><a href="#method-i-urls_on_same_domain-3F">#urls_on_same_domain?</a>
+    
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="module-Wmap::Utils::UrlMagic">
+  <h1 id="module-Wmap::Utils::UrlMagic" class="module">
+    module Wmap::Utils::UrlMagic
+  </h1>
+
+  <section class="description">
+    
+  </section>
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-create_absolute_url_from_base" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">create_absolute_url_from_base</span><span
+            class="method-args">(potential_base, relative_url)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Create / construct the absolute URL from a known URL and relative file
+path. For example, &#39;<a
+href="http://images.search.yahoo.com/images">images.search.yahoo.com/images</a>&#39;
++ &#39;/search/images?p=raiders&#39; =&gt; &#39;<a
+href="http://images.search.yahoo.com/search/images?p=raiders">images.search.yahoo.com/search/images?p=raiders</a>&#39;</p>
+          
+          
+
+          
+          <div class="method-source-code" id="create_absolute_url_from_base-source">
+            <pre><span class="ruby-comment"># File lib/wmap/utils/url_magic.rb, line 271</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-identifier">create_absolute_url_from_base</span>(<span class="ruby-identifier">potential_base</span>, <span class="ruby-identifier">relative_url</span>)
+    <span class="ruby-keyword">begin</span>
+                    <span class="ruby-comment">#puts &quot;Determine the absolute URL from potential base #{potential_base} and relative URL #{relative_url}&quot; if @verbose</span>
+                    <span class="ruby-identifier">naked_base</span> = <span class="ruby-identifier">url_2_site</span>(<span class="ruby-identifier">potential_base</span>).<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">chop</span>        
+                    <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Found absolute URL: #{naked_base+relative_url}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                    <span class="ruby-keyword">return</span> <span class="ruby-identifier">naked_base</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">relative_url</span>
+    <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                    <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+    <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-create_absolute_url_from_context" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">create_absolute_url_from_context</span><span
+            class="method-args">(potential_base, relative_url)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Construct the absolute URL by comparing a known URL and the relative file
+path</p>
+          
+          
+
+          
+          <div class="method-source-code" id="create_absolute_url_from_context-source">
+            <pre><span class="ruby-comment"># File lib/wmap/utils/url_magic.rb, line 284</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-identifier">create_absolute_url_from_context</span>(<span class="ruby-identifier">potential_base</span>, <span class="ruby-identifier">relative_url</span>)
+    <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Determine the absolute URL from context:\n Known base: #{potential_base}, Relative path: #{relative_url}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+            <span class="ruby-keyword">begin</span>
+                    <span class="ruby-identifier">absolute_url</span> = <span class="ruby-keyword">nil</span>
+                    <span class="ruby-comment"># make relative URL naked by removing the beginning &#39;/&#39;</span>
+                    <span class="ruby-identifier">relative_url</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp">/^\//</span>,<span class="ruby-string">&#39;&#39;</span>)
+                    <span class="ruby-keyword">if</span> <span class="ruby-identifier">potential_base</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/\/$/</span>
+                            <span class="ruby-identifier">absolute_url</span> = <span class="ruby-identifier">potential_base</span><span class="ruby-operator">+</span><span class="ruby-identifier">relative_url</span>.<span class="ruby-identifier">strip</span>
+                    <span class="ruby-keyword">else</span>
+                            <span class="ruby-identifier">last_index_of_slash</span> = <span class="ruby-identifier">potential_base</span>.<span class="ruby-identifier">rindex</span>(<span class="ruby-string">&#39;/&#39;</span>)
+                            <span class="ruby-keyword">if</span> <span class="ruby-identifier">potential_base</span>[<span class="ruby-identifier">last_index_of_slash</span><span class="ruby-operator">-</span><span class="ruby-value">2</span>, <span class="ruby-value">2</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&#39;:/&#39;</span>
+                                    <span class="ruby-identifier">absolute_url</span> = <span class="ruby-identifier">potential_base</span><span class="ruby-operator">+</span><span class="ruby-identifier">relative_url</span>
+                            <span class="ruby-keyword">else</span>
+                                    <span class="ruby-identifier">last_index_of_dot</span> = <span class="ruby-identifier">potential_base</span>.<span class="ruby-identifier">rindex</span>(<span class="ruby-string">&#39;.&#39;</span>)
+                                    <span class="ruby-keyword">if</span> <span class="ruby-identifier">last_index_of_dot</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">last_index_of_slash</span>
+                                            <span class="ruby-identifier">absolute_url</span> = <span class="ruby-identifier">potential_base</span>.<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">chop</span><span class="ruby-operator">+</span><span class="ruby-identifier">relative_url</span>
+                                    <span class="ruby-keyword">else</span>
+                                            <span class="ruby-identifier">absolute_url</span> = <span class="ruby-identifier">potential_base</span>[<span class="ruby-value">0</span>, <span class="ruby-identifier">last_index_of_slash</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">relative_url</span>
+                                    <span class="ruby-keyword">end</span>
+                            <span class="ruby-keyword">end</span>
+                    <span class="ruby-keyword">end</span>
+                    <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Found absolute URL: #{absolute_url}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                    <span class="ruby-keyword">return</span> <span class="ruby-identifier">absolute_url</span>
+    <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                    <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+    <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-host_2_url" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">host_2_url</span><span
+            class="method-args">(host,port=80)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Input is host and open port, output is a URL for valid http response code
+or nil</p>
+          
+          
+
+          
+          <div class="method-source-code" id="host_2_url-source">
+            <pre><span class="ruby-comment"># File lib/wmap/utils/url_magic.rb, line 222</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">host_2_url</span> (<span class="ruby-identifier">host</span>,<span class="ruby-identifier">port</span>=<span class="ruby-value">80</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Perform simple http(s) service detection on host #{host}, port #{port}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">host</span>=<span class="ruby-identifier">host</span>.<span class="ruby-identifier">strip</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">port</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">==</span> <span class="ruby-value">80</span> 
+                        <span class="ruby-identifier">url_1</span> = <span class="ruby-string">&quot;http://&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">host</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;/&quot;</span>
+                <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">port</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">==</span><span class="ruby-value">443</span>
+                        <span class="ruby-identifier">url_1</span> = <span class="ruby-string">&quot;https://&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">host</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;/&quot;</span>
+                <span class="ruby-keyword">else</span>
+                        <span class="ruby-identifier">url_1</span> = <span class="ruby-string">&quot;http://&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">host</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;:&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">port</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;/&quot;</span>
+                        <span class="ruby-identifier">url_2</span> = <span class="ruby-string">&quot;https://&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">host</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;:&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">port</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;/&quot;</span>
+                <span class="ruby-keyword">end</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Please ensure your internet connection is active before running this method: #{__method__}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-identifier">checker</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">UrlChecker</span>.<span class="ruby-identifier">new</span> 
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">checker</span>.<span class="ruby-identifier">response_code</span>(<span class="ruby-identifier">url_1</span>) <span class="ruby-operator">!=</span> <span class="ruby-value">10000</span>
+                        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Found URL: #{url_1}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-identifier">url_1</span>
+                <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">checker</span>.<span class="ruby-identifier">response_code</span>(<span class="ruby-identifier">url_2</span>) <span class="ruby-operator">!=</span> <span class="ruby-value">10000</span>
+                        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Found URL: #{url_2}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-identifier">url_2</span>
+                <span class="ruby-keyword">else</span>
+                        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;No http(s) service found on: #{host}:#{port}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-is_https-3F" class="method-detail method-alias">
+        
+        <div class="method-heading">
+          <span class="method-name">is_https?</span><span
+            class="method-args">(url)</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+        </div>
+
+        
+
+        
+        <div class="aliases">
+          Alias for: <a href="UrlMagic.html#method-i-is_ssl-3F">is_ssl?</a>
+        </div>
+        
+      </div>
+
+    
+      <div id="method-i-is_site-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">is_site?</span><span
+            class="method-args">(url)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Simple sanity check on a &#39;claimed&#39; web site base string.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_site-3F-source">
+            <pre><span class="ruby-comment"># File lib/wmap/utils/url_magic.rb, line 55</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">is_site?</span>(<span class="ruby-identifier">url</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Validate the website string format for: #{url}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">url</span>=<span class="ruby-identifier">url</span>.<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">downcase</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_url?</span>(<span class="ruby-identifier">url</span>)
+                        <span class="ruby-keyword">if</span> <span class="ruby-identifier">url</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">url_2_site</span>(<span class="ruby-identifier">url</span>)
+                                <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
+                        <span class="ruby-keyword">else</span>
+                                <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+                        <span class="ruby-keyword">end</span>                 
+                <span class="ruby-keyword">else</span>
+                        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Unknown site format: #{url}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-is_ssl-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">is_ssl?</span><span
+            class="method-args">(url)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Simple sanity check on a &#39;claimed&#39; SSL enabled URL string</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_ssl-3F-source">
+            <pre><span class="ruby-comment"># File lib/wmap/utils/url_magic.rb, line 38</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">is_ssl?</span>(<span class="ruby-identifier">url</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Validate if SSL is enabled on: #{url}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">url</span>=<span class="ruby-identifier">url</span>.<span class="ruby-identifier">strip</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_url?</span>(<span class="ruby-identifier">url</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">url</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/https/i</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
+                <span class="ruby-keyword">else</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+        <div class="aliases">
+          Also aliased as: <a href="UrlMagic.html#method-i-is_https-3F">is_https?</a>
+        </div>
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-is_url-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">is_url?</span><span
+            class="method-args">(url)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Simple sanity check on a &#39;claimed&#39; URL string.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="is_url-3F-source">
+            <pre><span class="ruby-comment"># File lib/wmap/utils/url_magic.rb, line 16</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">is_url?</span>(<span class="ruby-identifier">url</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Validate the URL format is valid: #{url}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">url</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/(http|https)\:\/\/((.)+)/i</span>
+                        <span class="ruby-identifier">host</span>=<span class="ruby-node">$2</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;/&#39;</span>)[<span class="ruby-value">0</span>]
+                        <span class="ruby-identifier">host</span>=<span class="ruby-identifier">host</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;:&#39;</span>)[<span class="ruby-value">0</span>]
+                        <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_ip?</span>(<span class="ruby-identifier">host</span>) <span class="ruby-keyword">or</span> <span class="ruby-identifier">is_fqdn?</span>(<span class="ruby-identifier">host</span>)
+                                <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
+                        <span class="ruby-keyword">else</span>
+                                <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+                        <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">else</span>
+                        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Unknown URL format: #{url}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-make_absolute" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">make_absolute</span><span
+            class="method-args">(base, relative_url)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Convert a relative URL to an absolute one. For example, from URL base
+&#39;<a href="http://games.yahoo.com">games.yahoo.com</a>/&#39; and file
+path &#39;/game/the-magic-snowman-flash.html&#39; =&gt; &#39;<a
+href="http://games.yahoo.com/game/the-magic-snowman-flash.html">games.yahoo.com/game/the-magic-snowman-flash.html</a>&#39;</p>
+          
+          
+
+          
+          <div class="method-source-code" id="make_absolute-source">
+            <pre><span class="ruby-comment"># File lib/wmap/utils/url_magic.rb, line 253</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-identifier">make_absolute</span>(<span class="ruby-identifier">base</span>, <span class="ruby-identifier">relative_url</span>)
+    <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Determine and return the absolute URL:\n Base: #{base}, Relative: #{relative_url} &quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+            <span class="ruby-keyword">begin</span>
+                    <span class="ruby-identifier">absolute_url</span> = <span class="ruby-keyword">nil</span>;
+                    <span class="ruby-keyword">if</span> <span class="ruby-identifier">relative_url</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/^\//</span>
+                            <span class="ruby-identifier">absolute_url</span> = <span class="ruby-identifier">create_absolute_url_from_base</span>(<span class="ruby-identifier">base</span>, <span class="ruby-identifier">relative_url</span>)
+                    <span class="ruby-keyword">else</span>
+                            <span class="ruby-identifier">absolute_url</span> = <span class="ruby-identifier">create_absolute_url_from_context</span>(<span class="ruby-identifier">base</span>, <span class="ruby-identifier">relative_url</span>)
+                    <span class="ruby-keyword">end</span>
+                    <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Found absolute URL: #{absolute_url}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                    <span class="ruby-keyword">return</span> <span class="ruby-identifier">absolute_url</span>
+    <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                    <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+    <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-normalize_url" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">normalize_url</span><span
+            class="method-args">(url)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Normalize the URL to a consistent manner in order to determine if a link
+has been visited or cached before See <a
+href="http://en.wikipedia.org/wiki/URL_normalization">en.wikipedia.org/wiki/URL_normalization</a>
+for more explanation</p>
+          
+          
+
+          
+          <div class="method-source-code" id="normalize_url-source">
+            <pre><span class="ruby-comment"># File lib/wmap/utils/url_magic.rb, line 315</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">normalize_url</span>(<span class="ruby-identifier">url</span>)
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">url</span>.<span class="ruby-identifier">strip!</span>
+                <span class="ruby-comment"># Converting the scheme and host to lower case in the process, i.e. &#39;HTTP://www.Example.com/&#39; =&gt; &#39;http://www.example.com/&#39;  </span>
+                <span class="ruby-comment"># Normalize the base</span>
+                <span class="ruby-identifier">base</span>=<span class="ruby-identifier">url_2_site</span>(<span class="ruby-identifier">url</span>) 
+                <span class="ruby-comment"># Case#1, remove the trailing dot after the hostname, i.e, &#39;http://www.yahoo.com./&#39; =&gt; &#39;http://www.yahoo.com/&#39;</span>
+                <span class="ruby-identifier">base</span>=<span class="ruby-identifier">base</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp">/\.\/$/</span>,<span class="ruby-string">&#39;/&#39;</span>)
+                <span class="ruby-comment"># Normalize the relative path, case#1</span>
+                <span class="ruby-comment"># retrieve the file path and remove the first &#39;/&#39; or &#39;.&#39;, </span>
+                <span class="ruby-comment"># i.e. &#39;http://www.example.com/mypath&#39; or &#39;http://www.example.com/./mypath&#39; =&gt; &#39;mypath&#39;</span>
+                <span class="ruby-identifier">path</span>=<span class="ruby-identifier">url_2_path</span>(<span class="ruby-identifier">url</span>).<span class="ruby-identifier">sub</span>(<span class="ruby-regexp">/^(\/|\.)*/</span>,<span class="ruby-string">&#39;&#39;</span>)
+                <span class="ruby-comment"># Normalize the relative path, case#2</span>
+                <span class="ruby-comment"># Replace dot-segments. &quot;/../&quot; and &quot;/./&quot; with &quot;/&quot;, i.e. &#39;http://www.example.com/../a/b/../c/./d.html&quot; =&gt; &#39;http://www.example.com/a/c/d.html&#39;</span>
+                <span class="ruby-identifier">path</span>=<span class="ruby-identifier">path</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/\/\.{1,2}\//</span>,<span class="ruby-string">&#39;/&#39;</span>)
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">path</span>.<span class="ruby-identifier">nil?</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-identifier">base</span>
+                <span class="ruby-keyword">else</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-identifier">base</span><span class="ruby-operator">+</span><span class="ruby-identifier">path</span>
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__} for #{url}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-identifier">url</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-url_2_host" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">url_2_host</span><span
+            class="method-args">(url)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Extract the web server host&#39;s Fully Qualified Domain Name (FQDN) from
+the url. For example: “<a
+href="https://login.yahoo.com/email/help">login.yahoo.com/email/help</a>”
+-&gt; “login.yahoo.com”</p>
+          
+          
+
+          
+          <div class="method-source-code" id="url_2_host-source">
+            <pre><span class="ruby-comment"># File lib/wmap/utils/url_magic.rb, line 99</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">url_2_host</span> (<span class="ruby-identifier">url</span>)
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">url</span> = <span class="ruby-identifier">url</span>.<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">downcase</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/(http:\/\/|https:\/\/)/</span>, <span class="ruby-string">&quot;&quot;</span>)
+                <span class="ruby-identifier">record1</span> = <span class="ruby-identifier">url</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;/&#39;</span>)
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">record1</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">nil?</span>
+                        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Error process url: #{url}&quot;</span> 
+                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+                <span class="ruby-keyword">else</span>
+                        <span class="ruby-identifier">record2</span> = <span class="ruby-identifier">record1</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;:&#39;</span>)             
+                        <span class="ruby-keyword">return</span> <span class="ruby-identifier">record2</span>[<span class="ruby-value">0</span>]
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-url_2_path" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">url_2_path</span><span
+            class="method-args">(url)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Wrapper to return relative path component of the URL. i.e. <a
+href="http://www.yahoo.com/login.html">www.yahoo.com/login.html</a> =&gt;
+/login.html</p>
+          
+          
+
+          
+          <div class="method-source-code" id="url_2_path-source">
+            <pre><span class="ruby-comment"># File lib/wmap/utils/url_magic.rb, line 194</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">url_2_path</span>(<span class="ruby-identifier">url</span>)
+        <span class="ruby-comment">#puts &quot;Retrieve the relative path component of the url: #{url}&quot; if @verbose</span>
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">url</span>.<span class="ruby-identifier">strip!</span>
+                <span class="ruby-identifier">base</span> = <span class="ruby-identifier">url_2_site</span>(<span class="ruby-identifier">url</span>).<span class="ruby-identifier">chop</span>
+                <span class="ruby-identifier">path</span>=<span class="ruby-identifier">url</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-identifier">base</span>,<span class="ruby-string">&#39;&#39;</span>)
+                <span class="ruby-comment">#puts &quot;Path component found: #{path}&quot; if @verbose</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-identifier">path</span>
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__} for #{url}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">end</span>
+
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-url_2_port" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">url_2_port</span><span
+            class="method-args">(url)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Extract web service port from the url. For example: “<a
+href="https://login.yahoo.com/email/help">login.yahoo.com/email/help</a>”
+-&gt; 443</p>
+          
+          
+
+          
+          <div class="method-source-code" id="url_2_port-source">
+            <pre><span class="ruby-comment"># File lib/wmap/utils/url_magic.rb, line 117</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">url_2_port</span> (<span class="ruby-identifier">url</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Retrieve service port on URL: #{url}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">ssl</span> = (<span class="ruby-identifier">url</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/https/i</span>)
+                <span class="ruby-identifier">url</span> = <span class="ruby-identifier">url</span>.<span class="ruby-identifier">downcase</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/(http:\/\/|https:\/\/)/</span>, <span class="ruby-string">&quot;&quot;</span>)
+                <span class="ruby-identifier">record1</span> = <span class="ruby-identifier">url</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;/&#39;</span>)
+                <span class="ruby-identifier">record2</span> = <span class="ruby-identifier">record1</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;:&#39;</span>)      
+                <span class="ruby-keyword">if</span> (<span class="ruby-identifier">record2</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">2</span>) 
+                        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;The service port: #{record2[1]}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-identifier">record2</span>[<span class="ruby-value">1</span>].<span class="ruby-identifier">to_i</span>
+                <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">ssl</span>
+                        <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;The service port: 443&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-value">443</span>
+                <span class="ruby-keyword">else</span>
+                        <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;The service port: 80&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-value">80</span>
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-url_2_site" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">url_2_site</span><span
+            class="method-args">(url)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Extract site in (host:port) format from a url: “<a
+href="https://login.yahoo.com:8443/email/help">login.yahoo.com:8443/email/help</a>”
+-&gt; “<a href="http://login.yahoo.com:8443">login.yahoo.com:8443</a>/”</p>
+          
+          
+
+          
+          <div class="method-source-code" id="url_2_site-source">
+            <pre><span class="ruby-comment"># File lib/wmap/utils/url_magic.rb, line 141</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">url_2_site</span> (<span class="ruby-identifier">url</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Retrieve the web site base for url: #{url}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">url</span> = <span class="ruby-identifier">url</span>.<span class="ruby-identifier">downcase</span>
+                <span class="ruby-identifier">url</span> = <span class="ruby-identifier">url</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp">/^(.*?)http/i</span>,<span class="ruby-string">&#39;http&#39;</span>)
+                <span class="ruby-identifier">entry</span> = <span class="ruby-identifier">url</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp">%r{\/\/}</span>)
+                <span class="ruby-identifier">prot</span>=<span class="ruby-identifier">entry</span>[<span class="ruby-value">0</span>]
+                <span class="ruby-comment"># step 1, extract the host:port pair from the url</span>
+                <span class="ruby-identifier">host_port</span>=<span class="ruby-identifier">entry</span>[<span class="ruby-value">1</span>].<span class="ruby-identifier">split</span>(<span class="ruby-regexp">%r{\/}</span>)[<span class="ruby-value">0</span>]
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">host_port</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/\:/</span>
+                        <span class="ruby-identifier">host</span>=<span class="ruby-identifier">host_port</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp">%r{\:}</span>)[<span class="ruby-value">0</span>]
+                        <span class="ruby-identifier">port</span>=<span class="ruby-identifier">host_port</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp">%r{\:}</span>)[<span class="ruby-value">1</span>].<span class="ruby-identifier">to_i</span>
+                <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">prot</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/https/i</span>
+                        <span class="ruby-identifier">host</span>=<span class="ruby-identifier">host_port</span>
+                        <span class="ruby-identifier">port</span>=<span class="ruby-value">443</span>
+                <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">prot</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/http/i</span>
+                        <span class="ruby-identifier">host</span>=<span class="ruby-identifier">host_port</span>
+                        <span class="ruby-identifier">port</span>=<span class="ruby-value">80</span>
+                <span class="ruby-keyword">else</span>
+                        <span class="ruby-identifier">host</span>=<span class="ruby-identifier">host_port</span>
+                        <span class="ruby-comment">#raise &quot;Unknown url format: #{url}&quot;</span>
+                <span class="ruby-keyword">end</span>
+                <span class="ruby-comment"># additional logic to handle uncommon url base structures</span>
+                <span class="ruby-keyword">unless</span> <span class="ruby-identifier">is_fqdn?</span>(<span class="ruby-identifier">host</span>)
+                        <span class="ruby-keyword">case</span> <span class="ruby-identifier">host</span>
+                                <span class="ruby-comment"># &quot;https://letmechoose.barclays.co.uk?source=btorganic/&quot; =&gt; &quot;https://letmechoose.barclays.co.uk&quot;</span>
+                                <span class="ruby-keyword">when</span> <span class="ruby-node">/\?|\#/</span>       
+                                        <span class="ruby-identifier">host</span>=<span class="ruby-identifier">host</span>.<span class="ruby-identifier">split</span>(<span class="ruby-node">%r{\?|\#}</span>)[<span class="ruby-value">0</span>]
+                                <span class="ruby-keyword">else</span>
+                                        <span class="ruby-comment">#do nothing</span>
+                        <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">end</span>
+                <span class="ruby-comment"># step 2, put the host:port pair back to the normal site format </span>
+                <span class="ruby-identifier">prot</span>=<span class="ruby-string">&quot;https:&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">port</span><span class="ruby-operator">==</span><span class="ruby-value">443</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">port</span><span class="ruby-operator">==</span><span class="ruby-value">80</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">port</span><span class="ruby-operator">==</span><span class="ruby-value">443</span>
+                        <span class="ruby-identifier">site</span>=<span class="ruby-identifier">prot</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;//&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">host</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;/&quot;</span>
+                <span class="ruby-keyword">else</span>
+                        <span class="ruby-identifier">site</span>=<span class="ruby-identifier">prot</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;//&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">host</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;:&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">port</span>.<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;/&quot;</span>
+                <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">site</span><span class="ruby-operator">=~</span> <span class="ruby-regexp">/http/i</span>
+                        <span class="ruby-comment">#puts &quot;Base found: #{site}&quot; if @verbose</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-identifier">site</span>
+                <span class="ruby-keyword">else</span> 
+                        <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Problem encountered on method url_2_site: Unable to convert #{url}&quot;</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-urls_on_same_domain-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">urls_on_same_domain?</span><span
+            class="method-args">(url1, url2)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Test if the two URLs are both under the same domain: <a
+href="http://login.yahoo.com">login.yahoo.com</a>, <a
+href="http://mail.yahoo.com">mail.yahoo.com</a> =&gt; true</p>
+          
+          
+
+          
+          <div class="method-source-code" id="urls_on_same_domain-3F-source">
+            <pre><span class="ruby-comment"># File lib/wmap/utils/url_magic.rb, line 209</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-identifier">urls_on_same_domain?</span>(<span class="ruby-identifier">url1</span>, <span class="ruby-identifier">url2</span>)
+            <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Determine if two URLs under the same domain: #{url1}, #{url2}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+            <span class="ruby-keyword">begin</span>
+                    <span class="ruby-identifier">host1</span>=<span class="ruby-identifier">url_2_host</span>(<span class="ruby-identifier">url1</span>)
+                    <span class="ruby-identifier">host2</span>=<span class="ruby-identifier">url_2_host</span>(<span class="ruby-identifier">url2</span>)
+                    <span class="ruby-keyword">return</span> <span class="ruby-identifier">get_domain_root</span>(<span class="ruby-identifier">host1</span>) <span class="ruby-operator">==</span> <span class="ruby-identifier">get_domain_root</span>(<span class="ruby-identifier">host2</span>)
+    <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                    <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Error searching the object content: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+    <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+  </section>
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>wmap.gemspec - RDoc Documentation</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script src="./js/jquery.js"></script>
+<script src="./js/darkfish.js"></script>
+
+<link href="./css/fonts.css" rel="stylesheet">
+<link href="./css/rdoc.css" rel="stylesheet">
+
+
+
+<body id="top" role="document" class="file">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="./index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="./table_of_contents.html#pages">Pages</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="project-metadata">
+    <div id="fileindex-section" class="nav-section">
+  <h3>Pages</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./CHANGELOG_md.html">CHANGELOG</a>
+  
+    <li><a href="./CREDIT_txt.html">CREDIT</a>
+  
+    <li><a href="./LICENSE_txt.html">LICENSE</a>
+  
+    <li><a href="./README_rdoc.html">README</a>
+  
+    <li><a href="./TODO.html">TODO</a>
+  
+    <li><a href="./data/cidrs.html">cidrs</a>
+  
+    <li><a href="./data/deactivated_sites.html">deactivated_sites</a>
+  
+    <li><a href="./data/domains.html">domains</a>
+  
+    <li><a href="./data/hosts.html">hosts</a>
+  
+    <li><a href="./data/prime_hosts.html">prime_hosts</a>
+  
+    <li><a href="./data/sites.html">sites</a>
+  
+    <li><a href="./data/sub_domains.html">sub_domains</a>
+  
+    <li><a href="./demos/nmap_parser_pl.html">nmap_parser.pl</a>
+  
+    <li><a href="./dicts/cctld_txt.html">cctld</a>
+  
+    <li><a href="./dicts/gtld_txt.html">gtld</a>
+  
+    <li><a href="./dicts/hostnames-dict_big.html">hostnames-dict.big</a>
+  
+    <li><a href="./dicts/hostnames-dict_txt.html">hostnames-dict</a>
+  
+    <li><a href="./logs/wmap_log.html">wmap.log</a>
+  
+    <li><a href="./settings/discovery_ports.html">discovery_ports</a>
+  
+    <li><a href="./settings/google_keywords_txt.html">google_keywords</a>
+  
+    <li><a href="./settings/google_locator_txt.html">google_locator</a>
+  
+    <li><a href="./version_txt.html">version</a>
+  
+    <li><a href="./wmap_gemspec.html">wmap.gemspec</a>
+  
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-label="Page wmap.gemspec">
+
+<p>#– # <a href="Wmap.html">Wmap</a> # # A pure Ruby library for Internet web
+application discovery and tracking. # # Copyright © 2012-2015 Yang Li
+&lt;yang.li@owasp.org&gt; #++</p>
+
+<p># -*- encoding: utf-8 -*- VERSION = File.dirname(__FILE__) + “/version.txt”</p>
+
+<p># Simple parser for the project version file info=Hash.new
+f=File.open(VERSION,&#39;r&#39;) f.each do |line|</p>
+
+<pre>line.chomp!
+case line
+when /^(\s)*#/
+        next
+when /\=/ 
+        entry=line.split(&quot;=&quot;).map! {|x| x.strip}
+        info[entry[0]]=entry[1]
+end</pre>
+
+<p>end f.close #</p>
+
+<p>Gem::Specification.new do |s|</p>
+
+<pre class="ruby"><span class="ruby-identifier">s</span>.<span class="ruby-identifier">name</span> = <span class="ruby-identifier">info</span>[<span class="ruby-string">&quot;package&quot;</span>]
+<span class="ruby-identifier">s</span>.<span class="ruby-identifier">version</span> = <span class="ruby-identifier">info</span>[<span class="ruby-string">&quot;version&quot;</span>]
+<span class="ruby-identifier">s</span>.<span class="ruby-identifier">required_rubygems_version</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Requirement</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;&gt;= 0&quot;</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">respond_to?</span> :<span class="ruby-identifier">required_rubygems_version=</span>
+<span class="ruby-identifier">s</span>.<span class="ruby-identifier">authors</span> = <span class="ruby-identifier">info</span>[<span class="ruby-string">&quot;author&quot;</span>]
+<span class="ruby-identifier">s</span>.<span class="ruby-identifier">homepage</span> = <span class="ruby-identifier">info</span>[<span class="ruby-string">&quot;linkedin&quot;</span>]
+<span class="ruby-identifier">s</span>.<span class="ruby-identifier">licenses</span> = [<span class="ruby-string">&quot;MIT&quot;</span>]
+<span class="ruby-identifier">s</span>.<span class="ruby-identifier">date</span> = <span class="ruby-identifier">info</span>[<span class="ruby-string">&quot;date&quot;</span>]
+<span class="ruby-identifier">s</span>.<span class="ruby-identifier">description</span> = <span class="ruby-string">&quot;wmap is written to perform Internet web application / service discovery. The discovery results are designed to be automatically tracked by the software.&quot;</span>
+<span class="ruby-identifier">s</span>.<span class="ruby-identifier">email</span> = <span class="ruby-identifier">info</span>[<span class="ruby-string">&quot;email&quot;</span>]
+<span class="ruby-identifier">s</span>.<span class="ruby-identifier">executables</span> = [<span class="ruby-string">&quot;wmap&quot;</span>,<span class="ruby-string">&quot;wscan&quot;</span>,<span class="ruby-string">&quot;wadd&quot;</span>,<span class="ruby-string">&quot;wadds&quot;</span>,<span class="ruby-string">&quot;wdel&quot;</span>,<span class="ruby-string">&quot;wcheck&quot;</span>,<span class="ruby-string">&quot;wdump&quot;</span>,<span class="ruby-string">&quot;spiderBot&quot;</span>,<span class="ruby-string">&quot;googleBot&quot;</span>,<span class="ruby-string">&quot;updateAll&quot;</span>,<span class="ruby-string">&quot;prime&quot;</span>,<span class="ruby-string">&quot;deprime&quot;</span>,<span class="ruby-string">&quot;refresh&quot;</span>,<span class="ruby-string">&quot;trust&quot;</span>,<span class="ruby-string">&quot;distrust&quot;</span>,<span class="ruby-string">&quot;run_tests&quot;</span>]
+<span class="ruby-identifier">s</span>.<span class="ruby-identifier">files</span> = [<span class="ruby-string">&quot;CHANGELOG.md&quot;</span>, <span class="ruby-string">&quot;TODO&quot;</span>, <span class="ruby-string">&quot;settings/discovery_ports&quot;</span>,<span class="ruby-string">&quot;settings/google_keywords.txt&quot;</span>,<span class="ruby-string">&quot;settings/google_locator.txt&quot;</span>,<span class="ruby-string">&quot;data/cidrs&quot;</span>,<span class="ruby-string">&quot;data/domains&quot;</span>,<span class="ruby-string">&quot;data/sub_domains&quot;</span>,<span class="ruby-string">&quot;data/hosts&quot;</span>,<span class="ruby-string">&quot;data/sites&quot;</span>,<span class="ruby-string">&quot;data/deactivated_sites&quot;</span>,<span class="ruby-string">&quot;data/prime_hosts&quot;</span>,<span class="ruby-string">&quot;lib/wmap/cidr_tracker.rb&quot;</span>,<span class="ruby-string">&quot;lib/wmap/dns_bruter.rb&quot;</span>,<span class="ruby-string">&quot;lib/wmap/domain_tracker.rb&quot;</span>,<span class="ruby-string">&quot;lib/wmap/domain_tracker/sub_domain.rb&quot;</span>,<span class="ruby-string">&quot;lib/wmap/host_tracker.rb&quot;</span>,<span class="ruby-string">&quot;lib/wmap/host_tracker/primary_host.rb&quot;</span>,<span class="ruby-string">&quot;lib/wmap/network_profiler.rb&quot;</span>,<span class="ruby-string">&quot;lib/wmap/port_scanner.rb&quot;</span>,<span class="ruby-string">&quot;lib/wmap/site_tracker.rb&quot;</span>,<span class="ruby-string">&quot;lib/wmap/site_tracker/deactivated_site.rb&quot;</span>,<span class="ruby-string">&quot;lib/wmap/url_checker.rb&quot;</span>,<span class="ruby-string">&quot;lib/wmap/url_crawler.rb&quot;</span>,<span class="ruby-string">&quot;lib/wmap/geoip_tracker.rb&quot;</span>,<span class="ruby-string">&quot;lib/wmap/google_search_scraper.rb&quot;</span>,<span class="ruby-string">&quot;lib/wmap/utils/logger.rb&quot;</span>,<span class="ruby-string">&quot;lib/wmap/utils/domain_root.rb&quot;</span>,<span class="ruby-string">&quot;lib/wmap/utils/url_magic.rb&quot;</span>,<span class="ruby-string">&quot;lib/wmap/utils/utils.rb&quot;</span>,<span class="ruby-string">&quot;lib/wmap/whois.rb&quot;</span>,<span class="ruby-string">&quot;lib/wmap.rb&quot;</span>,<span class="ruby-string">&quot;LICENSE.txt&quot;</span>,<span class="ruby-string">&quot;version.txt&quot;</span>,<span class="ruby-string">&quot;README.rdoc&quot;</span>,  <span class="ruby-string">&quot;wmap.gemspec&quot;</span>]
+<span class="ruby-identifier">s</span>.<span class="ruby-identifier">files</span> <span class="ruby-operator">+=</span> <span class="ruby-constant">Dir</span>[<span class="ruby-string">&#39;bin/*&#39;</span>] <span class="ruby-operator">+</span> <span class="ruby-constant">Dir</span>[<span class="ruby-string">&#39;demos/*&#39;</span>] <span class="ruby-operator">+</span> <span class="ruby-constant">Dir</span>[<span class="ruby-string">&#39;test/*&#39;</span>] <span class="ruby-operator">+</span> <span class="ruby-constant">Dir</span>[<span class="ruby-string">&#39;ruby_whois_patches/*&#39;</span>] <span class="ruby-operator">+</span> <span class="ruby-constant">Dir</span>[<span class="ruby-string">&#39;dicts/*&#39;</span>] <span class="ruby-operator">+</span> <span class="ruby-constant">Dir</span>[<span class="ruby-string">&#39;logs/wmap.log&#39;</span>]
+<span class="ruby-comment">#s.homepage = &quot;none&quot;</span>
+<span class="ruby-identifier">s</span>.<span class="ruby-identifier">post_install_message</span> = <span class="ruby-string">&quot;*&quot;</span><span class="ruby-operator">*</span><span class="ruby-value">80</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\n\nThank you for installing the wmap gem - a pure Ruby library for Internet web application discovery and tracking. Please refer to the README.rdoc for more information of using this gem.  \n\n&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;*&quot;</span><span class="ruby-operator">*</span><span class="ruby-value">80</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\n&quot;</span>
+<span class="ruby-identifier">s</span>.<span class="ruby-identifier">require_paths</span> = [<span class="ruby-string">&quot;lib&quot;</span>]
+<span class="ruby-identifier">s</span>.<span class="ruby-identifier">required_ruby_version</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Requirement</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;&gt;= 1.9.2&quot;</span>)
+<span class="ruby-identifier">s</span>.<span class="ruby-identifier">rubyforge_project</span> = <span class="ruby-string">&quot;wmap&quot;</span>
+<span class="ruby-identifier">s</span>.<span class="ruby-identifier">rubygems_version</span> = <span class="ruby-string">&quot;1.8.24&quot;</span>
+<span class="ruby-identifier">s</span>.<span class="ruby-identifier">summary</span> = <span class="ruby-string">&quot;A pure Ruby web application and service discovery API.&quot;</span>
+</pre>
+
+<p>end</p>
+</main>
+
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>class Wmap::GoogleSearchScraper - RDoc Documentation</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script src="../js/jquery.js"></script>
+<script src="../js/darkfish.js"></script>
+
+<link href="../css/fonts.css" rel="stylesheet">
+<link href="../css/rdoc.css" rel="stylesheet">
+
+
+
+<body id="top" role="document" class="class">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="../index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="../table_of_contents.html#pages">Pages</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="class-metadata">
+    
+    <div id="parent-class-section" class="nav-section">
+  <h3>Parent</h3>
+
+  
+  <p class="link"><a href="../Object.html">Object</a>
+  
+</div>
+
+    <div id="includes-section" class="nav-section">
+  <h3>Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><a class="include" href="Utils.html">Wmap::Utils</a>
+  
+  
+  </ul>
+</div>
+
+    
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-extract_links">#extract_links</a>
+    
+    <li ><a href="#method-i-get_discovered_sites_from_scraper">#get_discovered_sites_from_scraper</a>
+    
+    <li ><a href="#method-i-get_discovered_urls_from_scraper">#get_discovered_urls_from_scraper</a>
+    
+    <li ><a href="#method-i-google_search">#google_search</a>
+    
+    <li ><a href="#method-i-google_worker">#google_worker</a>
+    
+    <li ><a href="#method-i-google_workers">#google_workers</a>
+    
+    <li ><a href="#method-i-print">#print</a>
+    
+    <li ><a href="#method-i-print_discovered_sites_from_scraper">#print_discovered_sites_from_scraper</a>
+    
+    <li ><a href="#method-i-print_discovered_urls_from_scraper">#print_discovered_urls_from_scraper</a>
+    
+    <li ><a href="#method-i-save">#save</a>
+    
+    <li ><a href="#method-i-save_discovered_sites_from_scraper">#save_discovered_sites_from_scraper</a>
+    
+    <li ><a href="#method-i-search">#search</a>
+    
+    <li ><a href="#method-i-worker">#worker</a>
+    
+    <li ><a href="#method-i-workers">#workers</a>
+    
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="class-Wmap::GoogleSearchScraper">
+  <h1 id="class-Wmap::GoogleSearchScraper" class="class">
+    class Wmap::GoogleSearchScraper
+  </h1>
+
+  <section class="description">
+    
+<p>We build our own Google search class by querying Google search engine from
+its web interface, by simulating</p>
+
+<p>an anonymous web surfer.  Note: we don&#39;t use the native Google API due
+to its pricing structure - We don&#39;t have budget for</p>
+
+<pre>this project, and we can not use the free version due to the limitation of 100 queries per day for free. See https://github.com/google/google-api-ruby-client for details.</pre>
+
+  </section>
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <section class="constants-list">
+      <header>
+        <h3>Constants</h3>
+      </header>
+      <dl>
+      
+        <dt id="File_keywords">File_keywords
+        
+        <dd><p>Google search key words</p>
+        
+      
+        <dt id="File_locator">File_locator
+        
+        <dd><p>Google search engine web interface locators</p>
+        
+      
+      </dl>
+    </section>
+    
+
+    
+    <section class="attribute-method-details" class="method-section">
+      <header>
+        <h3>Attributes</h3>
+      </header>
+
+      
+      <div id="attribute-i-discovered_sites_from_scraper" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">discovered_sites_from_scraper</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-discovered_urls_from_scraper" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">discovered_urls_from_scraper</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-http_timeout" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">http_timeout</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-keyword_list" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">keyword_list</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-verbose" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">verbose</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+    </section>
+    
+
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Class Methods</h3>
+       </header>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(params = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Scraper default variables</p>
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/wmap/google_search_scraper.rb, line 29</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span> (<span class="ruby-identifier">params</span> = {})           
+        <span class="ruby-ivar">@verbose</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:verbose</span>, <span class="ruby-keyword">false</span>)
+        <span class="ruby-ivar">@http_timeout</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:http_timeout</span>, <span class="ruby-value">5000</span>)
+        <span class="ruby-comment"># Discovered data store               </span>
+        <span class="ruby-ivar">@discovered_urls_from_scraper</span>=<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+        <span class="ruby-ivar">@discovered_sites_from_scraper</span>=<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-extract_links" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">extract_links</span><span
+            class="method-args">(doc)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Search for nodes by css, and extract the hyper links</p>
+          
+          
+
+          
+          <div class="method-source-code" id="extract_links-source">
+            <pre><span class="ruby-comment"># File lib/wmap/google_search_scraper.rb, line 86</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">extract_links</span> (<span class="ruby-identifier">doc</span>)
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Extract the meaningful links from the DOC.&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-identifier">links</span>=<span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
+                <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">css</span>(<span class="ruby-string">&#39;a&#39;</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">link</span><span class="ruby-operator">|</span>
+                        <span class="ruby-identifier">ref</span>=<span class="ruby-identifier">link</span>.<span class="ruby-identifier">attribute</span>(<span class="ruby-string">&#39;href&#39;</span>).<span class="ruby-identifier">to_s</span>
+                        <span class="ruby-keyword">if</span> <span class="ruby-identifier">ref</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/\/url\?/</span>
+                                <span class="ruby-identifier">my_key</span>=<span class="ruby-identifier">ref</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp">/\/url\?q\=/</span>,<span class="ruby-string">&#39;&#39;</span>)
+                                <span class="ruby-identifier">my_site</span>=<span class="ruby-identifier">url_2_site</span>(<span class="ruby-identifier">my_key</span>)
+                                <span class="ruby-identifier">links</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">my_key</span>)
+                                <span class="ruby-ivar">@discovered_urls_from_scraper</span>[<span class="ruby-identifier">my_key</span>]=<span class="ruby-keyword">true</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@discovered_urls_from_scraper</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">my_key</span>)
+                                <span class="ruby-ivar">@discovered_sites_from_scraper</span>[<span class="ruby-identifier">my_site</span>]=<span class="ruby-keyword">true</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@discovered_sites_from_scraper</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">my_site</span>)
+                        <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-identifier">links</span>
+        <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method extract_links: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+        <span class="ruby-keyword">end</span> 
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-get_discovered_sites_from_scraper" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_discovered_sites_from_scraper</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>&#39;getter&#39; for the discovered sites from the Google search</p>
+          
+          
+
+          
+          <div class="method-source-code" id="get_discovered_sites_from_scraper-source">
+            <pre><span class="ruby-comment"># File lib/wmap/google_search_scraper.rb, line 138</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_discovered_sites_from_scraper</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Getter for the discovered sites by the scraper. &quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-ivar">@discovered_sites_from_scraper</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sort</span>
+<span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Error on method get_discovered_sites_from_scraper: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+<span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+        <div class="aliases">
+          Also aliased as: <a href="GoogleSearchScraper.html#method-i-print">print</a>
+        </div>
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-get_discovered_urls_from_scraper" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_discovered_urls_from_scraper</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>&#39;getter&#39; for the discovered urls from the Google search</p>
+          
+          
+
+          
+          <div class="method-source-code" id="get_discovered_urls_from_scraper-source">
+            <pre><span class="ruby-comment"># File lib/wmap/google_search_scraper.rb, line 149</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_discovered_urls_from_scraper</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Getter for the discovered urls by the scraper. &quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-ivar">@discovered_urls_from_scraper</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sort</span>
+<span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Error on method get_discovered_urls_from_scraper: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+<span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-google_search" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">google_search</span><span
+            class="method-args">(locator,keyword)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Perform a Google web interface keyword search, return as a
+Nokogiri::HTML:Document object for the search result page</p>
+          
+          
+
+          
+          <div class="method-source-code" id="google_search-source">
+            <pre><span class="ruby-comment"># File lib/wmap/google_search_scraper.rb, line 74</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">google_search</span> (<span class="ruby-identifier">locator</span>,<span class="ruby-identifier">keyword</span>)
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Perform the keyword search on the Google web engine for: #{keyword}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-identifier">link_search</span> = <span class="ruby-identifier">locator</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;search?q=&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-constant">URI</span><span class="ruby-operator">::</span><span class="ruby-identifier">encode</span>(<span class="ruby-identifier">keyword</span>)
+                <span class="ruby-identifier">doc</span> = <span class="ruby-constant">Nokogiri</span><span class="ruby-operator">::</span><span class="ruby-constant">HTML</span>(<span class="ruby-identifier">open</span>(<span class="ruby-identifier">link_search</span>))
+                <span class="ruby-keyword">return</span> <span class="ruby-identifier">doc</span>
+        <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method google_search at Google engine location #{link_search} for the keyword #{keyword} : #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-google_worker" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">google_worker</span><span
+            class="method-args">(keyword)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Main worker method to simulate extensive google keyword searches on over
+100+ countries and regions. The search will extract known web services
+related to the keyword by the Google Inc.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="google_worker-source">
+            <pre><span class="ruby-comment"># File lib/wmap/google_search_scraper.rb, line 38</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">google_worker</span> (<span class="ruby-identifier">keyword</span>)
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Start the Google worker for: #{keyword}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-identifier">links</span>=<span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
+                <span class="ruby-identifier">keyword</span>=<span class="ruby-identifier">keyword</span>.<span class="ruby-identifier">strip</span>
+                <span class="ruby-identifier">google_locators</span> = <span class="ruby-identifier">file_2_list</span>(<span class="ruby-constant">File_locator</span>)
+                <span class="ruby-identifier">google_locators</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">locator</span><span class="ruby-operator">|</span>
+                        <span class="ruby-identifier">doc</span>=<span class="ruby-identifier">google_search</span>(<span class="ruby-identifier">locator</span>,<span class="ruby-identifier">keyword</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">keyword</span>.<span class="ruby-identifier">nil?</span>
+                        <span class="ruby-identifier">links</span><span class="ruby-operator">+=</span><span class="ruby-identifier">extract_links</span>(<span class="ruby-identifier">doc</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">nil?</span> 
+                <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-identifier">links</span>.<span class="ruby-identifier">uniq</span>.<span class="ruby-identifier">sort</span><span class="ruby-operator">-</span>[<span class="ruby-string">&quot;&quot;</span>,<span class="ruby-keyword">nil</span>]
+        <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on the method google_worker for #{keyword}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+        <span class="ruby-keyword">end</span>   
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+        <div class="aliases">
+          Also aliased as: <a href="GoogleSearchScraper.html#method-i-worker">worker</a>, <a href="GoogleSearchScraper.html#method-i-search">search</a>
+        </div>
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-google_workers" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">google_workers</span><span
+            class="method-args">(keyword_list=file_2_list(File_keywords))</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Main method to collect intelligences on the Google vast data warehouse. It
+works by hitting the Google engines with the keyword list. This exhausive
+method will sweep through the Google engines in over 100+ countries and
+regions one by one, in order to collect all related web service links
+collected by known the Google, Inc. across the global Internet.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="google_workers-source">
+            <pre><span class="ruby-comment"># File lib/wmap/google_search_scraper.rb, line 58</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">google_workers</span>(<span class="ruby-identifier">keyword_list</span>=<span class="ruby-identifier">file_2_list</span>(<span class="ruby-constant">File_keywords</span>)) 
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Start the Google worker for: #{keyword_list}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-identifier">links</span>=<span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>                      
+                <span class="ruby-identifier">keyword_list</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">keyword</span><span class="ruby-operator">|</span>
+                        <span class="ruby-identifier">links</span><span class="ruby-operator">+=</span><span class="ruby-identifier">google_worker</span>(<span class="ruby-identifier">keyword</span>)
+                <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-identifier">links</span>.<span class="ruby-identifier">uniq</span>.<span class="ruby-identifier">sort</span>
+        <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on the method google_workers for #{keyword_list}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+        <span class="ruby-keyword">end</span>   
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+        <div class="aliases">
+          Also aliased as: <a href="GoogleSearchScraper.html#method-i-workers">workers</a>
+        </div>
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-print" class="method-detail method-alias">
+        
+        <div class="method-heading">
+          <span class="method-name">print</span><span
+            class="method-args">()</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+        </div>
+
+        
+
+        
+        <div class="aliases">
+          Alias for: <a href="GoogleSearchScraper.html#method-i-get_discovered_sites_from_scraper">get_discovered_sites_from_scraper</a>
+        </div>
+        
+      </div>
+
+    
+      <div id="method-i-print_discovered_sites_from_scraper" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">print_discovered_sites_from_scraper</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Method to print out discovery Sites result</p>
+          
+          
+
+          
+          <div class="method-source-code" id="print_discovered_sites_from_scraper-source">
+            <pre><span class="ruby-comment"># File lib/wmap/google_search_scraper.rb, line 123</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">print_discovered_sites_from_scraper</span>                
+        <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Print discovered sites by the scraper. &quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;\nSummary Report of Discovered Sites from the Scraper:&quot;</span>
+                <span class="ruby-ivar">@discovered_sites_from_scraper</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">site</span><span class="ruby-operator">|</span>
+                        <span class="ruby-identifier">puts</span> <span class="ruby-identifier">site</span>
+                <span class="ruby-keyword">end</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Total: #{@discovered_sites_from_scraper.keys.size} site(s)&quot;</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;End of the summary&quot;</span>
+<span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Error on method print_discovered_sites_from_scraper: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+<span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-print_discovered_urls_from_scraper" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">print_discovered_urls_from_scraper</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Method to print out discovery URL result</p>
+          
+          
+
+          
+          <div class="method-source-code" id="print_discovered_urls_from_scraper-source">
+            <pre><span class="ruby-comment"># File lib/wmap/google_search_scraper.rb, line 108</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">print_discovered_urls_from_scraper</span>         
+        <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Print discovered urls by the scraper. &quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;\nSummary Report of Discovered URLs from the Scraper:&quot;</span>
+                <span class="ruby-ivar">@discovered_urls_from_scraper</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">url</span><span class="ruby-operator">|</span>
+                        <span class="ruby-identifier">puts</span> <span class="ruby-identifier">url</span>
+                <span class="ruby-keyword">end</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Total: #{@discovered_urls_from_scraper.keys.size} url(s)&quot;</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;End of the summary&quot;</span>
+<span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Error on method print_discovered_urls_from_scraper: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+<span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-save" class="method-detail method-alias">
+        
+        <div class="method-heading">
+          <span class="method-name">save</span><span
+            class="method-args">(file)</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+        </div>
+
+        
+
+        
+        <div class="aliases">
+          Alias for: <a href="GoogleSearchScraper.html#method-i-save_discovered_sites_from_scraper">save_discovered_sites_from_scraper</a>
+        </div>
+        
+      </div>
+
+    
+      <div id="method-i-save_discovered_sites_from_scraper" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">save_discovered_sites_from_scraper</span><span
+            class="method-args">(file)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Save the discovered sites into a local file</p>
+          
+          
+
+          
+          <div class="method-source-code" id="save_discovered_sites_from_scraper-source">
+            <pre><span class="ruby-comment"># File lib/wmap/google_search_scraper.rb, line 159</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">save_discovered_sites_from_scraper</span> (<span class="ruby-identifier">file</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Save the discovery result(sites) into a local file: #{file}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">f</span>=<span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">file</span>, <span class="ruby-string">&#39;w&#39;</span>)
+                <span class="ruby-identifier">timestamp</span>=<span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+                <span class="ruby-identifier">f</span>.<span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;# Discovery result written by Wmap::GoogleSearchScraper.save_discovered_sites_from_scraper method at #{timestamp}\n&quot;</span>
+                <span class="ruby-ivar">@discovered_sites_from_scraper</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{x}\n&quot;</span> }
+                <span class="ruby-identifier">f</span>.<span class="ruby-identifier">close</span>
+                <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Unknown problem saving the result to file: #{file}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">file</span>)
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Done saving the discovery result into the local file: #{file}&quot;</span> 
+<span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Error on method save_discovered_sites_from_scraper: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+<span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+        <div class="aliases">
+          Also aliased as: <a href="GoogleSearchScraper.html#method-i-save">save</a>
+        </div>
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-search" class="method-detail method-alias">
+        
+        <div class="method-heading">
+          <span class="method-name">search</span><span
+            class="method-args">(keyword)</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+        </div>
+
+        
+
+        
+        <div class="aliases">
+          Alias for: <a href="GoogleSearchScraper.html#method-i-google_worker">google_worker</a>
+        </div>
+        
+      </div>
+
+    
+      <div id="method-i-worker" class="method-detail method-alias">
+        
+        <div class="method-heading">
+          <span class="method-name">worker</span><span
+            class="method-args">(keyword)</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+        </div>
+
+        
+
+        
+        <div class="aliases">
+          Alias for: <a href="GoogleSearchScraper.html#method-i-google_worker">google_worker</a>
+        </div>
+        
+      </div>
+
+    
+      <div id="method-i-workers" class="method-detail method-alias">
+        
+        <div class="method-heading">
+          <span class="method-name">workers</span><span
+            class="method-args">(keyword_list=file_2_list(File_keywords))</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+        </div>
+
+        
+
+        
+        <div class="aliases">
+          Alias for: <a href="GoogleSearchScraper.html#method-i-google_workers">google_workers</a>
+        </div>
+        
+      </div>
+
+    
+    </section>
+  
+  </section>
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+
