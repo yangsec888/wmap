@@ -18,7 +18,7 @@ class DomainTrackerTest < MiniTest::Unit::TestCase
 	end
 
 	def test_domain_known_case_2?
-		assert_equal true, Wmap::DomainTracker.instance.domain_known?("barclays.co.uk")
+		assert_equal true, Wmap::DomainTracker.instance.domain_known?("YourDomain.co.uk")
 	end
 
 	def test_domain_known_case_3?
@@ -26,6 +26,6 @@ class DomainTrackerTest < MiniTest::Unit::TestCase
 	end
 	
 	def test_domain_known_case_4?
-		assert_equal true, Wmap::DomainTracker::SubDomain.instance.domain_known?("secure.barclays.co.uk")
+		assert_equal true, Wmap::DomainTracker::SubDomain.instance.domain_known?("YourHost.YourDomain.co.uk")
 	end
 end

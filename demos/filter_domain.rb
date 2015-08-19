@@ -3,7 +3,7 @@
 require	"wmap"
 
 puts Wmap.banner 
-puts "Host,Domain,IP,Barclays CIDR,Netname"
+puts "Host,Domain,IP,Trusted CIDR,Trusted CIDR Netname"
 myD = Wmap::DomainTracker.instance
 f_urls = File.open(ARGV[0], 'r')
 f_urls.each do |line|

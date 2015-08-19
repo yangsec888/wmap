@@ -3,7 +3,7 @@
 require	"wmap"
 
 puts "List of URLs with the Valid Response Code:"
-puts "URL, Reponse Code, URL Finger Print, IP, Barclays CIDR, CIDR Netname"
+puts "URL, Reponse Code, URL Finger Print, IP, Trusted CIDR, Trusted CIDR Netname"
 myDis = Wmap::UrlChecker.new(:verbose=>false, :http_timeout=>5000)
 
 f_urls = File.open(ARGV[0], 'r')
