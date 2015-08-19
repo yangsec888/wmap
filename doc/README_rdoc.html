@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>README - RDoc Documentation</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script src="./js/jquery.js"></script>
+<script src="./js/darkfish.js"></script>
+
+<link href="./css/fonts.css" rel="stylesheet">
+<link href="./css/rdoc.css" rel="stylesheet">
+
+
+
+<body id="top" role="document" class="file">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="./index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="./table_of_contents.html#pages">Pages</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+<div class="nav-section">
+  <h3>Table of Contents</h3>
+
+  <ul class="link-list" role="directory">
+    <li><a href="#label-OWASP+WebMapper+Ruby+API+README">OWASP WebMapper Ruby API README</a>
+    <li><a href="#label-What-27s+this+program+for-3F">What&#39;s this program for?</a>
+    <li><a href="#label-Program+Version">Program Version</a>
+    <li><a href="#label-Author+Contact">Author Contact</a>
+    <li><a href="#label-Installation">Installation</a>
+    <li><a href="#label-Dependency">Dependency</a>
+    <li><a href="#label-Ruby-whois+Gem+Patches">Ruby-whois Gem Patches</a>
+    <li><a href="#label-Before+Using+This+Program">Before Using This Program</a>
+    <li><a href="#label-Automatic+Discovery+and+Tracking">Automatic Discovery and Tracking</a>
+    <li><a href="#label-Dump+Out+Discovery+Database">Dump Out Discovery Database</a>
+    <li><a href="#label-More+Usage+Cases-3A">More Usage Cases:</a>
+    <li><a href="#label-More+Document-28s-29-3A">More Document(s):</a>
+    <li><a href="#label-How+do+I+report+the+bugs-2C+or+maybe+require+some+new+features-3F">How do I report the bugs, or maybe require some new features?</a>
+    <li><a href="#label-Legal+Disclaimer-3A">Legal Disclaimer:</a>
+  </ul>
+</div>
+
+
+  <div id="project-metadata">
+    <div id="fileindex-section" class="nav-section">
+  <h3>Pages</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./CHANGELOG_md.html">CHANGELOG</a>
+  
+    <li><a href="./CREDIT_txt.html">CREDIT</a>
+  
+    <li><a href="./LICENSE_txt.html">LICENSE</a>
+  
+    <li><a href="./README_rdoc.html">README</a>
+  
+    <li><a href="./TODO.html">TODO</a>
+  
+    <li><a href="./data/cidrs.html">cidrs</a>
+  
+    <li><a href="./data/deactivated_sites.html">deactivated_sites</a>
+  
+    <li><a href="./data/domains.html">domains</a>
+  
+    <li><a href="./data/hosts.html">hosts</a>
+  
+    <li><a href="./data/prime_hosts.html">prime_hosts</a>
+  
+    <li><a href="./data/sites.html">sites</a>
+  
+    <li><a href="./data/sub_domains.html">sub_domains</a>
+  
+    <li><a href="./demos/nmap_parser_pl.html">nmap_parser.pl</a>
+  
+    <li><a href="./dicts/cctld_txt.html">cctld</a>
+  
+    <li><a href="./dicts/gtld_txt.html">gtld</a>
+  
+    <li><a href="./dicts/hostnames-dict_big.html">hostnames-dict.big</a>
+  
+    <li><a href="./dicts/hostnames-dict_txt.html">hostnames-dict</a>
+  
+    <li><a href="./logs/wmap_log.html">wmap.log</a>
+  
+    <li><a href="./settings/discovery_ports.html">discovery_ports</a>
+  
+    <li><a href="./settings/google_keywords_txt.html">google_keywords</a>
+  
+    <li><a href="./settings/google_locator_txt.html">google_locator</a>
+  
+    <li><a href="./version_txt.html">version</a>
+  
+    <li><a href="./wmap_gemspec.html">wmap.gemspec</a>
+  
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-label="Page README.rdoc">
+
+<h1 id="label-OWASP+WebMapper+Ruby+API+README">OWASP WebMapper Ruby API <a href="README_rdoc.html">README</a><span><a href="#label-OWASP+WebMapper+Ruby+API+README">&para;</a> <a href="#top">&uarr;</a></span></h1>
+
+<h2 id="label-What-27s+this+program+for-3F">What&#39;s this program for?<span><a href="#label-What-27s+this+program+for-3F">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>This program is designed for the web application asset discovery and
+tracking. It was originally developed to to cover the gaps of a similar
+commercial product. Over the time it grows to be a more capable and
+complete replacement (IMHO).</p>
+
+<h2 id="label-Program+Version">Program Version<span><a href="#label-Program+Version">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>The latest release is Beta version 1.5.x as of fall 2014. Please refer to
+the <a href="CHANGELOG_md.html">CHANGELOG.md</a> for the program&#39;s
+history information.</p>
+
+<h2 id="label-Author+Contact">Author Contact<span><a href="#label-Author+Contact">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>This program is designed and developed by Yang Li. You can reach him by
+Email: &lt;yang.li@owasp.org&gt;</p>
+
+<h2 id="label-Installation">Installation<span><a href="#label-Installation">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>To take full power of this program, you would need an *nix flavor machine
+with direct Internet access. I have installed it successfully on both Mac
+and Linux machines. You&#39;ll also need the Ruby environment being setup
+properly. The easiest way to install OWASP Web Mapper is by using Ruby
+Gems. Download the latest gem &#39;wmap-x.x.x.gem&#39; into the local file
+system. Then install it from command line there:</p>
+
+<pre>gem install wmap-x.x.x.gem --no-rdoc</pre>
+
+<h2 id="label-Dependency">Dependency<span><a href="#label-Dependency">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>You need the Ruby 1.9.2 or above in order to use this program. In my test
+environment, I was able to set it up with RVM. Please refer to this page
+for more installation information: <a
+href="http://www.ruby-lang.org/en/downloads">www.ruby-lang.org/en/downloads</a>/</p>
+
+<pre>In addition, the following Ruby GEM dependency are needed by different components of this software:
+     require &quot;digest/md5&quot;
+     require &quot;dnsruby&quot;
+     require &quot;geoip&quot;
+     require &quot;minitest/autorun&quot;
+     require &quot;net/http&quot;
+     require &quot;net/ping&quot;
+     require &quot;netaddr&quot;
+     require &quot;nokogiri&quot;
+     require &quot;open_uri_redirections&quot;
+     require &quot;openssl&quot;
+     require &quot;open-uri&quot;
+     require &quot;parallel&quot;
+     require &quot;resolv&quot;
+     require &quot;singleton&quot;
+     require &quot;uri&quot;
+     require &quot;whois&quot;
+     require &#39;httpclient&#39;
+     require &#39;nokogiri&#39;
+     require &#39;open-uri&#39;
+To install &quot;uri&quot; gem for example, use the command below:
+     $ gem install uri</pre>
+
+<h2 id="label-Ruby-whois+Gem+Patches">Ruby-whois <a href="Gem.html">Gem</a> Patches<span><a href="#label-Ruby-whois+Gem+Patches">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>This software depends on a patched version of Ruby gem ruby-whois-2.7.0 (<a
+href="http://www.ruby-whois.org">www.ruby-whois.org</a>/) for the domain
+whois lookup feature. For better result, you could manually add the patches
+into your local whois gem installation directory as shown below:</p>
+
+<pre>$ cp whois_patches/* [Your_ruby_whois_gem_path]/whois/lib/whois/record/parser/</pre>
+
+<p>Or you can directly download the branched whois gem from this repository -
+<a
+href="https://github.com/yangsec888/whois">github.com/yangsec888/whois</a></p>
+
+<h2 id="label-Before+Using+This+Program">Before Using This Program<span><a href="#label-Before+Using+This+Program">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>You need to define a scope for the program to run successful. The scope
+includes both your legitimate Internet domain, and your public network
+block in the CIDR format.</p>
+
+<p>To add your Internet domain into the scope, use the build-in shell command
+below:</p>
+
+<pre>$ trust XYZ.COM</pre>
+
+<p>To add your public network block into the scope:</p>
+
+<pre>$ trust x.x.x.x/x</pre>
+
+<h2 id="label-Automatic+Discovery+and+Tracking">Automatic Discovery and Tracking<span><a href="#label-Automatic+Discovery+and+Tracking">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<pre>$ wmap &lt;seed file | target host | target url | target IP or network cidr&gt;</pre>
+
+<p>The above utility is intelligent enough to take argument as either a seed
+file, or a string such as a host, an IP, a network block, or a URL. The new
+discoveries will be automatically tracked in the data file
+&#39;lib/wmap/data/target_sites&#39;.</p>
+
+<pre>Note: seed file - mix of url, cidr and domain seed, one entry per line.
+                              url seed - known URL(s) for further discovery via the web crawler.
+                              cidr seed - list of known network blocks, for discovering web service via port scanning; it is also used to validate if the web service has a known IP (internal hosted).
+                              domain seed - validated internet domain to be used for DNS record brute-forcing; it is also used to validate the ownership of found web service.</pre>
+
+<h2 id="label-Dump+Out+Discovery+Database">Dump Out Discovery Database<span><a href="#label-Dump+Out+Discovery+Database">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>You can dump out the program output by using the build-in utility
+&#39;wdump&#39; as shown below:</p>
+
+<pre>$ wdump [output file name from you]</pre>
+
+<p>The above utility will dump out the discovery database into a single file
+as program output. Currently, the supported file format is Comma-separated
+Value (.csv) and Extensible Markup Language (.xml)</p>
+
+<h2 id="label-More+Usage+Cases-3A">More Usage Cases:<span><a href="#label-More+Usage+Cases-3A">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>There are more examples under the &#39;demos&#39; folder of this package.
+The examples show how to use the &#39;wmap&#39; API to get your job done
+easily. Please check out the code - they should be easy and straightforward
+to be understood.</p>
+
+<h2 id="label-More+Document-28s-29-3A">More Document(s):<span><a href="#label-More+Document-28s-29-3A">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>The software comes with the Ruby doc during your installation as shown
+above. For your convenience, the Ruby doc is also distributed with this
+software. You can navigate to the &#39;doc&#39; folder of your local
+installation, and click the &#39;index.html&#39; to open the start page in
+your favorite browser. You can also download the wmap-x.x.x.rdoc.zip
+documentation package alone from GitHub, unzip and open the doc/index.html
+in your browser.</p>
+
+<p>If you need additional documentation / information other than this <a
+href="README_rdoc.html">README</a> file and the Ruby document package,
+please be patient - as I&#39;m still working on it :)</p>
+
+<h2 id="label-How+do+I+report+the+bugs-2C+or+maybe+require+some+new+features-3F">How do I report the bugs, or maybe require some new features?<span><a href="#label-How+do+I+report+the+bugs-2C+or+maybe+require+some+new+features-3F">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>Contact the author Yang Li directly at email &#39;yang.li@owasp.org&#39;.</p>
+
+<h2 id="label-Legal+Disclaimer-3A">Legal Disclaimer:<span><a href="#label-Legal+Disclaimer-3A">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>This software is provided strictly &#39;as-if&#39; without any implied
+warranty. You&#39;re free to copy or modify the codes anyway you want - a
+reference back to this software will be appreciated. Please refer to the
+&#39;LICENSE.txt&#39; file for more information.</p>
+</main>
+
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+
