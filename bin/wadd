@@ -4,7 +4,7 @@
 require "wmap"
 
 def print_usage
-	puts "Program to add an entry into the local data repository. Usage: wadd [site|domain]"
+	puts "Program to add an entry into the local data repository. Usage: wadd [site]"
 end
 
 puts Wmap.banner
@@ -13,18 +13,13 @@ Log_dir=File.dirname(__FILE__)+'/../logs/'
 Wmap.wlog("Execute the command: wadd #{ARGV[0]}","wadd",Log_dir+"wmap.log")
 
 st=Wmap::SiteTracker.instance
-abort "Incorrect program argument!" unless ARGV.length==1 
+abort "Incorrect program argument!" unless ARGV.length==1
 
 # Evaluate the argument and update the data store accordingly
 if st.is_site?(ARGV[0])
 	st.add(ARGV[0])
 	st.save!
 	st=nil
-elsif st.is_domain_root?(ARGV[0])
-	dt=Wmap::DomainTracker.instance
-	dt.add(ARGV[0])
-	dt.save!
-	dt=nil
 else
 	abort "Unknown argument format: #{ARGV[0]}"
 end
