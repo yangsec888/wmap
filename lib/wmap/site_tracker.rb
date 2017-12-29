@@ -6,18 +6,18 @@
 # Copyright (c) 2012-2015 Yang Li <yang.li@owasp.org>
 #++
 require "parallel"
-require "singleton"	
-require "nokogiri"	
+#require "singleton"
+require "nokogiri"
 
 
 # Main class to automatically track the site inventory
 class Wmap::SiteTracker
 	include Wmap::Utils
-	include Singleton
-	
+	#include Singleton
+
 	attr_accessor :sites_file, :max_parallel, :verbose
 	attr_reader :known_sites
-	
+
 	# Set default instance variables
 	def initialize (params = {})
 		# Initialize the instance variables
@@ -26,7 +26,8 @@ class Wmap::SiteTracker
 		@verbose=params.fetch(:verbose, false)
 		@max_parallel=params.fetch(:max_parallel, 30)
 		# Hash table to hold the site store
-		@known_sites=load_site_stores_from_file(@file_stores)		
+		File.write(@file_stores, "") unless File.exist?(@file_stores)
+		@known_sites=load_site_stores_from_file(@file_stores)
 	end
 
 	# Setter to load the known hosts into an instance variable
@@ -39,7 +40,7 @@ class Wmap::SiteTracker
 				line=line.chomp.strip
 				next if line.nil?
 				next if line.empty?
-				next if line =~ /^\s*#/ 
+				next if line =~ /^\s*#/
 				entry=line.split(%r{\t+|\,})
 				site=entry[0].downcase
 				ip=entry[1]
@@ -59,19 +60,19 @@ class Wmap::SiteTracker
 				known_sites[site]['code']=res
 				known_sites[site]['md5']=fp
 				known_sites[site]['redirection']=loc
-				known_sites[site]['timestamp']=timestamp				
+				known_sites[site]['timestamp']=timestamp
 			end
 			f.close
 			puts "Successfully loading file: #{file}" if @verbose
 			return known_sites
-		rescue => ee			
+		rescue => ee
 			puts "Exception on method #{__method__} for file #{file}: #{ee}"
 		end
 	end
 
 	# Save the current site store hash table into a file
 	def save_sites_to_file!(file_sites=@file_stores)
-		puts "Saving the current site store table from memory to file: #{file_sites}" 
+		puts "Saving the current site store table from memory to file: #{file_sites}"
 		begin
 			timestamp=Time.now
 			f=File.open(file_sites, 'w')
@@ -92,28 +93,28 @@ class Wmap::SiteTracker
 	def count
 		puts "Counting number of entries in the site store table ..."
 		begin
-			return @known_sites.size	
+			return @known_sites.size
 		rescue => ee
-			puts "Exception on method #{__method__}: #{ee}" 
-		end		
+			puts "Exception on method #{__method__}: #{ee}"
+		end
 	end
-	
+
 	# Setter to add site entry to the cache one at a time
 	def add(site)
-		puts "Add entry to the site store: #{site}" 
+		puts "Add entry to the site store: #{site}"
 		begin
-			# Preliminary sanity check 
-			site=site.strip.downcase unless site.nil?			
-			raise "Site is already exist. Skip #{site}" if site_known?(site)	
+			# Preliminary sanity check
+			site=site.strip.downcase unless site.nil?
+			raise "Site is already exist. Skip #{site}" if site_known?(site)
 			site=normalize_url(site) if is_url?(site)
 			site=url_2_site(site) if is_url?(site)
 			puts "Site in standard format: #{site}" if @verbose
 			raise "Exception on method #{__method__}: invalid site format of #{site}. Expected format is: http://your_website_name/" unless is_site?(site)
-			trusted=false	
+			trusted=false
 			host=url_2_host(site)
 			ip=host_2_ip(host)
 			# Additional logic to refresh deactivated site, 02/12/2014
-			deact=Wmap::SiteTracker::DeactivatedSite.instance
+			deact=Wmap::SiteTracker::DeactivatedSite.new
 			# only trust either the domain or IP we know
 			if is_ip?(host)
 				trusted=Wmap.ip_trusted?(ip)
@@ -124,7 +125,7 @@ class Wmap::SiteTracker
 				else
 					trusted=Wmap.domain_known?(root)
 				end
-			end			
+			end
 			# add record only if trusted
 			if trusted
 				# Add logic to check site status before adding it
@@ -134,9 +135,9 @@ class Wmap::SiteTracker
 				if is_https?(site)
 					# do nothing
 				else
-					raise "Site is currently down. Skip #{site}" if checker['code']==10000 
+					raise "Site is currently down. Skip #{site}" if checker['code']==10000
 				end
-				raise "Exception on add method - Fail to resolve the host-name: Host - #{host}, IP - #{ip}. Skip #{site}" unless is_ip?(ip)			
+				raise "Exception on add method - Fail to resolve the host-name: Host - #{host}, IP - #{ip}. Skip #{site}" unless is_ip?(ip)
 				# Update the local host table when necessary
 				if is_ip?(host)
 					# Case #1: Trusted site contains IP
@@ -151,19 +152,19 @@ class Wmap::SiteTracker
 						puts "Reverse DNS lookup for IP: #{ip}" if @verbose
 						host1=ip_2_host(host)
 						puts "host1: #{host1}" if @verbose
-						if is_fqdn?(host1) 
+						if is_fqdn?(host1)
 							if Wmap.domain_known?(host1)
-								# replace IP with host-name only if domain root is known 
+								# replace IP with host-name only if domain root is known
 								puts "Host found from the Internet reverse DNS lookup for #{ip}: #{host1}" if @verbose
 								host=host1
 								site.sub!(/\d+\.\d+\.\d+\.\d+/,host)
 							end
 						end
 					end
-					# Adding site for Case #1					
-					raise "Site already exist! Skip #{site}" if @known_sites.key?(site)				
+					# Adding site for Case #1
+					raise "Site already exist! Skip #{site}" if @known_sites.key?(site)
 					puts "Adding site: #{site}" if @verbose
-					@known_sites[site]=Hash.new 
+					@known_sites[site]=Hash.new
 					@known_sites[site]=checker
 					if deact.site_known?(site)
 						deact.delete(site)
@@ -186,11 +187,11 @@ class Wmap::SiteTracker
 							Wmap::HostTracker.instance.add(host)
 							Wmap::HostTracker.instance.save!
 						end
-					end	
+					end
 				else
 					# Case #2: Trusted site contains valid FQDN
 					puts "Ading site: #{site}" if @verbose
-					@known_sites[site]=Hash.new 
+					@known_sites[site]=Hash.new
 					@known_sites[site]=checker
 					if deact.site_known?(site)
 						deact.delete(site)
@@ -218,39 +219,39 @@ class Wmap::SiteTracker
 				puts "Problem found: untrusted Internet domain or IP. Skip #{site}"
 				deact=nil
 				return nil
-			end			
-		rescue => ee			
-			puts "Exception on method #{__method__}: #{ee}" 
+			end
+		rescue => ee
+			puts "Exception on method #{__method__}: #{ee}"
 			deact=nil
 			return nil
 		end
 	end
-	
+
 	# Setter to add site entry to the cache table in batch (from a file)
 	def file_add(file)
-		puts "Add entries to the local site store from file: #{file}" 
+		puts "Add entries to the local site store from file: #{file}"
 		begin
 			raise "File non-exist. Please check your file path and name again: #{file}" unless File.exist?(file)
 			changes=Hash.new
-			sites=file_2_list(file)			
+			sites=file_2_list(file)
 			changes=bulk_add(sites) unless sites.nil? or sites.empty?
 			puts "Done loading file #{file}. "
 			return changes
-		rescue => ee			
+		rescue => ee
 			puts "Exception on method #{__method__}: #{ee}"
 		end
 	end
 
 	# Setter to add site entry to the cache in batch (from a list)
 	def bulk_add(list,num=@max_parallel)
-		puts "Add entries to the local site store from list:\n #{list}" 
+		puts "Add entries to the local site store from list:\n #{list}"
 		begin
 			results=Hash.new
 			if list.size > 0
 				puts "Start parallel adding on the sites:\n #{list}"
 				Parallel.map(list, :in_processes => num) { |target|
 					add(target)
-				}.each do |process| 				
+				}.each do |process|
 					if process.nil?
 						next
 					elsif process.empty?
@@ -258,25 +259,25 @@ class Wmap::SiteTracker
 					else
 						results[process['url']]=Hash.new
 						results[process['url']]=process
-					end				
+					end
 				end
 				@known_sites.merge!(results)
 			else
 				puts "Error: no entry is added. Please check your list and try again."
 			end
 			puts "Done adding site entries."
-			if results.size>0 
-				puts "New entries added: #{results}" 
+			if results.size>0
+				puts "New entries added: #{results}"
 			else
 				puts "No new entry added. "
 			end
 			return results
-		rescue => ee			
+		rescue => ee
 			puts "Exception on method #{__method__}: #{ee}" if @verbose
 		end
 	end
 	alias_method :adds, :bulk_add
-	
+
 	# Setter to remove entry from the site store one at a time
 	def delete(site)
 		puts "Remove entry from the site store: #{site} " if @verbose
@@ -297,11 +298,11 @@ class Wmap::SiteTracker
 				puts "Entry not fund. Skip #{site}"
 				deact=nil
 				return nil
-			end			 
-		rescue => ee			
+			end
+		rescue => ee
 			puts "Exception on method #{__method__}: #{ee}" if @verbose
 			deact=nil
-		end		
+		end
 	end
 	alias_method :del, :delete
 
@@ -310,25 +311,25 @@ class Wmap::SiteTracker
 		begin
 			puts "Delete entries to the local site store from file: #{file}" if @verbose
 			raise "File non-exist. Please check your file path and name again: #{file}" unless File.exist?(file)
-			sites=file_2_list(file)			
+			sites=file_2_list(file)
 			changes=Array.new
 			changes=bulk_delete(sites) unless sites.nil? or sites.empty?
-		rescue => ee			
+		rescue => ee
 			puts "Exception on method file_delete: #{ee} for file: #{file}" if @verbose
 		end
 	end
 	alias_method :file_del, :file_delete
-	
+
 	# Setter to delete site entry to the cache in batch (from a list)
 	def bulk_delete(list)
 		puts "Delete entries to the local site store from list:\n #{list}" if @verbose
 		begin
-			sites=list			
+			sites=list
 			changes=Array.new
 			if sites.size > 0
-				sites.map do |x| 
+				sites.map do |x|
 					x=url_2_site(x)
-					site=delete(x) 
+					site=delete(x)
 					changes.push(site) unless site.nil?
 				end
 				puts "Done deleting sites from the list:\n #{list}"
@@ -336,15 +337,15 @@ class Wmap::SiteTracker
 			else
 				puts "Error: no entry is loaded. Please check your list and try again."
 			end
-		rescue => ee			
+		rescue => ee
 			puts "Exception on method #{__method__}: #{ee}" if @verbose
 		end
 	end
 	alias_method :dels, :bulk_delete
-	
+
 	# Setter to refresh the entry in the site store one at a time
 	def refresh(site)
-		puts "Refresh the local site store for site: #{site} " 
+		puts "Refresh the local site store for site: #{site} "
 		begin
 			raise "Invalid site: #{site}" if site.nil? or site.empty?
 			site=site.strip.downcase
@@ -357,10 +358,10 @@ class Wmap::SiteTracker
 				puts "Error entry non exist: #{site}"
 			end
 			return nil
-		rescue => ee			
+		rescue => ee
 			puts "Exception on method #{__method__}: #{ee}" if @verbose
 			return nil
-		end		
+		end
 	end
 
 	# 'Refresh sites in the site store in batch (from a file)
@@ -368,31 +369,31 @@ class Wmap::SiteTracker
 		puts "Refresh entries in the site store from file: #{file}" if @verbose
 		begin
 			changes=Hash.new
-			sites=file_2_list(file)			
+			sites=file_2_list(file)
 			changes=bulk_refresh(sites) unless sites.nil? or sites.empty?
 			return changes
-		rescue => ee			
+		rescue => ee
 			puts "Exception on method #{__method__}: #{ee} for file: #{file}" if @verbose
 		end
 	end
-	
+
 	# 'Refresh unique sites in the site store only
-	def refresh_uniq_sites 
+	def refresh_uniq_sites
 		puts "Refresh unique site entries in the site store. " if @verbose
 		begin
 			changes=Hash.new
-			sites=get_uniq_sites		
+			sites=get_uniq_sites
 			if sites.size > 0
 				changes=bulk_refresh(sites)
 			else
 				puts "Error: no entry is refreshed. Please check your site store and try again."
 			end
 			return changes
-		rescue => ee			
+		rescue => ee
 			puts "Exception on method #{__method__}: #{ee}" if @verbose
 		end
 	end
-	
+
 	# 'Refresh sites in the site store in batch (from a list)
 	def bulk_refresh(list,num=@max_parallel)
 		puts "Refresh entries in the site store from list:\n #{list}" if @verbose
@@ -402,7 +403,7 @@ class Wmap::SiteTracker
 				puts "Start parallel refreshing on the sites:\n #{list}"
 				Parallel.map(list, :in_processes => num) { |target|
 					refresh(target)
-				}.each do |process| 				
+				}.each do |process|
 					if process.nil?
 						next
 					elsif process.empty?
@@ -410,7 +411,7 @@ class Wmap::SiteTracker
 					else
 						results[process['url']]=Hash.new
 						results[process['url']]=process
-					end				
+					end
 				end
 				# Clean up old entries, by Y.L. 03/30/2015
 				list.map {|x| @known_sites.delete(x)}
@@ -421,30 +422,30 @@ class Wmap::SiteTracker
 				puts "Error: no entry is loaded. Please check your list and try again."
 			end
 			return results
-		rescue => ee			
+		rescue => ee
 			puts "Exception on method #{__method__}: #{ee}" if @verbose
 		end
 	end
 	alias_method :refreshs, :bulk_refresh
-	
+
 
 	# Refresh all site entries in the stores in one shot
 	def refresh_all
-		puts "Refresh all the entries within the local site store ... " 
+		puts "Refresh all the entries within the local site store ... "
 		begin
 			changes=Hash.new
 			changes=bulk_refresh(@known_sites.keys)
 			@known_sites.merge!(changes)
 			puts "Done refresh all entries."
 			return changes
-		rescue => ee			
+		rescue => ee
 			puts "Exception on method #{__method__}: #{ee}" if @verbose
-		end		
+		end
 	end
 
 	# Refresh all site entries in the stores that contains an IP instead of a hostname
 	def refresh_ip_sites
-		puts "Refresh all entries that contain an IP address instead of a FQDN ... " 
+		puts "Refresh all entries that contain an IP address instead of a FQDN ... "
 		begin
 			sites=get_ip_sites
 			live_sites=sites.delete_if { |x| @known_sites[x]['code'] == 10000 or  @known_sites[x]['code'] == 20000 }
@@ -453,11 +454,11 @@ class Wmap::SiteTracker
 			@known_sites.merge!(changes)
 			puts "Done refresh IP sites."
 			return changes
-		rescue => ee			
+		rescue => ee
 			puts "Exception on method #{__method__}: #{ee}" if @verbose
-		end		
+		end
 	end
-	
+
 	# Quick validation if a site is already covered under the site store
 	def site_known?(site)
 		begin
@@ -469,9 +470,9 @@ class Wmap::SiteTracker
 			puts "Error checking web site #{site} against the site store: #{ee}"
 		end
 		return false
-	end	
+	end
 	alias_method :is_known?, :site_known?
-	
+
 	# Quick validation check on an IP is already part of the site store
 	def site_ip_known?(ip)
 		begin
@@ -490,7 +491,7 @@ class Wmap::SiteTracker
 			puts "Exception on method #{__method__}: #{ee}"
 			return false
 		end
-	end	
+	end
 	alias_method :siteip_known?, :site_ip_known?
 
 	# Quick check of the stored information of a site within the store
@@ -504,7 +505,7 @@ class Wmap::SiteTracker
 			puts "Exception on method #{__method__}: #{ee}"
 			return nil
 		end
-	end	
+	end
 	alias_method :check, :site_check
 
 	# Retrieve external hosted sites into a list
@@ -525,7 +526,7 @@ class Wmap::SiteTracker
 		end
 	end
 	alias_method :get_ext, :get_ext_sites
-	
+
 	# Retrieve a list of internal hosted site URLs
 	def get_int_sites
 		puts "getter to retrieve all the internal hosted sites." if @verbose
@@ -599,7 +600,7 @@ class Wmap::SiteTracker
 							sites[id]=key
 						#	uniqueness[md5]=true
 						#end
-					#end 
+					#end
 				end
 			end
 			#primary_host_tracker=nil
@@ -610,14 +611,14 @@ class Wmap::SiteTracker
 		end
 	end
 	alias_method :uniq_sites, :get_uniq_sites
-	
+
 	# Retrieve a list of sites that contain an IP in the site URL
 	def get_ssl_sites
 		puts "getter to retrieve https sites from the site store." if @verbose
 		begin
 			sites=Array.new
 			@known_sites.keys.map do |key|
-				key =~ /https/i 
+				key =~ /https/i
 				sites.push(key)
 			end
 			sites.sort!
@@ -627,7 +628,7 @@ class Wmap::SiteTracker
 			return nil
 		end
 	end
-	
+
 	# Retrieve a list of redirection URLs from the site store
 	def get_redirection_urls
 		puts "getter to retrieve all the redirection URLs from the site store." if @verbose
@@ -662,7 +663,7 @@ class Wmap::SiteTracker
 			return nil
 		end
 	end
-	
+
 	# Perform local host table reverse lookup for the IP sites, in hope that the hostname could now be resolved since the site was discovered
 	def resolve_ip_sites
 		puts "Resolve sites that contain an IP address. Update the site cache table once a hostname is found in the local host table." if @verbose
@@ -679,7 +680,7 @@ class Wmap::SiteTracker
 					puts "Host-name found for IP #{ip}: #{hostname}" if @verbose
 					updates.push(site)
 					refresh(site)
-				end			
+				end
 			end
 			updates.sort!
 			puts "The following sites are now refreshed: #{updates}" if @verbose
@@ -688,7 +689,7 @@ class Wmap::SiteTracker
 			puts "Exception on method #{__method__}: #{ee}" if @verbose
 		end
 	end
-	
+
 	# Search potential matching sites from the site store by using simple regular expression. Note that any upper-case char in the search string will be automatically converted into lower case
 	def search (pattern)
 		puts "Search site store based on the regular expression: #{pattern}" if @verbose
@@ -706,10 +707,10 @@ class Wmap::SiteTracker
 			return nil
 		end
 	end
-	
+
 	# Print summary report on all sites that contain an IP in the site URL
 	def print_ip_sites
-		puts "Print sites contain an IP instead of a host-name." 
+		puts "Print sites contain an IP instead of a host-name."
 		sites=get_ip_sites
 		sites.map { |x| puts x }
 		puts "End of report. "
@@ -735,16 +736,16 @@ class Wmap::SiteTracker
 		end
 	end
 	alias_method :print, :print_site
-	
+
 
 	# Print summary report of all sites URL in the site store
 	def print_all_sites
 		puts "\nSummary Report of the site store:"
 		sites=@known_sites.keys.sort
 		sites.each do |site|
-			puts site		
+			puts site
 		end
-		
+
 		puts "End of the summary"
 		#return sites
 	end
@@ -761,7 +762,7 @@ class Wmap::SiteTracker
 			f.write "Site, IP, Port, Server, Hosting, Response Code, MD5, Redirect, Timestamps\n"
 			prime_sites.map do |key|
 				next if key.nil?
-				site=key.strip 
+				site=key.strip
 				raise "Unknown site: #{site}. You may need to add it into the site store first. Execute the following shell command before trying again: \n\wadd #{site}\n" unless @known_sites.key?(site)
 				ip=@known_sites[site]['ip']
 				port=@known_sites[site]['port']
@@ -796,7 +797,7 @@ class Wmap::SiteTracker
 							site=key.strip
 							raise "Unknown site: #{site}. You may need to add it into the site store first. Execute the following shell command before trying again: \n\twmap #{site}\n" unless @known_sites.key?(site)
 							xml.site {
-								xml.name site 
+								xml.name site
 								xml.ip_ @known_sites[site]['ip']
 								xml.port_ @known_sites[site]['port']
 								xml.status_ @known_sites[site]['status']
@@ -821,8 +822,8 @@ class Wmap::SiteTracker
 			return false
 		end
 	end
-	alias_method :dump_xml, :save_uniq_sites_xml	
-	
+	alias_method :dump_xml, :save_uniq_sites_xml
+
 	# Retrieve the unique sites from the local site store in the primary host format
 	def get_prim_uniq_sites
 		puts "Retrieve and prime unique sites in the site store. " if @verbose
@@ -836,7 +837,7 @@ class Wmap::SiteTracker
 			sites.map do |site|
 				puts "Work on priming unique site: #{site}" if @verbose
 				host=url_2_host(site)
-				# case#1, for the IP only site, do nothing (presuming 'refresh_ip_sites' or 'refresh_all' method already take care of the potential discrepancy here). 
+				# case#1, for the IP only site, do nothing (presuming 'refresh_ip_sites' or 'refresh_all' method already take care of the potential discrepancy here).
 				if is_ip?(host)
 					prim_uniq_sites.push(site)
 					next
@@ -852,20 +853,20 @@ class Wmap::SiteTracker
 				if host_tracker.alias[ip] == nil
 					prim_uniq_sites.push(site)
 					next
-				end			
+				end
 				# case#4, for the site has a duplicate IP with others, we try to determine which one is the primary site
 				# raise "Error: inconsistency detected on record: #{site}. Please run the following shell command to refresh it first: \n\srefresh #{site}" if tracker1.alias[ip].nil?
-				if ( primary_host_tracker.known_hosts.key?(ip) and (Wmap::HostTracker.instance.alias[ip] > 1) )	
+				if ( primary_host_tracker.known_hosts.key?(ip) and (Wmap::HostTracker.instance.alias[ip] > 1) )
 					new_host=primary_host_tracker.prime(host)
 					puts "Host: #{host}, New host:#{new_host}" if @verbose
 					unless host==new_host
-						new_site=site.sub(host,new_host) 
+						new_site=site.sub(host,new_host)
 						raise "Site not found in the site tracking data repository: #{new_site}. You may need to add it into the site store first. Execute the following shell command before trying again: \n\twadd #{new_site}\n" unless @known_sites.key?(new_site)
 						new_ip=@known_sites[new_site]['ip']
 						if new_ip==ip		# consistency check
-							site=new_site 
+							site=new_site
 						else
-							# TBD - case of multiple IPs for A DNS record 
+							# TBD - case of multiple IPs for A DNS record
 							#raise "Inconsistency found on prime host entrance: #{new_ip}, #{ip}; #{new_site}, #{site}. Please refresh your entries by running the following shell command: \n\s refresh #{new_site}"
 						end
 					end
@@ -880,8 +881,8 @@ class Wmap::SiteTracker
 		end
 	end
 	alias_method :get_prime, :get_prim_uniq_sites
-	
-	# Print summary report of external hosted sites URL in the 
+
+	# Print summary report of external hosted sites URL in the
 	def print_ext_sites
 		puts "\nSummary Report of the External Hosted Site"
 		sites=get_ext_sites
@@ -902,7 +903,7 @@ class Wmap::SiteTracker
 		return nil
 	end
 	alias_method :print_int, :print_int_sites
-	
+
 	# Print summary report of internal hosted site URLs
 	def print_ssl_sites
 		puts "\nSummary Report of the HTTPS Sites from the Site Store"
@@ -919,11 +920,10 @@ class Wmap::SiteTracker
 		puts "Website,Primary IP,Port,Hosting Status,Server,Response Code,Site MD5 Finger-print,Site Redirection,Timestamp"
 		sites=get_uniq_sites
 		sites.each do |site|
-			print_site(site)		
+			print_site(site)
 		end
 	end
-	
-	private 
-	
-end
 
+	private
+
+end

@@ -5,7 +5,7 @@
 #
 # Copyright (c) 2012-2015 Yang Li <yang.li@owasp.org>
 #++
-require "singleton"
+#require "singleton"
 
 
 # Class to trace de-activated site. This is need for basic state tracking for our sites.
@@ -13,12 +13,12 @@ require "singleton"
 module Wmap
 class SiteTracker
 
-class DeactivatedSite < Wmap::SiteTracker 
+class DeactivatedSite < Wmap::SiteTracker
 	include Wmap::Utils
-	include Singleton
-	
+	#include Singleton
+
 	attr_accessor :sites_file, :known_sites, :verbose
-	
+
 	# Set default instance variables
 	def initialize (params = {})
 		# Initialize the instance variables
@@ -26,9 +26,10 @@ class DeactivatedSite < Wmap::SiteTracker
 		@file_stores=params.fetch(:sites_file, @f_sites)
 		@verbose=params.fetch(:verbose, false)
 		# Hash table to hold the site store
-		@known_sites=load_site_stores_from_file(@file_stores)		
+		File.write(@file_stores, "") unless File.exist?(@file_stores)
+		@known_sites=load_site_stores_from_file(@file_stores)
 	end
-	
+
 	# Deactivate obsolete entrance from the live site store. Note this method is used by the parent class only
 	def add (site,entry)
 		begin
@@ -47,8 +48,8 @@ class DeactivatedSite < Wmap::SiteTracker
 			puts "Exception on method #{__method__}: #{ee}" if @verbose
 			return nil
 		end
-	
-	end 
+
+	end
 
 	# Refresh re-activated entrance in the store. Note this method is used by the parent class only
 	def delete (site)
@@ -61,10 +62,10 @@ class DeactivatedSite < Wmap::SiteTracker
 			puts "Exception on method #{__method__}: #{ee}" if @verbose
 			return nil
 		end
-	
-	end 
-	
-	# Procedures to discover deactivated sites from the live site store to here in one shot (TBD). 
+
+	end
+
+	# Procedures to discover deactivated sites from the live site store to here in one shot (TBD).
 	def update_from_site_store!
 		puts "Invoke internal procedures to update the site store."
 		begin
@@ -76,7 +77,7 @@ class DeactivatedSite < Wmap::SiteTracker
 	end
 	alias_method :update!, :update_from_site_store!
 
-	
+
 end
 
 end

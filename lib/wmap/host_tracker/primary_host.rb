@@ -12,25 +12,26 @@ module Wmap
   class HostTracker
 
 	# Class to differentiate the primary host-name from the potential aliases. This is needed in order to minimize the confusion on our final site inventory list, as it contains a large number of duplicates (aliases). More specifically, a filter could be built by using this class to track the primary url of a website.
-	class PrimaryHost < Wmap::HostTracker 
+	class PrimaryHost < Wmap::HostTracker
 		include Wmap::Utils
 		include Singleton
 
 		attr_accessor :hosts_file, :verbose
 		attr_reader :known_hosts, :known_ips
-		
+
 		# Initialize the instance variables
-		def initialize (params = {})		
-			@verbose=params.fetch(:verbose, false)		
+		def initialize (params = {})
+			@verbose=params.fetch(:verbose, false)
 			# Set default instance variables
 			@file_hosts=File.dirname(__FILE__)+'/../../../data/prime_hosts'
 			file=params.fetch(:hosts_file, @file_hosts)
 			# Initialize the instance variables
+      File.write(@file_hosts, "") unless File.exist?(@file_hosts)
 			@known_hosts=load_known_hosts_from_file(file)
 			@known_ips=Hash.new
 			de_duplicate
 		end
-		
+
 		# Procedures to identify primary host-name from the site store SSL certificates. The assumption is that the CN used in the cert application must be primary hostname and used by the users.
 		def update_from_site_store!
 			puts "Invoke internal procedures to update the primary host-name table from the site store."
@@ -39,7 +40,7 @@ module Wmap
 				cns=Hash.new
 				checker=Wmap::UrlChecker.new
 				Wmap::SiteTracker.instance.get_ssl_sites.map do |site|
-					puts "Exam SSL enabled site entry #{site} ..." 
+					puts "Exam SSL enabled site entry #{site} ..."
 					my_host=url_2_host(site)
 					next if @known_hosts.key?(my_host) # add the logic to optimize the process
 					puts "Pull SSL cert details on site: #{site}"
@@ -52,7 +53,7 @@ module Wmap
 					if is_fqdn?(cn)
 						next if @known_hosts.key?(cn)
 						self.add(cn)
-						puts "New entry added: #{cn}\t#{@known_hosts[cn]}" 
+						puts "New entry added: #{cn}\t#{@known_hosts[cn]}"
 					end
 				end
 				# Step 2 - Save the cache into the file
@@ -87,7 +88,7 @@ module Wmap
 				return nil
 			end
 		end
-		
+
 		# Procedures to remove the redundant entries in the primary hosts data repository
 		def de_duplicate
 			@known_hosts.keys.map do |key|
@@ -116,8 +117,8 @@ module Wmap
 				return host
 			end
 		end
-		
+
 	end
-	
+
   end
 end

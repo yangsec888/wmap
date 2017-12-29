@@ -59,9 +59,9 @@ end
 
 # second step - update the hosts repository
 if ARGV.length == 1
-	host_tracker = Wmap::HostTracker.instance
-elsif ARGV.lengh == 2
-	host_tracker = Wmap::HostTracker.instance(:hosts_file => File.join(ARGV[1],"hosts"))
+	host_tracker = Wmap::HostTracker.new(:verbose=>true)
+elsif ARGV.length == 2
+	host_tracker = Wmap::HostTracker.new(:hosts_file => File.join(ARGV[1],"hosts"))
 else
 	aborts "Error firing up HostTracker instance!"
 end
@@ -84,7 +84,7 @@ urls.uniq!
 scanner=nil
 
 # fourth step - crawling on the URL seeds
-crawler = Wmap::UrlCrawler.instance(:verbose=>false)
+crawler = Wmap::UrlCrawler.new(:verbose=>false)
 Wmap.wlog(urls, "wmap", Log_dir+"url_seeds.log") if urls.size > 0   # save port scan results for debugging
 crawler.crawls(urls) if urls.size>0
 dis_urls=crawler.discovered_urls_by_crawler
@@ -119,9 +119,9 @@ when nil,[]
 else
 	puts "Automatically save the discovery results into the site tracking data repository: "
 	if ARGV.length == 1
-		inventory=Wmap::SiteTracker.instance
+		inventory=Wmap::SiteTracker.new
 	elsif ARGV.length == 2
-		inventory=Wmap::SiteTracker.instance(:sites_file => File.join(ARGV[1], "sites"))
+		inventory=Wmap::SiteTracker.new(:sites_file => File.join(ARGV[1], "sites"))
 	else
 		aborts "Error firing up SiteTracker instance!"
 	end
