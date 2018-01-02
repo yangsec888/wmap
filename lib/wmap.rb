@@ -122,7 +122,7 @@ module Wmap
 	# Domain Tracking - check with the trust domain seed file locally, to determine if it's a new internet domain
 	# NOT to confuse with the Internet 'whois' lookup
 	def domain_known?(domain)
-		tracker=Wmap::DomainTracker.instance
+		tracker=Wmap::DomainTracker.new
 		tracker.domain_known?(domain)
 	end
 
@@ -172,32 +172,32 @@ module Wmap
 
 	# Search the site repository for all entries that match the pattern
 	def search(pattern)
-		searcher=Wmap::SiteTracker.instance
+		searcher=Wmap::SiteTracker.new
 		searcher.search(pattern)
 	end
 
 	# Dump out the unique sites into a plain file
 	def dump(file)
-			store=Wmap::SiteTracker.instance
+			store=Wmap::SiteTracker.new
 			store.save_uniq_sites(file)
 	end
 
 	# Dump out the unique sites into a XML file
 	def dump_xml(file)
-			store=Wmap::SiteTracker.instance
+			store=Wmap::SiteTracker.new
 			store.save_uniq_sites_xml(file)
 	end
 
 	# Refresh the site information in the local data repository
 	def refresh(site)
-			store=Wmap::SiteTracker.instance
+			store=Wmap::SiteTracker.new
 			store.refresh(site)
 			store.save!
 	end
 
 	# Refresh the site information in the local data repository
 	def refresh_all
-			store=Wmap::SiteTracker.instance
+			store=Wmap::SiteTracker.new
 			store.refresh_all
 			store.save!
 	end
@@ -209,13 +209,13 @@ module Wmap
 
 	# Print a site's full information from the repository
 	def print(site)
-		searcher=Wmap::SiteTracker.instance
+		searcher=Wmap::SiteTracker.new
 		searcher.print_site(site)
 	end
 
 	# Print a site's full information from the repository
 	def print_all
-		searcher=Wmap::SiteTracker.instance
+		searcher=Wmap::SiteTracker.new
 		searcher.print_all_sites
 	end
 
