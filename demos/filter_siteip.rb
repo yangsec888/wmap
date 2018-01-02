@@ -1,10 +1,10 @@
-# Sample Site IP Tracker - Given a IP, flag it if not found in the site data repository  
-# Usage: ruby filter_siteip.rb [file_web_hosts] 
+# Sample Site IP Tracker - Given a IP, flag it if not found in the site data repository
+# Usage: ruby filter_siteip.rb [file_web_hosts]
 require	"wmap"
 
 def known?(ip)
 	ip=ip.chomp.strip
-	myDis = Wmap::SiteTracker.instance
+	myDis = Wmap::SiteTracker.new
 	known=false
 	if myDis.is_ip?(ip)
 		if myDis.siteip_known?(ip)
@@ -29,4 +29,3 @@ f_ips.each do |line|
 	end
 end
 f_ips.close
-

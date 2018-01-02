@@ -138,13 +138,14 @@ class Wmap::SiteTracker
 					raise "Site is currently down. Skip #{site}" if checker['code']==10000
 				end
 				raise "Exception on add method - Fail to resolve the host-name: Host - #{host}, IP - #{ip}. Skip #{site}" unless is_ip?(ip)
+				my_tracker = Wmap::HostTracker.new
 				# Update the local host table when necessary
 				if is_ip?(host)
 					# Case #1: Trusted site contains IP
-					if Wmap::HostTracker.instance.ip_known?(host)
+					if my_tracker.ip_known?(host)
 						# Try local reverse DNS lookup first
 						puts "Local hosts table lookup for IP: #{ip}" if @verbose
-						host=Wmap::HostTracker.instance.local_ip_2_host(host)
+						host=my_tracker.local_ip_2_host(host)
 						puts "Host found from the local hosts table for #{ip}: #{host}" if @verbose
 						site.sub!(/\d+\.\d+\.\d+\.\d+/,host)
 					else
@@ -175,17 +176,17 @@ class Wmap::SiteTracker
 					# Add logic to update the hosts table for case #1 variance
 					# -  case that reverse DNS lookup successful
 						puts "Update local hosts table for host: #{host}"
-						if Wmap::HostTracker.instance.host_known?(host)
-							old_ip=Wmap::HostTracker.instance.local_host_2_ip(host)
+						if my_tracker.host_known?(host)
+							old_ip=my_tracker.local_host_2_ip(host)
 							if old_ip != ip
-								Wmap::HostTracker.instance.refresh(host)
-								Wmap::HostTracker.instance.save!
+								my_tracker.efresh(host)
+								my_tracker.save!
 							else
 								puts "Host resolve to the same IP #{ip} - no need to update the local host table." if @verbose
 							end
 						else
-							Wmap::HostTracker.instance.add(host)
-							Wmap::HostTracker.instance.save!
+							my_tracker.add(host)
+							my_tracker.save!
 						end
 					end
 				else
@@ -200,24 +201,26 @@ class Wmap::SiteTracker
 					puts "Site entry loaded: #{checker}"
 					# Add logic to update the hosts table for case #2
 					puts "Update local hosts table for host: #{host}"
-					if Wmap::HostTracker.instance.host_known?(host)
-						old_ip=Wmap::HostTracker.instance.local_host_2_ip(host)
+					if my_tracker.host_known?(host)
+						old_ip=my_tracker.local_host_2_ip(host)
 						if old_ip != ip
-							Wmap::HostTracker.instance.refresh(host)
-							Wmap::HostTracker.instance.save!
+							my_tracker.efresh(host)
+							my_tracker.save!
 						else
 							# Skip - no need to update the local hosts table
 						end
 					else
-						Wmap::HostTracker.instance.add(host)
-						Wmap::HostTracker.instance.save!
+						my_tracker.add(host)
+						my_tracker.save!
 					end
 				end
 				deact=nil
+				my_tracker=nil
 				return checker
 			else
 				puts "Problem found: untrusted Internet domain or IP. Skip #{site}"
 				deact=nil
+				my_tracker=nil
 				return nil
 			end
 		rescue => ee
@@ -283,7 +286,7 @@ class Wmap::SiteTracker
 		puts "Remove entry from the site store: #{site} " if @verbose
 		begin
 			# Additional logic to deactivate the site properly, by moving it to the DeactivatedSite list, 02/07/2014
-			deact=Wmap::SiteTracker::DeactivatedSite.instance
+			deact=Wmap::SiteTracker::DeactivatedSite.new
 			site=site.strip.downcase
 			site=url_2_site(site)
 			if @known_sites.key?(site)
@@ -572,12 +575,13 @@ class Wmap::SiteTracker
 			#primary_host_tracker=Wmap::HostTracker::PrimaryHost.new
 			sites=Hash.new
 			#uniqueness=Hash.new
+			my_tracker=Wmap::HostTracker.new
 			@known_sites.keys.map do |key|
 				port=url_2_port(key).to_s
 				host=url_2_host(key)
 				md5=@known_sites[key]['md5']
 				code=@known_sites[key]['code']
-				ip=Wmap::HostTracker.instance.local_host_2_ip(host)
+				ip=my_trakcer.local_host_2_ip(host)
 				ip=host_2_ip(host) if ip.nil?
 				# filtering out 'un-reachable' sites
 				next if (code == 10000 or code == 20000)
@@ -604,6 +608,7 @@ class Wmap::SiteTracker
 				end
 			end
 			#primary_host_tracker=nil
+			my_tracker=nil
 			return sites.values
 		rescue Exception => ee
 			puts "Exception on method #{__method__}: #{ee}" if @verbose
@@ -670,10 +675,11 @@ class Wmap::SiteTracker
 		begin
 			updates=Array.new
 			sites=get_ip_sites
+			my_tracker=Wmap::HostTracker.new
 			sites.map do |site|
 				puts "Work on resolve the IP site: #{site}" if @verbose
 				ip=url_2_host(site)
-				hostname=Wmap::HostTracker.instance.local_ip_2_host(ip)
+				hostname=my_tracker.local_ip_2_host(ip)
 				if hostname.nil?
 					puts "Can't resolve #{ip} from the local host store. Skip #{site}" if @verbose
 				else
@@ -684,6 +690,7 @@ class Wmap::SiteTracker
 			end
 			updates.sort!
 			puts "The following sites are now refreshed: #{updates}" if @verbose
+			my_tracker=nil
 			return updates
 		rescue Exception => ee
 			puts "Exception on method #{__method__}: #{ee}" if @verbose
@@ -828,8 +835,8 @@ class Wmap::SiteTracker
 	def get_prim_uniq_sites
 		puts "Retrieve and prime unique sites in the site store. " if @verbose
 		begin
-			host_tracker=Wmap::HostTracker.instance
-			primary_host_tracker=Wmap::HostTracker::PrimaryHost.instance
+			host_tracker=Wmap::HostTracker.new
+			primary_host_tracker=Wmap::HostTracker::PrimaryHost.new
 			# Step 1. Retrieve the unique site list first
 			sites=get_uniq_sites
 			prim_uniq_sites=Array.new
@@ -856,7 +863,7 @@ class Wmap::SiteTracker
 				end
 				# case#4, for the site has a duplicate IP with others, we try to determine which one is the primary site
 				# raise "Error: inconsistency detected on record: #{site}. Please run the following shell command to refresh it first: \n\srefresh #{site}" if tracker1.alias[ip].nil?
-				if ( primary_host_tracker.known_hosts.key?(ip) and (Wmap::HostTracker.instance.alias[ip] > 1) )
+				if ( primary_host_tracker.known_hosts.key?(ip) and (host_tracker.alias[ip] > 1) )
 					new_host=primary_host_tracker.prime(host)
 					puts "Host: #{host}, New host:#{new_host}" if @verbose
 					unless host==new_host

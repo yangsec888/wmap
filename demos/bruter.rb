@@ -4,9 +4,10 @@ require "wmap"
 
 f_rpt=".rpt.txt"
 # Step 1 - obtain list of domains to be brute-forced on
-root_domains=Wmap::HostTracker.instance.dump_root_domains
-sub_domains=Wmap::HostTracker.instance.dump_sub_domains
-# Step 2 - multi-thread brute forcer works on known domains and sub-domains 
+host_tracker=Wmap::HostTracker.new
+root_domains=host_tracker.dump_root_domains
+sub_domains=host_tracker.instance.dump_sub_domains
+# Step 2 - multi-thread brute forcer works on known domains and sub-domains
 k=Wmap::DnsBruter.new(:verbose=>true, :max_parallel=>50)
 #hosts=k.dns_brute_file(ARGV[0])
 results=k.dns_brute_workers(sub_domains+root_domains)
@@ -21,5 +22,6 @@ f.close
 puts "Brute force results are saved successfully: #{f_rpt}"
 
 # Step 4 - now update the local hosts table accordingly
-Wmap::HostTracker.instance.bulk_add(results.values.flatten)
-Wmap::HostTracker.instance.save!
+host_tracker.bulk_add(results.values.flatten)
+host_tracker.instance.save!
+host_tracker=nil

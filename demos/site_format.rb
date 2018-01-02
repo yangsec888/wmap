@@ -4,7 +4,7 @@
 
 require "wmap"
 
-k=Wmap::SiteTracker.instance
+k=Wmap::SiteTracker.new
 f=File.open(ARGV[0],'r')
 f.each do |line|
 	url=line.chomp.strip.downcase
@@ -12,6 +12,7 @@ f.each do |line|
 		puts k.url_2_site(url)
 	else
 		puts url
-	end	
+	end
 end
 f.close
+k=nil 

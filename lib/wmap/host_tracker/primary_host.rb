@@ -39,7 +39,8 @@ module Wmap
 				# Step 1 - update the prime host table based on the SSL cert CN fields
 				cns=Hash.new
 				checker=Wmap::UrlChecker.new
-				Wmap::SiteTracker.instance.get_ssl_sites.map do |site|
+        my_tracker = Wmap::SiteTracker.new
+				my_tracker.get_ssl_sites.map do |site|
 					puts "Exam SSL enabled site entry #{site} ..."
 					my_host=url_2_host(site)
 					next if @known_hosts.key?(my_host) # add the logic to optimize the process
@@ -58,8 +59,12 @@ module Wmap
 				end
 				# Step 2 - Save the cache into the file
 				self.save!
+        checker=nil
+        my_tracker=nil
 			rescue Exception => ee
 				puts "Exception on method #{__method__}: #{ee}" if @verbose
+        checker=nil
+        my_tracker=nil 
 				return nil
 			end
 		end

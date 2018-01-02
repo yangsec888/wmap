@@ -118,7 +118,7 @@ class Wmap::HostTracker
 						# add additional logic to update the sub-domain table as well, 02/10/2014
 						sub=get_sub_domain(host)
 						if sub!=root
-							tracker=Wmap::DomainTracker::SubDomain.instance
+							tracker=Wmap::DomainTracker::SubDomain.new
 							unless tracker.domain_known?(sub)
 								tracker.add(sub)
 								tracker.save!

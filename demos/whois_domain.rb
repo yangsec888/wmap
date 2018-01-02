@@ -1,11 +1,11 @@
 # Automated whois lookup for a list of valid domains
-# Usage: ruby whois_domain.rb [file_hosts] 
+# Usage: ruby whois_domain.rb [file_hosts]
 # Input file format: one line for each host (FQDN)
 # Output file format: good old CSV format, with whois response parsed and sorted into structured fields.
 require	"wmap"
 
 puts Wmap.banner
-dis=Wmap::DomainTracker.instance
+dis=Wmap::DomainTracker.new
 dis.verbose=false
 puts "Domain Whois Lookup Summary Report"
 puts "Host | Domain | Primary Domain Name Server | Registrant Name | Registrant Oraganization | Registrant Address | Registrant Zip | Registrant City | Registrant State | Registration Country | Registration Contact Phone | Registration Contact Email | Technical Contact Name | Technical Contact Organization | Technical Contact Country | Technical Contract Phone | Technical Contact Email | Admin Contact Name | Admin Contact Organization | Domain Availability"
@@ -21,7 +21,7 @@ f_hosts.each do |line|
 		if domain.nil?
 			puts "#{line.chomp} | Domain Unknown"
 #		elsif dis.domain_known?(domain)
-#			next	
+#			next
 		else
 			result=Wmap.whois(domain)
 			puts result if dis.verbose
@@ -31,7 +31,7 @@ f_hosts.each do |line|
 					 record['r_name']=contact_r['name']
 					 record['r_org']=contact_r['organization']
 					 record['r_addr']=contact_r['address'].gsub(/\n/,',').gsub(/\r/,' ') unless contact_r['address'].nil?
-					 record['r_zip']=contact_r['zip']					 
+					 record['r_zip']=contact_r['zip']
 					 record['r_city']=contact_r['city']
 					 record['r_state']=contact_r['state']
 					 record['r_country']=contact_r['country_code']
@@ -45,16 +45,16 @@ f_hosts.each do |line|
 					 record['t_org']=contact_t['organization']
 					 record['t_country']=contact_t['country_code']
 					 record['t_phone']=contact_t['phone']
-					 record['t_email']=contact_t['email']					
+					 record['t_email']=contact_t['email']
 				end
 			end
 			unless result.admin_contacts.nil?
 				result.admin_contacts.each do |contact_a|
 					 record['a_name']=contact_a['name']
-					 record['a_org']=contact_a['organization']				 
+					 record['a_org']=contact_a['organization']
 				end
 			end
-			if result.available? 
+			if result.available?
 				record['availability']="true"
 			else
 				record['availability']="false"
@@ -69,9 +69,10 @@ f_hosts.each do |line|
 			print ' | ', record['t_name'], ' | ', record['t_org'],' | ', record['t_country'],' | ', record['t_phone'],' | ', record['t_email']
 			print ' | ', record['a_name'], ' | ', record['a_org'],' | ', record['availability']
 		end
-		print "\n"				
+		print "\n"
 	rescue => ee
 		puts "#{line.chomp} | #{domain} | #{ee}"
-	end	
+	end
 end
 f_hosts.close
+dis=nil 

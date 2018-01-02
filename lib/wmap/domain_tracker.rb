@@ -107,7 +107,7 @@ class Wmap::DomainTracker
 	# 'setter' to add domain entry to the cache one at a time
 	def add(host)
 		puts "Add entry to the local domains cache table: #{host}" if @verbose
-		begin
+		#begin
 			host=host.strip.downcase
 			if @known_internet_domains.key?(host)
 				puts "Domain is already exist. Skipping: #{host}"
@@ -143,9 +143,9 @@ class Wmap::DomainTracker
 					puts "Problem add domain #{host} - please use legal root domain or sub domain only."
 				end
 			end
-		rescue => ee
-			puts "Exception on method #{__method__}: #{ee}" if @verbose
-		end
+		#rescue => ee
+			#puts "Exception on method #{__method__}: #{ee}" if @verbose
+		#end
 	end
 
 	# 'setter' to add domain entry to the cache in batch (from a file)
