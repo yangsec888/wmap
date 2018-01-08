@@ -17,15 +17,16 @@ class SubDomain < Wmap::DomainTracker
 	include Wmap::Utils
 	#include Singleton
 
-	attr_accessor :verbose, :domains_file, :max_parallel
+	attr_accessor :verbose, :domains_file, :max_parallel, :data_dir
 	attr_reader :known_internet_sub_domains
 
 	# Set default instance variables
 	def initialize (params = {})
 		@verbose=params.fetch(:verbose, false)
+		@data_dir=params.fetch(:data_dir, File.dirname(__FILE__)+'/../../../data/')
 		@max_parallel=params.fetch(:max_parallel, 40)
 		# Hash table to hold the trusted domains
-		@file_sub_domains=params.fetch(:domains_file,File.dirname(__FILE__)+'/../../../data/sub_domains')
+		@file_sub_domains=@data_dir + 'sub_domains'
 		File.write(@file_sub_domains, "") unless File.exist?(@file_sub_domains)
 		@known_internet_sub_domains=load_domains_from_file(@file_sub_domains) #unless @known_internet_sub_domains.size>0
 		end
@@ -89,7 +90,7 @@ class SubDomain < Wmap::DomainTracker
 		puts "Invoke internal procedures to update the sub-domain list from the host store."
 		begin
 			# Step 1 - obtain the latest sub-domains
-			subs = Wmap::HostTracker.new.dump_sub_domains - [nil,""]
+			subs = Wmap::HostTracker.new(:data_dir=>@data_dir).dump_sub_domains - [nil,""]
 			# Step 2 - update the sub-domain list
 			unless subs.empty?
 				#subs.map { |x| self.add(x) unless domain_known?(x) }

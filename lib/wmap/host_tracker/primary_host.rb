@@ -5,7 +5,7 @@
 #
 # Copyright (c) 2012-2015 Yang Li <yang.li@owasp.org>
 #++
-require "singleton"		# Implement singleton pattern to avoid race condition under parallel engine
+#require "singleton"		# Implement singleton pattern to avoid race condition under parallel engine
 
 
 module Wmap
@@ -16,14 +16,15 @@ module Wmap
 		include Wmap::Utils
 		include Singleton
 
-		attr_accessor :hosts_file, :verbose
+		attr_accessor :hosts_file, :verbose, :data_dir
 		attr_reader :known_hosts, :known_ips
 
 		# Initialize the instance variables
 		def initialize (params = {})
 			@verbose=params.fetch(:verbose, false)
+      @data_dir=params.fetch(:data_dir, File.dirname(__FILE__)+'/../../../data/')
 			# Set default instance variables
-			@file_hosts=File.dirname(__FILE__)+'/../../../data/prime_hosts'
+			@file_hosts=@data_dir + 'prime_hosts'
 			file=params.fetch(:hosts_file, @file_hosts)
 			# Initialize the instance variables
       File.write(@file_hosts, "") unless File.exist?(@file_hosts)
@@ -38,8 +39,8 @@ module Wmap
 			begin
 				# Step 1 - update the prime host table based on the SSL cert CN fields
 				cns=Hash.new
-				checker=Wmap::UrlChecker.new
-        my_tracker = Wmap::SiteTracker.new
+				checker=Wmap::UrlChecker.new(:data_dir=>@data_dir)
+        my_tracker = Wmap::SiteTracker.new(:data_dir=>@data_dir)
 				my_tracker.get_ssl_sites.map do |site|
 					puts "Exam SSL enabled site entry #{site} ..."
 					my_host=url_2_host(site)
@@ -64,7 +65,7 @@ module Wmap
 			rescue Exception => ee
 				puts "Exception on method #{__method__}: #{ee}" if @verbose
         checker=nil
-        my_tracker=nil 
+        my_tracker=nil
 				return nil
 			end
 		end
@@ -74,7 +75,7 @@ module Wmap
 		def update_from_site_redirections!
 			puts "Invoke internal procedures to update the primary host-name table from the site store."
 			begin
-				urls=Wmap::SiteTracker.instance.get_redirection_urls
+				urls=Wmap::SiteTracker.new(:data_dir=>@data_dir).get_redirection_urls
 				urls.map do |url|
 					if is_url?(url)
 						host=url_2_host(url)

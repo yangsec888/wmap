@@ -17,12 +17,13 @@ class DeactivatedSite < Wmap::SiteTracker
 	include Wmap::Utils
 	#include Singleton
 
-	attr_accessor :sites_file, :known_sites, :verbose
+	attr_accessor :sites_file, :known_sites, :verbose, :data_dir
 
 	# Set default instance variables
 	def initialize (params = {})
 		# Initialize the instance variables
-		@f_sites=File.dirname(__FILE__)+'/../../../data/deactivated_sites'
+		@data_dir=params.fetch(:data_dir, File.dirname(__FILE__)+'/../../../data/')
+		@f_sites=@data_dir + 'deactivated_sites'
 		@file_stores=params.fetch(:sites_file, @f_sites)
 		@verbose=params.fetch(:verbose, false)
 		# Hash table to hold the site store

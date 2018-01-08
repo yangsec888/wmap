@@ -15,14 +15,15 @@ class Wmap::DomainTracker
 	#include Singleton
 
 
-	attr_accessor :verbose, :max_parallel, :domains_file, :file_domains
+	attr_accessor :verbose, :max_parallel, :domains_file, :file_domains, :data_dir
 	attr_reader :known_internet_domains
 
 	# Set default instance variables
 	def initialize (params = {})
 		# Initialize the instance variables
 		@verbose=params.fetch(:verbose, false)
-		@file_domains=params.fetch(:domains_file,File.dirname(__FILE__)+'/../../data/domains')
+		@data_dir=params.fetch(:data_dir, File.dirname(__FILE__)+'/../../data/')
+		@file_domains=params.fetch(:domains_file, @data_dir+'domains')
 		@max_parallel=params.fetch(:max_parallel, 40)
 		# Hash table to hold the trusted domains
 		File.write(@file_domains, "") unless File.exist?(@file_domains)

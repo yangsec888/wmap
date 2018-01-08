@@ -15,13 +15,14 @@ class Wmap::SiteTracker
 	include Wmap::Utils
 	#include Singleton
 
-	attr_accessor :sites_file, :max_parallel, :verbose
+	attr_accessor :sites_file, :max_parallel, :verbose, :data_dir
 	attr_reader :known_sites
 
 	# Set default instance variables
 	def initialize (params = {})
 		# Initialize the instance variables
-		@f_sites=File.dirname(__FILE__)+'/../../data/sites'
+		@data_dir=params.fetch(:data_dir, File.dirname(__FILE__)+'/../../data/')
+		@f_sites=@data_dir+'sites'
 		@file_stores=params.fetch(:sites_file, @f_sites)
 		@verbose=params.fetch(:verbose, false)
 		@max_parallel=params.fetch(:max_parallel, 30)
@@ -114,22 +115,22 @@ class Wmap::SiteTracker
 			host=url_2_host(site)
 			ip=host_2_ip(host)
 			# Additional logic to refresh deactivated site, 02/12/2014
-			deact=Wmap::SiteTracker::DeactivatedSite.new
+			deact=Wmap::SiteTracker::DeactivatedSite.new(:data_dir=>@data_dir)
 			# only trust either the domain or IP we know
 			if is_ip?(host)
-				trusted=Wmap.ip_trusted?(ip)
+				trusted=Wmap::CidrTracker.new(:data_dir=>@data_dir).ip_trusted?(ip)
 			else
 				root=get_domain_root(host)
 				if root.nil?
 					raise "Invalid web site format. Please check your record again."
 				else
-					trusted=Wmap.domain_known?(root)
+					trusted=Wmap::DomainTracker.new(:data_dir=>@data_dir).domain_known?(root)
 				end
 			end
 			# add record only if trusted
 			if trusted
 				# Add logic to check site status before adding it
-				checker=Wmap.check(site)
+				checker=Wmap::UrlChecker.new(:data_dir=>@data_dir).check(site)
 				raise "Site is currently down. Skip #{site}" if checker.nil?
 				# Skip the http site if it's un-responsive; for the https we'll keep it because we're interested in analysing the SSL layer later
 				if is_https?(site)
@@ -138,7 +139,7 @@ class Wmap::SiteTracker
 					raise "Site is currently down. Skip #{site}" if checker['code']==10000
 				end
 				raise "Exception on add method - Fail to resolve the host-name: Host - #{host}, IP - #{ip}. Skip #{site}" unless is_ip?(ip)
-				my_tracker = Wmap::HostTracker.new
+				my_tracker = Wmap::HostTracker.new(:data_dir=>@data_dir)
 				# Update the local host table when necessary
 				if is_ip?(host)
 					# Case #1: Trusted site contains IP
@@ -154,7 +155,7 @@ class Wmap::SiteTracker
 						host1=ip_2_host(host)
 						puts "host1: #{host1}" if @verbose
 						if is_fqdn?(host1)
-							if Wmap.domain_known?(host1)
+							if Wmap::HostTracker.new(:data_dir=>@data_dir).domain_known?(host1)
 								# replace IP with host-name only if domain root is known
 								puts "Host found from the Internet reverse DNS lookup for #{ip}: #{host1}" if @verbose
 								host=host1
@@ -286,7 +287,7 @@ class Wmap::SiteTracker
 		puts "Remove entry from the site store: #{site} " if @verbose
 		begin
 			# Additional logic to deactivate the site properly, by moving it to the DeactivatedSite list, 02/07/2014
-			deact=Wmap::SiteTracker::DeactivatedSite.new
+			deact=Wmap::SiteTracker::DeactivatedSite.new(:data_dir=>@data_dir)
 			site=site.strip.downcase
 			site=url_2_site(site)
 			if @known_sites.key?(site)
@@ -575,7 +576,7 @@ class Wmap::SiteTracker
 			#primary_host_tracker=Wmap::HostTracker::PrimaryHost.new
 			sites=Hash.new
 			#uniqueness=Hash.new
-			my_tracker=Wmap::HostTracker.new
+			my_tracker=Wmap::HostTracker.new(:data_dir=>@data_dir)
 			@known_sites.keys.map do |key|
 				port=url_2_port(key).to_s
 				host=url_2_host(key)
@@ -675,7 +676,7 @@ class Wmap::SiteTracker
 		begin
 			updates=Array.new
 			sites=get_ip_sites
-			my_tracker=Wmap::HostTracker.new
+			my_tracker=Wmap::HostTracker.new(:data_dir=>@data_dir)
 			sites.map do |site|
 				puts "Work on resolve the IP site: #{site}" if @verbose
 				ip=url_2_host(site)
@@ -835,8 +836,8 @@ class Wmap::SiteTracker
 	def get_prim_uniq_sites
 		puts "Retrieve and prime unique sites in the site store. " if @verbose
 		begin
-			host_tracker=Wmap::HostTracker.new
-			primary_host_tracker=Wmap::HostTracker::PrimaryHost.new
+			host_tracker=Wmap::HostTracker.new(:data_dir=>@data_dir)
+			primary_host_tracker=Wmap::HostTracker::PrimaryHost.new(:data_dir=>@data_dir)
 			# Step 1. Retrieve the unique site list first
 			sites=get_uniq_sites
 			prim_uniq_sites=Array.new

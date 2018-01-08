@@ -14,14 +14,15 @@ class Wmap::HostTracker
 	#include Singleton
 	include Wmap::Utils
 
-	attr_accessor :hosts_file, :max_parallel, :verbose
+	attr_accessor :hosts_file, :max_parallel, :verbose, :data_dir
 	attr_reader :known_hosts, :alias
 
 	# Instance default variables
 	def initialize (params = {})
 		@verbose=params.fetch(:verbose, false)
+		@data_dir=params.fetch(:data_dir, File.dirname(__FILE__)+'/../../data/')
 		# Set default instance variables
-		@file_hosts=File.dirname(__FILE__)+'/../../data/hosts'
+		@file_hosts=@data_dir + 'hosts'
 		file=params.fetch(:hosts_file, @file_hosts)
 		@max_parallel=params.fetch(:max_parallel, 40)
 		# Initialize the instance variables
@@ -110,7 +111,7 @@ class Wmap::HostTracker
 				if is_ip?(ip)
 					# filter host to known domains only
 					root=get_domain_root(host)
-					if Wmap.domain_known?(root)
+					if Wmap::DomainTracker.new(:data_dir=>@data_dir).domain_known?(root)
 						record[host]=ip
 						record[ip]=host
 						puts "Host data repository entry loaded: #{host} <=> #{ip}"
@@ -118,7 +119,7 @@ class Wmap::HostTracker
 						# add additional logic to update the sub-domain table as well, 02/10/2014
 						sub=get_sub_domain(host)
 						if sub!=root
-							tracker=Wmap::DomainTracker::SubDomain.new
+							tracker=Wmap::DomainTracker::SubDomain.new(:data_dir=>@data_dir)
 							unless tracker.domain_known?(sub)
 								tracker.add(sub)
 								tracker.save!

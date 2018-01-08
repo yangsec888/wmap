@@ -13,11 +13,12 @@ require "parallel"
 class Wmap::DnsBruter
 	include Wmap::Utils
 
-	attr_accessor :hosts_dict, :verbose, :max_parallel
+	attr_accessor :hosts_dict, :verbose, :max_parallel, :data_dir
 	attr_reader :discovered_hosts_from_dns_bruter, :fail_domain_cnt
 
 	# Change to your brute-force dictionary file here if necessary
-	File_hosts = File.dirname(__FILE__)+'/../../data/hosts'
+	@data_dir=params.fetch(:data_dir, File.dirname(__FILE__)+'/../../data/')
+	File_hosts = @data_dir + 'hosts'
 	File_hosts_dict = File.dirname(__FILE__)+'/../../dicts/hostnames-dict.txt'
 
 	# Set default instance variables
@@ -161,22 +162,23 @@ class Wmap::DnsBruter
 		begin
 			host=host.strip
 			valid_hosts = Array.new
+			my_host_tracker = Wmap::HostTracker.new(:data_dir=>@data_dir)
 			# build the host dictionary for the brute force method
 			dict = Array.new
 			if File.exists?(@hosts_dict)
 				dict = file_2_list(@hosts_dict)
 			elsif File.exists?(File_hosts)
-				dict = Wmap::HostTracker.new.top_hostname(200)
-				Wmap::HostTracker.new.list_2_file(dict,@hosts_dict)
+				dict = my_host_tracker.top_hostname(200)
+				my_host_tracker.list_2_file(dict,@hosts_dict)
 			else
 				abort "Error: Non-existing common hosts dictionary file - #{@host_dict} or hosts file #{File_hosts}. Please check your file path and name setting again."
 			end
 			domain=String.new
-			unless is_root_domain?(host) or Wmap.sub_domain_known?(host)
+			unless is_root_domain?(host) or my_host_tracker.sub_domain_known?(host)
 				my_hosts=hostname_mutation(host).map {|x| x.split('.')[0]}
 				dict+=my_hosts unless my_hosts.empty?
 			end
-			if is_domain?(host) or Wmap.sub_domain_known?(host)
+			if is_domain?(host) or my_host_tracker.sub_domain_known?(host)
 				domain=host
 			elsif
 				array_h=host.split('.')
@@ -213,6 +215,7 @@ class Wmap::DnsBruter
 			end
 			puts "Found DNS records on domain #{host}: #{valid_hosts}" if @verbose
 			@discovered_hosts_from_dns_bruter[host] = valid_hosts
+			my_host_tracker = nil
 			return valid_hosts.uniq
 		rescue Exception => ee
 			puts "Exception on method #{__method__}: #{ee}" if @verbose
@@ -243,7 +246,7 @@ class Wmap::DnsBruter
 		puts "Start the parallel brute-forcing all domains with maximum child processes: #{num}"
 		begin
 			hosts=Array.new
-			my_dis=Wmap::HostTracker.new
+			my_dis=Wmap::HostTracker.new(:data_dir=>@data_dir)
 			known_domains=my_dis.dump_root_domains
 			hosts=dns_brute_domains(num, known_domains)
 			my_dis.adds(hosts)
