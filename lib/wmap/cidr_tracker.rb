@@ -17,15 +17,12 @@ class Wmap::CidrTracker
 	def initialize (params = {})
 		@verbose=params.fetch(:verbose, false)
 		@data_dir=params.fetch(:data_dir, File.dirname(__FILE__)+'/../../data/')
-		@file_cidr_seeds=@data_dir + 'cidrs'
+		@file_cidr_seeds=params.fetch(:cidr_seeds, @data_dir + 'cidrs')
 		@known_cidr_blks={}
 		@known_cidr_blks_desc_index=[]
 		@known_cidr_blks_asce_index=[]
-		# Set default instance variables
-		@cidr_seeds=params.fetch(:cidr_seeds, @file_cidr_seeds)
-		# Initialize the class variables
-		File.write(@cidr_seeds, "") unless File.exist?(@cidr_seeds)
-		load_cidr_blks_from_file(@cidr_seeds)
+		File.write(@file_cidr_seeds, "") unless File.exist?(@file_cidr_seeds)
+		load_cidr_blks_from_file(@file_cidr_seeds)
 	end
 
 	# Main worker method to retrieve known network information for a host / ip
@@ -53,7 +50,7 @@ class Wmap::CidrTracker
 	alias_method :track, :cidr_worker
 
 	# 'setter' to load the known CIDR blocks into an instance variable @known_cidr_blks
-	def load_cidr_blks_from_file (file_cidrs)
+	def load_cidr_blks_from_file (file_cidrs=@file_cidr_seeds)
 		puts "Load the known CIDR seed file: #{file_cidrs}" if @verbose
 		begin
 			f=File.open(file_cidrs, 'r')

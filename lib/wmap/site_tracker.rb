@@ -22,8 +22,8 @@ class Wmap::SiteTracker
 	def initialize (params = {})
 		# Initialize the instance variables
 		@data_dir=params.fetch(:data_dir, File.dirname(__FILE__)+'/../../data/')
-		@f_sites=@data_dir+'sites'
-		@file_stores=params.fetch(:sites_file, @f_sites)
+		@file_sites=@data_dir+'sites'
+		@file_stores=params.fetch(:sites_file, @file_sites)
 		@verbose=params.fetch(:verbose, false)
 		@max_parallel=params.fetch(:max_parallel, 30)
 		# Hash table to hold the site store
@@ -249,7 +249,7 @@ class Wmap::SiteTracker
 	# Setter to add site entry to the cache in batch (from a list)
 	def bulk_add(list,num=@max_parallel)
 		puts "Add entries to the local site store from list:\n #{list}"
-		begin
+		#begin
 			results=Hash.new
 			if list.size > 0
 				puts "Start parallel adding on the sites:\n #{list}"
@@ -276,9 +276,9 @@ class Wmap::SiteTracker
 				puts "No new entry added. "
 			end
 			return results
-		rescue => ee
-			puts "Exception on method #{__method__}: #{ee}" if @verbose
-		end
+		#rescue => ee
+			#puts "Exception on method #{__method__}: #{ee}" if @verbose
+		#end
 	end
 	alias_method :adds, :bulk_add
 
