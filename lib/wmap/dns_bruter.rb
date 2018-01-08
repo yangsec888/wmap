@@ -16,16 +16,16 @@ class Wmap::DnsBruter
 	attr_accessor :hosts_dict, :verbose, :max_parallel, :data_dir
 	attr_reader :discovered_hosts_from_dns_bruter, :fail_domain_cnt
 
-	# Change to your brute-force dictionary file here if necessary
-	@data_dir=params.fetch(:data_dir, File.dirname(__FILE__)+'/../../data/')
-	File_hosts = @data_dir + 'hosts'
-	File_hosts_dict = File.dirname(__FILE__)+'/../../dicts/hostnames-dict.txt'
-
 	# Set default instance variables
 	def initialize (params = {})
+		# Change to your brute-force dictionary file here if necessary
+		@data_dir=params.fetch(:data_dir, File.dirname(__FILE__)+'/../../data/')
+		@file_hosts = @data_dir + 'hosts'
+		@file_hosts_dict = File.dirname(__FILE__)+'/../../dicts/hostnames-dict.txt'
+
 		@verbose=params.fetch(:verbose, false)
 		@discovered_hosts_from_dns_bruter=Hash.new
-		@hosts_dict=params.fetch(:hosts_dict, File_hosts_dict)
+		@hosts_dict=params.fetch(:hosts_dict, @file_hosts_dict)
 		@max_parallel=params.fetch(:max_parallel, 30)
 		@fail_domain_cnt=Hash.new
 	end
@@ -167,11 +167,11 @@ class Wmap::DnsBruter
 			dict = Array.new
 			if File.exists?(@hosts_dict)
 				dict = file_2_list(@hosts_dict)
-			elsif File.exists?(File_hosts)
+			elsif File.exists?(@file_hosts)
 				dict = my_host_tracker.top_hostname(200)
 				my_host_tracker.list_2_file(dict,@hosts_dict)
 			else
-				abort "Error: Non-existing common hosts dictionary file - #{@host_dict} or hosts file #{File_hosts}. Please check your file path and name setting again."
+				abort "Error: Non-existing common hosts dictionary file - #{@host_dict} or hosts file #{@file_hosts}. Please check your file path and name setting again."
 			end
 			domain=String.new
 			unless is_root_domain?(host) or my_host_tracker.sub_domain_known?(host)

@@ -11,17 +11,18 @@ require "netaddr"
 class Wmap::CidrTracker
 	include Wmap::Utils
 
-	attr_accessor :cidr_seeds, :verbose, :known_cidr_blks
-	File_cidr_seeds=File.dirname(__FILE__)+'/../../data/cidrs'
+	attr_accessor :cidr_seeds, :verbose, :known_cidr_blks, :data_dir
 
 	# Set class default variables
 	def initialize (params = {})
 		@verbose=params.fetch(:verbose, false)
+		@data_dir=params.fetch(:data_dir, File.dirname(__FILE__)+'/../../data/')
+		@file_cidr_seeds=@data_dir + 'cidrs'
 		@known_cidr_blks={}
 		@known_cidr_blks_desc_index=[]
 		@known_cidr_blks_asce_index=[]
 		# Set default instance variables
-		@cidr_seeds=params.fetch(:cidr_seeds, File_cidr_seeds)
+		@cidr_seeds=params.fetch(:cidr_seeds, @file_cidr_seeds)
 		# Initialize the class variables
 		File.write(@cidr_seeds, "") unless File.exist?(@cidr_seeds)
 		load_cidr_blks_from_file(@cidr_seeds)
@@ -276,7 +277,7 @@ class Wmap::CidrTracker
 	end
 
 	# Save the current cidr hash table into a file
-	def save_cidrs_to_file!(file_cidrs=File_cidr_seeds)
+	def save_cidrs_to_file!(file_cidrs=@file_cidr_seeds)
 		puts "Saving the current cidrs cache table from memory to file: #{file_cidrs} ..." if @verbose
 		begin
 			timestamp=Time.now
