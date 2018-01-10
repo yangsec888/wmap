@@ -78,7 +78,7 @@ class Wmap::SiteTracker
 			timestamp=Time.now
 			f=File.open(file_sites, 'w')
 			f.write "# Local site store created by class #{self.class} method #{__method__} at: #{timestamp}\n"
-			f.write "# Website,Primary IP,Port,Hosting Status,Server,Response Code,Site MD5 Finger-print,Site Redirection,Timestamp\n"
+			f.write "# Website,Primary IP,Port,Hosting Status,Server,Response Code,MD5 Finger-print,Redirection,Timestamp\n"
 			@known_sites.keys.sort.map do |key|
 				f.write "#{key},#{@known_sites[key]['ip']},#{@known_sites[key]['port']},#{@known_sites[key]['status']},#{@known_sites[key]['server']},#{@known_sites[key]['code']},#{@known_sites[key]['md5']},#{@known_sites[key]['redirection']},#{@known_sites[key]['timestamp']}\n"
 			end

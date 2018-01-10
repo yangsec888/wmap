@@ -60,8 +60,8 @@ class Wmap::CidrTracker
 				puts "Loading: #{entry[0]}" if @verbose
 				key=entry[0].strip
 				@known_cidr_blks[key] = Hash.new if not @known_cidr_blks.key?(key)
-				@known_cidr_blks[key]['ref']=entry[1].strip
-				@known_cidr_blks[key]['netname']=entry[2].strip
+				@known_cidr_blks[key]['ref']=entry[1].nil? ? nil : entry[1].strip
+				@known_cidr_blks[key]['netname']=entry[2].nil? ? nil : entry[2].strip
 			end
 			f.close
 			# Sort the blocks in order once for better performance
