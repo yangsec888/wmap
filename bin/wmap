@@ -11,8 +11,15 @@ end
 
 # preparing - spit out the program banner
 puts Wmap.banner
-# Log the command entry
-Log_dir=File.dirname(__FILE__)+'/../logs/'
+if ARGV.length == 1
+	# Log the command entry
+	Log_dir=File.dirname(__FILE__)+'/../logs/'
+elsif ARGV.length == 2
+	# Log to the instance running directory
+	Log_dir=ARGV[1] + '/logs/'
+	Dir.mkdir(Log_dir) unless Dir.exist?(Log_dir)
+end
+
 Wmap.wlog("Execute the command: wmap #{ARGV[0]}","wmap",Log_dir+"wmap.log")
 print_usage unless (ARGV.length==1 or ARGV.length==2)
 urls = Array.new
@@ -59,6 +66,7 @@ end
 
 # second step - update the hosts repository
 if ARGV.length == 1
+	puts puts "Invoke the HostTracker."
 	host_tracker = Wmap::HostTracker.new(:verbose=>true)
 elsif ARGV.length == 2
 	puts "Invoke the HostTracker with optional directory setter."
@@ -85,7 +93,15 @@ urls.uniq!
 scanner=nil
 
 # fourth step - crawling on the URL seeds
-crawler = Wmap::UrlCrawler.new(:verbose=>false)
+if ARGV.length == 1
+	puts "Fire up the crawler."
+	crawler = Wmap::UrlCrawler.new(:verbose=>false)
+elsif ARGV.length == 2
+	puts "Fire up the crawler with the optional directory setter."
+	crawler = Wmap::UrlCrawler.new(:data_dir => ARGV[1])
+else
+	aborts "Error firing up UrlCrawler instance!"
+end
 Wmap.wlog(urls, "wmap", Log_dir+"url_seeds.log") if urls.size > 0   # save port scan results for debugging
 crawler.crawls(urls) if urls.size>0
 dis_urls=crawler.discovered_urls_by_crawler
@@ -120,8 +136,10 @@ when nil,[]
 else
 	puts "Automatically save the discovery results into the site tracking data repository: "
 	if ARGV.length == 1
+		puts "Start the SiteTracker. "
 		inventory=Wmap::SiteTracker.new
 	elsif ARGV.length == 2
+		puts "Start the SiteTracker with the optional directory setter. "
 		inventory=Wmap::SiteTracker.new(:data_dir => ARGV[1])
 	else
 		aborts "Error firing up SiteTracker instance!"

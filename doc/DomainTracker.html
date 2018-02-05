@@ -71,10 +71,6 @@
     <li><a class="include" href="Wmap/Utils.html">Wmap::Utils</a>
   
   
-  
-    <li><span class="include">Singleton</span>
-  
-  
   </ul>
 </div>
 
@@ -198,11 +194,13 @@
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span> (<span class="ruby-identifier">params</span> = {})
         <span class="ruby-comment"># Initialize the instance variables</span>
         <span class="ruby-ivar">@verbose</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:verbose</span>, <span class="ruby-keyword">false</span>)
-        <span class="ruby-ivar">@file_domains</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:domains_file</span>,<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-keyword">__FILE__</span>)<span class="ruby-operator">+</span><span class="ruby-string">&#39;/../../data/domains&#39;</span>)
+        <span class="ruby-ivar">@data_dir</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:data_dir</span>, <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-keyword">__FILE__</span>)<span class="ruby-operator">+</span><span class="ruby-string">&#39;/../../data/&#39;</span>)
+        <span class="ruby-ivar">@file_domains</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:domains_file</span>, <span class="ruby-ivar">@data_dir</span><span class="ruby-operator">+</span><span class="ruby-string">&#39;domains&#39;</span>)
         <span class="ruby-ivar">@max_parallel</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:max_parallel</span>, <span class="ruby-value">40</span>)
         <span class="ruby-comment"># Hash table to hold the trusted domains</span>
-        <span class="ruby-ivar">@known_internet_domains</span>=<span class="ruby-identifier">load_domains_from_file</span>(<span class="ruby-ivar">@file_domains</span>) 
-        <span class="ruby-comment">#@known_internet_sub_domains=Hash.new         </span>
+        <span class="ruby-constant">File</span>.<span class="ruby-identifier">write</span>(<span class="ruby-ivar">@file_domains</span>, <span class="ruby-string">&quot;&quot;</span>) <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-ivar">@file_domains</span>)
+        <span class="ruby-ivar">@known_internet_domains</span>=<span class="ruby-identifier">load_domains_from_file</span>(<span class="ruby-ivar">@file_domains</span>)
+        <span class="ruby-comment">#@known_internet_sub_domains=Hash.new</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -241,11 +239,11 @@
 
           
           <div class="method-source-code" id="add-source">
-            <pre><span class="ruby-comment"># File lib/wmap/domain_tracker.rb, line 107</span>
+            <pre><span class="ruby-comment"># File lib/wmap/domain_tracker.rb, line 109</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">add</span>(<span class="ruby-identifier">host</span>)
         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Add entry to the local domains cache table: #{host}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
-        <span class="ruby-keyword">begin</span>
-                <span class="ruby-identifier">host</span>=<span class="ruby-identifier">host</span>.<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">downcase</span>                     
+        <span class="ruby-comment">#begin</span>
+                <span class="ruby-identifier">host</span>=<span class="ruby-identifier">host</span>.<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">downcase</span>
                 <span class="ruby-keyword">if</span> <span class="ruby-ivar">@known_internet_domains</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">host</span>)
                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Domain is already exist. Skipping: #{host}&quot;</span>
                 <span class="ruby-keyword">else</span>
@@ -265,7 +263,7 @@
                                 <span class="ruby-keyword">return</span> <span class="ruby-identifier">record</span>
                         <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">sub</span>.<span class="ruby-identifier">nil?</span>                              <span class="ruby-comment"># 2/10/2014, additional logic to support sub-domains</span>
                                 <span class="ruby-comment"># do nothing</span>
-                        <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">host</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">sub</span>                   
+                        <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">host</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">sub</span>
                                 <span class="ruby-keyword">if</span> <span class="ruby-identifier">zone_transferable?</span>(<span class="ruby-identifier">sub</span>)
                                         <span class="ruby-comment">#@known_internet_domains[sub]=true</span>
                                         <span class="ruby-identifier">record</span>[<span class="ruby-identifier">sub</span>]=<span class="ruby-keyword">true</span>
@@ -279,10 +277,10 @@
                         <span class="ruby-keyword">else</span>
                                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Problem add domain #{host} - please use legal root domain or sub domain only.&quot;</span>
                         <span class="ruby-keyword">end</span>
-                <span class="ruby-keyword">end</span>          
-        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
-                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
-        <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-comment">#rescue =&gt; ee</span>
+                <span class="ruby-comment">#puts &quot;Exception on method #{__method__}: #{ee}&quot; if @verbose</span>
+        <span class="ruby-comment">#end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -341,23 +339,23 @@
 
           
           <div class="method-source-code" id="bulk_add-source">
-            <pre><span class="ruby-comment"># File lib/wmap/domain_tracker.rb, line 164</span>
+            <pre><span class="ruby-comment"># File lib/wmap/domain_tracker.rb, line 166</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">bulk_add</span>(<span class="ruby-identifier">list</span>, <span class="ruby-identifier">num</span>=<span class="ruby-ivar">@max_parallel</span>)
         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Add entries to the local domains cache table from list: #{list}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-identifier">results</span>=<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
-                <span class="ruby-identifier">domains</span>=<span class="ruby-identifier">list</span>                 
+                <span class="ruby-identifier">domains</span>=<span class="ruby-identifier">list</span>
                 <span class="ruby-keyword">if</span> <span class="ruby-identifier">domains</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
                         <span class="ruby-constant">Parallel</span>.<span class="ruby-identifier">map</span>(<span class="ruby-identifier">list</span>, <span class="ruby-value">:in_processes</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">num</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">target</span><span class="ruby-operator">|</span>
                                 <span class="ruby-identifier">add</span>(<span class="ruby-identifier">target</span>)
-                        }.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">process</span><span class="ruby-operator">|</span>                                 
+                        }.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">process</span><span class="ruby-operator">|</span>
                                 <span class="ruby-keyword">if</span> <span class="ruby-identifier">process</span>.<span class="ruby-identifier">nil?</span>
                                         <span class="ruby-keyword">next</span>
                                 <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">process</span>.<span class="ruby-identifier">empty?</span>
                                         <span class="ruby-comment">#do nothing</span>
                                 <span class="ruby-keyword">else</span>
                                         <span class="ruby-identifier">results</span>.<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">process</span>)
-                                <span class="ruby-keyword">end</span>                                
+                                <span class="ruby-keyword">end</span>
                         <span class="ruby-keyword">end</span>
                         <span class="ruby-ivar">@known_internet_domains</span>.<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">results</span>)
                         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Done loading entries.&quot;</span>
@@ -366,7 +364,7 @@
                         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Error: no entry is loaded. Please check your list and try again.&quot;</span>
                 <span class="ruby-keyword">end</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-identifier">results</span>
-        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
@@ -403,15 +401,15 @@
 
           
           <div class="method-source-code" id="bulk_delete-source">
-            <pre><span class="ruby-comment"># File lib/wmap/domain_tracker.rb, line 212</span>
+            <pre><span class="ruby-comment"># File lib/wmap/domain_tracker.rb, line 214</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">bulk_delete</span>(<span class="ruby-identifier">list</span>)
         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Delete entries to the local domains cache table from list: #{list}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">begin</span>
-                <span class="ruby-identifier">domains</span>=<span class="ruby-identifier">list</span>                 
+                <span class="ruby-identifier">domains</span>=<span class="ruby-identifier">list</span>
                 <span class="ruby-identifier">changes</span>=<span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
                 <span class="ruby-keyword">if</span> <span class="ruby-identifier">domains</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
-                        <span class="ruby-identifier">domains</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> 
-                                <span class="ruby-identifier">domain</span>=<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">x</span>) 
+                        <span class="ruby-identifier">domains</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span>
+                                <span class="ruby-identifier">domain</span>=<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">x</span>)
                                 <span class="ruby-identifier">changes</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">domain</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">domain</span>.<span class="ruby-identifier">nil?</span>
                         <span class="ruby-keyword">end</span>
                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Done deleting domains from list: #{list}&quot;</span>
@@ -419,7 +417,7 @@
                 <span class="ruby-keyword">else</span>
                         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Exception on method bulk_delete: no entry is loaded. Please check your list and try again.&quot;</span>
                 <span class="ruby-keyword">end</span>
-        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
@@ -456,7 +454,7 @@
 
           
           <div class="method-source-code" id="count-source">
-            <pre><span class="ruby-comment"># File lib/wmap/domain_tracker.rb, line 89</span>
+            <pre><span class="ruby-comment"># File lib/wmap/domain_tracker.rb, line 91</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">count</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Counting number of entries in the domain cache table ...&quot;</span>
         <span class="ruby-keyword">begin</span>
@@ -467,10 +465,10 @@
                         <span class="ruby-keyword">end</span>
                 <span class="ruby-keyword">end</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Current number of entries: #{cnt}&quot;</span>
-                <span class="ruby-keyword">return</span> <span class="ruby-identifier">cnt</span>   
+                <span class="ruby-keyword">return</span> <span class="ruby-identifier">cnt</span>
         <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
-        <span class="ruby-keyword">end</span>           
+        <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -505,7 +503,7 @@
 
           
           <div class="method-source-code" id="delete-source">
-            <pre><span class="ruby-comment"># File lib/wmap/domain_tracker.rb, line 195</span>
+            <pre><span class="ruby-comment"># File lib/wmap/domain_tracker.rb, line 197</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">delete</span>(<span class="ruby-identifier">domain</span>)
         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Remove entry from the domains cache table: #{domain} &quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">begin</span>
@@ -516,10 +514,10 @@
                         <span class="ruby-keyword">return</span> <span class="ruby-identifier">domain</span>
                 <span class="ruby-keyword">else</span>
                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Entry not fund. Skipping: #{domain}&quot;</span>
-                <span class="ruby-keyword">end</span>                   
-        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
-        <span class="ruby-keyword">end</span>           
+        <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -550,16 +548,16 @@
 
           
           <div class="method-source-code" id="delete_all-source">
-            <pre><span class="ruby-comment"># File lib/wmap/domain_tracker.rb, line 246</span>
+            <pre><span class="ruby-comment"># File lib/wmap/domain_tracker.rb, line 248</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">delete_all</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Delete all entries in the domain store! &quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-ivar">@known_internet_domains</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">domain</span><span class="ruby-operator">|</span>
                         <span class="ruby-identifier">delete</span>(<span class="ruby-identifier">domain</span>)
-                <span class="ruby-keyword">end</span>                   
-        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
-        <span class="ruby-keyword">end</span>           
+        <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -618,16 +616,16 @@
 
           
           <div class="method-source-code" id="domain_known-3F-source">
-            <pre><span class="ruby-comment"># File lib/wmap/domain_tracker.rb, line 277</span>
+            <pre><span class="ruby-comment"># File lib/wmap/domain_tracker.rb, line 279</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">domain_known?</span>(<span class="ruby-identifier">domain</span>)
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-comment">#abort &quot;Trusted Internet domain file not loaded properly! &quot; if @known_internet_domains.nil? or @known_internet_sub_domains.nil?</span>
                 <span class="ruby-identifier">domain</span>=<span class="ruby-identifier">domain</span>.<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">downcase</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">domain</span>.<span class="ruby-identifier">nil?</span>
-                <span class="ruby-keyword">case</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span> 
+                <span class="ruby-keyword">case</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span>
                 <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;Wmap::DomainTracker&quot;</span>
-                        <span class="ruby-keyword">return</span> <span class="ruby-ivar">@known_internet_domains</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">domain</span>) 
+                        <span class="ruby-keyword">return</span> <span class="ruby-ivar">@known_internet_domains</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">domain</span>)
                 <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;Wmap::DomainTracker::SubDomain&quot;</span>
-                        <span class="ruby-keyword">return</span> <span class="ruby-ivar">@known_internet_sub_domains</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">domain</span>) 
+                        <span class="ruby-keyword">return</span> <span class="ruby-ivar">@known_internet_sub_domains</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">domain</span>)
                 <span class="ruby-keyword">else</span>
                         <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
                 <span class="ruby-keyword">end</span>
@@ -725,15 +723,15 @@
 
           
           <div class="method-source-code" id="file_add-source">
-            <pre><span class="ruby-comment"># File lib/wmap/domain_tracker.rb, line 151</span>
+            <pre><span class="ruby-comment"># File lib/wmap/domain_tracker.rb, line 153</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">file_add</span>(<span class="ruby-identifier">file</span>)
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Add entries to the local domains cache table from file: #{file}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
                 <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;File non-exist. Please check your file path and name again: #{file}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">file</span>)
                 <span class="ruby-identifier">changes</span>=<span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
-                <span class="ruby-identifier">domains</span>=<span class="ruby-identifier">file_2_list</span>(<span class="ruby-identifier">file</span>)                    
+                <span class="ruby-identifier">domains</span>=<span class="ruby-identifier">file_2_list</span>(<span class="ruby-identifier">file</span>)
                 <span class="ruby-identifier">changes</span>=<span class="ruby-identifier">bulk_add</span>(<span class="ruby-identifier">domains</span>)
-        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
@@ -766,14 +764,14 @@
 
           
           <div class="method-source-code" id="file_delete-source">
-            <pre><span class="ruby-comment"># File lib/wmap/domain_tracker.rb, line 234</span>
+            <pre><span class="ruby-comment"># File lib/wmap/domain_tracker.rb, line 236</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">file_delete</span>(<span class="ruby-identifier">file</span>)
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Delete entries to the local domains cache table from file: #{file}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
                 <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;File non-exist. Please check your file path and name again: #{file}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">file</span>)
-                <span class="ruby-identifier">domains</span>=<span class="ruby-identifier">file_2_list</span>(<span class="ruby-identifier">file</span>)                    
+                <span class="ruby-identifier">domains</span>=<span class="ruby-identifier">file_2_list</span>(<span class="ruby-identifier">file</span>)
                 <span class="ruby-identifier">changes</span>=<span class="ruby-identifier">bulk_delete</span>(<span class="ruby-identifier">domains</span>)
-        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
@@ -834,8 +832,8 @@
 
           
           <div class="method-source-code" id="get_domains-source">
-            <pre><span class="ruby-comment"># File lib/wmap/domain_tracker.rb, line 298</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_domains</span> 
+            <pre><span class="ruby-comment"># File lib/wmap/domain_tracker.rb, line 300</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_domains</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Retrieve a list of known domain ...&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-ivar">@known_internet_domains</span>.<span class="ruby-identifier">keys</span>
@@ -961,11 +959,11 @@
 
           
           <div class="method-source-code" id="print_known_domains-source">
-            <pre><span class="ruby-comment"># File lib/wmap/domain_tracker.rb, line 330</span>
+            <pre><span class="ruby-comment"># File lib/wmap/domain_tracker.rb, line 332</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">print_known_domains</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;\nSummary of known Internet Domains:&quot;</span>
         <span class="ruby-ivar">@known_internet_domains</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">domain</span><span class="ruby-operator">|</span>
-                <span class="ruby-identifier">puts</span> <span class="ruby-identifier">domain</span>          
+                <span class="ruby-identifier">puts</span> <span class="ruby-identifier">domain</span>
         <span class="ruby-keyword">end</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;End of the summary&quot;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1002,11 +1000,11 @@
 
           
           <div class="method-source-code" id="print_known_sub_domains-source">
-            <pre><span class="ruby-comment"># File lib/wmap/domain_tracker/sub_domain.rb, line 131</span>
+            <pre><span class="ruby-comment"># File lib/wmap/domain_tracker/sub_domain.rb, line 133</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">print_known_sub_domains</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;\nSummary of known Internet Sub-domains:&quot;</span>
         <span class="ruby-keyword">self</span>.<span class="ruby-identifier">known_internet_sub_domains</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">domain</span><span class="ruby-operator">|</span>
-                <span class="ruby-identifier">puts</span> <span class="ruby-identifier">domain</span>          
+                <span class="ruby-identifier">puts</span> <span class="ruby-identifier">domain</span>
         <span class="ruby-keyword">end</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;End of the summary&quot;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1039,7 +1037,7 @@
 
           
           <div class="method-source-code" id="refresh-source">
-            <pre><span class="ruby-comment"># File lib/wmap/domain_tracker.rb, line 258</span>
+            <pre><span class="ruby-comment"># File lib/wmap/domain_tracker.rb, line 260</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">refresh</span>(<span class="ruby-identifier">domain</span>)
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-identifier">abort</span> <span class="ruby-string">&quot;Trusted Internet domain file not loaded properly! &quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@known_internet_domains</span>.<span class="ruby-identifier">nil?</span>
@@ -1055,7 +1053,7 @@
         <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__} for #{domain}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
-        <span class="ruby-keyword">end</span> 
+        <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -1114,7 +1112,7 @@
 
           
           <div class="method-source-code" id="save_domains_to_file-21-source">
-            <pre><span class="ruby-comment"># File lib/wmap/domain_tracker.rb, line 66</span>
+            <pre><span class="ruby-comment"># File lib/wmap/domain_tracker.rb, line 68</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">save_domains_to_file!</span>(<span class="ruby-identifier">file_domains</span>=<span class="ruby-ivar">@file_domains</span>, <span class="ruby-identifier">domains</span>=<span class="ruby-ivar">@known_internet_domains</span>)
         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Saving the current domains cache table from memory to file: #{file_domains} ...&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">begin</span>
@@ -1170,7 +1168,7 @@ be automatically converted into lower case</p>
 
           
           <div class="method-source-code" id="search-source">
-            <pre><span class="ruby-comment"># File lib/wmap/domain_tracker.rb, line 311</span>
+            <pre><span class="ruby-comment"># File lib/wmap/domain_tracker.rb, line 313</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">search</span> (<span class="ruby-identifier">pattern</span>)
         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Search domain store for the regular expression: #{pattern}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">begin</span>
@@ -1257,9 +1255,9 @@ variable</p>
 
           
           <div class="method-source-code" id="load_domains_from_file-source">
-            <pre><span class="ruby-comment"># File lib/wmap/domain_tracker.rb, line 33</span>
+            <pre><span class="ruby-comment"># File lib/wmap/domain_tracker.rb, line 35</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">load_domains_from_file</span> (<span class="ruby-identifier">file</span>=<span class="ruby-ivar">@file_domains</span>, <span class="ruby-identifier">lc</span>=<span class="ruby-keyword">true</span>)
-        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Loading trusted domain file: #{file}&quot;</span>   <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>       
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Loading trusted domain file: #{file}&quot;</span>   <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-identifier">known_internet_domains</span>=<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
                 <span class="ruby-identifier">f_domains</span>=<span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">file</span>, <span class="ruby-string">&#39;r&#39;</span>)
@@ -1268,7 +1266,7 @@ variable</p>
                         <span class="ruby-identifier">line</span>=<span class="ruby-identifier">line</span>.<span class="ruby-identifier">chomp</span>.<span class="ruby-identifier">strip</span>
                         <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">nil?</span>
                         <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">empty?</span>
-                        <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">line</span> <span class="ruby-operator">=~</span> <span class="ruby-node">/^\s*#/</span> 
+                        <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">line</span> <span class="ruby-operator">=~</span> <span class="ruby-node">/^\s*#/</span>
                         <span class="ruby-identifier">line</span>=<span class="ruby-identifier">line</span>.<span class="ruby-identifier">downcase</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">lc</span><span class="ruby-operator">==</span><span class="ruby-keyword">true</span>
                         <span class="ruby-identifier">entry</span>=<span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;,&#39;</span>)
                         <span class="ruby-keyword">if</span> <span class="ruby-identifier">known_internet_domains</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">entry</span>[<span class="ruby-value">0</span>])
@@ -1280,11 +1278,11 @@ variable</p>
                                         <span class="ruby-identifier">known_internet_domains</span>[<span class="ruby-identifier">entry</span>[<span class="ruby-value">0</span>]]=<span class="ruby-keyword">false</span>
                                 <span class="ruby-keyword">end</span>
                         <span class="ruby-keyword">end</span>
-                        
+
                 <span class="ruby-keyword">end</span>
                 <span class="ruby-identifier">f_domains</span>.<span class="ruby-identifier">close</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-identifier">known_internet_domains</span>
-        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
         <span class="ruby-keyword">end</span>
@@ -1307,7 +1305,7 @@ variable</p>
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="http://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.0.
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.3.0.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

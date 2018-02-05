@@ -71,10 +71,6 @@
     <li><a class="include" href="../Utils.html">Wmap::Utils</a>
   
   
-  
-    <li><span class="include">Singleton</span>
-  
-  
   </ul>
 </div>
 
@@ -127,6 +123,19 @@
       </header>
 
       
+      <div id="attribute-i-data_dir" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">data_dir</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>include Singleton</p>
+        
+        </div>
+      </div>
+      
       <div id="attribute-i-known_sites" class="method-detail">
         <div class="method-heading attribute-method-heading">
           <span class="method-name">known_sites</span><span
@@ -135,7 +144,7 @@
 
         <div class="method-description">
         
-        
+        <p>include Singleton</p>
         
         </div>
       </div>
@@ -148,7 +157,7 @@
 
         <div class="method-description">
         
-        
+        <p>include Singleton</p>
         
         </div>
       </div>
@@ -161,7 +170,7 @@
 
         <div class="method-description">
         
-        
+        <p>include Singleton</p>
         
         </div>
       </div>
@@ -198,11 +207,13 @@
             <pre><span class="ruby-comment"># File lib/wmap/site_tracker/deactivated_site.rb, line 23</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span> (<span class="ruby-identifier">params</span> = {})
         <span class="ruby-comment"># Initialize the instance variables</span>
-        <span class="ruby-ivar">@f_sites</span>=<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-keyword">__FILE__</span>)<span class="ruby-operator">+</span><span class="ruby-string">&#39;/../../../data/deactivated_sites&#39;</span>
+        <span class="ruby-ivar">@data_dir</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:data_dir</span>, <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-keyword">__FILE__</span>)<span class="ruby-operator">+</span><span class="ruby-string">&#39;/../../../data/&#39;</span>)
+        <span class="ruby-ivar">@f_sites</span>=<span class="ruby-ivar">@data_dir</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;deactivated_sites&#39;</span>
         <span class="ruby-ivar">@file_stores</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:sites_file</span>, <span class="ruby-ivar">@f_sites</span>)
         <span class="ruby-ivar">@verbose</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:verbose</span>, <span class="ruby-keyword">false</span>)
         <span class="ruby-comment"># Hash table to hold the site store</span>
-        <span class="ruby-ivar">@known_sites</span>=<span class="ruby-identifier">load_site_stores_from_file</span>(<span class="ruby-ivar">@file_stores</span>)         
+        <span class="ruby-constant">File</span>.<span class="ruby-identifier">write</span>(<span class="ruby-ivar">@file_stores</span>, <span class="ruby-string">&quot;&quot;</span>) <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-ivar">@file_stores</span>)
+        <span class="ruby-ivar">@known_sites</span>=<span class="ruby-identifier">load_site_stores_from_file</span>(<span class="ruby-ivar">@file_stores</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -242,7 +253,7 @@ used by the parent class only</p>
 
           
           <div class="method-source-code" id="add-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker/deactivated_site.rb, line 33</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker/deactivated_site.rb, line 35</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">add</span> (<span class="ruby-identifier">site</span>,<span class="ruby-identifier">entry</span>)
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Deactivate site: #{site}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
@@ -292,7 +303,7 @@ parent class only</p>
 
           
           <div class="method-source-code" id="delete-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker/deactivated_site.rb, line 54</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker/deactivated_site.rb, line 56</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">delete</span> (<span class="ruby-identifier">site</span>)
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Reactivate site: #{site}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
@@ -363,7 +374,7 @@ in one shot (TBD).</p>
 
           
           <div class="method-source-code" id="update_from_site_store-21-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker/deactivated_site.rb, line 68</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker/deactivated_site.rb, line 70</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">update_from_site_store!</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Invoke internal procedures to update the site store.&quot;</span>
         <span class="ruby-keyword">begin</span>
@@ -395,7 +406,7 @@ in one shot (TBD).</p>
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="http://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.0.
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.3.0.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

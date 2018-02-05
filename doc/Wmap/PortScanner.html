@@ -266,9 +266,9 @@
           
           <div class="method-source-code" id="new-source">
             <pre><span class="ruby-comment"># File lib/wmap/port_scanner.rb, line 24</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span> (<span class="ruby-identifier">params</span> = {})           
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span> (<span class="ruby-identifier">params</span> = {})
         <span class="ruby-ivar">@verbose</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:verbose</span>, <span class="ruby-keyword">false</span>)
-        <span class="ruby-ivar">@socket_timeout</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:socket_timeout</span>, <span class="ruby-value">1500</span>)   
+        <span class="ruby-ivar">@socket_timeout</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:socket_timeout</span>, <span class="ruby-value">1500</span>)
         <span class="ruby-ivar">@http_timeout</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:http_timeout</span>, <span class="ruby-value">5000</span>)
         <span class="ruby-ivar">@max_parallel</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:max_parallel</span>, <span class="ruby-value">40</span>)
         <span class="ruby-comment"># Initialize the instance variables</span>
@@ -411,7 +411,7 @@ performance, for instance.</p>
                 <span class="ruby-keyword">if</span> (<span class="ruby-value">100</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">nwk_to</span><span class="ruby-operator">*</span><span class="ruby-value">2</span>).<span class="ruby-identifier">to_i</span> <span class="ruby-operator">&gt;</span> <span class="ruby-constant">Max_socket_timeout</span>
                         <span class="ruby-ivar">@socket_timeout</span>=<span class="ruby-constant">Max_socket_timeout</span>
                 <span class="ruby-keyword">else</span>
-                        <span class="ruby-ivar">@socket_timeout</span>=(<span class="ruby-value">100</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">nwk_to</span><span class="ruby-operator">*</span><span class="ruby-value">2</span>).<span class="ruby-identifier">to_i</span>       
+                        <span class="ruby-ivar">@socket_timeout</span>=(<span class="ruby-value">100</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">nwk_to</span><span class="ruby-operator">*</span><span class="ruby-value">2</span>).<span class="ruby-identifier">to_i</span>
                 <span class="ruby-keyword">end</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Done with the pre-scan works: reset @socket_timeout to: #{@socket_timeout}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
@@ -477,11 +477,11 @@ performance, for instance.</p>
           
           <div class="method-source-code" id="print_discovered_urls-source">
             <pre><span class="ruby-comment"># File lib/wmap/port_scanner.rb, line 193</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">print_discovered_urls</span>              
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">print_discovered_urls</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Print out port discovery results.&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Summary of Discovered Sites:&quot;</span>
         <span class="ruby-ivar">@discovered_urls</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">puts</span> <span class="ruby-identifier">x</span> }
-        <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;End of Summary.&quot;</span>                
+        <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;End of Summary.&quot;</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -547,8 +547,8 @@ findings in the URL format as an array</p>
           
           <div class="method-source-code" id="scan-source">
             <pre><span class="ruby-comment"># File lib/wmap/port_scanner.rb, line 53</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">scan</span> (<span class="ruby-identifier">host</span>)        
-        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Perform web service discovery on host: #{host}&quot;</span> 
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">scan</span> (<span class="ruby-identifier">host</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Perform web service discovery on host: #{host}&quot;</span>
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-identifier">pre_scan</span>(<span class="ruby-identifier">host</span>)
                 <span class="ruby-identifier">urls</span>=<span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
@@ -556,7 +556,7 @@ findings in the URL format as an array</p>
                         <span class="ruby-keyword">if</span> <span class="ruby-identifier">tcp_port_open?</span>(<span class="ruby-identifier">host</span>,<span class="ruby-identifier">port</span>)
                                 <span class="ruby-identifier">url</span>=<span class="ruby-identifier">host_2_url</span>(<span class="ruby-identifier">host</span>,<span class="ruby-identifier">port</span>)
                                 <span class="ruby-identifier">urls</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">url</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">url</span>.<span class="ruby-identifier">nil?</span>
-                        <span class="ruby-keyword">end</span>                         
+                        <span class="ruby-keyword">end</span>
                 <span class="ruby-keyword">end</span>
                 <span class="ruby-keyword">if</span> <span class="ruby-identifier">urls</span>.<span class="ruby-identifier">empty?</span>
                         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;No web service detected. &quot;</span>
@@ -613,11 +613,11 @@ as the website construct within an array</p>
         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Start the parallel scans on the target file: #{file}&quot;</span>
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-identifier">list</span>=<span class="ruby-identifier">load_target_file</span>(<span class="ruby-identifier">file</span>)
-                <span class="ruby-identifier">urls</span>=<span class="ruby-identifier">scans</span>(<span class="ruby-identifier">list</span>,<span class="ruby-identifier">num</span>) 
+                <span class="ruby-identifier">urls</span>=<span class="ruby-identifier">scans</span>(<span class="ruby-identifier">list</span>,<span class="ruby-identifier">num</span>)
         <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Error on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
-        <span class="ruby-keyword">end</span>   
+        <span class="ruby-keyword">end</span>
         <span class="ruby-keyword">return</span> <span class="ruby-identifier">urls</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -675,7 +675,7 @@ numbers of child processes on multiple hosts/IPs simultaneously</p>
                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Start the parallel port scan on the target list:\n #{targets}&quot;</span>
                         <span class="ruby-constant">Parallel</span>.<span class="ruby-identifier">map</span>(<span class="ruby-identifier">targets</span>.<span class="ruby-identifier">shuffle</span>, <span class="ruby-value">:in_processes</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">num</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">target</span><span class="ruby-operator">|</span>
                                 <span class="ruby-identifier">scan</span>(<span class="ruby-identifier">target</span>)
-                        }.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">process</span><span class="ruby-operator">|</span>                                 
+                        }.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">process</span><span class="ruby-operator">|</span>
                                 <span class="ruby-keyword">if</span> <span class="ruby-identifier">process</span>.<span class="ruby-identifier">nil?</span>
                                         <span class="ruby-keyword">next</span>
                                 <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">process</span>.<span class="ruby-identifier">empty?</span>
@@ -687,7 +687,7 @@ numbers of child processes on multiple hosts/IPs simultaneously</p>
                                                 <span class="ruby-keyword">end</span>
                                         <span class="ruby-keyword">end</span>
                                         <span class="ruby-identifier">urls</span><span class="ruby-operator">+=</span><span class="ruby-identifier">process</span>
-                                <span class="ruby-keyword">end</span>                                
+                                <span class="ruby-keyword">end</span>
                         <span class="ruby-keyword">end</span>
                 <span class="ruby-keyword">end</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Port scanning done successfully with the found web services: #{urls}&quot;</span>
@@ -695,7 +695,7 @@ numbers of child processes on multiple hosts/IPs simultaneously</p>
         <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
-        <span class="ruby-keyword">end</span>           
+        <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -729,12 +729,12 @@ Notice the default time-out is set by the default instance variable
           
           <div class="method-source-code" id="tcp_port_open-3F-source">
             <pre><span class="ruby-comment"># File lib/wmap/port_scanner.rb, line 174</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">tcp_port_open?</span> (<span class="ruby-identifier">host</span>,<span class="ruby-identifier">port</span>)         
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">tcp_port_open?</span> (<span class="ruby-identifier">host</span>,<span class="ruby-identifier">port</span>)
         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Perform open port detection on: #{host}:#{port}, time-out: #{@socket_timeout} ms&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-comment">#@socket_timeout = socket_timeout</span>
         <span class="ruby-identifier">timeo</span> = <span class="ruby-ivar">@socket_timeout</span><span class="ruby-operator">/</span><span class="ruby-value">1000.0</span>                                                <span class="ruby-comment"># change time-out unit from sec to ms</span>
         <span class="ruby-keyword">begin</span>
-    <span class="ruby-keyword">if</span> <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">Ping</span><span class="ruby-operator">::</span><span class="ruby-constant">TCP</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">host</span>,<span class="ruby-identifier">port</span>,<span class="ruby-identifier">timeo</span>).<span class="ruby-identifier">ping</span>         
+    <span class="ruby-keyword">if</span> <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">Ping</span><span class="ruby-operator">::</span><span class="ruby-constant">TCP</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">host</span>,<span class="ruby-identifier">port</span>,<span class="ruby-identifier">timeo</span>).<span class="ruby-identifier">ping</span>
                         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Port open!&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
     <span class="ruby-keyword">else</span>
@@ -764,7 +764,7 @@ Notice the default time-out is set by the default instance variable
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="http://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.0.
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.3.0.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 
