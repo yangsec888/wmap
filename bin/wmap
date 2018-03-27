@@ -1,20 +1,27 @@
 #!/usr/bin/env ruby
 # Wmap main executable - intelligent enough to handle most command argument inputs from the user.
-# The discovery result is automatically compared and saved into the the tracking data repository.  
-# 
-# Usage: wmap <Target Host | URL | IP | CIDR | or a seed file with any of the above combo>
+# The discovery result is automatically compared and saved into the the tracking data repository.
+#
+# Usage: wmap <Target Host | URL | IP | CIDR | or a seed file with any of the above combo> <Optional Discovery Result Directory>
 require "wmap"
 
 def print_usage
-	abort "Program to perform website asset discovery and tracking. \nUsage: wmap <Target Host | URL | IP | CIDR | or a seed file with any of the above combo>"
+	abort "Program to perform website asset discovery and tracking. \nUsage: wmap <Target Host | URL | IP | CIDR | or a seed file with any of the above combo> <Optional Discovery Result Directory>"
 end
 
 # preparing - spit out the program banner
 puts Wmap.banner
-# Log the command entry
-Log_dir=File.dirname(__FILE__)+'/../logs/'
+if ARGV.length == 1
+	# Log the command entry
+	Log_dir=File.dirname(__FILE__)+'/../logs/'
+elsif ARGV.length == 2
+	# Log to the instance running directory
+	Log_dir=ARGV[1] + '/logs/'
+	Dir.mkdir(Log_dir) unless Dir.exist?(Log_dir)
+end
+
 Wmap.wlog("Execute the command: wmap #{ARGV[0]}","wmap",Log_dir+"wmap.log")
-print_usage unless ARGV.length==1
+print_usage unless (ARGV.length==1 or ARGV.length==2)
 urls = Array.new
 # first step - construct the host list
 scanner = Wmap::PortScanner.new(:verbose=>false, :socket_timeout=>600) # default time-out of 600 milliseconds
@@ -25,11 +32,11 @@ if File.exist?(ARGV[0])
 	domains=Array.new
 	cidrs=Array.new
 	raise "Error: empty seed file or no legal entry found!" if seeds.nil? or seeds.empty?
-	seeds.map do |x|	
+	seeds.map do |x|
 		x=x.split(%r{(,|\s+)})[0]
 		urls.push(x) if scanner.is_url?(x)
-		domains.push(x) if scanner.is_domain_root?(x) or Wmap.sub_domain_known?(x) 
-		# invoke bruter if the hostname contains a numeric number. 
+		domains.push(x) if scanner.is_domain_root?(x) or Wmap.sub_domain_known?(x)
+		# invoke bruter if the hostname contains a numeric number.
 		domains.push(x) if scanner.is_fqdn?(x) and (x.split('.')[0] =~ /\d+/)
 		hosts.push(x) if scanner.is_fqdn?(x) or scanner.is_ip?(x)
 		cidrs.push(x) if scanner.is_cidr?(x)
@@ -40,15 +47,15 @@ if File.exist?(ARGV[0])
 elsif scanner.is_url?(ARGV[0])
 	puts "Processing the URL: #{ARGV[0]}"
 	urls.push(ARGV[0])
-elsif Wmap.domain_known?(ARGV[0]) or Wmap.sub_domain_known?(ARGV[0]) 
+elsif Wmap.domain_known?(ARGV[0]) or Wmap.sub_domain_known?(ARGV[0])
 	puts "Processing the domain: #{ARGV[0]}"
-	hosts+=Wmap::DnsBruter.new(:verbose=>false).dns_brute_worker(ARGV[0]).values.flatten 
-elsif scanner.is_fqdn?(ARGV[0]) 
+	hosts+=Wmap::DnsBruter.new(:verbose=>false).dns_brute_worker(ARGV[0]).values.flatten
+elsif scanner.is_fqdn?(ARGV[0])
 	puts "Processing the host: #{ARGV[0]}"
 	hosts.push(ARGV[0])
 	my_hosts=Wmap::DnsBruter.new(:verbose=>false).dns_brute_worker(ARGV[0]).values.flatten if (ARGV[0].split('.')[0] =~ /\d+/)
 	hosts+=my_hosts unless my_hosts.nil?
-elsif scanner.is_cidr?(ARGV[0]) 
+elsif scanner.is_cidr?(ARGV[0])
 	puts "Processing the network block: #{ARGV[0]}"
 	hosts+=scanner.cidr_2_ips(ARGV[0])
 elsif scanner.is_ip?(ARGV[0])
@@ -58,11 +65,19 @@ else
 end
 
 # second step - update the hosts repository
-host_tracker = Wmap::HostTracker.instance
+if ARGV.length == 1
+	puts puts "Invoke the HostTracker."
+	host_tracker = Wmap::HostTracker.new(:verbose=>true)
+elsif ARGV.length == 2
+	puts "Invoke the HostTracker with optional directory setter."
+	host_tracker = Wmap::HostTracker.new(:verbose=>true, :data_dir => ARGV[1])
+else
+	aborts "Error firing up HostTracker instance!"
+end
 hosts.uniq!
 if hosts.size > 0
 	hostnames=hosts.dup.delete_if { |h| host_tracker.is_ip?(h) }
-	if hostnames.size > 0 
+	if hostnames.size > 0
 		puts "Update the local hosts data repository."
 		new_hosts=host_tracker.adds(hostnames)
 		host_tracker.save! if new_hosts.size>0
@@ -72,14 +87,22 @@ host_tracker=nil
 
 # third step - port discovery on the above host list, and to build the URL seeds
 puts "Build up URL list for the web crawler ..."
-urls0=scanner.scans(hosts) 
+urls0=scanner.scans(hosts)
 urls+=urls0
 urls.uniq!
 scanner=nil
 
 # fourth step - crawling on the URL seeds
-crawler = Wmap::UrlCrawler.new(:verbose=>false)
-Wmap.wlog(urls, "wmap", Log_dir+"url_seeds.log") if urls.size > 0   # save port scan results for debugging 
+if ARGV.length == 1
+	puts "Fire up the crawler."
+	crawler = Wmap::UrlCrawler.new(:verbose=>false)
+elsif ARGV.length == 2
+	puts "Fire up the crawler with the optional directory setter."
+	crawler = Wmap::UrlCrawler.new(:data_dir => ARGV[1])
+else
+	aborts "Error firing up UrlCrawler instance!"
+end
+Wmap.wlog(urls, "wmap", Log_dir+"url_seeds.log") if urls.size > 0   # save port scan results for debugging
 crawler.crawls(urls) if urls.size>0
 dis_urls=crawler.discovered_urls_by_crawler
 #c_start=crawler.crawl_start
@@ -89,7 +112,7 @@ unless dis_urls.empty?
 	dis_urls.keys.map do |url|
 		site=crawler.url_2_site(url)
 		dis_sites[site]=true unless dis_sites.key?(site)
-	end 
+	end
 end
 puts "Discovered sites: "
 
@@ -99,21 +122,29 @@ else
 	dis_sites.keys.map {|x| puts x}
 end
 
-# fifth step - trace the discovery results into a local log file for debugging and other purposes 
+# fifth step - trace the discovery results into a local log file for debugging and other purposes
 Wmap.wlog(dis_urls.keys, "wmap", Log_dir+"discovered_urls.log") unless dis_urls.empty?
 Wmap.wlog(dis_sites.keys, "wmap", Log_dir+"discovered_sites.log") unless dis_sites.empty?
-#crawler.wlog(c_start.keys,Log_dir+"crawler.log") 
-#crawler.wlog(c_done.keys,Log_dir+"crawler.log") 
+#crawler.wlog(c_start.keys,Log_dir+"crawler.log")
+#crawler.wlog(c_done.keys,Log_dir+"crawler.log")
 crawler=nil
 
 # sixth step - save discovery results into the inventory data repository
-case dis_sites.keys 
+case dis_sites.keys
 when nil,[]
 	puts "No new site found. There is no change to the site tracking data repository. "
 else
 	puts "Automatically save the discovery results into the site tracking data repository: "
-	inventory=Wmap::SiteTracker.instance
-	new_sites=inventory.adds(dis_sites.keys) 
+	if ARGV.length == 1
+		puts "Start the SiteTracker. "
+		inventory=Wmap::SiteTracker.new
+	elsif ARGV.length == 2
+		puts "Start the SiteTracker with the optional directory setter. "
+		inventory=Wmap::SiteTracker.new(:data_dir => ARGV[1])
+	else
+		aborts "Error firing up SiteTracker instance!"
+	end
+	new_sites=inventory.adds(dis_sites.keys)
 	inventory.save! if new_sites.size>0
 	inventory=nil
 	puts "Done! New found sites are successfully saved. " if new_sites.size > 0

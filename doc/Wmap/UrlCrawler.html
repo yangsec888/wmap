@@ -219,6 +219,19 @@ performance penalty for certain &#39;weird&#39; site(s)</p>
         </div>
       </div>
       
+      <div id="attribute-i-data_dir" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">data_dir</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
       <div id="attribute-i-discovered_urls_by_crawler" class="method-detail">
         <div class="method-heading attribute-method-heading">
           <span class="method-name">discovered_urls_by_crawler</span><span
@@ -314,18 +327,20 @@ performance penalty for certain &#39;weird&#39; site(s)</p>
           
           <div class="method-source-code" id="new-source">
             <pre><span class="ruby-comment"># File lib/wmap/url_crawler.rb, line 32</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span> (<span class="ruby-identifier">params</span> = {})           
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span> (<span class="ruby-identifier">params</span> = {})
         <span class="ruby-ivar">@verbose</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:verbose</span>, <span class="ruby-keyword">false</span>)
+        <span class="ruby-ivar">@data_dir</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:data_dir</span>, <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-keyword">__FILE__</span>)<span class="ruby-operator">+</span><span class="ruby-string">&#39;/../../logs/&#39;</span>)
         <span class="ruby-ivar">@http_timeout</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:http_timeout</span>, <span class="ruby-value">5000</span>)
         <span class="ruby-ivar">@crawl_depth</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:crawl_depth</span>, <span class="ruby-value">4</span>)
         <span class="ruby-ivar">@crawl_page_limit</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:crawl_page_limit</span>, <span class="ruby-value">1000</span>)
         <span class="ruby-ivar">@max_parallel</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:max_parallel</span>, <span class="ruby-value">40</span>)
-        <span class="ruby-comment"># Discovered data store               </span>
+        <span class="ruby-comment"># Discovered data store</span>
         <span class="ruby-ivar">@discovered_urls_by_crawler</span>=<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
         <span class="ruby-ivar">@visited_urls_by_crawler</span>=<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
         <span class="ruby-ivar">@crawl_start</span>=<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
         <span class="ruby-ivar">@crawl_done</span>=<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
-        <span class="ruby-ivar">@log_file</span>=<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-keyword">__FILE__</span>)<span class="ruby-operator">+</span><span class="ruby-string">&quot;../../logs/crawler.log&quot;</span>
+        <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">mkdir</span>(<span class="ruby-ivar">@data_dir</span>) <span class="ruby-keyword">unless</span> <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-ivar">@data_dir</span>)
+        <span class="ruby-ivar">@log_file</span>=<span class="ruby-ivar">@data_dir</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;crawler.log&quot;</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -367,10 +382,10 @@ href="http://www.yahoo.com">www.yahoo.com</a>/&#39; it could discover
 
           
           <div class="method-source-code" id="crawl-source">
-            <pre><span class="ruby-comment"># File lib/wmap/url_crawler.rb, line 67</span>
+            <pre><span class="ruby-comment"># File lib/wmap/url_crawler.rb, line 69</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">crawl</span>(<span class="ruby-identifier">url</span>)
         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Start web crawling on #{url}&quot;</span>
-        <span class="ruby-keyword">begin</span>
+        <span class="ruby-comment">#begin</span>
                 <span class="ruby-identifier">result</span>=<span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
                 <span class="ruby-identifier">url</span>=<span class="ruby-identifier">url</span>.<span class="ruby-identifier">chomp</span>.<span class="ruby-identifier">strip</span>
                 <span class="ruby-identifier">result</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">url_2_site</span>(<span class="ruby-identifier">url</span>))
@@ -382,10 +397,10 @@ href="http://www.yahoo.com">www.yahoo.com</a>/&#39; it could discover
                 }
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Web crawling time-out on #{url}: #{status}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-identifier">result</span>
-        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
-                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__} for URL #{url}: #{ee}&quot;</span> 
-                <span class="ruby-keyword">return</span> <span class="ruby-identifier">result</span>
-        <span class="ruby-keyword">end</span>
+        <span class="ruby-comment">#rescue =&gt; ee</span>
+                <span class="ruby-comment">#puts &quot;Exception on method #{__method__} for URL #{url}: #{ee}&quot;</span>
+                <span class="ruby-comment">#return result</span>
+        <span class="ruby-comment">#end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -448,10 +463,10 @@ href="http://www.yahoo.com">www.yahoo.com</a>/&#39; it could discover
 
           
           <div class="method-source-code" id="crawl_worker-source">
-            <pre><span class="ruby-comment"># File lib/wmap/url_crawler.rb, line 89</span>
+            <pre><span class="ruby-comment"># File lib/wmap/url_crawler.rb, line 91</span>
         <span class="ruby-keyword">def</span> <span class="ruby-identifier">crawl_worker</span>(<span class="ruby-identifier">url0</span>)
-                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Please be aware that it may take a while to crawl #{url0}, depending on the site&#39;s responsiveness and the amount of contents.&quot;</span>  
-                <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Please be aware that it may take a while to crawl #{url0}, depending on the site&#39;s responsiveness and the amount of contents.&quot;</span>
+                <span class="ruby-comment">#begin</span>
                         <span class="ruby-comment"># Input URL sanity check first</span>
                         <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_url?</span>(<span class="ruby-identifier">url0</span>)
                                 <span class="ruby-identifier">host</span>=<span class="ruby-identifier">url_2_host</span>(<span class="ruby-identifier">url0</span>)
@@ -478,7 +493,7 @@ href="http://www.yahoo.com">www.yahoo.com</a>/&#39; it could discover
                                         <span class="ruby-identifier">url</span> = <span class="ruby-identifier">update_url_if_redirected</span>(<span class="ruby-identifier">url</span>, <span class="ruby-identifier">url_object</span>)
                                         <span class="ruby-identifier">url_body</span> = <span class="ruby-identifier">read_url</span>(<span class="ruby-identifier">url</span>)
                                         <span class="ruby-comment"># Protection code - to avoid parsing failure on the empty or nil object</span>
-                                        <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">url_body</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">url_body</span>.<span class="ruby-identifier">empty?</span>                                   
+                                        <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">url_body</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">url_body</span>.<span class="ruby-identifier">empty?</span>
                                         <span class="ruby-identifier">url_stores</span>[<span class="ruby-identifier">url</span>]=<span class="ruby-keyword">true</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">url_stores</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">url</span>)
                                         <span class="ruby-ivar">@discovered_urls_by_crawler</span>[<span class="ruby-identifier">url</span>]=<span class="ruby-keyword">true</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@discovered_urls_by_crawler</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">url</span>)
 <span class="ruby-comment">#                                       $discovered_urls[url]=true unless $discovered_urls.key?(url)</span>
@@ -503,15 +518,15 @@ href="http://www.yahoo.com">www.yahoo.com</a>/&#39; it could discover
                         <span class="ruby-keyword">end</span>
                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Finish web crawling on: #{url0}&quot;</span>
                         <span class="ruby-identifier">log_info</span>[<span class="ruby-value">2</span>]=<span class="ruby-node">&quot;Finish working on: #{url0}&quot;</span>
-                        <span class="ruby-identifier">wlog</span>(<span class="ruby-identifier">log_info</span>, <span class="ruby-ivar">@log_file</span>)
+                        <span class="ruby-identifier">wlog</span>(<span class="ruby-identifier">log_info</span>, <span class="ruby-string">&quot;UrlCrawler&quot;</span>, <span class="ruby-ivar">@log_file</span>)
                         <span class="ruby-ivar">@crawl_done</span>[<span class="ruby-identifier">url0</span>]=<span class="ruby-keyword">true</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@crawl_done</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">url0</span>)
                         <span class="ruby-keyword">return</span> <span class="ruby-identifier">url_stores</span>
-                <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
-                        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__} for URL #{url0}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
-                        <span class="ruby-identifier">log_info</span>[<span class="ruby-value">3</span>]=<span class="ruby-node">&quot;Exception on #{url0}&quot;</span>
-                        <span class="ruby-identifier">wlog</span>(<span class="ruby-identifier">log_info</span>,<span class="ruby-ivar">@log_file</span>)
-                        <span class="ruby-keyword">return</span> <span class="ruby-identifier">url_stores</span>
-                <span class="ruby-keyword">end</span>
+                <span class="ruby-comment">#rescue =&gt; ee</span>
+                        <span class="ruby-comment">#puts &quot;Exception on method #{__method__} for URL #{url0}: #{ee}&quot; if @verbose</span>
+                        <span class="ruby-comment">#log_info[3]=&quot;Exception on #{url0}&quot;</span>
+                        <span class="ruby-comment">#wlog(log_info,&quot;UrlCrawler&quot;,@log_file)</span>
+                        <span class="ruby-comment">#return url_stores</span>
+                <span class="ruby-comment">#end</span>
         <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -544,13 +559,13 @@ target pool until all the works are done</p>
 
           
           <div class="method-source-code" id="crawl_workers-source">
-            <pre><span class="ruby-comment"># File lib/wmap/url_crawler.rb, line 156</span>
+            <pre><span class="ruby-comment"># File lib/wmap/url_crawler.rb, line 158</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">crawl_workers</span> (<span class="ruby-identifier">targets</span>,<span class="ruby-identifier">num</span>=<span class="ruby-ivar">@max_parallel</span>)
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Input error - expecting targets in an array format: #{targets}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">targets</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">Array</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Sanitize the URL seeds to eliminate the unnecessary duplication(s) ...&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
                 <span class="ruby-comment">#puts &quot;This could be awhile depending on the list size. Please be patient ...&quot;</span>
-                <span class="ruby-comment"># 09/30/2013 Add additional logic to eliminate the duplicate target site(s) before the crawlers are invoked. </span>
+                <span class="ruby-comment"># 09/30/2013 Add additional logic to eliminate the duplicate target site(s) before the crawlers are invoked.</span>
                 <span class="ruby-identifier">targets</span> <span class="ruby-operator">-=</span> [<span class="ruby-string">&quot;&quot;</span>, <span class="ruby-keyword">nil</span>]
                 <span class="ruby-identifier">uniq_sites</span>=<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
                 <span class="ruby-identifier">targets</span>.<span class="ruby-identifier">dup</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">target</span><span class="ruby-operator">|</span>
@@ -567,13 +582,13 @@ target pool until all the works are done</p>
                         <span class="ruby-keyword">end</span>
                 <span class="ruby-keyword">end</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Sanitization done! &quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
-                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Start the parallel engine on the normalized crawling list:\n #{targets} &quot;</span>      
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Start the parallel engine on the normalized crawling list:\n #{targets} &quot;</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Maximum number of web crawling sessions allowed: #{num}&quot;</span> <span class="ruby-comment">#if @verbose</span>
                 <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;Error: target list is empty!&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">targets</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">1</span>
                 <span class="ruby-constant">Parallel</span>.<span class="ruby-identifier">map</span>(<span class="ruby-identifier">uniq_sites</span>.<span class="ruby-identifier">values</span>, <span class="ruby-value">:in_processes</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">num</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">target</span><span class="ruby-operator">|</span>
                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Working on #{target} ...&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
                         <span class="ruby-identifier">crawl</span>(<span class="ruby-identifier">target</span>)
-                }.<span class="ruby-identifier">dup</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">process</span><span class="ruby-operator">|</span> 
+                }.<span class="ruby-identifier">dup</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">process</span><span class="ruby-operator">|</span>
                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;process.inspect: #{process}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
                         <span class="ruby-identifier">urls</span>=<span class="ruby-identifier">process</span>
                         <span class="ruby-identifier">urls</span><span class="ruby-operator">-=</span>[<span class="ruby-string">&quot;&quot;</span>,<span class="ruby-keyword">nil</span>] <span class="ruby-keyword">unless</span> <span class="ruby-identifier">urls</span>.<span class="ruby-identifier">nil?</span>
@@ -588,14 +603,14 @@ target pool until all the works are done</p>
                                         <span class="ruby-ivar">@discovered_urls_by_crawler</span>[<span class="ruby-identifier">url</span>]=<span class="ruby-keyword">true</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@discovered_urls_by_crawler</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">url</span>)
                                         <span class="ruby-comment">#$discovered_urls[url]=true unless $discovered_urls.key?(url)</span>
                                 <span class="ruby-keyword">end</span>
-                        <span class="ruby-keyword">end</span>                         
-                <span class="ruby-keyword">end</span>  
+                        <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">end</span>
                 <span class="ruby-comment">#return sites</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-ivar">@discovered_urls_by_crawler</span>.<span class="ruby-identifier">keys</span>
         <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
-        <span class="ruby-keyword">end</span>   
+        <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -630,8 +645,8 @@ target pool until all the works are done</p>
 
           
           <div class="method-source-code" id="crawl_workers_on_file-source">
-            <pre><span class="ruby-comment"># File lib/wmap/url_crawler.rb, line 211</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">crawl_workers_on_file</span> (<span class="ruby-identifier">file</span>)       
+            <pre><span class="ruby-comment"># File lib/wmap/url_crawler.rb, line 213</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">crawl_workers_on_file</span> (<span class="ruby-identifier">file</span>)
         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Web crawl the list of targets from file: #{file}&quot;</span>
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-identifier">targets</span>=<span class="ruby-identifier">file_2_list</span>(<span class="ruby-identifier">file</span>)
@@ -639,7 +654,7 @@ target pool until all the works are done</p>
                 <span class="ruby-keyword">return</span> <span class="ruby-identifier">sites</span>
         <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
     <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
-    <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>                  
+    <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
         <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -703,8 +718,8 @@ target pool until all the works are done</p>
 
           
           <div class="method-source-code" id="get_discovered_sites_by_crawler-source">
-            <pre><span class="ruby-comment"># File lib/wmap/url_crawler.rb, line 358</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_discovered_sites_by_crawler</span>            
+            <pre><span class="ruby-comment"># File lib/wmap/url_crawler.rb, line 360</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_discovered_sites_by_crawler</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Print summary report of discovered sites. &quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;\nSummary Report of Discovered Sites from the Crawler:&quot;</span>
@@ -784,7 +799,7 @@ performance.</p>
 
           
           <div class="method-source-code" id="pre_crawl-source">
-            <pre><span class="ruby-comment"># File lib/wmap/url_crawler.rb, line 47</span>
+            <pre><span class="ruby-comment"># File lib/wmap/url_crawler.rb, line 49</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">pre_crawl</span>(<span class="ruby-identifier">url</span>)
         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Perform network profiling works on the web server before the web crawling: #{url}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">begin</span>
@@ -859,8 +874,8 @@ performance.</p>
 
           
           <div class="method-source-code" id="print_discovered_urls_by_crawler-source">
-            <pre><span class="ruby-comment"># File lib/wmap/url_crawler.rb, line 328</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">print_discovered_urls_by_crawler</span>           
+            <pre><span class="ruby-comment"># File lib/wmap/url_crawler.rb, line 330</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">print_discovered_urls_by_crawler</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Print discovered url by the crawler. &quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;\nSummary Report of Discovered URLs from the Crawler:&quot;</span>
@@ -991,9 +1006,9 @@ performance.</p>
 
           
           <div class="method-source-code" id="save_discovered_urls-source">
-            <pre><span class="ruby-comment"># File lib/wmap/url_crawler.rb, line 345</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">save_discovered_urls</span> (<span class="ruby-identifier">file</span>)                
-        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Save discovered urls by the crawler to file: #{file} &quot;</span> 
+            <pre><span class="ruby-comment"># File lib/wmap/url_crawler.rb, line 347</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">save_discovered_urls</span> (<span class="ruby-identifier">file</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Save discovered urls by the crawler to file: #{file} &quot;</span>
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-identifier">list_2_file</span>(<span class="ruby-ivar">@discovered_urls_by_crawler</span>.<span class="ruby-identifier">keys</span>, <span class="ruby-identifier">file</span>)
                 <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Done!&quot;</span>
@@ -1024,7 +1039,7 @@ performance.</p>
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="http://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.0.
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.3.0.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

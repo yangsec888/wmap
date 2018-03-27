@@ -132,6 +132,11 @@
 
   <section class="description">
     
+<p>require “singleton”</p>
+
+<p>require “singleton”            # Implement singleton pattern to avoid race
+condition under parallel engine</p>
+
 <p>Class to trace de-activated site. This is need for basic state tracking for
 our sites.</p>
 
@@ -242,13 +247,13 @@ href="http://patorjk.com/software/taag">patorjk.com/software/taag</a>/</p>
             <pre><span class="ruby-comment"># File lib/wmap.rb, line 57</span>
         <span class="ruby-keyword">def</span> <span class="ruby-identifier">banner</span>
                 <span class="ruby-identifier">ver</span>=<span class="ruby-identifier">read_ver</span>
-                <span class="ruby-identifier">art</span>=<span class="ruby-string">&quot;,--.   ,--.       ,--.       ,--.   ,--.                                     
-|  |   |  | ,---. |  |-.     |   `.&#39;   | ,--,--. ,---.  ,---.  ,---. ,--.--. 
-|  |.&#39;.|  || .-. :| .-. &#39;    |  |&#39;.&#39;|  |&#39; ,-.  || .-. || .-. || .-. :|  .--&#39; 
-|   ,&#39;.   |\   --.| `-&#39; |    |  |   |  |\ &#39;-&#39;  || &#39;-&#39; &#39;| &#39;-&#39; &#39;\   --.|  |    
-&#39;--&#39;   &#39;--&#39; `----&#39; `---&#39;     `--&#39;   `--&#39; `--`--&#39;|  |-&#39; |  |-&#39;  `----&#39;`--&#39;    
+                <span class="ruby-identifier">art</span>=<span class="ruby-string">&quot;,--.   ,--.       ,--.       ,--.   ,--.
+|  |   |  | ,---. |  |-.     |   `.&#39;   | ,--,--. ,---.  ,---.  ,---. ,--.--.
+|  |.&#39;.|  || .-. :| .-. &#39;    |  |&#39;.&#39;|  |&#39; ,-.  || .-. || .-. || .-. :|  .--&#39;
+|   ,&#39;.   |\   --.| `-&#39; |    |  |   |  |\ &#39;-&#39;  || &#39;-&#39; &#39;| &#39;-&#39; &#39;\   --.|  |
+&#39;--&#39;   &#39;--&#39; `----&#39; `---&#39;     `--&#39;   `--&#39; `--`--&#39;|  |-&#39; |  |-&#39;  `----&#39;`--&#39;
                                                 `--&#39;   `--&#39;                  &quot;</span>
-                <span class="ruby-identifier">string</span> = <span class="ruby-string">&quot;-&quot;</span><span class="ruby-operator">*</span><span class="ruby-value">80</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\n&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">art</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\n&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;Version: &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">ver</span>[<span class="ruby-string">&quot;version&quot;</span>] <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\tRelease Date: &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">ver</span>[<span class="ruby-string">&quot;date&quot;</span>] <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\nDesigned and developed by: &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">ver</span>[<span class="ruby-string">&quot;author&quot;</span>] <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\nEmail: &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">ver</span>[<span class="ruby-string">&quot;email&quot;</span>] <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\tLinkedIn: &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">ver</span>[<span class="ruby-string">&quot;linkedin&quot;</span>] <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\n&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;-&quot;</span><span class="ruby-operator">*</span><span class="ruby-value">80</span>       
+                <span class="ruby-identifier">string</span> = <span class="ruby-string">&quot;-&quot;</span><span class="ruby-operator">*</span><span class="ruby-value">80</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\n&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">art</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\n&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;Version: &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">ver</span>[<span class="ruby-string">&quot;version&quot;</span>] <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\tRelease Date: &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">ver</span>[<span class="ruby-string">&quot;date&quot;</span>] <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\nDesigned and developed by: &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">ver</span>[<span class="ruby-string">&quot;author&quot;</span>] <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\nEmail: &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">ver</span>[<span class="ruby-string">&quot;email&quot;</span>] <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\tLinkedIn: &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">ver</span>[<span class="ruby-string">&quot;linkedin&quot;</span>] <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\n&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;-&quot;</span><span class="ruby-operator">*</span><span class="ruby-value">80</span>
         <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -385,7 +390,7 @@ Internet &#39;whois&#39; lookup</p>
           <div class="method-source-code" id="domain_known-3F-source">
             <pre><span class="ruby-comment"># File lib/wmap.rb, line 124</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">domain_known?</span>(<span class="ruby-identifier">domain</span>)
-        <span class="ruby-identifier">tracker</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">DomainTracker</span>.<span class="ruby-identifier">instance</span>
+        <span class="ruby-identifier">tracker</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">DomainTracker</span>.<span class="ruby-identifier">new</span>
         <span class="ruby-identifier">tracker</span>.<span class="ruby-identifier">domain_known?</span>(<span class="ruby-identifier">domain</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -452,7 +457,7 @@ Internet &#39;whois&#39; lookup</p>
           <div class="method-source-code" id="dump-source">
             <pre><span class="ruby-comment"># File lib/wmap.rb, line 180</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">dump</span>(<span class="ruby-identifier">file</span>)
-                <span class="ruby-identifier">store</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">SiteTracker</span>.<span class="ruby-identifier">instance</span>
+                <span class="ruby-identifier">store</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">SiteTracker</span>.<span class="ruby-identifier">new</span>
                 <span class="ruby-identifier">store</span>.<span class="ruby-identifier">save_uniq_sites</span>(<span class="ruby-identifier">file</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -486,7 +491,7 @@ Internet &#39;whois&#39; lookup</p>
           <div class="method-source-code" id="dump_xml-source">
             <pre><span class="ruby-comment"># File lib/wmap.rb, line 186</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">dump_xml</span>(<span class="ruby-identifier">file</span>)
-                <span class="ruby-identifier">store</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">SiteTracker</span>.<span class="ruby-identifier">instance</span>
+                <span class="ruby-identifier">store</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">SiteTracker</span>.<span class="ruby-identifier">new</span>
                 <span class="ruby-identifier">store</span>.<span class="ruby-identifier">save_uniq_sites_xml</span>(<span class="ruby-identifier">file</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -590,7 +595,7 @@ internet</p>
           <div class="method-source-code" id="host_known-3F-source">
             <pre><span class="ruby-comment"># File lib/wmap.rb, line 131</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">host_known?</span>(<span class="ruby-identifier">host</span>)
-        <span class="ruby-identifier">tracker</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">HostTracker</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">host_known?</span>(<span class="ruby-identifier">host</span>)
+        <span class="ruby-identifier">tracker</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">HostTracker</span>.<span class="ruby-identifier">new</span>.<span class="ruby-identifier">host_known?</span>(<span class="ruby-identifier">host</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -625,7 +630,7 @@ internet</p>
           <div class="method-source-code" id="ip_known-3F-source">
             <pre><span class="ruby-comment"># File lib/wmap.rb, line 142</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">ip_known?</span>(<span class="ruby-identifier">ip</span>)
-        <span class="ruby-identifier">tracker</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">HostTracker</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">ip_known?</span>(<span class="ruby-identifier">ip</span>)
+        <span class="ruby-identifier">tracker</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">HostTracker</span>.<span class="ruby-identifier">new</span>.<span class="ruby-identifier">ip_known?</span>(<span class="ruby-identifier">ip</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -726,7 +731,7 @@ internet</p>
           <div class="method-source-code" id="print-source">
             <pre><span class="ruby-comment"># File lib/wmap.rb, line 211</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">print</span>(<span class="ruby-identifier">site</span>)
-        <span class="ruby-identifier">searcher</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">SiteTracker</span>.<span class="ruby-identifier">instance</span>
+        <span class="ruby-identifier">searcher</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">SiteTracker</span>.<span class="ruby-identifier">new</span>
         <span class="ruby-identifier">searcher</span>.<span class="ruby-identifier">print_site</span>(<span class="ruby-identifier">site</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -760,7 +765,7 @@ internet</p>
           <div class="method-source-code" id="print_all-source">
             <pre><span class="ruby-comment"># File lib/wmap.rb, line 217</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">print_all</span>
-        <span class="ruby-identifier">searcher</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">SiteTracker</span>.<span class="ruby-identifier">instance</span>
+        <span class="ruby-identifier">searcher</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">SiteTracker</span>.<span class="ruby-identifier">new</span>
         <span class="ruby-identifier">searcher</span>.<span class="ruby-identifier">print_all_sites</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -801,7 +806,7 @@ internet</p>
                 <span class="ruby-keyword">case</span> <span class="ruby-identifier">line</span>
                 <span class="ruby-keyword">when</span> <span class="ruby-node">/^(\s)*#/</span>
                         <span class="ruby-keyword">next</span>
-                <span class="ruby-keyword">when</span> <span class="ruby-regexp">/\=/</span> 
+                <span class="ruby-keyword">when</span> <span class="ruby-regexp">/\=/</span>
                         <span class="ruby-identifier">entry</span>=<span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;=&quot;</span>).<span class="ruby-identifier">map!</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">strip</span>}
                         <span class="ruby-identifier">ver</span>[<span class="ruby-identifier">entry</span>[<span class="ruby-value">0</span>]]=<span class="ruby-identifier">entry</span>[<span class="ruby-value">1</span>]
                 <span class="ruby-keyword">end</span>
@@ -840,7 +845,7 @@ internet</p>
           <div class="method-source-code" id="refresh-source">
             <pre><span class="ruby-comment"># File lib/wmap.rb, line 192</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">refresh</span>(<span class="ruby-identifier">site</span>)
-                <span class="ruby-identifier">store</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">SiteTracker</span>.<span class="ruby-identifier">instance</span>
+                <span class="ruby-identifier">store</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">SiteTracker</span>.<span class="ruby-identifier">new</span>
                 <span class="ruby-identifier">store</span>.<span class="ruby-identifier">refresh</span>(<span class="ruby-identifier">site</span>)
                 <span class="ruby-identifier">store</span>.<span class="ruby-identifier">save!</span>
 <span class="ruby-keyword">end</span></pre>
@@ -875,7 +880,7 @@ internet</p>
           <div class="method-source-code" id="refresh_all-source">
             <pre><span class="ruby-comment"># File lib/wmap.rb, line 199</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">refresh_all</span>
-                <span class="ruby-identifier">store</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">SiteTracker</span>.<span class="ruby-identifier">instance</span>
+                <span class="ruby-identifier">store</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">SiteTracker</span>.<span class="ruby-identifier">new</span>
                 <span class="ruby-identifier">store</span>.<span class="ruby-identifier">refresh_all</span>
                 <span class="ruby-identifier">store</span>.<span class="ruby-identifier">save!</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1012,7 +1017,7 @@ internet</p>
           <div class="method-source-code" id="search-source">
             <pre><span class="ruby-comment"># File lib/wmap.rb, line 174</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">search</span>(<span class="ruby-identifier">pattern</span>)
-        <span class="ruby-identifier">searcher</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">SiteTracker</span>.<span class="ruby-identifier">instance</span>
+        <span class="ruby-identifier">searcher</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">SiteTracker</span>.<span class="ruby-identifier">new</span>
         <span class="ruby-identifier">searcher</span>.<span class="ruby-identifier">search</span>(<span class="ruby-identifier">pattern</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -1047,7 +1052,7 @@ already known</p>
           <div class="method-source-code" id="sub_domain_known-3F-source">
             <pre><span class="ruby-comment"># File lib/wmap.rb, line 136</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">sub_domain_known?</span>(<span class="ruby-identifier">host</span>)
-        <span class="ruby-identifier">tracker</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">HostTracker</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">sub_domain_known?</span>(<span class="ruby-identifier">host</span>)
+        <span class="ruby-identifier">tracker</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">HostTracker</span>.<span class="ruby-identifier">new</span>.<span class="ruby-identifier">sub_domain_known?</span>(<span class="ruby-identifier">host</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -1203,7 +1208,7 @@ CIDR tracking path if found</p>
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="http://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.0.
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.3.0.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

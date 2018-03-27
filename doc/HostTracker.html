@@ -68,10 +68,6 @@
   <ul class="link-list">
   
   
-    <li><span class="include">Singleton</span>
-  
-  
-  
     <li><a class="include" href="Wmap/Utils.html">Wmap::Utils</a>
   
   
@@ -216,13 +212,15 @@ hosts from discovery and past assessment efforts are stored</p>
           
           <div class="method-source-code" id="new-source">
             <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 21</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span> (<span class="ruby-identifier">params</span> = {})           
-        <span class="ruby-ivar">@verbose</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:verbose</span>, <span class="ruby-keyword">false</span>)                
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span> (<span class="ruby-identifier">params</span> = {})
+        <span class="ruby-ivar">@verbose</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:verbose</span>, <span class="ruby-keyword">false</span>)
+        <span class="ruby-ivar">@data_dir</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:data_dir</span>, <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-keyword">__FILE__</span>)<span class="ruby-operator">+</span><span class="ruby-string">&#39;/../../data/&#39;</span>)
         <span class="ruby-comment"># Set default instance variables</span>
-        <span class="ruby-ivar">@file_hosts</span>=<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-keyword">__FILE__</span>)<span class="ruby-operator">+</span><span class="ruby-string">&#39;/../../data/hosts&#39;</span>
+        <span class="ruby-ivar">@file_hosts</span>=<span class="ruby-ivar">@data_dir</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;hosts&#39;</span>
         <span class="ruby-identifier">file</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:hosts_file</span>, <span class="ruby-ivar">@file_hosts</span>)
         <span class="ruby-ivar">@max_parallel</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:max_parallel</span>, <span class="ruby-value">40</span>)
         <span class="ruby-comment"># Initialize the instance variables</span>
+        <span class="ruby-constant">File</span>.<span class="ruby-identifier">write</span>(<span class="ruby-ivar">@file_hosts</span>, <span class="ruby-string">&quot;&quot;</span>) <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-ivar">@file_hosts</span>)
         <span class="ruby-ivar">@known_hosts</span>=<span class="ruby-identifier">load_known_hosts_from_file</span>(<span class="ruby-identifier">file</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -262,26 +260,26 @@ hosts from discovery and past assessment efforts are stored</p>
 
           
           <div class="method-source-code" id="add-source">
-            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 102</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">add</span>(<span class="ruby-identifier">host</span>)  
-        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Add entry to the local host repository: #{host}&quot;</span> 
+            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 104</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">add</span>(<span class="ruby-identifier">host</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Add entry to the local host repository: #{host}&quot;</span>
         <span class="ruby-keyword">begin</span>
-                <span class="ruby-identifier">host</span>=<span class="ruby-identifier">host</span>.<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">downcase</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">host</span>.<span class="ruby-identifier">nil?</span>                    
+                <span class="ruby-identifier">host</span>=<span class="ruby-identifier">host</span>.<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">downcase</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">host</span>.<span class="ruby-identifier">nil?</span>
                 <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@known_hosts</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">host</span>)
                         <span class="ruby-identifier">ip</span>=<span class="ruby-identifier">host_2_ip</span>(<span class="ruby-identifier">host</span>)
                         <span class="ruby-identifier">record</span>=<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
-                        <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_ip?</span>(<span class="ruby-identifier">ip</span>) 
+                        <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_ip?</span>(<span class="ruby-identifier">ip</span>)
                                 <span class="ruby-comment"># filter host to known domains only</span>
                                 <span class="ruby-identifier">root</span>=<span class="ruby-identifier">get_domain_root</span>(<span class="ruby-identifier">host</span>)
-                                <span class="ruby-keyword">if</span> <span class="ruby-constant">Wmap</span>.<span class="ruby-identifier">domain_known?</span>(<span class="ruby-identifier">root</span>)
+                                <span class="ruby-keyword">if</span> <span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">DomainTracker</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:data_dir=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@data_dir</span>).<span class="ruby-identifier">domain_known?</span>(<span class="ruby-identifier">root</span>)
                                         <span class="ruby-identifier">record</span>[<span class="ruby-identifier">host</span>]=<span class="ruby-identifier">ip</span>
                                         <span class="ruby-identifier">record</span>[<span class="ruby-identifier">ip</span>]=<span class="ruby-identifier">host</span>
                                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Host data repository entry loaded: #{host} &lt;=&gt; #{ip}&quot;</span>
                                         <span class="ruby-comment"># Replace instance with the class variable to avoid potential race condition under parallel engine</span>
                                         <span class="ruby-comment"># add additional logic to update the sub-domain table as well, 02/10/2014</span>
                                         <span class="ruby-identifier">sub</span>=<span class="ruby-identifier">get_sub_domain</span>(<span class="ruby-identifier">host</span>)
-                                        <span class="ruby-keyword">if</span> <span class="ruby-identifier">sub!</span>=<span class="ruby-identifier">root</span>              
-                                                <span class="ruby-identifier">tracker</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">DomainTracker</span><span class="ruby-operator">::</span><span class="ruby-constant">SubDomain</span>.<span class="ruby-identifier">instance</span>
+                                        <span class="ruby-keyword">if</span> <span class="ruby-identifier">sub!</span>=<span class="ruby-identifier">root</span>
+                                                <span class="ruby-identifier">tracker</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">DomainTracker</span><span class="ruby-operator">::</span><span class="ruby-constant">SubDomain</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:data_dir=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@data_dir</span>)
                                                 <span class="ruby-keyword">unless</span> <span class="ruby-identifier">tracker</span>.<span class="ruby-identifier">domain_known?</span>(<span class="ruby-identifier">sub</span>)
                                                         <span class="ruby-identifier">tracker</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">sub</span>)
                                                         <span class="ruby-identifier">tracker</span>.<span class="ruby-identifier">save!</span>
@@ -298,8 +296,8 @@ hosts from discovery and past assessment efforts are stored</p>
                         <span class="ruby-keyword">end</span>
                 <span class="ruby-keyword">else</span>
                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Host is already exist. Skip: #{host}&quot;</span>
-                <span class="ruby-keyword">end</span>  
-        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
@@ -388,23 +386,23 @@ hosts from discovery and past assessment efforts are stored</p>
 
           
           <div class="method-source-code" id="bulk_add-source">
-            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 144</span>
+            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 146</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">bulk_add</span>(<span class="ruby-identifier">list</span>, <span class="ruby-identifier">num</span>=<span class="ruby-ivar">@max_parallel</span>)
-        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Add entries to the local host repository: #{list}&quot;</span> 
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Add entries to the local host repository: #{list}&quot;</span>
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-identifier">results</span>=<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
                 <span class="ruby-keyword">if</span> <span class="ruby-identifier">list</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Start parallel host update processing on:\n #{list}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
                         <span class="ruby-constant">Parallel</span>.<span class="ruby-identifier">map</span>(<span class="ruby-identifier">list</span>, <span class="ruby-value">:in_processes</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">num</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">target</span><span class="ruby-operator">|</span>
                                 <span class="ruby-identifier">add</span>(<span class="ruby-identifier">target</span>)
-                        }.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">process</span><span class="ruby-operator">|</span>                                 
+                        }.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">process</span><span class="ruby-operator">|</span>
                                 <span class="ruby-keyword">if</span> <span class="ruby-identifier">process</span>.<span class="ruby-identifier">nil?</span>
                                         <span class="ruby-keyword">next</span>
                                 <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">process</span>.<span class="ruby-identifier">empty?</span>
                                         <span class="ruby-comment">#do nothing</span>
                                 <span class="ruby-keyword">else</span>
                                         <span class="ruby-identifier">results</span>.<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">process</span>)
-                                <span class="ruby-keyword">end</span>                                
+                                <span class="ruby-keyword">end</span>
                         <span class="ruby-keyword">end</span>
                         <span class="ruby-ivar">@known_hosts</span>.<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">results</span>)
                         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Done loading entries.&quot;</span>
@@ -413,8 +411,8 @@ hosts from discovery and past assessment efforts are stored</p>
                         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Error: empty list - no entry is loaded. Please check your input list and try again.&quot;</span>
                 <span class="ruby-keyword">end</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-identifier">results</span>
-        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
-                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> 
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span>
         <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -450,15 +448,15 @@ hosts from discovery and past assessment efforts are stored</p>
 
           
           <div class="method-source-code" id="bulk_delete-source">
-            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 205</span>
+            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 207</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">bulk_delete</span>(<span class="ruby-identifier">list</span>)
-        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Delete entries to the local host repository from:\n #{list}&quot;</span> 
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Delete entries to the local host repository from:\n #{list}&quot;</span>
         <span class="ruby-keyword">begin</span>
-                <span class="ruby-identifier">hosts</span>=<span class="ruby-identifier">list</span>           
+                <span class="ruby-identifier">hosts</span>=<span class="ruby-identifier">list</span>
                 <span class="ruby-identifier">changes</span>=<span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
                 <span class="ruby-keyword">if</span> <span class="ruby-identifier">hosts</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
-                        <span class="ruby-identifier">hosts</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> 
-                                <span class="ruby-identifier">host</span>=<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">x</span>) 
+                        <span class="ruby-identifier">hosts</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span>
+                                <span class="ruby-identifier">host</span>=<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">x</span>)
                                 <span class="ruby-identifier">changes</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">host</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">host</span>.<span class="ruby-identifier">nil?</span>
                         <span class="ruby-keyword">end</span>
                         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Done deleting hosts.&quot;</span>
@@ -466,8 +464,8 @@ hosts from discovery and past assessment efforts are stored</p>
                 <span class="ruby-keyword">else</span>
                         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Error: empty list - no entry is loaded. Please check your list and try again.&quot;</span>
                 <span class="ruby-keyword">end</span>
-        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
-                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> 
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span>
         <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -503,21 +501,21 @@ hosts from discovery and past assessment efforts are stored</p>
 
           
           <div class="method-source-code" id="count-source">
-            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 85</span>
+            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 87</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">count</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Counting number of entries in the local host repository ...&quot;</span>
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-identifier">cnt</span>=<span class="ruby-value">0</span>
                 <span class="ruby-ivar">@known_hosts</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span>
-                        <span class="ruby-keyword">unless</span> <span class="ruby-identifier">is_ip?</span>(<span class="ruby-identifier">key</span>) 
+                        <span class="ruby-keyword">unless</span> <span class="ruby-identifier">is_ip?</span>(<span class="ruby-identifier">key</span>)
                                 <span class="ruby-identifier">cnt</span>=<span class="ruby-identifier">cnt</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>
                         <span class="ruby-keyword">end</span>
                 <span class="ruby-keyword">end</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Current number of entries: #{cnt}&quot;</span>
-                <span class="ruby-keyword">return</span> <span class="ruby-identifier">cnt</span>   
+                <span class="ruby-keyword">return</span> <span class="ruby-identifier">cnt</span>
         <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
-                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> 
-        <span class="ruby-keyword">end</span>           
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span>
+        <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -548,9 +546,9 @@ hosts from discovery and past assessment efforts are stored</p>
 
           
           <div class="method-source-code" id="delete-source">
-            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 188</span>
+            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 190</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">delete</span>(<span class="ruby-identifier">host</span>)
-        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Remove entry from the local host repository: #{host} &quot;</span> 
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Remove entry from the local host repository: #{host} &quot;</span>
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-identifier">host</span>=<span class="ruby-identifier">host</span>.<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">downcase</span>
                 <span class="ruby-keyword">if</span> <span class="ruby-ivar">@known_hosts</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">host</span>)
@@ -559,10 +557,10 @@ hosts from discovery and past assessment efforts are stored</p>
                         <span class="ruby-keyword">return</span> <span class="ruby-identifier">host</span>
                 <span class="ruby-keyword">else</span>
                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Entry not fund. Skip: #{host}&quot;</span>
-                <span class="ruby-keyword">end</span>                   
-        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
-                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> 
-        <span class="ruby-keyword">end</span>           
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span>
+        <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -677,7 +675,7 @@ hosts from discovery and past assessment efforts are stored</p>
 
           
           <div class="method-source-code" id="dump_sub_domains-source">
-            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 429</span>
+            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 431</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">dump_sub_domains</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Dump out all active sub domains from the local hosts.&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">begin</span>
@@ -686,15 +684,15 @@ hosts from discovery and past assessment efforts are stored</p>
                         <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_ip?</span>(<span class="ruby-identifier">hostname</span>)
                         <span class="ruby-identifier">hostname</span> = <span class="ruby-identifier">hostname</span>.<span class="ruby-identifier">strip</span>
                         <span class="ruby-identifier">sub</span> = <span class="ruby-identifier">get_subdomain</span>(<span class="ruby-identifier">hostname</span>)
-                        <span class="ruby-identifier">subs</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">sub</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">sub</span>.<span class="ruby-identifier">nil?</span>                      
+                        <span class="ruby-identifier">subs</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">sub</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">sub</span>.<span class="ruby-identifier">nil?</span>
                 <span class="ruby-keyword">end</span>
                 <span class="ruby-identifier">subs</span>.<span class="ruby-identifier">uniq!</span>.<span class="ruby-identifier">sort!</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Found sub domains: #{subs}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-identifier">subs</span>
-        <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                        
-                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> 
+        <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-identifier">subs</span>
-        <span class="ruby-keyword">end</span>   
+        <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -730,16 +728,16 @@ file)</p>
 
           
           <div class="method-source-code" id="file_add-source">
-            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 175</span>
+            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 177</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">file_add</span>(<span class="ruby-identifier">file</span>)
         <span class="ruby-keyword">begin</span>
-                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Add entries to the local host repository from file: #{file}&quot;</span> 
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Add entries to the local host repository from file: #{file}&quot;</span>
                 <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;File non-exist. Please check your file path and name again: #{file}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">file</span>)
-                <span class="ruby-identifier">hosts</span>=<span class="ruby-identifier">file_2_list</span>(<span class="ruby-identifier">file</span>)                      
+                <span class="ruby-identifier">hosts</span>=<span class="ruby-identifier">file_2_list</span>(<span class="ruby-identifier">file</span>)
                 <span class="ruby-identifier">changes</span>=<span class="ruby-identifier">bulk_add</span>(<span class="ruby-identifier">hosts</span>)
                 <span class="ruby-keyword">return</span> <span class="ruby-identifier">changes</span>
-        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
-                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> 
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span>
         <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -771,17 +769,17 @@ file)</p>
 
           
           <div class="method-source-code" id="file_delete-source">
-            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 227</span>
+            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 229</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">file_delete</span>(<span class="ruby-identifier">file</span>)
         <span class="ruby-keyword">begin</span>
-                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Delete the local host repository entries from file: #{file}&quot;</span> 
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Delete the local host repository entries from file: #{file}&quot;</span>
                 <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;File non-exist. Please check your file path and name again: #{file}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">file</span>)
-                <span class="ruby-identifier">hosts</span>=<span class="ruby-identifier">file_2_list</span>(<span class="ruby-identifier">file</span>)              
+                <span class="ruby-identifier">hosts</span>=<span class="ruby-identifier">file_2_list</span>(<span class="ruby-identifier">file</span>)
                 <span class="ruby-identifier">changes</span>=<span class="ruby-identifier">bulk_delete</span>(<span class="ruby-identifier">hosts</span>)
                 <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Delete done.&quot;</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-identifier">changes</span>
-        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
-                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> 
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span>
         <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -842,7 +840,7 @@ can be used for statistics study.</p>
 
           
           <div class="method-source-code" id="get_a_records-source">
-            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 315</span>
+            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 317</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">get_a_records</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Dump out all known A records from the local hosts.&quot;</span>
         <span class="ruby-keyword">begin</span>
@@ -852,13 +850,13 @@ can be used for statistics study.</p>
                         <span class="ruby-identifier">hostname</span> = <span class="ruby-identifier">hostname</span>.<span class="ruby-identifier">strip</span>
                         <span class="ruby-identifier">root</span> = <span class="ruby-identifier">get_domain_root</span>(<span class="ruby-identifier">hostname</span>)
                         <span class="ruby-identifier">record</span> = <span class="ruby-identifier">hostname</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-string">&#39;.&#39;</span><span class="ruby-operator">+</span><span class="ruby-identifier">root</span>,<span class="ruby-string">&#39;&#39;</span>)
-                        <span class="ruby-identifier">records</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">record</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">record</span>.<span class="ruby-identifier">nil?</span>                     
+                        <span class="ruby-identifier">records</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">record</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">record</span>.<span class="ruby-identifier">nil?</span>
                 <span class="ruby-keyword">end</span>
                 <span class="ruby-identifier">records</span>.<span class="ruby-identifier">sort!</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-identifier">records</span>
-        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
-                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> 
-        <span class="ruby-keyword">end</span>   
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span>
+        <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -893,7 +891,7 @@ can be used for statistics study.</p>
 
           
           <div class="method-source-code" id="get_root_domains-source">
-            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 296</span>
+            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 298</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">get_root_domains</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Dump out all active root domains from the cache.&quot;</span>
         <span class="ruby-keyword">begin</span>
@@ -902,13 +900,13 @@ can be used for statistics study.</p>
                         <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_ip?</span>(<span class="ruby-identifier">hostname</span>)
                         <span class="ruby-identifier">hostname</span> = <span class="ruby-identifier">hostname</span>.<span class="ruby-identifier">strip</span>
                         <span class="ruby-identifier">zone</span> = <span class="ruby-identifier">get_domain_root</span>(<span class="ruby-identifier">hostname</span>)
-                        <span class="ruby-identifier">zones</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">zone</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">zone</span>.<span class="ruby-identifier">nil?</span>                   
+                        <span class="ruby-identifier">zones</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">zone</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">zone</span>.<span class="ruby-identifier">nil?</span>
                 <span class="ruby-keyword">end</span>
                 <span class="ruby-identifier">zones</span>.<span class="ruby-identifier">uniq!</span>.<span class="ruby-identifier">sort!</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-identifier">zones</span>
-        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
-                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> 
-        <span class="ruby-keyword">end</span>   
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span>
+        <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -999,7 +997,7 @@ can be used for statistics study.</p>
 
           
           <div class="method-source-code" id="host_aliases-source">
-            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 481</span>
+            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 483</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">host_aliases</span> (<span class="ruby-identifier">host</span>)
         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Search aliases in the local hosts data repository for host: #{host}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">begin</span>
@@ -1019,7 +1017,7 @@ can be used for statistics study.</p>
                 <span class="ruby-keyword">end</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-identifier">aliases</span><span class="ruby-operator">-</span>[<span class="ruby-identifier">host</span>]
         <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
-                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> 
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
         <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1056,7 +1054,7 @@ can be used for statistics study.</p>
 
           
           <div class="method-source-code" id="host_known-3F-source">
-            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 382</span>
+            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 384</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">host_known?</span> (<span class="ruby-identifier">host</span>)
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-identifier">host</span>=<span class="ruby-identifier">host</span>.<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">downcase</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">host</span>.<span class="ruby-identifier">nil?</span>
@@ -1102,7 +1100,7 @@ can be used for statistics study.</p>
 
           
           <div class="method-source-code" id="ip_known-3F-source">
-            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 365</span>
+            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 367</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">ip_known?</span> (<span class="ruby-identifier">ip</span>)
         <span class="ruby-identifier">known</span> = <span class="ruby-keyword">false</span>
         <span class="ruby-keyword">begin</span>
@@ -1179,7 +1177,7 @@ DNS lookup from the Internet</p>
 
           
           <div class="method-source-code" id="local_host_2_ip-source">
-            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 413</span>
+            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 415</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">local_host_2_ip</span> (<span class="ruby-identifier">host</span>)
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;DNS lookup from the local host repository&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">begin</span>
@@ -1189,10 +1187,10 @@ DNS lookup from the Internet</p>
                 <span class="ruby-keyword">else</span>
                         <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
                 <span class="ruby-keyword">end</span>
-        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
-                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> 
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
-        <span class="ruby-keyword">end</span>   
+        <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -1224,7 +1222,7 @@ with the reverse DNS lookup from the Internet</p>
 
           
           <div class="method-source-code" id="local_ip_2_host-source">
-            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 397</span>
+            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 399</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">local_ip_2_host</span> (<span class="ruby-identifier">ip</span>)
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Reverse DNS lookup from the local host repository&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">begin</span>
@@ -1234,9 +1232,9 @@ with the reverse DNS lookup from the Internet</p>
                 <span class="ruby-keyword">else</span>
                         <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
                 <span class="ruby-keyword">end</span>
-        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
-                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> 
-        <span class="ruby-keyword">end</span>   
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span>
+        <span class="ruby-keyword">end</span>
         <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -1324,7 +1322,7 @@ with the reverse DNS lookup from the Internet</p>
 
           
           <div class="method-source-code" id="print_host-source">
-            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 347</span>
+            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 349</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">print_host</span>(<span class="ruby-identifier">host</span>)
         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Local host store entry for #{host}&quot;</span>
         <span class="ruby-keyword">begin</span>
@@ -1332,12 +1330,12 @@ with the reverse DNS lookup from the Internet</p>
                 <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Invalid input: #{host}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">is_fqdn?</span>(<span class="ruby-identifier">host</span>)
                 <span class="ruby-keyword">if</span> <span class="ruby-ivar">@known_hosts</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">host</span>)
                         <span class="ruby-identifier">value</span>=<span class="ruby-ivar">@known_hosts</span>[<span class="ruby-identifier">host</span>]
-                        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{host}\t#{value}&quot;</span> 
+                        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{host}\t#{value}&quot;</span>
                 <span class="ruby-keyword">else</span>
                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Unknown host in the local store: #{host}&quot;</span>
                 <span class="ruby-keyword">end</span>
         <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
-                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> 
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span>
         <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -1373,7 +1371,7 @@ with the reverse DNS lookup from the Internet</p>
 
           
           <div class="method-source-code" id="print_known_hosts-source">
-            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 335</span>
+            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 337</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">print_known_hosts</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;\nSummary of local hosts Table:&quot;</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Total entries: #{@known_hosts.size}&quot;</span>
@@ -1416,15 +1414,15 @@ with the reverse DNS lookup from the Internet</p>
 
           
           <div class="method-source-code" id="refresh-source">
-            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 241</span>
+            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 243</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">refresh</span>(<span class="ruby-identifier">host</span>)
-        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Refresh the local host repository for host: #{host} &quot;</span> 
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Refresh the local host repository for host: #{host} &quot;</span>
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-identifier">host</span>=<span class="ruby-identifier">host</span>.<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">downcase</span>
                 <span class="ruby-keyword">if</span> <span class="ruby-ivar">@known_hosts</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">host</span>)
-                        <span class="ruby-identifier">old_ip</span>=<span class="ruby-ivar">@known_hosts</span>[<span class="ruby-identifier">host</span>]                           
+                        <span class="ruby-identifier">old_ip</span>=<span class="ruby-ivar">@known_hosts</span>[<span class="ruby-identifier">host</span>]
                         <span class="ruby-identifier">new_ip</span>=<span class="ruby-identifier">host_2_ip</span>(<span class="ruby-identifier">host</span>)
-                        <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_ip?</span>(<span class="ruby-identifier">new_ip</span>) 
+                        <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_ip?</span>(<span class="ruby-identifier">new_ip</span>)
                                 <span class="ruby-keyword">if</span> <span class="ruby-identifier">old_ip</span><span class="ruby-operator">==</span><span class="ruby-identifier">new_ip</span>
                                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;No change for the host entry: #{host}\t#{old_ip}&quot;</span>
                                         <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
@@ -1433,18 +1431,18 @@ with the reverse DNS lookup from the Internet</p>
                                         <span class="ruby-ivar">@known_hosts</span>[<span class="ruby-identifier">new_ip</span>]=<span class="ruby-identifier">host</span>
                                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Entry refreshed: #{host}\t#{@known_hosts[host]}&quot;</span>
                                         <span class="ruby-keyword">return</span> <span class="ruby-identifier">host</span>
-                                <span class="ruby-keyword">end</span>                                        
+                                <span class="ruby-keyword">end</span>
                         <span class="ruby-keyword">else</span>
-                                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Host can no longer be resolved in the Internet. Entry removed: #{host}\t#{@known_hosts[host]}&quot;</span> 
+                                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Host can no longer be resolved in the Internet. Entry removed: #{host}\t#{@known_hosts[host]}&quot;</span>
                                 <span class="ruby-ivar">@known_hosts</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">host</span>)
                                 <span class="ruby-keyword">return</span> <span class="ruby-identifier">host</span>
-                        <span class="ruby-keyword">end</span>                         
+                        <span class="ruby-keyword">end</span>
                 <span class="ruby-keyword">else</span>
                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Error entry non exist: #{host}&quot;</span>
                 <span class="ruby-keyword">end</span>
-        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
-                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> 
-        <span class="ruby-keyword">end</span>           
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span>
+        <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -1475,9 +1473,9 @@ with the reverse DNS lookup from the Internet</p>
 
           
           <div class="method-source-code" id="refresh_all-source">
-            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 272</span>
+            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 274</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">refresh_all</span>
-        <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Refresh all the entries in the local host repository in one shot.&quot;</span> 
+        <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Refresh all the entries in the local host repository in one shot.&quot;</span>
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-identifier">changes</span>=<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
                 <span class="ruby-identifier">hosts</span>=<span class="ruby-ivar">@known_hosts</span>.<span class="ruby-identifier">keys</span>
@@ -1485,7 +1483,7 @@ with the reverse DNS lookup from the Internet</p>
                 <span class="ruby-identifier">changes</span>=<span class="ruby-identifier">bulk_add</span>(<span class="ruby-identifier">hosts</span>)
                 <span class="ruby-ivar">@known_hosts</span>.<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">changes</span>)
                 <span class="ruby-comment">#@known_hosts.keys.map do |key|</span>
-                <span class="ruby-comment">#    unless is_ip?(key) </span>
+                <span class="ruby-comment">#    unless is_ip?(key)</span>
                 <span class="ruby-comment">#            host=refresh(key)</span>
                 <span class="ruby-comment">#            changes.push(host) unless host.nil?</span>
                 <span class="ruby-comment">#    end</span>
@@ -1494,9 +1492,9 @@ with the reverse DNS lookup from the Internet</p>
                 <span class="ruby-comment">#changes.map { |x| puts x }</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Done refreshing the local hosts.&quot;</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-identifier">changes</span>
-        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
-                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> 
-        <span class="ruby-keyword">end</span>   
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span>
+        <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -1556,9 +1554,9 @@ file</p>
 
           
           <div class="method-source-code" id="save_known_hosts_to_file-21-source">
-            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 65</span>
+            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 67</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">save_known_hosts_to_file!</span>(<span class="ruby-identifier">f_hosts</span>=<span class="ruby-ivar">@file_hosts</span>)
-        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Saving the local host repository from memory to file: #{f_hosts} ...&quot;</span> 
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Saving the local host repository from memory to file: #{f_hosts} ...&quot;</span>
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-identifier">timestamp</span>=<span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
                 <span class="ruby-identifier">f</span>=<span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">f_hosts</span>, <span class="ruby-string">&#39;w&#39;</span>)
@@ -1571,7 +1569,7 @@ file</p>
                 <span class="ruby-identifier">f</span>.<span class="ruby-identifier">close</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;local host repository is successfully saved to: #{f_hosts}&quot;</span>
         <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
-                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> 
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span>
         <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -1609,7 +1607,7 @@ automatically converted into lower case</p>
 
           
           <div class="method-source-code" id="search-source">
-            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 462</span>
+            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 464</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">search</span> (<span class="ruby-identifier">pattern</span>)
         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Search host store based on the regular expression: #{pattern}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">begin</span>
@@ -1622,7 +1620,7 @@ automatically converted into lower case</p>
                 <span class="ruby-keyword">end</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-identifier">results</span>
         <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
-                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> 
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
         <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1660,16 +1658,16 @@ sub-domain</p>
 
           
           <div class="method-source-code" id="sub_domain_known-3F-source">
-            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 450</span>
+            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 452</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">sub_domain_known?</span>(<span class="ruby-identifier">domain</span>)
         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Validate sub-domain: #{domain}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-identifier">domain</span>=<span class="ruby-identifier">domain</span>.<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">downcase</span>
                 <span class="ruby-identifier">subs</span>=<span class="ruby-identifier">dump_sub_domains</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-identifier">subs</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">domain</span>)
-        <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                        
-                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> 
-        <span class="ruby-keyword">end</span>   
+        <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span>
+        <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -1701,7 +1699,7 @@ descendant order</p>
 
           
           <div class="method-source-code" id="top_hostname-source">
-            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 507</span>
+            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 509</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">top_hostname</span> (<span class="ruby-identifier">num</span>)
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Sort the host store for the most common hostname. &quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-identifier">h</span>=<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
@@ -1718,7 +1716,7 @@ descendant order</p>
                         <span class="ruby-identifier">key</span>=<span class="ruby-identifier">entry</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">downcase</span>
                         <span class="ruby-identifier">value</span>=<span class="ruby-identifier">entry</span>[<span class="ruby-value">1</span>]
                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Loading value pair: #{key} - #{value}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
-                        <span class="ruby-identifier">host_store</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">known_hosts</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">key</span>)                             
+                        <span class="ruby-identifier">host_store</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">known_hosts</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">key</span>)
                         <span class="ruby-identifier">host_store</span>[<span class="ruby-identifier">key</span>]= <span class="ruby-identifier">value</span>
                 <span class="ruby-keyword">end</span>
                 <span class="ruby-identifier">f</span>.<span class="ruby-identifier">close</span>
@@ -1737,7 +1735,7 @@ descendant order</p>
                 <span class="ruby-keyword">end</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-identifier">top</span>
         <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
-                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> 
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
         <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1779,7 +1777,7 @@ instance</p>
 
           
           <div class="method-source-code" id="load_known_hosts_from_file-source">
-            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 32</span>
+            <pre><span class="ruby-comment"># File lib/wmap/host_tracker.rb, line 34</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">load_known_hosts_from_file</span> (<span class="ruby-identifier">f_hosts</span>=<span class="ruby-ivar">@file_hosts</span>)
         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Loading local hosts from file: #{f_hosts} ...&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">begin</span>
@@ -1792,10 +1790,10 @@ instance</p>
                         <span class="ruby-identifier">key</span>=<span class="ruby-identifier">entry</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">downcase</span>
                         <span class="ruby-identifier">value</span>=<span class="ruby-identifier">entry</span>[<span class="ruby-value">1</span>]
                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Loading value pair: #{key} - #{value}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
-                        <span class="ruby-identifier">known_hosts</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">known_hosts</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">key</span>)                            
+                        <span class="ruby-identifier">known_hosts</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">known_hosts</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">key</span>)
                         <span class="ruby-identifier">known_hosts</span>[<span class="ruby-identifier">key</span>]= <span class="ruby-identifier">value</span>
                         <span class="ruby-comment"># For reverse host lookup</span>
-                        <span class="ruby-identifier">known_hosts</span>[<span class="ruby-identifier">value</span>] = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">known_hosts</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">value</span>)        
+                        <span class="ruby-identifier">known_hosts</span>[<span class="ruby-identifier">value</span>] = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">known_hosts</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">value</span>)
                         <span class="ruby-identifier">known_hosts</span>[<span class="ruby-identifier">value</span>] = <span class="ruby-identifier">key</span>
                         <span class="ruby-comment"># Count the number of alias for the recorded IP</span>
                         <span class="ruby-keyword">if</span> <span class="ruby-ivar">@alias</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">value</span>)
@@ -1806,8 +1804,8 @@ instance</p>
                 <span class="ruby-keyword">end</span>
                 <span class="ruby-identifier">f</span>.<span class="ruby-identifier">close</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-identifier">known_hosts</span>
-        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
-                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> 
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-identifier">known_hosts</span>
         <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1829,7 +1827,7 @@ instance</p>
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="http://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.0.
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.3.0.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

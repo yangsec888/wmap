@@ -3,7 +3,7 @@
 #
 # A pure Ruby library for Internet web application discovery and tracking.
 #
-# Copyright (c) 2012-2015 Yang Li 
+# Copyright (c) 2012-2015 Yang Li
 #++
 require "net/http"
 require "uri"
@@ -17,30 +17,32 @@ require "parallel"
 class Wmap::UrlCrawler
 	include Wmap::Utils
 
-	attr_accessor :http_timeout, :crawl_page_limit, :crawl_depth, :max_parallel, :verbose
+	attr_accessor :http_timeout, :crawl_page_limit, :crawl_depth, :max_parallel, :verbose, :data_dir
 	attr_reader :discovered_urls_by_crawler, :visited_urls_by_crawler, :crawl_start, :crawl_done
-	# Global variable used to store the combined result of all the forked child processes. Note that class variable 
+	# Global variable used to store the combined result of all the forked child processes. Note that class variable
 	# would not be able to pass the result due the limitation of IO Pipe communication mechanism used by 'parallel' fork manager
 #	$discovered_urls=Hash.new
-	
+
 	# set hard stop limit of http time-out to 8 seconds, in order to avoid severe performance penalty for certain 'weird' site(s)
 	Max_http_timeout=8000
-	# set hard stop limit of crawler time-out to 1200 seconds or 20 minutes 
+	# set hard stop limit of crawler time-out to 1200 seconds or 20 minutes
 	Crawl_timeout=1200000
-	
+
 	# Crawler instance default variables
-	def initialize (params = {})		
+	def initialize (params = {})
 		@verbose=params.fetch(:verbose, false)
+		@data_dir=params.fetch(:data_dir, File.dirname(__FILE__)+'/../../logs/')
 		@http_timeout=params.fetch(:http_timeout, 5000)
 		@crawl_depth=params.fetch(:crawl_depth, 4)
 		@crawl_page_limit=params.fetch(:crawl_page_limit, 1000)
 		@max_parallel=params.fetch(:max_parallel, 40)
-		# Discovered data store		
+		# Discovered data store
 		@discovered_urls_by_crawler=Hash.new
 		@visited_urls_by_crawler=Hash.new
 		@crawl_start=Hash.new
 		@crawl_done=Hash.new
-		@log_file=File.dirname(__FILE__)+"../../logs/crawler.log"
+		Dir.mkdir(@data_dir) unless Dir.exist?(@data_dir)
+		@log_file=@data_dir + "crawler.log"
 	end
 
 	# Pre-crawl profiler, to be used for network profiling to maximum the crawler performance.
@@ -60,13 +62,13 @@ class Wmap::UrlCrawler
 			puts "Exception on method #{__method__} for #{host}: #{ee}" if @verbose
 			@http_timeout = Max_http_timeout
 		end
-	end	
-	
+	end
+
 	# A web crawler to crawl a known website and search for html links within the same root domain. For example,
     # by crawling 'http://www.yahoo.com/' it could discover 'http://login.yahoo.com/'
 	def crawl(url)
 		puts "Start web crawling on #{url}"
-		begin
+		#begin
 			result=Array.new
 			url=url.chomp.strip
 			result.push(url_2_site(url))
@@ -78,17 +80,17 @@ class Wmap::UrlCrawler
 			}
 			puts "Web crawling time-out on #{url}: #{status}" if @verbose
 			return result
-		rescue => ee
-			puts "Exception on method #{__method__} for URL #{url}: #{ee}" 
-			return result
-		end
+		#rescue => ee
+			#puts "Exception on method #{__method__} for URL #{url}: #{ee}"
+			#return result
+		#end
 	end
 	alias_method :query, :crawl
-	
+
     # The worker instance of crawler who perform the labour work
 	def crawl_worker(url0)
-		puts "Please be aware that it may take a while to crawl #{url0}, depending on the site's responsiveness and the amount of contents." 	
-		begin
+		puts "Please be aware that it may take a while to crawl #{url0}, depending on the site's responsiveness and the amount of contents."
+		#begin
 			# Input URL sanity check first
 			if is_url?(url0)
 				host=url_2_host(url0)
@@ -115,7 +117,7 @@ class Wmap::UrlCrawler
 					url = update_url_if_redirected(url, url_object)
 					url_body = read_url(url)
 					# Protection code - to avoid parsing failure on the empty or nil object
-					next if url_body.nil? or url_body.empty?					
+					next if url_body.nil? or url_body.empty?
 					url_stores[url]=true unless url_stores.key?(url)
 					@discovered_urls_by_crawler[url]=true unless @discovered_urls_by_crawler.key?(url)
 #					$discovered_urls[url]=true unless $discovered_urls.key?(url)
@@ -140,15 +142,15 @@ class Wmap::UrlCrawler
 			end
 			puts "Finish web crawling on: #{url0}"
 			log_info[2]="Finish working on: #{url0}"
-			wlog(log_info, @log_file)
+			wlog(log_info, "UrlCrawler", @log_file)
 			@crawl_done[url0]=true unless @crawl_done.key?(url0)
 			return url_stores
-		rescue => ee
-			puts "Exception on method #{__method__} for URL #{url0}: #{ee}" if @verbose
-			log_info[3]="Exception on #{url0}"
-			wlog(log_info,@log_file)
-			return url_stores
-		end
+		#rescue => ee
+			#puts "Exception on method #{__method__} for URL #{url0}: #{ee}" if @verbose
+			#log_info[3]="Exception on #{url0}"
+			#wlog(log_info,"UrlCrawler",@log_file)
+			#return url_stores
+		#end
 	end
 
 	# Fast crawling by utilizing fork manager parallel to spawn numbers of child processes at the same time
@@ -158,7 +160,7 @@ class Wmap::UrlCrawler
 			raise "Input error - expecting targets in an array format: #{targets}" unless targets.kind_of? Array
 			puts "Sanitize the URL seeds to eliminate the unnecessary duplication(s) ..." if @verbose
 			#puts "This could be awhile depending on the list size. Please be patient ..."
-			# 09/30/2013 Add additional logic to eliminate the duplicate target site(s) before the crawlers are invoked. 
+			# 09/30/2013 Add additional logic to eliminate the duplicate target site(s) before the crawlers are invoked.
 			targets -= ["", nil]
 			uniq_sites=Hash.new
 			targets.dup.map do |target|
@@ -175,13 +177,13 @@ class Wmap::UrlCrawler
 				end
 			end
 			puts "Sanitization done! " if @verbose
-			puts "Start the parallel engine on the normalized crawling list:\n #{targets} "	
+			puts "Start the parallel engine on the normalized crawling list:\n #{targets} "
 			puts "Maximum number of web crawling sessions allowed: #{num}" #if @verbose
 			raise "Error: target list is empty!" if targets.size < 1
 			Parallel.map(uniq_sites.values, :in_processes => num) { |target|
 				puts "Working on #{target} ..." if @verbose
 				crawl(target)
-			}.dup.each do |process| 
+			}.dup.each do |process|
 				puts "process.inspect: #{process}" if @verbose
 				urls=process
 				urls-=["",nil] unless urls.nil?
@@ -196,19 +198,19 @@ class Wmap::UrlCrawler
 						@discovered_urls_by_crawler[url]=true unless @discovered_urls_by_crawler.key?(url)
 						#$discovered_urls[url]=true unless $discovered_urls.key?(url)
 					end
-				end				
-			end	
+				end
+			end
 			#return sites
 			return @discovered_urls_by_crawler.keys
 		rescue Exception => ee
 			puts "Exception on method #{__method__}: #{ee}" if @verbose
 			return nil
-		end	
+		end
 	end
 	alias_method :crawls, :crawl_workers
-	
-	# Fast crawling method - build the target pool from the input file 
-	def crawl_workers_on_file (file)	
+
+	# Fast crawling method - build the target pool from the input file
+	def crawl_workers_on_file (file)
 		puts "Web crawl the list of targets from file: #{file}"
 		begin
 			targets=file_2_list(file)
@@ -216,14 +218,14 @@ class Wmap::UrlCrawler
 			return sites
 		rescue => ee
             puts "Exception on method #{__method__}: #{ee}" if @verbose
-            return nil			
+            return nil
 		end
 	end
 	alias_method :query_file, :crawl_workers_on_file
 	alias_method :crawl_file, :crawl_workers_on_file
-	
+
     # Wrapper for the OpenURI open method - create an open_uri object and return the reference upon success
-	def open_url(url)	
+	def open_url(url)
 		puts "Open url #{url} by creating an open_uri object. Return the reference upon success." if @verbose
 		#url_object = nil
         begin
@@ -241,9 +243,9 @@ class Wmap::UrlCrawler
         rescue => ee
             puts "Exception on method #{__method__} for #{url}: #{ee}" if @verbose
             return nil
-        end   
+        end
     end
-	
+
 	# Wrapper to use OpenURI method 'read' to return url body contents
 	def read_url(url)
 		puts "Wrapper to return the OpenURI object for url: #{url}" if @verbose
@@ -258,8 +260,8 @@ class Wmap::UrlCrawler
         end
 	end
 
-    # Return the destination url in case of url re-direct 
-	def update_url_if_redirected(url, url_object)	
+    # Return the destination url in case of url re-direct
+	def update_url_if_redirected(url, url_object)
 		#puts "Comparing the original URL with the return object base_uri. Return the one where the true content is found. " if @verbose
 		begin
 			if url != url_object.base_uri.to_s
@@ -273,7 +275,7 @@ class Wmap::UrlCrawler
     end
 
     # Wrapper for the Nokogiri DOM parser
-	def parse_html(html_body)	
+	def parse_html(html_body)
         #puts "Parsing the html content: #{html_body}. Return DOM " if @verbose
 		begin
             doc = Nokogiri::HTML(html_body)
@@ -287,9 +289,9 @@ class Wmap::UrlCrawler
 	end
 
     # Search 'current_url' and return found URLs under the same domain
-	def find_urls_on_page(doc, current_url)	
+	def find_urls_on_page(doc, current_url)
         #puts "Search and return URLs within the doc: #{doc}" if @verbose
-		begin 
+		begin
 			urls_list = []
 			# case 1 - search embedded HTML tag <a href='url'> for the url elements
 			links=doc.css('a')
@@ -314,7 +316,7 @@ class Wmap::UrlCrawler
 				unless link.nil?
 					new_url = make_absolute(current_url, link)
 					urls_list.push(new_url) unless new_url.nil?
-				end				
+				end
 			end
 			#puts "Found URLs under page #{current_url}:\n#{urls_list}" if @verbose
 			return urls_list.uniq-["",nil]
@@ -325,7 +327,7 @@ class Wmap::UrlCrawler
     end
 
 	# Method to print out discovery URL result
-	def print_discovered_urls_by_crawler		
+	def print_discovered_urls_by_crawler
 		puts "Print discovered url by the crawler. " if @verbose
 		begin
 			puts "\nSummary Report of Discovered URLs from the Crawler:"
@@ -338,12 +340,12 @@ class Wmap::UrlCrawler
             puts "Exception on method #{__method__}: #{ee}" if @verbose
             return nil
         end
-	end	
+	end
 	alias_method :print, :print_discovered_urls_by_crawler
 
 	# Method to save URL discovery  result
-	def save_discovered_urls (file)		
-		puts "Save discovered urls by the crawler to file: #{file} " 
+	def save_discovered_urls (file)
+		puts "Save discovered urls by the crawler to file: #{file} "
 		begin
 			list_2_file(@discovered_urls_by_crawler.keys, file)
 			puts "Done!"
@@ -351,11 +353,11 @@ class Wmap::UrlCrawler
             puts "Exception on method #{__method__}: #{ee}" if @verbose
             return nil
         end
-	end	
-	alias_method :save, :save_discovered_urls	
-	
+	end
+	alias_method :save, :save_discovered_urls
+
 	# Method to retrieve discovery site result
-	def get_discovered_sites_by_crawler		
+	def get_discovered_sites_by_crawler
 		puts "Print summary report of discovered sites. " if @verbose
 		begin
 			puts "\nSummary Report of Discovered Sites from the Crawler:"
@@ -372,8 +374,8 @@ class Wmap::UrlCrawler
 			puts "Exception on method #{__method__}: #{ee}" if @verbose
             return nil
         end
-	end	
+	end
 	alias_method :get_sites, :get_discovered_sites_by_crawler
-	
+
 	private :open_url, :read_url, :update_url_if_redirected, :parse_html, :find_urls_on_page
 end

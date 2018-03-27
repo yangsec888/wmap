@@ -4,7 +4,7 @@
 
 require "wmap"
 
-k=Wmap::DomainTracker.instance
+k=Wmap::DomainTracker.new
 #k.verbose=true
 f=File.open(ARGV[0],'r')
 f.each do |line|
@@ -13,6 +13,7 @@ f.each do |line|
 	root=k.get_domain_root(host)
 	unless k.domain_known?(root)
 		puts root
-	end	
+	end
 end
 f.close
+k=nil 

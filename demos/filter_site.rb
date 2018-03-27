@@ -7,7 +7,7 @@ require "wmap"
 @map=Hash.new
 
 def build_map (file)
-	k=Wmap::SiteTracker.instance
+	k=Wmap::SiteTracker.new
 	f=File.open(file,'r')
 	f.each do |line|
 		url=line.chomp.strip.downcase
@@ -15,7 +15,7 @@ def build_map (file)
 			@map[k.url_2_site(url)]=true
 		else
 			#puts url
-		end	
+		end
 	end
 	f.close
 	k=nil
@@ -23,7 +23,7 @@ end
 
 
 build_map(ARGV[0])
-s=Wmap::SiteTracker.instance
+s=Wmap::SiteTracker.new
 f=File.open(ARGV[1],'r')
 f.each do |line|
 	url=line.chomp.strip.downcase
@@ -38,4 +38,3 @@ f.each do |line|
 		puts "Invalid Internet URL"
 	end
 end
-

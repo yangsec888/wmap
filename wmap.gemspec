@@ -30,7 +30,7 @@ Gem::Specification.new do |s|
   s.version = info["version"]
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = info["author"]
-  s.homepage = info["linkedin"]
+  s.homepage = info["github"]
   s.licenses = ["MIT"]
   s.date = info["date"]
   s.description = "wmap is written to perform Internet web application / service discovery. The discovery results are designed to be automatically tracked by the software."

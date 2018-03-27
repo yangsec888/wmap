@@ -71,10 +71,6 @@
     <li><a class="include" href="Utils.html">Wmap::Utils</a>
   
   
-  
-    <li><span class="include">Singleton</span>
-  
-  
   </ul>
 </div>
 
@@ -257,12 +253,14 @@
             <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 22</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span> (<span class="ruby-identifier">params</span> = {})
         <span class="ruby-comment"># Initialize the instance variables</span>
-        <span class="ruby-ivar">@f_sites</span>=<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-keyword">__FILE__</span>)<span class="ruby-operator">+</span><span class="ruby-string">&#39;/../../data/sites&#39;</span>
-        <span class="ruby-ivar">@file_stores</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:sites_file</span>, <span class="ruby-ivar">@f_sites</span>)
+        <span class="ruby-ivar">@data_dir</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:data_dir</span>, <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-keyword">__FILE__</span>)<span class="ruby-operator">+</span><span class="ruby-string">&#39;/../../data/&#39;</span>)
+        <span class="ruby-ivar">@file_sites</span>=<span class="ruby-ivar">@data_dir</span><span class="ruby-operator">+</span><span class="ruby-string">&#39;sites&#39;</span>
+        <span class="ruby-ivar">@file_stores</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:sites_file</span>, <span class="ruby-ivar">@file_sites</span>)
         <span class="ruby-ivar">@verbose</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:verbose</span>, <span class="ruby-keyword">false</span>)
         <span class="ruby-ivar">@max_parallel</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:max_parallel</span>, <span class="ruby-value">30</span>)
         <span class="ruby-comment"># Hash table to hold the site store</span>
-        <span class="ruby-ivar">@known_sites</span>=<span class="ruby-identifier">load_site_stores_from_file</span>(<span class="ruby-ivar">@file_stores</span>)         
+        <span class="ruby-constant">File</span>.<span class="ruby-identifier">write</span>(<span class="ruby-ivar">@file_stores</span>, <span class="ruby-string">&quot;&quot;</span>) <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-ivar">@file_stores</span>)
+        <span class="ruby-ivar">@known_sites</span>=<span class="ruby-identifier">load_site_stores_from_file</span>(<span class="ruby-ivar">@file_stores</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -301,52 +299,53 @@
 
           
           <div class="method-source-code" id="add-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 102</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 104</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">add</span>(<span class="ruby-identifier">site</span>)
-        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Add entry to the site store: #{site}&quot;</span> 
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Add entry to the site store: #{site}&quot;</span>
         <span class="ruby-keyword">begin</span>
-                <span class="ruby-comment"># Preliminary sanity check </span>
-                <span class="ruby-identifier">site</span>=<span class="ruby-identifier">site</span>.<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">downcase</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">site</span>.<span class="ruby-identifier">nil?</span>                    
-                <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Site is already exist. Skip #{site}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">site_known?</span>(<span class="ruby-identifier">site</span>)     
+                <span class="ruby-comment"># Preliminary sanity check</span>
+                <span class="ruby-identifier">site</span>=<span class="ruby-identifier">site</span>.<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">downcase</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">site</span>.<span class="ruby-identifier">nil?</span>
+                <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Site is already exist. Skip #{site}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">site_known?</span>(<span class="ruby-identifier">site</span>)
                 <span class="ruby-identifier">site</span>=<span class="ruby-identifier">normalize_url</span>(<span class="ruby-identifier">site</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_url?</span>(<span class="ruby-identifier">site</span>)
                 <span class="ruby-identifier">site</span>=<span class="ruby-identifier">url_2_site</span>(<span class="ruby-identifier">site</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_url?</span>(<span class="ruby-identifier">site</span>)
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Site in standard format: #{site}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
                 <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Exception on method #{__method__}: invalid site format of #{site}. Expected format is: http://your_website_name/&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">is_site?</span>(<span class="ruby-identifier">site</span>)
-                <span class="ruby-identifier">trusted</span>=<span class="ruby-keyword">false</span>        
+                <span class="ruby-identifier">trusted</span>=<span class="ruby-keyword">false</span>
                 <span class="ruby-identifier">host</span>=<span class="ruby-identifier">url_2_host</span>(<span class="ruby-identifier">site</span>)
                 <span class="ruby-identifier">ip</span>=<span class="ruby-identifier">host_2_ip</span>(<span class="ruby-identifier">host</span>)
                 <span class="ruby-comment"># Additional logic to refresh deactivated site, 02/12/2014</span>
-                <span class="ruby-identifier">deact</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">SiteTracker</span><span class="ruby-operator">::</span><span class="ruby-constant">DeactivatedSite</span>.<span class="ruby-identifier">instance</span>
+                <span class="ruby-identifier">deact</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">SiteTracker</span><span class="ruby-operator">::</span><span class="ruby-constant">DeactivatedSite</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:data_dir=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@data_dir</span>)
                 <span class="ruby-comment"># only trust either the domain or IP we know</span>
                 <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_ip?</span>(<span class="ruby-identifier">host</span>)
-                        <span class="ruby-identifier">trusted</span>=<span class="ruby-constant">Wmap</span>.<span class="ruby-identifier">ip_trusted?</span>(<span class="ruby-identifier">ip</span>)
+                        <span class="ruby-identifier">trusted</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">CidrTracker</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:data_dir=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@data_dir</span>).<span class="ruby-identifier">ip_trusted?</span>(<span class="ruby-identifier">ip</span>)
                 <span class="ruby-keyword">else</span>
                         <span class="ruby-identifier">root</span>=<span class="ruby-identifier">get_domain_root</span>(<span class="ruby-identifier">host</span>)
                         <span class="ruby-keyword">if</span> <span class="ruby-identifier">root</span>.<span class="ruby-identifier">nil?</span>
                                 <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;Invalid web site format. Please check your record again.&quot;</span>
                         <span class="ruby-keyword">else</span>
-                                <span class="ruby-identifier">trusted</span>=<span class="ruby-constant">Wmap</span>.<span class="ruby-identifier">domain_known?</span>(<span class="ruby-identifier">root</span>)
+                                <span class="ruby-identifier">trusted</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">DomainTracker</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:data_dir=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@data_dir</span>).<span class="ruby-identifier">domain_known?</span>(<span class="ruby-identifier">root</span>)
                         <span class="ruby-keyword">end</span>
-                <span class="ruby-keyword">end</span>                  
+                <span class="ruby-keyword">end</span>
                 <span class="ruby-comment"># add record only if trusted</span>
                 <span class="ruby-keyword">if</span> <span class="ruby-identifier">trusted</span>
                         <span class="ruby-comment"># Add logic to check site status before adding it</span>
-                        <span class="ruby-identifier">checker</span>=<span class="ruby-constant">Wmap</span>.<span class="ruby-identifier">check</span>(<span class="ruby-identifier">site</span>)
+                        <span class="ruby-identifier">checker</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">UrlChecker</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:data_dir=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@data_dir</span>).<span class="ruby-identifier">check</span>(<span class="ruby-identifier">site</span>)
                         <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Site is currently down. Skip #{site}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">checker</span>.<span class="ruby-identifier">nil?</span>
                         <span class="ruby-comment"># Skip the http site if it&#39;s un-responsive; for the https we&#39;ll keep it because we&#39;re interested in analysing the SSL layer later</span>
                         <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_https?</span>(<span class="ruby-identifier">site</span>)
                                 <span class="ruby-comment"># do nothing</span>
                         <span class="ruby-keyword">else</span>
-                                <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Site is currently down. Skip #{site}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">checker</span>[<span class="ruby-string">&#39;code&#39;</span>]<span class="ruby-operator">==</span><span class="ruby-value">10000</span> 
+                                <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Site is currently down. Skip #{site}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">checker</span>[<span class="ruby-string">&#39;code&#39;</span>]<span class="ruby-operator">==</span><span class="ruby-value">10000</span>
                         <span class="ruby-keyword">end</span>
-                        <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Exception on add method - Fail to resolve the host-name: Host - #{host}, IP - #{ip}. Skip #{site}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">is_ip?</span>(<span class="ruby-identifier">ip</span>)                 
+                        <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Exception on add method - Fail to resolve the host-name: Host - #{host}, IP - #{ip}. Skip #{site}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">is_ip?</span>(<span class="ruby-identifier">ip</span>)
+                        <span class="ruby-identifier">my_tracker</span> = <span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">HostTracker</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:data_dir=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@data_dir</span>)
                         <span class="ruby-comment"># Update the local host table when necessary</span>
                         <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_ip?</span>(<span class="ruby-identifier">host</span>)
                                 <span class="ruby-comment"># Case #1: Trusted site contains IP</span>
-                                <span class="ruby-keyword">if</span> <span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">HostTracker</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">ip_known?</span>(<span class="ruby-identifier">host</span>)
+                                <span class="ruby-keyword">if</span> <span class="ruby-identifier">my_tracker</span>.<span class="ruby-identifier">ip_known?</span>(<span class="ruby-identifier">host</span>)
                                         <span class="ruby-comment"># Try local reverse DNS lookup first</span>
                                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Local hosts table lookup for IP: #{ip}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
-                                        <span class="ruby-identifier">host</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">HostTracker</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">local_ip_2_host</span>(<span class="ruby-identifier">host</span>)
+                                        <span class="ruby-identifier">host</span>=<span class="ruby-identifier">my_tracker</span>.<span class="ruby-identifier">local_ip_2_host</span>(<span class="ruby-identifier">host</span>)
                                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Host found from the local hosts table for #{ip}: #{host}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
                                         <span class="ruby-identifier">site</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp">/\d+\.\d+\.\d+\.\d+/</span>,<span class="ruby-identifier">host</span>)
                                 <span class="ruby-keyword">else</span>
@@ -354,19 +353,19 @@
                                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Reverse DNS lookup for IP: #{ip}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
                                         <span class="ruby-identifier">host1</span>=<span class="ruby-identifier">ip_2_host</span>(<span class="ruby-identifier">host</span>)
                                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;host1: #{host1}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
-                                        <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_fqdn?</span>(<span class="ruby-identifier">host1</span>) 
-                                                <span class="ruby-keyword">if</span> <span class="ruby-constant">Wmap</span>.<span class="ruby-identifier">domain_known?</span>(<span class="ruby-identifier">host1</span>)
-                                                        <span class="ruby-comment"># replace IP with host-name only if domain root is known </span>
+                                        <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_fqdn?</span>(<span class="ruby-identifier">host1</span>)
+                                                <span class="ruby-keyword">if</span> <span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">HostTracker</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:data_dir=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@data_dir</span>).<span class="ruby-identifier">domain_known?</span>(<span class="ruby-identifier">host1</span>)
+                                                        <span class="ruby-comment"># replace IP with host-name only if domain root is known</span>
                                                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Host found from the Internet reverse DNS lookup for #{ip}: #{host1}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
                                                         <span class="ruby-identifier">host</span>=<span class="ruby-identifier">host1</span>
                                                         <span class="ruby-identifier">site</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp">/\d+\.\d+\.\d+\.\d+/</span>,<span class="ruby-identifier">host</span>)
                                                 <span class="ruby-keyword">end</span>
                                         <span class="ruby-keyword">end</span>
                                 <span class="ruby-keyword">end</span>
-                                <span class="ruby-comment"># Adding site for Case #1                                  </span>
-                                <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Site already exist! Skip #{site}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@known_sites</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">site</span>)                                
+                                <span class="ruby-comment"># Adding site for Case #1</span>
+                                <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Site already exist! Skip #{site}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@known_sites</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">site</span>)
                                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Adding site: #{site}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
-                                <span class="ruby-ivar">@known_sites</span>[<span class="ruby-identifier">site</span>]=<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span> 
+                                <span class="ruby-ivar">@known_sites</span>[<span class="ruby-identifier">site</span>]=<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
                                 <span class="ruby-ivar">@known_sites</span>[<span class="ruby-identifier">site</span>]=<span class="ruby-identifier">checker</span>
                                 <span class="ruby-keyword">if</span> <span class="ruby-identifier">deact</span>.<span class="ruby-identifier">site_known?</span>(<span class="ruby-identifier">site</span>)
                                         <span class="ruby-identifier">deact</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">site</span>)
@@ -377,23 +376,23 @@
                                 <span class="ruby-comment"># Add logic to update the hosts table for case #1 variance</span>
                                 <span class="ruby-comment"># -  case that reverse DNS lookup successful</span>
                                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Update local hosts table for host: #{host}&quot;</span>
-                                        <span class="ruby-keyword">if</span> <span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">HostTracker</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">host_known?</span>(<span class="ruby-identifier">host</span>)
-                                                <span class="ruby-identifier">old_ip</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">HostTracker</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">local_host_2_ip</span>(<span class="ruby-identifier">host</span>)
+                                        <span class="ruby-keyword">if</span> <span class="ruby-identifier">my_tracker</span>.<span class="ruby-identifier">host_known?</span>(<span class="ruby-identifier">host</span>)
+                                                <span class="ruby-identifier">old_ip</span>=<span class="ruby-identifier">my_tracker</span>.<span class="ruby-identifier">local_host_2_ip</span>(<span class="ruby-identifier">host</span>)
                                                 <span class="ruby-keyword">if</span> <span class="ruby-identifier">old_ip</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">ip</span>
-                                                        <span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">HostTracker</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">refresh</span>(<span class="ruby-identifier">host</span>)
-                                                        <span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">HostTracker</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">save!</span>
+                                                        <span class="ruby-identifier">my_tracker</span>.<span class="ruby-identifier">efresh</span>(<span class="ruby-identifier">host</span>)
+                                                        <span class="ruby-identifier">my_tracker</span>.<span class="ruby-identifier">save!</span>
                                                 <span class="ruby-keyword">else</span>
                                                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Host resolve to the same IP #{ip} - no need to update the local host table.&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
                                                 <span class="ruby-keyword">end</span>
                                         <span class="ruby-keyword">else</span>
-                                                <span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">HostTracker</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">host</span>)
-                                                <span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">HostTracker</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">save!</span>
+                                                <span class="ruby-identifier">my_tracker</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">host</span>)
+                                                <span class="ruby-identifier">my_tracker</span>.<span class="ruby-identifier">save!</span>
                                         <span class="ruby-keyword">end</span>
-                                <span class="ruby-keyword">end</span>        
+                                <span class="ruby-keyword">end</span>
                         <span class="ruby-keyword">else</span>
                                 <span class="ruby-comment"># Case #2: Trusted site contains valid FQDN</span>
                                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Ading site: #{site}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
-                                <span class="ruby-ivar">@known_sites</span>[<span class="ruby-identifier">site</span>]=<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span> 
+                                <span class="ruby-ivar">@known_sites</span>[<span class="ruby-identifier">site</span>]=<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
                                 <span class="ruby-ivar">@known_sites</span>[<span class="ruby-identifier">site</span>]=<span class="ruby-identifier">checker</span>
                                 <span class="ruby-keyword">if</span> <span class="ruby-identifier">deact</span>.<span class="ruby-identifier">site_known?</span>(<span class="ruby-identifier">site</span>)
                                         <span class="ruby-identifier">deact</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">site</span>)
@@ -402,28 +401,30 @@
                                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Site entry loaded: #{checker}&quot;</span>
                                 <span class="ruby-comment"># Add logic to update the hosts table for case #2</span>
                                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Update local hosts table for host: #{host}&quot;</span>
-                                <span class="ruby-keyword">if</span> <span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">HostTracker</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">host_known?</span>(<span class="ruby-identifier">host</span>)
-                                        <span class="ruby-identifier">old_ip</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">HostTracker</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">local_host_2_ip</span>(<span class="ruby-identifier">host</span>)
+                                <span class="ruby-keyword">if</span> <span class="ruby-identifier">my_tracker</span>.<span class="ruby-identifier">host_known?</span>(<span class="ruby-identifier">host</span>)
+                                        <span class="ruby-identifier">old_ip</span>=<span class="ruby-identifier">my_tracker</span>.<span class="ruby-identifier">local_host_2_ip</span>(<span class="ruby-identifier">host</span>)
                                         <span class="ruby-keyword">if</span> <span class="ruby-identifier">old_ip</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">ip</span>
-                                                <span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">HostTracker</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">refresh</span>(<span class="ruby-identifier">host</span>)
-                                                <span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">HostTracker</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">save!</span>
+                                                <span class="ruby-identifier">my_tracker</span>.<span class="ruby-identifier">efresh</span>(<span class="ruby-identifier">host</span>)
+                                                <span class="ruby-identifier">my_tracker</span>.<span class="ruby-identifier">save!</span>
                                         <span class="ruby-keyword">else</span>
                                                 <span class="ruby-comment"># Skip - no need to update the local hosts table</span>
                                         <span class="ruby-keyword">end</span>
                                 <span class="ruby-keyword">else</span>
-                                        <span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">HostTracker</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">host</span>)
-                                        <span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">HostTracker</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">save!</span>
+                                        <span class="ruby-identifier">my_tracker</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">host</span>)
+                                        <span class="ruby-identifier">my_tracker</span>.<span class="ruby-identifier">save!</span>
                                 <span class="ruby-keyword">end</span>
                         <span class="ruby-keyword">end</span>
                         <span class="ruby-identifier">deact</span>=<span class="ruby-keyword">nil</span>
+                        <span class="ruby-identifier">my_tracker</span>=<span class="ruby-keyword">nil</span>
                         <span class="ruby-keyword">return</span> <span class="ruby-identifier">checker</span>
                 <span class="ruby-keyword">else</span>
                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Problem found: untrusted Internet domain or IP. Skip #{site}&quot;</span>
                         <span class="ruby-identifier">deact</span>=<span class="ruby-keyword">nil</span>
+                        <span class="ruby-identifier">my_tracker</span>=<span class="ruby-keyword">nil</span>
                         <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
-                <span class="ruby-keyword">end</span>                  
-        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
-                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> 
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span>
                 <span class="ruby-identifier">deact</span>=<span class="ruby-keyword">nil</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
         <span class="ruby-keyword">end</span>
@@ -485,16 +486,16 @@
 
           
           <div class="method-source-code" id="bulk_add-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 245</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 250</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">bulk_add</span>(<span class="ruby-identifier">list</span>,<span class="ruby-identifier">num</span>=<span class="ruby-ivar">@max_parallel</span>)
-        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Add entries to the local site store from list:\n #{list}&quot;</span> 
-        <span class="ruby-keyword">begin</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Add entries to the local site store from list:\n #{list}&quot;</span>
+        <span class="ruby-comment">#begin</span>
                 <span class="ruby-identifier">results</span>=<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
                 <span class="ruby-keyword">if</span> <span class="ruby-identifier">list</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Start parallel adding on the sites:\n #{list}&quot;</span>
                         <span class="ruby-constant">Parallel</span>.<span class="ruby-identifier">map</span>(<span class="ruby-identifier">list</span>, <span class="ruby-value">:in_processes</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">num</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">target</span><span class="ruby-operator">|</span>
                                 <span class="ruby-identifier">add</span>(<span class="ruby-identifier">target</span>)
-                        }.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">process</span><span class="ruby-operator">|</span>                                 
+                        }.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">process</span><span class="ruby-operator">|</span>
                                 <span class="ruby-keyword">if</span> <span class="ruby-identifier">process</span>.<span class="ruby-identifier">nil?</span>
                                         <span class="ruby-keyword">next</span>
                                 <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">process</span>.<span class="ruby-identifier">empty?</span>
@@ -502,22 +503,22 @@
                                 <span class="ruby-keyword">else</span>
                                         <span class="ruby-identifier">results</span>[<span class="ruby-identifier">process</span>[<span class="ruby-string">&#39;url&#39;</span>]]=<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
                                         <span class="ruby-identifier">results</span>[<span class="ruby-identifier">process</span>[<span class="ruby-string">&#39;url&#39;</span>]]=<span class="ruby-identifier">process</span>
-                                <span class="ruby-keyword">end</span>                                
+                                <span class="ruby-keyword">end</span>
                         <span class="ruby-keyword">end</span>
                         <span class="ruby-ivar">@known_sites</span>.<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">results</span>)
                 <span class="ruby-keyword">else</span>
                         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Error: no entry is added. Please check your list and try again.&quot;</span>
                 <span class="ruby-keyword">end</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Done adding site entries.&quot;</span>
-                <span class="ruby-keyword">if</span> <span class="ruby-identifier">results</span>.<span class="ruby-identifier">size</span><span class="ruby-operator">&gt;</span><span class="ruby-value">0</span> 
-                        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;New entries added: #{results}&quot;</span> 
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">results</span>.<span class="ruby-identifier">size</span><span class="ruby-operator">&gt;</span><span class="ruby-value">0</span>
+                        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;New entries added: #{results}&quot;</span>
                 <span class="ruby-keyword">else</span>
                         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;No new entry added. &quot;</span>
                 <span class="ruby-keyword">end</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-identifier">results</span>
-        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
-                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
-        <span class="ruby-keyword">end</span>
+        <span class="ruby-comment">#rescue =&gt; ee</span>
+                <span class="ruby-comment">#puts &quot;Exception on method #{__method__}: #{ee}&quot; if @verbose</span>
+        <span class="ruby-comment">#end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -552,16 +553,16 @@
 
           
           <div class="method-source-code" id="bulk_delete-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 323</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 328</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">bulk_delete</span>(<span class="ruby-identifier">list</span>)
         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Delete entries to the local site store from list:\n #{list}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">begin</span>
-                <span class="ruby-identifier">sites</span>=<span class="ruby-identifier">list</span>                   
+                <span class="ruby-identifier">sites</span>=<span class="ruby-identifier">list</span>
                 <span class="ruby-identifier">changes</span>=<span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
                 <span class="ruby-keyword">if</span> <span class="ruby-identifier">sites</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
-                        <span class="ruby-identifier">sites</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> 
+                        <span class="ruby-identifier">sites</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span>
                                 <span class="ruby-identifier">x</span>=<span class="ruby-identifier">url_2_site</span>(<span class="ruby-identifier">x</span>)
-                                <span class="ruby-identifier">site</span>=<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">x</span>) 
+                                <span class="ruby-identifier">site</span>=<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">x</span>)
                                 <span class="ruby-identifier">changes</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">site</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">site</span>.<span class="ruby-identifier">nil?</span>
                         <span class="ruby-keyword">end</span>
                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Done deleting sites from the list:\n #{list}&quot;</span>
@@ -569,7 +570,7 @@
                 <span class="ruby-keyword">else</span>
                         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Error: no entry is loaded. Please check your list and try again.&quot;</span>
                 <span class="ruby-keyword">end</span>
-        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
@@ -606,7 +607,7 @@
 
           
           <div class="method-source-code" id="bulk_refresh-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 397</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 402</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">bulk_refresh</span>(<span class="ruby-identifier">list</span>,<span class="ruby-identifier">num</span>=<span class="ruby-ivar">@max_parallel</span>)
         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Refresh entries in the site store from list:\n #{list}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">begin</span>
@@ -615,7 +616,7 @@
                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Start parallel refreshing on the sites:\n #{list}&quot;</span>
                         <span class="ruby-constant">Parallel</span>.<span class="ruby-identifier">map</span>(<span class="ruby-identifier">list</span>, <span class="ruby-value">:in_processes</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">num</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">target</span><span class="ruby-operator">|</span>
                                 <span class="ruby-identifier">refresh</span>(<span class="ruby-identifier">target</span>)
-                        }.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">process</span><span class="ruby-operator">|</span>                                 
+                        }.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">process</span><span class="ruby-operator">|</span>
                                 <span class="ruby-keyword">if</span> <span class="ruby-identifier">process</span>.<span class="ruby-identifier">nil?</span>
                                         <span class="ruby-keyword">next</span>
                                 <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">process</span>.<span class="ruby-identifier">empty?</span>
@@ -623,7 +624,7 @@
                                 <span class="ruby-keyword">else</span>
                                         <span class="ruby-identifier">results</span>[<span class="ruby-identifier">process</span>[<span class="ruby-string">&#39;url&#39;</span>]]=<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
                                         <span class="ruby-identifier">results</span>[<span class="ruby-identifier">process</span>[<span class="ruby-string">&#39;url&#39;</span>]]=<span class="ruby-identifier">process</span>
-                                <span class="ruby-keyword">end</span>                                
+                                <span class="ruby-keyword">end</span>
                         <span class="ruby-keyword">end</span>
                         <span class="ruby-comment"># Clean up old entries, by Y.L. 03/30/2015</span>
                         <span class="ruby-identifier">list</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@known_sites</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">x</span>)}
@@ -634,7 +635,7 @@
                         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Error: no entry is loaded. Please check your list and try again.&quot;</span>
                 <span class="ruby-keyword">end</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-identifier">results</span>
-        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
@@ -699,14 +700,14 @@
 
           
           <div class="method-source-code" id="count-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 92</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 94</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">count</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Counting number of entries in the site store table ...&quot;</span>
         <span class="ruby-keyword">begin</span>
-                <span class="ruby-keyword">return</span> <span class="ruby-ivar">@known_sites</span>.<span class="ruby-identifier">size</span>     
+                <span class="ruby-keyword">return</span> <span class="ruby-ivar">@known_sites</span>.<span class="ruby-identifier">size</span>
         <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
-                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> 
-        <span class="ruby-keyword">end</span>           
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span>
+        <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -765,12 +766,12 @@
 
           
           <div class="method-source-code" id="delete-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 281</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 286</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">delete</span>(<span class="ruby-identifier">site</span>)
         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Remove entry from the site store: #{site} &quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-comment"># Additional logic to deactivate the site properly, by moving it to the DeactivatedSite list, 02/07/2014</span>
-                <span class="ruby-identifier">deact</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">SiteTracker</span><span class="ruby-operator">::</span><span class="ruby-constant">DeactivatedSite</span>.<span class="ruby-identifier">instance</span>
+                <span class="ruby-identifier">deact</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">SiteTracker</span><span class="ruby-operator">::</span><span class="ruby-constant">DeactivatedSite</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:data_dir=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@data_dir</span>)
                 <span class="ruby-identifier">site</span>=<span class="ruby-identifier">site</span>.<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">downcase</span>
                 <span class="ruby-identifier">site</span>=<span class="ruby-identifier">url_2_site</span>(<span class="ruby-identifier">site</span>)
                 <span class="ruby-keyword">if</span> <span class="ruby-ivar">@known_sites</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">site</span>)
@@ -785,11 +786,11 @@
                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Entry not fund. Skip #{site}&quot;</span>
                         <span class="ruby-identifier">deact</span>=<span class="ruby-keyword">nil</span>
                         <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
-                <span class="ruby-keyword">end</span>                   
-        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
                 <span class="ruby-identifier">deact</span>=<span class="ruby-keyword">nil</span>
-        <span class="ruby-keyword">end</span>           
+        <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -908,17 +909,17 @@
 
           
           <div class="method-source-code" id="file_add-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 230</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 235</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">file_add</span>(<span class="ruby-identifier">file</span>)
-        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Add entries to the local site store from file: #{file}&quot;</span> 
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Add entries to the local site store from file: #{file}&quot;</span>
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;File non-exist. Please check your file path and name again: #{file}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">file</span>)
                 <span class="ruby-identifier">changes</span>=<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
-                <span class="ruby-identifier">sites</span>=<span class="ruby-identifier">file_2_list</span>(<span class="ruby-identifier">file</span>)                      
+                <span class="ruby-identifier">sites</span>=<span class="ruby-identifier">file_2_list</span>(<span class="ruby-identifier">file</span>)
                 <span class="ruby-identifier">changes</span>=<span class="ruby-identifier">bulk_add</span>(<span class="ruby-identifier">sites</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">sites</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">sites</span>.<span class="ruby-identifier">empty?</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Done loading file #{file}. &quot;</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-identifier">changes</span>
-        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span>
         <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
@@ -979,15 +980,15 @@
 
           
           <div class="method-source-code" id="file_delete-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 309</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 314</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">file_delete</span>(<span class="ruby-identifier">file</span>)
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Delete entries to the local site store from file: #{file}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
                 <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;File non-exist. Please check your file path and name again: #{file}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">file</span>)
-                <span class="ruby-identifier">sites</span>=<span class="ruby-identifier">file_2_list</span>(<span class="ruby-identifier">file</span>)                      
+                <span class="ruby-identifier">sites</span>=<span class="ruby-identifier">file_2_list</span>(<span class="ruby-identifier">file</span>)
                 <span class="ruby-identifier">changes</span>=<span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
                 <span class="ruby-identifier">changes</span>=<span class="ruby-identifier">bulk_delete</span>(<span class="ruby-identifier">sites</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">sites</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">sites</span>.<span class="ruby-identifier">empty?</span>
-        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method file_delete: #{ee} for file: #{file}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1024,15 +1025,15 @@
 
           
           <div class="method-source-code" id="file_refresh-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 367</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 372</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">file_refresh</span>(<span class="ruby-identifier">file</span>)
         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Refresh entries in the site store from file: #{file}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-identifier">changes</span>=<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
-                <span class="ruby-identifier">sites</span>=<span class="ruby-identifier">file_2_list</span>(<span class="ruby-identifier">file</span>)                      
+                <span class="ruby-identifier">sites</span>=<span class="ruby-identifier">file_2_list</span>(<span class="ruby-identifier">file</span>)
                 <span class="ruby-identifier">changes</span>=<span class="ruby-identifier">bulk_refresh</span>(<span class="ruby-identifier">sites</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">sites</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">sites</span>.<span class="ruby-identifier">empty?</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-identifier">changes</span>
-        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee} for file: #{file}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1093,7 +1094,7 @@
 
           
           <div class="method-source-code" id="get_ext_sites-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 511</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 516</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">get_ext_sites</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;getter to retrieve all the external hosted sites. &quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">begin</span>
@@ -1171,7 +1172,7 @@
 
           
           <div class="method-source-code" id="get_int_sites-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 530</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 535</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">get_int_sites</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;getter to retrieve all the internal hosted sites.&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">begin</span>
@@ -1221,7 +1222,7 @@
 
           
           <div class="method-source-code" id="get_ip_sites-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 549</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 554</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">get_ip_sites</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Getter to retrieve sites contain an IP instead of a host-name .&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">begin</span>
@@ -1269,12 +1270,12 @@ format</p>
 
           
           <div class="method-source-code" id="get_prim_uniq_sites-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 827</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 836</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">get_prim_uniq_sites</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Retrieve and prime unique sites in the site store. &quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">begin</span>
-                <span class="ruby-identifier">host_tracker</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">HostTracker</span>.<span class="ruby-identifier">instance</span>
-                <span class="ruby-identifier">primary_host_tracker</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">HostTracker</span><span class="ruby-operator">::</span><span class="ruby-constant">PrimaryHost</span>.<span class="ruby-identifier">instance</span>
+                <span class="ruby-identifier">host_tracker</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">HostTracker</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:data_dir=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@data_dir</span>)
+                <span class="ruby-identifier">primary_host_tracker</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">HostTracker</span><span class="ruby-operator">::</span><span class="ruby-constant">PrimaryHost</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:data_dir=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@data_dir</span>)
                 <span class="ruby-comment"># Step 1. Retrieve the unique site list first</span>
                 <span class="ruby-identifier">sites</span>=<span class="ruby-identifier">get_uniq_sites</span>
                 <span class="ruby-identifier">prim_uniq_sites</span>=<span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
@@ -1282,7 +1283,7 @@ format</p>
                 <span class="ruby-identifier">sites</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">site</span><span class="ruby-operator">|</span>
                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Work on priming unique site: #{site}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
                         <span class="ruby-identifier">host</span>=<span class="ruby-identifier">url_2_host</span>(<span class="ruby-identifier">site</span>)
-                        <span class="ruby-comment"># case#1, for the IP only site, do nothing (presuming &#39;refresh_ip_sites&#39; or &#39;refresh_all&#39; method already take care of the potential discrepancy here). </span>
+                        <span class="ruby-comment"># case#1, for the IP only site, do nothing (presuming &#39;refresh_ip_sites&#39; or &#39;refresh_all&#39; method already take care of the potential discrepancy here).</span>
                         <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_ip?</span>(<span class="ruby-identifier">host</span>)
                                 <span class="ruby-identifier">prim_uniq_sites</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">site</span>)
                                 <span class="ruby-keyword">next</span>
@@ -1298,20 +1299,20 @@ format</p>
                         <span class="ruby-keyword">if</span> <span class="ruby-identifier">host_tracker</span>.<span class="ruby-identifier">alias</span>[<span class="ruby-identifier">ip</span>] <span class="ruby-operator">==</span> <span class="ruby-keyword">nil</span>
                                 <span class="ruby-identifier">prim_uniq_sites</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">site</span>)
                                 <span class="ruby-keyword">next</span>
-                        <span class="ruby-keyword">end</span>                 
+                        <span class="ruby-keyword">end</span>
                         <span class="ruby-comment"># case#4, for the site has a duplicate IP with others, we try to determine which one is the primary site</span>
                         <span class="ruby-comment"># raise &quot;Error: inconsistency detected on record: #{site}. Please run the following shell command to refresh it first: \n\srefresh #{site}&quot; if tracker1.alias[ip].nil?</span>
-                        <span class="ruby-keyword">if</span> ( <span class="ruby-identifier">primary_host_tracker</span>.<span class="ruby-identifier">known_hosts</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">ip</span>) <span class="ruby-keyword">and</span> (<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">HostTracker</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">alias</span>[<span class="ruby-identifier">ip</span>] <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>) )     
+                        <span class="ruby-keyword">if</span> ( <span class="ruby-identifier">primary_host_tracker</span>.<span class="ruby-identifier">known_hosts</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">ip</span>) <span class="ruby-keyword">and</span> (<span class="ruby-identifier">host_tracker</span>.<span class="ruby-identifier">alias</span>[<span class="ruby-identifier">ip</span>] <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>) )
                                 <span class="ruby-identifier">new_host</span>=<span class="ruby-identifier">primary_host_tracker</span>.<span class="ruby-identifier">prime</span>(<span class="ruby-identifier">host</span>)
                                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Host: #{host}, New host:#{new_host}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
                                 <span class="ruby-keyword">unless</span> <span class="ruby-identifier">host</span><span class="ruby-operator">==</span><span class="ruby-identifier">new_host</span>
-                                        <span class="ruby-identifier">new_site</span>=<span class="ruby-identifier">site</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-identifier">host</span>,<span class="ruby-identifier">new_host</span>) 
+                                        <span class="ruby-identifier">new_site</span>=<span class="ruby-identifier">site</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-identifier">host</span>,<span class="ruby-identifier">new_host</span>)
                                         <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Site not found in the site tracking data repository: #{new_site}. You may need to add it into the site store first. Execute the following shell command before trying again: \n\twadd #{new_site}\n&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@known_sites</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">new_site</span>)
                                         <span class="ruby-identifier">new_ip</span>=<span class="ruby-ivar">@known_sites</span>[<span class="ruby-identifier">new_site</span>][<span class="ruby-string">&#39;ip&#39;</span>]
                                         <span class="ruby-keyword">if</span> <span class="ruby-identifier">new_ip</span><span class="ruby-operator">==</span><span class="ruby-identifier">ip</span>             <span class="ruby-comment"># consistency check</span>
-                                                <span class="ruby-identifier">site</span>=<span class="ruby-identifier">new_site</span> 
+                                                <span class="ruby-identifier">site</span>=<span class="ruby-identifier">new_site</span>
                                         <span class="ruby-keyword">else</span>
-                                                <span class="ruby-comment"># TBD - case of multiple IPs for A DNS record </span>
+                                                <span class="ruby-comment"># TBD - case of multiple IPs for A DNS record</span>
                                                 <span class="ruby-comment">#raise &quot;Inconsistency found on prime host entrance: #{new_ip}, #{ip}; #{new_site}, #{site}. Please refresh your entries by running the following shell command: \n\s refresh #{new_site}&quot;</span>
                                         <span class="ruby-keyword">end</span>
                                 <span class="ruby-keyword">end</span>
@@ -1386,7 +1387,7 @@ format</p>
 
           
           <div class="method-source-code" id="get_redirection_url-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 650</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 657</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">get_redirection_url</span> (<span class="ruby-identifier">site</span>)
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;getter to retrieve the redirection URL from the site store.&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">begin</span>
@@ -1431,7 +1432,7 @@ format</p>
 
           
           <div class="method-source-code" id="get_redirection_urls-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 632</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 639</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">get_redirection_urls</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;getter to retrieve all the redirection URLs from the site store.&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">begin</span>
@@ -1477,13 +1478,13 @@ format</p>
 
           
           <div class="method-source-code" id="get_ssl_sites-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 615</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 622</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">get_ssl_sites</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;getter to retrieve https sites from the site store.&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-identifier">sites</span>=<span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
                 <span class="ruby-ivar">@known_sites</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span>
-                        <span class="ruby-identifier">key</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/https/i</span> 
+                        <span class="ruby-identifier">key</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/https/i</span>
                         <span class="ruby-identifier">sites</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">key</span>)
                 <span class="ruby-keyword">end</span>
                 <span class="ruby-identifier">sites</span>.<span class="ruby-identifier">sort!</span>
@@ -1522,19 +1523,20 @@ format</p>
 
           
           <div class="method-source-code" id="get_uniq_sites-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 568</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 573</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">get_uniq_sites</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Getter to retrieve unique sites containing unique IP:PORT key identifier.&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-comment">#primary_host_tracker=Wmap::HostTracker::PrimaryHost.new</span>
                 <span class="ruby-identifier">sites</span>=<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
                 <span class="ruby-comment">#uniqueness=Hash.new</span>
+                <span class="ruby-identifier">my_tracker</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">HostTracker</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:data_dir=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@data_dir</span>)
                 <span class="ruby-ivar">@known_sites</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span>
                         <span class="ruby-identifier">port</span>=<span class="ruby-identifier">url_2_port</span>(<span class="ruby-identifier">key</span>).<span class="ruby-identifier">to_s</span>
                         <span class="ruby-identifier">host</span>=<span class="ruby-identifier">url_2_host</span>(<span class="ruby-identifier">key</span>)
                         <span class="ruby-identifier">md5</span>=<span class="ruby-ivar">@known_sites</span>[<span class="ruby-identifier">key</span>][<span class="ruby-string">&#39;md5&#39;</span>]
                         <span class="ruby-identifier">code</span>=<span class="ruby-ivar">@known_sites</span>[<span class="ruby-identifier">key</span>][<span class="ruby-string">&#39;code&#39;</span>]
-                        <span class="ruby-identifier">ip</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">HostTracker</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">local_host_2_ip</span>(<span class="ruby-identifier">host</span>)
+                        <span class="ruby-identifier">ip</span>=<span class="ruby-identifier">my_trakcer</span>.<span class="ruby-identifier">local_host_2_ip</span>(<span class="ruby-identifier">host</span>)
                         <span class="ruby-identifier">ip</span>=<span class="ruby-identifier">host_2_ip</span>(<span class="ruby-identifier">host</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">ip</span>.<span class="ruby-identifier">nil?</span>
                         <span class="ruby-comment"># filtering out &#39;un-reachable&#39; sites</span>
                         <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> (<span class="ruby-identifier">code</span> <span class="ruby-operator">==</span> <span class="ruby-value">10000</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">code</span> <span class="ruby-operator">==</span> <span class="ruby-value">20000</span>)
@@ -1557,10 +1559,11 @@ format</p>
                                                 <span class="ruby-identifier">sites</span>[<span class="ruby-identifier">id</span>]=<span class="ruby-identifier">key</span>
                                         <span class="ruby-comment"># uniqueness[md5]=true</span>
                                         <span class="ruby-comment">#end</span>
-                                <span class="ruby-comment">#end </span>
+                                <span class="ruby-comment">#end</span>
                         <span class="ruby-keyword">end</span>
                 <span class="ruby-keyword">end</span>
                 <span class="ruby-comment">#primary_host_tracker=nil</span>
+                <span class="ruby-identifier">my_tracker</span>=<span class="ruby-keyword">nil</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-identifier">sites</span>.<span class="ruby-identifier">values</span>
         <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
@@ -1628,7 +1631,7 @@ format</p>
 
           
           <div class="method-source-code" id="load_site_stores_from_file-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 33</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 35</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">load_site_stores_from_file</span> (<span class="ruby-identifier">file</span>)
         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Loading the site store data repository from file: #{file} &quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">begin</span>
@@ -1638,7 +1641,7 @@ format</p>
                         <span class="ruby-identifier">line</span>=<span class="ruby-identifier">line</span>.<span class="ruby-identifier">chomp</span>.<span class="ruby-identifier">strip</span>
                         <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">nil?</span>
                         <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">empty?</span>
-                        <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">line</span> <span class="ruby-operator">=~</span> <span class="ruby-node">/^\s*#/</span> 
+                        <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">line</span> <span class="ruby-operator">=~</span> <span class="ruby-node">/^\s*#/</span>
                         <span class="ruby-identifier">entry</span>=<span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp">%r{\t+|\,}</span>)
                         <span class="ruby-identifier">site</span>=<span class="ruby-identifier">entry</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">downcase</span>
                         <span class="ruby-identifier">ip</span>=<span class="ruby-identifier">entry</span>[<span class="ruby-value">1</span>]
@@ -1658,12 +1661,12 @@ format</p>
                         <span class="ruby-identifier">known_sites</span>[<span class="ruby-identifier">site</span>][<span class="ruby-string">&#39;code&#39;</span>]=<span class="ruby-identifier">res</span>
                         <span class="ruby-identifier">known_sites</span>[<span class="ruby-identifier">site</span>][<span class="ruby-string">&#39;md5&#39;</span>]=<span class="ruby-identifier">fp</span>
                         <span class="ruby-identifier">known_sites</span>[<span class="ruby-identifier">site</span>][<span class="ruby-string">&#39;redirection&#39;</span>]=<span class="ruby-identifier">loc</span>
-                        <span class="ruby-identifier">known_sites</span>[<span class="ruby-identifier">site</span>][<span class="ruby-string">&#39;timestamp&#39;</span>]=<span class="ruby-identifier">timestamp</span>                            
+                        <span class="ruby-identifier">known_sites</span>[<span class="ruby-identifier">site</span>][<span class="ruby-string">&#39;timestamp&#39;</span>]=<span class="ruby-identifier">timestamp</span>
                 <span class="ruby-keyword">end</span>
                 <span class="ruby-identifier">f</span>.<span class="ruby-identifier">close</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Successfully loading file: #{file}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-identifier">known_sites</span>
-        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__} for file #{file}: #{ee}&quot;</span>
         <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1752,14 +1755,14 @@ format</p>
 
           
           <div class="method-source-code" id="print_all_sites-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 741</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 750</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">print_all_sites</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;\nSummary Report of the site store:&quot;</span>
         <span class="ruby-identifier">sites</span>=<span class="ruby-ivar">@known_sites</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sort</span>
         <span class="ruby-identifier">sites</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">site</span><span class="ruby-operator">|</span>
-                <span class="ruby-identifier">puts</span> <span class="ruby-identifier">site</span>            
+                <span class="ruby-identifier">puts</span> <span class="ruby-identifier">site</span>
         <span class="ruby-keyword">end</span>
-        
+
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;End of the summary&quot;</span>
         <span class="ruby-comment">#return sites</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1824,7 +1827,7 @@ format</p>
 
           
           <div class="method-source-code" id="print_ext_sites-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 885</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 894</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">print_ext_sites</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;\nSummary Report of the External Hosted Site&quot;</span>
         <span class="ruby-identifier">sites</span>=<span class="ruby-identifier">get_ext_sites</span>
@@ -1894,7 +1897,7 @@ format</p>
 
           
           <div class="method-source-code" id="print_int_sites-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 896</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 905</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">print_int_sites</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;\nSummary Report of the Internal Hosted Site&quot;</span>
         <span class="ruby-identifier">sites</span>=<span class="ruby-identifier">get_int_sites</span>
@@ -1936,9 +1939,9 @@ format</p>
 
           
           <div class="method-source-code" id="print_ip_sites-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 711</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 720</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">print_ip_sites</span>
-        <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Print sites contain an IP instead of a host-name.&quot;</span> 
+        <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Print sites contain an IP instead of a host-name.&quot;</span>
         <span class="ruby-identifier">sites</span>=<span class="ruby-identifier">get_ip_sites</span>
         <span class="ruby-identifier">sites</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">puts</span> <span class="ruby-identifier">x</span> }
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;End of report. &quot;</span>
@@ -1972,7 +1975,7 @@ format</p>
 
           
           <div class="method-source-code" id="print_site-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 719</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 728</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">print_site</span>(<span class="ruby-identifier">site</span>)
         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Site Information Report for: #{site}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">begin</span>
@@ -2024,7 +2027,7 @@ format</p>
 
           
           <div class="method-source-code" id="print_ssl_sites-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 907</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 916</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">print_ssl_sites</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;\nSummary Report of the HTTPS Sites from the Site Store&quot;</span>
         <span class="ruby-identifier">sites</span>=<span class="ruby-identifier">get_ssl_sites</span>
@@ -2062,13 +2065,13 @@ format</p>
 
           
           <div class="method-source-code" id="print_uniq_sites-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 917</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 926</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">print_uniq_sites</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Summary Report for the Unique sites:&quot;</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Website,Primary IP,Port,Hosting Status,Server,Response Code,Site MD5 Finger-print,Site Redirection,Timestamp&quot;</span>
         <span class="ruby-identifier">sites</span>=<span class="ruby-identifier">get_uniq_sites</span>
         <span class="ruby-identifier">sites</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">site</span><span class="ruby-operator">|</span>
-                <span class="ruby-identifier">print_site</span>(<span class="ruby-identifier">site</span>)             
+                <span class="ruby-identifier">print_site</span>(<span class="ruby-identifier">site</span>)
         <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -2100,9 +2103,9 @@ format</p>
 
           
           <div class="method-source-code" id="refresh-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 346</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 351</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">refresh</span>(<span class="ruby-identifier">site</span>)
-        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Refresh the local site store for site: #{site} &quot;</span> 
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Refresh the local site store for site: #{site} &quot;</span>
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Invalid site: #{site}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">site</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">site</span>.<span class="ruby-identifier">empty?</span>
                 <span class="ruby-identifier">site</span>=<span class="ruby-identifier">site</span>.<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">downcase</span>
@@ -2115,10 +2118,10 @@ format</p>
                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Error entry non exist: #{site}&quot;</span>
                 <span class="ruby-keyword">end</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
-        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
-        <span class="ruby-keyword">end</span>           
+        <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -2149,18 +2152,18 @@ format</p>
 
           
           <div class="method-source-code" id="refresh_all-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 432</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 437</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">refresh_all</span>
-        <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Refresh all the entries within the local site store ... &quot;</span> 
+        <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Refresh all the entries within the local site store ... &quot;</span>
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-identifier">changes</span>=<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
                 <span class="ruby-identifier">changes</span>=<span class="ruby-identifier">bulk_refresh</span>(<span class="ruby-ivar">@known_sites</span>.<span class="ruby-identifier">keys</span>)
                 <span class="ruby-ivar">@known_sites</span>.<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">changes</span>)
                 <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Done refresh all entries.&quot;</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-identifier">changes</span>
-        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
-        <span class="ruby-keyword">end</span>           
+        <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -2192,9 +2195,9 @@ hostname</p>
 
           
           <div class="method-source-code" id="refresh_ip_sites-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 446</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 451</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">refresh_ip_sites</span>
-        <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Refresh all entries that contain an IP address instead of a FQDN ... &quot;</span> 
+        <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Refresh all entries that contain an IP address instead of a FQDN ... &quot;</span>
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-identifier">sites</span>=<span class="ruby-identifier">get_ip_sites</span>
                 <span class="ruby-identifier">live_sites</span>=<span class="ruby-identifier">sites</span>.<span class="ruby-identifier">delete_if</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@known_sites</span>[<span class="ruby-identifier">x</span>][<span class="ruby-string">&#39;code&#39;</span>] <span class="ruby-operator">==</span> <span class="ruby-value">10000</span> <span class="ruby-keyword">or</span>  <span class="ruby-ivar">@known_sites</span>[<span class="ruby-identifier">x</span>][<span class="ruby-string">&#39;code&#39;</span>] <span class="ruby-operator">==</span> <span class="ruby-value">20000</span> }
@@ -2203,9 +2206,9 @@ hostname</p>
                 <span class="ruby-ivar">@known_sites</span>.<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">changes</span>)
                 <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Done refresh IP sites.&quot;</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-identifier">changes</span>
-        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
-        <span class="ruby-keyword">end</span>           
+        <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -2236,19 +2239,19 @@ hostname</p>
 
           
           <div class="method-source-code" id="refresh_uniq_sites-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 380</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">refresh_uniq_sites</span> 
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 385</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">refresh_uniq_sites</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Refresh unique site entries in the site store. &quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-identifier">changes</span>=<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
-                <span class="ruby-identifier">sites</span>=<span class="ruby-identifier">get_uniq_sites</span>         
+                <span class="ruby-identifier">sites</span>=<span class="ruby-identifier">get_uniq_sites</span>
                 <span class="ruby-keyword">if</span> <span class="ruby-identifier">sites</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
                         <span class="ruby-identifier">changes</span>=<span class="ruby-identifier">bulk_refresh</span>(<span class="ruby-identifier">sites</span>)
                 <span class="ruby-keyword">else</span>
                         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Error: no entry is refreshed. Please check your site store and try again.&quot;</span>
                 <span class="ruby-keyword">end</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-identifier">changes</span>
-        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>                  
+        <span class="ruby-keyword">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
@@ -2310,26 +2313,28 @@ hostname could now be resolved since the site was discovered</p>
 
           
           <div class="method-source-code" id="resolve_ip_sites-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 667</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 674</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">resolve_ip_sites</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Resolve sites that contain an IP address. Update the site cache table once a hostname is found in the local host table.&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-identifier">updates</span>=<span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
                 <span class="ruby-identifier">sites</span>=<span class="ruby-identifier">get_ip_sites</span>
+                <span class="ruby-identifier">my_tracker</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">HostTracker</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:data_dir=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@data_dir</span>)
                 <span class="ruby-identifier">sites</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">site</span><span class="ruby-operator">|</span>
                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Work on resolve the IP site: #{site}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
                         <span class="ruby-identifier">ip</span>=<span class="ruby-identifier">url_2_host</span>(<span class="ruby-identifier">site</span>)
-                        <span class="ruby-identifier">hostname</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">HostTracker</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">local_ip_2_host</span>(<span class="ruby-identifier">ip</span>)
+                        <span class="ruby-identifier">hostname</span>=<span class="ruby-identifier">my_tracker</span>.<span class="ruby-identifier">local_ip_2_host</span>(<span class="ruby-identifier">ip</span>)
                         <span class="ruby-keyword">if</span> <span class="ruby-identifier">hostname</span>.<span class="ruby-identifier">nil?</span>
                                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Can&#39;t resolve #{ip} from the local host store. Skip #{site}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
                         <span class="ruby-keyword">else</span>
                                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Host-name found for IP #{ip}: #{hostname}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
                                 <span class="ruby-identifier">updates</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">site</span>)
                                 <span class="ruby-identifier">refresh</span>(<span class="ruby-identifier">site</span>)
-                        <span class="ruby-keyword">end</span>                 
+                        <span class="ruby-keyword">end</span>
                 <span class="ruby-keyword">end</span>
                 <span class="ruby-identifier">updates</span>.<span class="ruby-identifier">sort!</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;The following sites are now refreshed: #{updates}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
+                <span class="ruby-identifier">my_tracker</span>=<span class="ruby-keyword">nil</span>
                 <span class="ruby-keyword">return</span> <span class="ruby-identifier">updates</span>
         <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ee</span>
                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Exception on method #{__method__}: #{ee}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
@@ -2392,14 +2397,14 @@ hostname could now be resolved since the site was discovered</p>
 
           
           <div class="method-source-code" id="save_sites_to_file-21-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 73</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 75</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">save_sites_to_file!</span>(<span class="ruby-identifier">file_sites</span>=<span class="ruby-ivar">@file_stores</span>)
-        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Saving the current site store table from memory to file: #{file_sites}&quot;</span> 
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Saving the current site store table from memory to file: #{file_sites}&quot;</span>
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-identifier">timestamp</span>=<span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
                 <span class="ruby-identifier">f</span>=<span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">file_sites</span>, <span class="ruby-string">&#39;w&#39;</span>)
                 <span class="ruby-identifier">f</span>.<span class="ruby-identifier">write</span> <span class="ruby-node">&quot;# Local site store created by class #{self.class} method #{__method__} at: #{timestamp}\n&quot;</span>
-                <span class="ruby-identifier">f</span>.<span class="ruby-identifier">write</span> <span class="ruby-node">&quot;# Website,Primary IP,Port,Hosting Status,Server,Response Code,Site MD5 Finger-print,Site Redirection,Timestamp\n&quot;</span>
+                <span class="ruby-identifier">f</span>.<span class="ruby-identifier">write</span> <span class="ruby-node">&quot;# Website,Primary IP,Port,Hosting Status,Server,Response Code,MD5 Finger-print,Redirection,Timestamp\n&quot;</span>
                 <span class="ruby-ivar">@known_sites</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span>
                         <span class="ruby-identifier">f</span>.<span class="ruby-identifier">write</span> <span class="ruby-node">&quot;#{key},#{@known_sites[key][&#39;ip&#39;]},#{@known_sites[key][&#39;port&#39;]},#{@known_sites[key][&#39;status&#39;]},#{@known_sites[key][&#39;server&#39;]},#{@known_sites[key][&#39;code&#39;]},#{@known_sites[key][&#39;md5&#39;]},#{@known_sites[key][&#39;redirection&#39;]},#{@known_sites[key][&#39;timestamp&#39;]}\n&quot;</span>
                 <span class="ruby-keyword">end</span>
@@ -2443,7 +2448,7 @@ plain local file</p>
 
           
           <div class="method-source-code" id="save_uniq_sites-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 754</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 763</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">save_uniq_sites</span>(<span class="ruby-identifier">file</span>)
         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Save unique sites information into a flat file: #{file}\nThis may take a long while as it go through a lengthy self correction check process, please be patient ...&quot;</span>
         <span class="ruby-keyword">begin</span>
@@ -2454,7 +2459,7 @@ plain local file</p>
                 <span class="ruby-identifier">f</span>.<span class="ruby-identifier">write</span> <span class="ruby-string">&quot;Site, IP, Port, Server, Hosting, Response Code, MD5, Redirect, Timestamps\n&quot;</span>
                 <span class="ruby-identifier">prime_sites</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span>
                         <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">key</span>.<span class="ruby-identifier">nil?</span>
-                        <span class="ruby-identifier">site</span>=<span class="ruby-identifier">key</span>.<span class="ruby-identifier">strip</span> 
+                        <span class="ruby-identifier">site</span>=<span class="ruby-identifier">key</span>.<span class="ruby-identifier">strip</span>
                         <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Unknown site: #{site}. You may need to add it into the site store first. Execute the following shell command before trying again: \n\wadd #{site}\n&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@known_sites</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">site</span>)
                         <span class="ruby-identifier">ip</span>=<span class="ruby-ivar">@known_sites</span>[<span class="ruby-identifier">site</span>][<span class="ruby-string">&#39;ip&#39;</span>]
                         <span class="ruby-identifier">port</span>=<span class="ruby-ivar">@known_sites</span>[<span class="ruby-identifier">site</span>][<span class="ruby-string">&#39;port&#39;</span>]
@@ -2508,7 +2513,7 @@ XML file</p>
 
           
           <div class="method-source-code" id="save_uniq_sites_xml-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 787</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 796</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">save_uniq_sites_xml</span>(<span class="ruby-identifier">file</span>)
         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Save unique sites information into XML file: #{file}\nThis may take a long while as it go through lengthy self correctness check, please be patient ...&quot;</span>
         <span class="ruby-keyword">begin</span>
@@ -2521,7 +2526,7 @@ XML file</p>
                                                 <span class="ruby-identifier">site</span>=<span class="ruby-identifier">key</span>.<span class="ruby-identifier">strip</span>
                                                 <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Unknown site: #{site}. You may need to add it into the site store first. Execute the following shell command before trying again: \n\twmap #{site}\n&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@known_sites</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">site</span>)
                                                 <span class="ruby-identifier">xml</span>.<span class="ruby-identifier">site</span> {
-                                                        <span class="ruby-identifier">xml</span>.<span class="ruby-identifier">name</span> <span class="ruby-identifier">site</span> 
+                                                        <span class="ruby-identifier">xml</span>.<span class="ruby-identifier">name</span> <span class="ruby-identifier">site</span>
                                                         <span class="ruby-identifier">xml</span>.<span class="ruby-identifier">ip_</span> <span class="ruby-ivar">@known_sites</span>[<span class="ruby-identifier">site</span>][<span class="ruby-string">&#39;ip&#39;</span>]
                                                         <span class="ruby-identifier">xml</span>.<span class="ruby-identifier">port_</span> <span class="ruby-ivar">@known_sites</span>[<span class="ruby-identifier">site</span>][<span class="ruby-string">&#39;port&#39;</span>]
                                                         <span class="ruby-identifier">xml</span>.<span class="ruby-identifier">status_</span> <span class="ruby-ivar">@known_sites</span>[<span class="ruby-identifier">site</span>][<span class="ruby-string">&#39;status&#39;</span>]
@@ -2581,7 +2586,7 @@ automatically converted into lower case</p>
 
           
           <div class="method-source-code" id="search-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 693</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 702</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">search</span> (<span class="ruby-identifier">pattern</span>)
         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Search site store based on the regular expression: #{pattern}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">begin</span>
@@ -2627,7 +2632,7 @@ automatically converted into lower case</p>
 
           
           <div class="method-source-code" id="site_check-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 497</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 502</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">site_check</span>(<span class="ruby-identifier">site</span>)
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;Web site store not loaded properly! &quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@known_sites</span>.<span class="ruby-identifier">nil?</span>
@@ -2672,7 +2677,7 @@ automatically converted into lower case</p>
 
           
           <div class="method-source-code" id="site_ip_known-3F-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 476</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 481</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">site_ip_known?</span>(<span class="ruby-identifier">ip</span>)
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-identifier">ip</span>=<span class="ruby-identifier">ip</span>.<span class="ruby-identifier">chomp</span>.<span class="ruby-identifier">strip</span>
@@ -2724,7 +2729,7 @@ automatically converted into lower case</p>
 
           
           <div class="method-source-code" id="site_known-3F-source">
-            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 462</span>
+            <pre><span class="ruby-comment"># File lib/wmap/site_tracker.rb, line 467</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">site_known?</span>(<span class="ruby-identifier">site</span>)
         <span class="ruby-keyword">begin</span>
                 <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;Web site store not loaded properly! &quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@known_sites</span>.<span class="ruby-identifier">nil?</span>
@@ -2814,7 +2819,7 @@ automatically converted into lower case</p>
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="http://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.0.
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.3.0.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 
