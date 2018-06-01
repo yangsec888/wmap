@@ -95,7 +95,7 @@ The software comes with the Ruby doc during your installation as shown above. Fo
 If you need additional documentation / information other than this README file and the Ruby document package, please be patient - as I'm still working on it :)
 
 == How do I report the bugs, or maybe require some new features?
-Contact the author Yang Li directly at email 'yang.li@owasp.org'.
+Contact the author Sam Li directly at email 'yang.li@owasp.org'.
 
 
 == Legal Disclaimer:
