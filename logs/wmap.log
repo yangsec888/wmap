@@ -16,3 +16,4 @@
 2018-01-12 14:04:50 -0500: wmap: Execute the command: wmap /Users/ylee/www_wmap/uploads/1/seed
 2018-01-16 11:25:58 -0500: wmap: Execute the command: wmap 206.156.53.0/24
 2018-01-16 15:45:08 -0500: wmap: Execute the command: wmap -v
+2018-10-29 10:39:20 -0400: wmap: Execute the command: wmap www.prh.com

@@ -1,0 +1,8 @@
+# no user data
+data/*
+
+# no user logs
+logs/*
+
+# no distribution packages
+*.gem *.zip
