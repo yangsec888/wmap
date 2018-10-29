@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 require "wmap"
-# Executable to add seed entry into ring of the trust. I.E. the trusted domain or CIDR 
+# Executable to add seed entry into ring of the trust. I.E. the trusted domain or CIDR
 
 def print_usage
 	puts "Program to add trust authority entry. Usage: trust [domain|CIDR]"
@@ -11,7 +11,7 @@ print_usage
 Log_dir=File.dirname(__FILE__)+'/../logs/'
 Wmap.wlog("Execute the command: trust #{ARGV[0]}","trust",Log_dir+"wmap.log")
 
-dt=Wmap::DomainTracker.instance
+dt=Wmap::DomainTracker.new
 ct=Wmap::CidrTracker.new
 abort "Incorrect program argument! Proper usage: trust [domain | netblock]" unless ARGV.length==1 && (dt.is_fqdn?(ARGV[0]) || ct.is_cidr?(ARGV[0]))
 
@@ -19,7 +19,7 @@ puts "Start the baptizing process ..."
 
 # Add entry into the local repository
 
-if dt.is_domain?(ARGV[0]) 
+if dt.is_domain?(ARGV[0])
 	result=dt.add(ARGV[0])
 	unless result.nil?
 		dt.save!
@@ -27,7 +27,7 @@ if dt.is_domain?(ARGV[0])
 	end
 end
 dt=nil
-	
+
 if ct.is_cidr?(ARGV[0])
 	result=ct.add(ARGV[0])
 	unless result.nil?
