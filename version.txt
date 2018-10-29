@@ -6,8 +6,8 @@ package = wmap
 version = 2.4.4
 date = 2018-01-16
 
-author = Yang Li
+author = Sam (Yang) Li
 email = yang.li@owasp.org
 linkedin = http://www.linkedin.com/in/yangli8/
-github = https://github.com/yangsec888/wmap 
+github = https://github.com/yangsec888/wmap
 ###############################################################################

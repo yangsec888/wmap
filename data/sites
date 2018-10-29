@@ -1,2 +1,10 @@
-# Local site store created by class Wmap::SiteTracker method save_sites_to_file! at: 2015-04-22 14:03:45 -0400
-# Website,Primary IP,Port,Hosting Status,Server,Response Code,Site MD5 Finger-print,Site Redirection,Timestamp
+# Local site store created by class Wmap::SiteTracker method save_sites_to_file! at: 2018-10-29 14:23:36 -0400
+# Website,Primary IP,Port,Hosting Status,Server,Response Code,MD5 Finger-print,Redirection,Timestamp
+http://12-21book.com/,170.171.208.66,80,ext_hosted,,200,711cccafe044583618bc0853f629ce39,,2018-10-29 14:23:31 -0400
+http://1968thebook.com/,170.171.208.107,80,ext_hosted,,200,46a09f1e3b2bedcd8c63ccc56c50d129,,2018-10-29 14:23:32 -0400
+http://77shadowstreet.com/,34.218.95.48,80,ext_hosted,Microsoft-IIS/10.0,301,5ff15adaf14b5a6fdf927ca403352bbb,http://www.77shadowstreet.com/,2018-10-29 14:23:32 -0400
+http://abiglittlelife.com/,170.171.208.12,80,ext_hosted,,200,da12b27ad6926962b109bc3cf992033f,,2018-10-29 14:23:31 -0400
+http://www.12-21book.com/,170.171.208.66,80,ext_hosted,,200,3a1a76062c2df607f8d50fcb32eba10f,,2018-10-29 14:23:31 -0400
+https://1968thebook.com/,170.171.208.107,443,ext_hosted,Apache,301,76f15c4ee713d4733bd7e77c15fe699c,http://www.randomhouse.com/catalog/display.pperl?0345455819,2018-10-29 14:23:32 -0400
+https://77shadowstreet.com/,34.218.95.48,443,ext_hosted,,104,,,2018-10-29 14:23:32 -0400
+https://abiglittlelife.com/,170.171.208.12,443,ext_hosted,,200,ec6c9067f88724cc05e0f956cd3b7344,,2018-10-29 14:23:31 -0400

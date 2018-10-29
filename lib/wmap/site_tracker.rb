@@ -582,7 +582,7 @@ class Wmap::SiteTracker
 				host=url_2_host(key)
 				md5=@known_sites[key]['md5']
 				code=@known_sites[key]['code']
-				ip=my_trakcer.local_host_2_ip(host)
+				ip=my_tracker.local_host_2_ip(host)
 				ip=host_2_ip(host) if ip.nil?
 				# filtering out 'un-reachable' sites
 				next if (code == 10000 or code == 20000)
@@ -835,7 +835,7 @@ class Wmap::SiteTracker
 	# Retrieve the unique sites from the local site store in the primary host format
 	def get_prim_uniq_sites
 		puts "Retrieve and prime unique sites in the site store. " if @verbose
-		begin
+		#begin
 			host_tracker=Wmap::HostTracker.new(:data_dir=>@data_dir)
 			primary_host_tracker=Wmap::HostTracker::PrimaryHost.new(:data_dir=>@data_dir)
 			# Step 1. Retrieve the unique site list first
@@ -884,9 +884,9 @@ class Wmap::SiteTracker
 			primary_host_tracker=nil
 			host_tracker=nil
 			return prim_uniq_sites
-		rescue => ee
-			puts "Exception on method #{__method__}: #{ee}"
-		end
+		#rescue => ee
+		#	puts "Exception on method #{__method__}: #{ee}"
+		#end
 	end
 	alias_method :get_prime, :get_prim_uniq_sites
 

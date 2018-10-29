@@ -14,7 +14,7 @@ module Wmap
 	# Class to differentiate the primary host-name from the potential aliases. This is needed in order to minimize the confusion on our final site inventory list, as it contains a large number of duplicates (aliases). More specifically, a filter could be built by using this class to track the primary url of a website.
 	class PrimaryHost < Wmap::HostTracker
 		include Wmap::Utils
-		include Singleton
+		#include Singleton
 
 		attr_accessor :hosts_file, :verbose, :data_dir
 		attr_reader :known_hosts, :known_ips
