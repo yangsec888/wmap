@@ -1,2 +1,3 @@
-# Local domains file created by class Wmap::DomainTracker method save_domains_to_file! at: 2015-07-07 12:24:49 -0400
+# Local domains file created by class Wmap::DomainTracker method save_domains_to_file! at: 2018-10-29 10:57:40 -0400
 # domain name, free zone transfer detected?
+yann-martel.com, no

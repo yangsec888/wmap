@@ -64,9 +64,11 @@ class Wmap::CidrTracker
 				@known_cidr_blks[key]['netname']=entry[2].nil? ? nil : entry[2].strip
 			end
 			f.close
-			# Sort the blocks in order once for better performance
-			@known_cidr_blks_desc_index=NetAddr.sort(@known_cidr_blks.keys, :Desc=>true)
-			@known_cidr_blks_asce_index=NetAddr.sort(@known_cidr_blks.keys, :Desc=>false)
+			# Sort the blocks in order once for better performance. Update 10/29/2018 to support Netaddr 2.x syntax
+			#@known_cidr_blks_desc_index=NetAddr.sort(@known_cidr_blks.keys, :Desc=>true)
+			#@known_cidr_blks_asce_index=NetAddr.sort(@known_cidr_blks.keys, :Desc=>false)
+			@known_cidr_blks_asce_index=@known_cidr_blks.keys.sort
+			@known_cidr_blks_desc_index=@known_cidr_blks_asce_index.reverse
 		rescue => ee
 			puts "Exception on method #{__method__}: #{ee}" # if @verbose
 		end
@@ -75,7 +77,7 @@ class Wmap::CidrTracker
 	# 'setter' to add an entry to CIDR store @known_cidr_blks
 	def add (cidr,ref=nil,netname=nil)
 		puts "Load the entry into the CIDR store: #{cidr}"
-		begin
+		#begin
 			raise "Unknown CIDR format: #{cidr}" unless is_cidr?(cidr)
 			# Obtain the 'ref' and 'netname' value automatically in case not passed as method parameters
 			if ref.nil? or netname.nil?
@@ -96,11 +98,13 @@ class Wmap::CidrTracker
 				puts "Entry loaded!"
 			end
 			# Re-sort the blocks in order for better performance
-			@known_cidr_blks_desc_index=NetAddr.sort(@known_cidr_blks.keys, :Desc=>true)
-			@known_cidr_blks_asce_index=NetAddr.sort(@known_cidr_blks.keys, :Desc=>false)
-		rescue => ee
-			puts "Exception on method #{__method__}: #{ee}" # if @verbose
-		end
+			#@known_cidr_blks_desc_index=NetAddr.sort(@known_cidr_blks.keys, :Desc=>true)
+			#@known_cidr_blks_asce_index=NetAddr.sort(@known_cidr_blks.keys, :Desc=>false)
+			@known_cidr_blks_asce_index=@known_cidr_blks.keys.sort
+			@known_cidr_blks_desc_index=@known_cidr_blks_asce_index.reverse
+		#rescue => ee
+		#	puts "Exception on method #{__method__}: #{ee}" # if @verbose
+		#end
 	end
 
 	# 'setter' to remove an entry to CIDR store @known_cidr_blks
@@ -117,8 +121,10 @@ class Wmap::CidrTracker
 				raise "Unknown CIDR entry: #{cidr}"
 			end
 			# Re-sort the blocks in order for better performance
-			@known_cidr_blks_desc_index=NetAddr.sort(@known_cidr_blks.keys, :Desc=>true)
-			@known_cidr_blks_asce_index=NetAddr.sort(@known_cidr_blks.keys, :Desc=>false)
+			#@known_cidr_blks_desc_index=NetAddr.sort(@known_cidr_blks.keys, :Desc=>true)
+			#@known_cidr_blks_asce_index=NetAddr.sort(@known_cidr_blks.keys, :Desc=>false)
+			@known_cidr_blks_asce_index=@known_cidr_blks.keys.sort
+			@known_cidr_blks_desc_index=@known_cidr_blks_asce_index.reverse
 		rescue => ee
 			puts "Exception on method #{__method__}: #{ee}" # if @verbose
 		end
@@ -276,7 +282,7 @@ class Wmap::CidrTracker
 	# Save the current cidr hash table into a file
 	def save_cidrs_to_file!(file_cidrs=@file_cidr_seeds)
 		puts "Saving the current cidrs cache table from memory to file: #{file_cidrs} ..." if @verbose
-		begin
+		#begin
 			timestamp=Time.now
 			f=File.open(file_cidrs, 'w')
 			f.write "# Local cidrs file created by Wmap::CidrTracker.save method at: #{timestamp}\n"
@@ -288,9 +294,9 @@ class Wmap::CidrTracker
 			end
 			f.close
 			puts "CIDR cache table is successfully saved: #{file_cidrs}"
-		rescue => ee
-			puts "Exception on method #{__method__}: #{ee}" if @verbose
-		end
+		#rescue => ee
+		#	puts "Exception on method #{__method__}: #{ee}" if @verbose
+		#end
 	end
 	alias_method :save!, :save_cidrs_to_file!
 

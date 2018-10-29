@@ -19,3 +19,20 @@
 2018-10-29 10:39:20 -0400: wmap: Execute the command: wmap www.prh.com
 2018-10-29 10:52:34 -0400: wadds: Execute the command: wadds /tmp/prh.txt
 2018-10-29 10:53:44 -0400: wadds: Execute the command: wadds /tmp/prh.txt
+2018-10-29 10:57:30 -0400: trust: Execute the command: trust yann-martel.com
+2018-10-29 10:58:23 -0400: wdump: Execute the command: wdump 
+2018-10-29 10:58:37 -0400: wdump: Execute the command: wdump /tmp/out
+2018-10-29 11:04:21 -0400: trust: Execute the command: trust 170.171.0.0/16
+2018-10-29 11:07:08 -0400: trust: Execute the command: trust 170.171.0.0/16
+2018-10-29 11:08:55 -0400: trust: Execute the command: trust 170.171.0.0/16
+2018-10-29 11:14:25 -0400: trust: Execute the command: trust 170.171.0.0/16
+2018-10-29 11:16:20 -0400: trust: Execute the command: trust 170.171.0.0/16
+2018-10-29 11:19:27 -0400: trust: Execute the command: trust 170.171.0.0/16
+2018-10-29 11:23:08 -0400: trust: Execute the command: trust 170.171.0.0/16
+2018-10-29 11:33:02 -0400: trust: Execute the command: trust 170.171.0.0/16
+2018-10-29 11:43:32 -0400: trust: Execute the command: trust 170.171.0.0/16
+2018-10-29 11:45:11 -0400: trust: Execute the command: trust 170.171.0.0/16
+2018-10-29 11:48:08 -0400: trust: Execute the command: trust 170.171.0.0/16
+2018-10-29 11:57:59 -0400: trust: Execute the command: trust 170.171.0.0/16
+2018-10-29 12:43:16 -0400: trust: Execute the command: trust 170.171.0.0/16
+2018-10-29 12:44:07 -0400: trust: Execute the command: trust 170.171.0.0/16

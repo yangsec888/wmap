@@ -59,7 +59,7 @@ network block in the CIDR format.
 To add your Internet domain into the scope, use the build-in shell command below:
   $ trust XYZ.COM
 
-To add your public network block into the scope:
+To add your public network block into the scope (note current support of IPv4 only):
   $ trust x.x.x.x/x
 
 
