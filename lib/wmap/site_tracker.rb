@@ -205,7 +205,7 @@ class Wmap::SiteTracker
 					if my_tracker.host_known?(host)
 						old_ip=my_tracker.local_host_2_ip(host)
 						if old_ip != ip
-							my_tracker.efresh(host)
+							my_tracker.refresh(host)
 							my_tracker.save!
 						else
 							# Skip - no need to update the local hosts table
