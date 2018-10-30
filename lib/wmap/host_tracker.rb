@@ -103,7 +103,7 @@ class Wmap::HostTracker
 	# Setter to add host entry to the cache once at a time
 	def add(host)
 		puts "Add entry to the local host repository: #{host}"
-		begin
+		#begin
 			host=host.strip.downcase unless host.nil?
 			unless @known_hosts.key?(host)
 				ip=host_2_ip(host)
@@ -137,9 +137,9 @@ class Wmap::HostTracker
 			else
 				puts "Host is already exist. Skip: #{host}"
 			end
-		rescue => ee
-			puts "Exception on method #{__method__}: #{ee}" if @verbose
-		end
+		#rescue => ee
+		#	puts "Exception on method #{__method__}: #{ee}" if @verbose
+		#end
 	end
 
 	# Setter to add host entry to the local hosts in batch (from an array)

@@ -56,3 +56,7 @@
 2018-10-29 14:51:08 -0400: wdump: Execute the command: wdump /tmp/out
 2018-10-29 14:52:44 -0400: wdump: Execute the command: wdump /tmp/out
 2018-10-29 14:54:04 -0400: wdump: Execute the command: wdump /tmp/out
+2018-10-29 14:59:50 -0400: wmap: Execute the command: wmap /tmp/prh_domains
+2018-10-29 15:56:47 -0400: wmap: Execute the command: wmap /tmp/prh_domains
+2018-10-29 22:56:40 -0400: wmap: Execute the command: wmap -h
+2018-10-29 22:58:30 -0400: wmap: Execute the command: wmap writteninpink.com

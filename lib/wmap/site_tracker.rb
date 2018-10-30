@@ -180,7 +180,7 @@ class Wmap::SiteTracker
 						if my_tracker.host_known?(host)
 							old_ip=my_tracker.local_host_2_ip(host)
 							if old_ip != ip
-								my_tracker.efresh(host)
+								my_tracker.refresh(host)
 								my_tracker.save!
 							else
 								puts "Host resolve to the same IP #{ip} - no need to update the local host table." if @verbose
