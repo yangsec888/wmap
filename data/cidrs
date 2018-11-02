@@ -1,7 +1,0 @@
-# Local cidrs file created by Wmap::CidrTracker.save method at: 2018-10-29 14:34:17 -0400
-Network CIDR, CIDR RIPE Reference Text, CIDR NETNAME
-170.171.0.0/16,Random House Inc,UNKNOWN
-63.79.215.16/29,Colorado Springs,UNKNOWN
-63.81.143.200/29,Roseville,UNKNOWN
-65.200.31.216/29,Woodland Hills,UNKNOWN
-65.203.34.176/29,Emeryville,UNKNOWN
