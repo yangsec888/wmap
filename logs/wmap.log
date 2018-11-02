@@ -61,3 +61,10 @@
 2018-10-29 22:56:40 -0400: wmap: Execute the command: wmap -h
 2018-10-29 22:58:30 -0400: wmap: Execute the command: wmap writteninpink.com
 2018-10-29 23:06:02 -0400: wmap: Execute the command: wmap writteninpink.com
+2018-10-29 23:07:42 -0400: wmap: Execute the command: wmap writteninpink.com
+2018-10-29 23:08:15 -0400: wmap: Execute the command: wmap www.lcbhome.com
+2018-10-29 23:10:39 -0400: wmap: Execute the command: wmap https://www.penguinrandomhouse.com/
+2018-10-29 23:15:12 -0400: wmap: Execute the command: wmap /tmp/prh_domains
+2018-10-30 10:39:09 -0400: trust: Execute the command: trust /tmp/test
+2018-10-30 10:46:23 -0400: trust: Execute the command: trust /tmp/test
+2018-10-30 10:46:37 -0400: trust: Execute the command: trust /tmp/test

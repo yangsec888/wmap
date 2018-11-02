@@ -5,4 +5,5 @@ data/*
 logs/*
 
 # no distribution packages
-*.gem *.zip
+*.gem
+*.zip
