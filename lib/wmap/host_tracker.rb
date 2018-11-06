@@ -42,7 +42,7 @@ class Wmap::HostTracker
 				entry=line.chomp.split(%r{\t+|\s+|\,})
 				key=entry[0].downcase
 				value=entry[1]
-				puts "Loading value pair: #{key} - #{value}" if @verbose
+				puts "Loading key value pair: #{key} - #{value}" if @verbose
 				known_hosts[key] = Hash.new unless known_hosts.key?(key)
 				known_hosts[key]= value
 				# For reverse host lookup
@@ -521,7 +521,7 @@ class Wmap::HostTracker
 				entry=line.chomp.split(%r{\t+|\s+|\,})
 				key=entry[0].downcase
 				value=entry[1]
-				puts "Loading value pair: #{key} - #{value}" if @verbose
+				puts "Loading key value pair: #{key} - #{value}" if @verbose
 				host_store[key] = Hash.new unless known_hosts.key?(key)
 				host_store[key]= value
 			end

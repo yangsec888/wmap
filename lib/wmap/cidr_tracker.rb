@@ -173,6 +173,7 @@ class Wmap::CidrTracker
 			@known_cidr_blks_desc_index.each do |line|
 				first_octet_blk = line.split('.').first.to_i
 				next if first_octet_blk > first_octet_ip
+				puts "line: #{line}" if @verbose
 				cidr4 = NetAddr::CIDR.create(line)
 				known = cidr4.contains?(ip+'/32')
 				break if known
