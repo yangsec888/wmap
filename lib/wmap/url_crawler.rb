@@ -31,7 +31,7 @@ class Wmap::UrlCrawler
 	# Crawler instance default variables
 	def initialize (params = {})
 		@verbose=params.fetch(:verbose, false)
-		@data_dir=params.fetch(:data_dir, File.dirname(__FILE__)+'/../../logs/')
+		@data_dir=params.fetch(:data_dir, File.dirname(__FILE__)+'/../../data/')
 		@http_timeout=params.fetch(:http_timeout, 5000)
 		@crawl_depth=params.fetch(:crawl_depth, 4)
 		@crawl_page_limit=params.fetch(:crawl_page_limit, 1000)
@@ -224,11 +224,11 @@ class Wmap::UrlCrawler
 	alias_method :query_file, :crawl_workers_on_file
 	alias_method :crawl_file, :crawl_workers_on_file
 
-    # Wrapper for the OpenURI open method - create an open_uri object and return the reference upon success
+  # Wrapper for the OpenURI open method - create an open_uri object and return the reference upon success
 	def open_url(url)
-		puts "Open url #{url} by creating an open_uri object. Return the reference upon success." if @verbose
 		#url_object = nil
-        begin
+    begin
+			puts "Open url #{url} by creating an open_uri object. Return the reference upon success." if @verbose
 			if url =~ /http\:/i
 				# patch for allow the 'un-safe' URL redirection i.e. https://www.example.com -> http://www.example.com
 				url_object = open(url, :allow_redirections=>:safe, :read_timeout=>Max_http_timeout/1000)
@@ -240,24 +240,24 @@ class Wmap::UrlCrawler
 				raise "Invalid URL format - please specify the protocol prefix http(s) in the URL: #{url}"
 			end
 			return url_object
-        rescue => ee
-            puts "Exception on method #{__method__} for #{url}: #{ee}" if @verbose
-            return nil
-        end
+    rescue => ee
+      puts "Exception on method #{__method__} for #{url}: #{ee}" if @verbose
+      return nil
     end
+  end
 
 	# Wrapper to use OpenURI method 'read' to return url body contents
 	def read_url(url)
-		puts "Wrapper to return the OpenURI object for url: #{url}" if @verbose
 		begin
+			puts "Wrapper to return the OpenURI object for url: #{url}" if @verbose
 			url_object=open_url(url)
 			@visited_urls_by_crawler[url]=true unless @visited_urls_by_crawler.key?(url)
 			body=url_object.read
 			return body
-        rescue => ee
-            puts "Exception on method #{__method__}: #{ee}" if @verbose
-            return nil
-        end
+  	rescue => ee
+      puts "Exception on method #{__method__}: #{ee}" if @verbose
+      return nil
+    end
 	end
 
     # Return the destination url in case of url re-direct
@@ -268,11 +268,11 @@ class Wmap::UrlCrawler
 				return url_object.base_uri.to_s
 			end
 			return url
-        rescue => ee
-            puts "Exception on method #{__method__}: #{ee}" if @verbose
-            return nil
-        end
+    rescue => ee
+      puts "Exception on method #{__method__}: #{ee}" if @verbose
+      return nil
     end
+  end
 
     # Wrapper for the Nokogiri DOM parser
 	def parse_html(html_body)

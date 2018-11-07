@@ -7,3 +7,6 @@ logs/*
 # no distribution packages
 *.gem
 *.zip
+
+# ignore specific loading utility
+bin/wmaps

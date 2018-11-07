@@ -34,6 +34,7 @@ In addition, the following Ruby GEM dependency are needed by different component
       require "net/ping"
       require "netaddr"
       require "nokogiri"
+      require "css_parser"
       require "openssl"
       require "open_uri_redirections"
       require "parallel"
@@ -43,7 +44,7 @@ In addition, the following Ruby GEM dependency are needed by different component
 
 To install the above gems, use the command below:
 
-      $ gem install dnsruby geoip minitest net-ping netaddr:1.5.1 nokogiri open_uri_redirections openssl parallel whois httpclient
+      $ gem install dnsruby geoip minitest net-ping netaddr:1.5.1 nokogiri css_parser open_uri_redirections openssl parallel whois httpclient
 
 == Ruby-whois Gem Patches
 This software depends on a patched version of Ruby gem ruby-whois-2.7.0 (http://www.ruby-whois.org/) for the domain whois lookup feature. For better result, you could manually add the patches into your local whois gem installation directory as shown below:
