@@ -10,3 +10,4 @@ logs/*
 
 # ignore specific loading utility
 bin/wmaps
+bin/RHPG

@@ -102,11 +102,7 @@ class Wmap::WpTracker
 				puts "Site is already exist. Skipping: #{site}"
 			else
 				record=Hash.new
-				if wp_readme?(site)
-          record[site]=true
-        elsif wp_css?(site)
-          record[site]=true
-        elsif wp_meta?(site)
+				if is_wp?(site)
           record[site]=true
         else
           record[site]=false
@@ -116,8 +112,27 @@ class Wmap::WpTracker
       @known_wp_sites.merge!(record)
       return record
 		rescue => ee
-			#puts "Exception on method #{__method__}: #{ee}: #{url}" if @verbose
+			puts "Exception on method #{__method__}: #{ee}: #{url}" if @verbose
 		end
+	end
+
+  # logic to determin if it's a wordpress site
+  def is_wp?(url)
+		#begin
+			site=url_2_site(url)
+			if wp_readme?(site)
+				found=true
+			elsif wp_css?(site)
+				found=true
+			elsif wp_meta?(site)
+				found=true
+			else
+				found=false
+			end
+			return found
+		#rescue => ee
+		#	puts "Exception on method #{__method__}: #{ee}: #{url}" if @verbose
+		#end
 	end
 
   # add wordpress site entries (from a sitetracker list)
@@ -220,7 +235,8 @@ class Wmap::WpTracker
   end
 
   # Wordpress detection checkpoint - meta generator
-  def wp_meta?(site)
+  def wp_meta?(url)
+		site=url_2_site(url)
     k=Wmap::UrlChecker.new
     if k.response_code(site) == 200
       k=nil
@@ -231,10 +247,56 @@ class Wmap::WpTracker
       else
         return false
       end
-    else
-      k=nil
-      return false
     end
+		return false
   end
+
+	def wp_ver(url)
+		if !wp_ver_readme(url).nil?
+			return wp_ver_readme(url)
+		elsif !wp_ver_meta(url).nil?
+			return wp_ver_meta(url)
+		else
+			return nil
+		end
+	end
+
+	# Identify wordpress version through the meta tag
+  def wp_ver_meta(url)
+		site=url_2_site(url)
+    k=Wmap::UrlChecker.new
+    if k.response_code(site) == 200
+      doc=read_url(site)
+			#puts doc.inspect
+      meta=doc.css('meta')
+			#puts meta.inspect
+			meta.each do |tag|
+	      if tag.to_s =~ /wordpress/i
+					#puts tag.to_s
+					k=nil
+	        return tag.to_s.scan(/[\d+\.]+\d+/).first
+	      end
+			end
+    end
+    k=nil
+    return nil
+  end
+
+	# Wordpress version detection via - readme.html
+  def wp_ver_readme(url)
+		site=url_2_site(url)
+    readme_url=site + "/readme.html"
+    k=Wmap::UrlChecker.new
+    if k.response_code(readme_url) == 200
+      k=nil
+      doc=read_url(readme_url)
+      logo=doc.css('h1#logo')[0]
+      #puts logo.inspect
+			return logo.to_s.scan(/[\d+\.]+\d+/).first
+    end
+    k=nil
+    return nil
+	end
+
 
 end
