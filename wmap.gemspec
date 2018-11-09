@@ -42,19 +42,19 @@ Gem::Specification.new do |s|
   #s.homepage = "none"
   s.post_install_message = "*"*80 + "\n\nThank you for installing the wmap gem - a pure Ruby library for Internet web application discovery and tracking. Please refer to the README.rdoc for more information of using this gem.  \n\n" + "*"*80 + "\n"
   s.require_paths = ["lib"]
-  s.required_ruby_version = Gem::Requirement.new(">= 2.1.0")
+  s.required_ruby_version = Gem::Requirement.new(">= 2.1")
 
- 	s.add_dependency 'dnsruby', '~> 1.52'
-	s.add_dependency 'geoip', '~> 1.6'
-	s.add_dependency 'minitest', '~> 5.10'
-	s.add_dependency 'net-ping', '~> 2.0'
-	s.add_dependency 'nokogiri', '~> 1.6'
-	s.add_dependency 'css_parser', '~> 1.6'
-	s.add_dependency 'openssl', '~> 2.1'
-	s.add_dependency 'parallel', '~> 1.12.1'
-	s.add_dependency 'whois', '~> 3.0'
-	s.add_dependency 'httpclient', '~> 2.8'
-	s.add_dependency 'open_uri_redirections', '~> 0.2'
+ 	s.add_dependency 'dnsruby', '>= 1.52'
+	s.add_dependency 'geoip', '>= 1.0'
+	s.add_dependency 'minitest', '>= 5.0'
+	s.add_dependency 'net-ping', '>= 2.0'
+	s.add_dependency 'nokogiri', '>= 1.6'
+	s.add_dependency 'css_parser', '>= 1.6'
+	s.add_dependency 'openssl', '>= 2.0'
+	s.add_dependency 'parallel', '>= 1.0'
+	s.add_dependency 'whois', '>= 2.7'
+	s.add_dependency 'httpclient', '~> 2.0'
+	s.add_dependency 'open_uri_redirections', '>= 0.2'
 	s.add_dependency 'netaddr', '~> 1.5'
 
   s.rubyforge_project = "wmap"
