@@ -27,7 +27,7 @@ To take full power of this program, you would need an *nix flavor machine with d
 Nokogiri is a native xml/html parser used by the project. It's fast and powerful. However, it comes with pitfall of installation problem around building native extension for your environment. Please refer to this page for trouble-shooting tip (http://www.nokogiri.org/tutorials/installing_nokogiri.html).
 
 == Dependency
-You need the Ruby 1.9.2 or above in order to use this program. In my test environment, I was able to set it up with RVM. Please refer to this page for more installation information: http://www.ruby-lang.org/en/downloads/
+You need the Ruby 2.1.0 or above in order to use this program. In my test environment, I was able to set it up with RVM. Please refer to this page for more installation information: http://www.ruby-lang.org/en/downloads/
 
 In addition, the following Ruby GEM dependency are needed by different components of this software. The should be installed automatically:
       require "dnsruby"
