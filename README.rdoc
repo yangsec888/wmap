@@ -6,8 +6,8 @@ This program is designed for the web application asset discovery and tracking. I
 to cover the gaps of a similar commercial product. Over the time it grows to be a more capable and complete replacement (IMHO).
 
 
-== Wmap in Motion
-Use the demo web app build on top of wmap gem: http://wmap.io/
+== WMAP in Motion
+Use the demo web app build on top of wmap gem: http://wmap.io
 
 
 == Program Version
@@ -21,7 +21,7 @@ This program is designed and developed by Yang Li. You can reach him by Email: <
 == Installation
 To take full power of this program, you would need an *nix flavor machine with direct Internet access. I have installed it successfully on both Mac and Linux machines. You'll also need the Ruby environment being setup properly. The easiest way to install OWASP Web Mapper is by using Ruby Gems. Download the latest gem 'wmap-x.x.x.gem' into the local file system. Then install it from command line there:
 
-  gem install wmap-x.x.x.gem --no-rdoc
+  gem install wmap
 
 == Specific Installation Problem with Nokogiri
 Nokogiri is a native xml/html parser used by the project. It's fast and powerful. However, it comes with pitfall of installation problem around building native extension for your environment. Please refer to this page for trouble-shooting tip (http://www.nokogiri.org/tutorials/installing_nokogiri.html).
