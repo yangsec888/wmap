@@ -11,7 +11,7 @@ Use the demo web app build on top of wmap gem: http://wmap.io
 
 
 == Program Version
-The latest release is Beta version 1.5.x as of fall 2014. Please refer to the CHANGELOG.md for the program's history information.
+The latest release is version 2.4.5. as of fall 2018. Please refer to the CHANGELOG.md for the program's history information.
 
 
 == Author Contact
@@ -19,7 +19,7 @@ This program is designed and developed by Yang Li. You can reach him by Email: <
 
 
 == Installation
-To take full power of this program, you would need an *nix flavor machine with direct Internet access. I have installed it successfully on both Mac and Linux machines. You'll also need the Ruby environment being setup properly. The easiest way to install OWASP Web Mapper is by using Ruby Gems. Download the latest gem 'wmap-x.x.x.gem' into the local file system. Then install it from command line there:
+To take full power of this program, you would need an *nix flavor machine with direct Internet access. I have installed it successfully on both Mac and Linux machines. You'll also need the Ruby environment being setup properly. The easiest way to install OWASP Web Mapper is by using Ruby Gems. You can install it from command line:
 
   gem install wmap
 
@@ -27,7 +27,7 @@ To take full power of this program, you would need an *nix flavor machine with d
 Nokogiri is a native xml/html parser used by the project. It's fast and powerful. However, it comes with pitfall of installation problem around building native extension for your environment. Please refer to this page for trouble-shooting tip (http://www.nokogiri.org/tutorials/installing_nokogiri.html).
 
 == Dependency
-You need the Ruby 2.1.0 or above in order to use this program. In my test environment, I was able to set it up with RVM. Please refer to this page for more installation information: http://www.ruby-lang.org/en/downloads/
+You need the Ruby 2.1.0 or above in order to use this program. In my test environment, I was able to set it up with RVM. Please refer to this page for more installation information: https://www.ruby-lang.org/en/documentation/installation/
 
 In addition, the following Ruby GEM dependency are needed by different components of this software. The should be installed automatically:
       require "dnsruby"

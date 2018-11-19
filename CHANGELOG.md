@@ -11,6 +11,7 @@
 
 ## Mile-stones
 
+- November 2018: Pick up the maintenances.
 - July 2015: Move the project under OWASP
 - November 2014: Re-name from web_discovery to wmap, re-factor the code base to better scale up
 	across the board
