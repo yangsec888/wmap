@@ -20,6 +20,7 @@ class Wmap::DnsBruter
 	def initialize (params = {})
 		# Change to your brute-force dictionary file here if necessary
 		@data_dir=params.fetch(:data_dir, File.dirname(__FILE__)+'/../../data/')
+		Dir.mkdir(@data_dir) unless Dir.exist?(@data_dir)
 		@file_hosts = @data_dir + 'hosts'
 		@file_hosts_dict = File.dirname(__FILE__)+'/../../dicts/hostnames-dict.txt'
 

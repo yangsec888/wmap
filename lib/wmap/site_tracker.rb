@@ -22,6 +22,7 @@ class Wmap::SiteTracker
 	def initialize (params = {})
 		# Initialize the instance variables
 		@data_dir=params.fetch(:data_dir, File.dirname(__FILE__)+'/../../data/')
+		Dir.mkdir(@data_dir) unless Dir.exist?(@data_dir)
 		@file_sites=@data_dir+'sites'
 		@file_stores=params.fetch(:sites_file, @file_sites)
 		@verbose=params.fetch(:verbose, false)

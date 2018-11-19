@@ -21,6 +21,7 @@ class Wmap::HostTracker
 	def initialize (params = {})
 		@verbose=params.fetch(:verbose, false)
 		@data_dir=params.fetch(:data_dir, File.dirname(__FILE__)+'/../../data/')
+		Dir.mkdir(@data_dir) unless Dir.exist?(@data_dir)
 		# Set default instance variables
 		@file_hosts=@data_dir + 'hosts'
 		file=params.fetch(:hosts_file, @file_hosts)

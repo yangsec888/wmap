@@ -23,6 +23,7 @@ class Wmap::DomainTracker
 		# Initialize the instance variables
 		@verbose=params.fetch(:verbose, false)
 		@data_dir=params.fetch(:data_dir, File.dirname(__FILE__)+'/../../data/')
+		Dir.mkdir(@data_dir) unless Dir.exist?(@data_dir)
 		@file_domains=params.fetch(:domains_file, @data_dir+'domains')
 		@max_parallel=params.fetch(:max_parallel, 40)
 		# Hash table to hold the trusted domains

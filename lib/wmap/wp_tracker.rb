@@ -27,6 +27,7 @@ class Wmap::WpTracker
 	def initialize (params = {})
 		@verbose=params.fetch(:verbose, false)
 		@data_dir=params.fetch(:data_dir, File.dirname(__FILE__)+'/../../data/')
+		Dir.mkdir(@data_dir) unless Dir.exist?(@data_dir)
     wp_sites=@data_dir+'wp_sites'
     @file_wps=params.fetch(:sites_wp, wp_sites)
 		@http_timeout=params.fetch(:http_timeout, 5000)

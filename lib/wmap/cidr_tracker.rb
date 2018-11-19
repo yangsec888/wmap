@@ -17,6 +17,7 @@ class Wmap::CidrTracker
 	def initialize (params = {})
 		@verbose=params.fetch(:verbose, false)
 		@data_dir=params.fetch(:data_dir, File.dirname(__FILE__)+'/../../data/')
+		Dir.mkdir(@data_dir) unless Dir.exist?(@data_dir)
 		@file_cidr_seeds=params.fetch(:cidr_seeds, @data_dir + 'cidrs')
 		@known_cidr_blks={}
 		@known_cidr_blks_desc_index=[]
