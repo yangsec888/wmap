@@ -127,6 +127,10 @@ class Wmap::WpTracker
 				found=true
 			elsif wp_meta?(site)
 				found=true
+			elsif wp_login?(site)
+				found=true
+			elsif wp_rpc?(site)
+				found=true
 			else
 				found=false
 			end
@@ -252,17 +256,73 @@ class Wmap::WpTracker
 		return false
   end
 
+	# Wordpress detection checkpoint - wp-login
+  def wp_login?(url)
+		site=url_2_site(url)
+		login_url=site + "/wp-login.php"
+    k=Wmap::UrlChecker.new
+    if k.response_code(login_url) == 200
+      k=nil
+      doc=read_url(login_url)
+      links=doc.css('link')
+      if links.to_s =~ /login.min.css/i
+        return true
+      else
+        return false
+      end
+    end
+		return false
+  end
+
+	# Wordpress detection checkpoint - xml-rpc
+  def wp_rpc?(url)
+		site=url_2_site(url)
+		rpc_url=site + "/xmlrpc.php"
+    k=Wmap::UrlChecker.new
+		#puts "res code", k.response_code(rpc_url)
+    if k.response_code(rpc_url) == 405 # method not allowed
+      k=nil
+      return true
+    end
+		return false
+  end
+
+	# Extract the WordPress version
 	def wp_ver(url)
 		if !wp_ver_readme(url).nil?
 			return wp_ver_readme(url)
 		elsif !wp_ver_meta(url).nil?
 			return wp_ver_meta(url)
+		elsif !wp_ver_login(url).nil?
+			return wp_ver_login(url)
 		else
 			return nil
 		end
 	end
 
-	# Identify wordpress version through the meta tag
+	# Identify wordpress version through the login page
+  def wp_ver_login(url)
+		site=url_2_site(url)
+		login_url=site + "/wp-login.php"
+    k=Wmap::UrlChecker.new
+    if k.response_code(login_url) == 200
+      doc=read_url(login_url)
+			#puts doc.inspect
+      links=doc.css('link')
+			#puts links.inspect
+			links.each do |tag|
+	      if tag.to_s =~ /login.min.css/i
+					puts tag.to_s
+					k=nil
+	        return tag.to_s.scan(/[\d+\.]+\d+/).first
+	      end
+			end
+    end
+    k=nil
+    return nil
+  end
+
+	# Identify wordpress version through the meta link
   def wp_ver_meta(url)
 		site=url_2_site(url)
     k=Wmap::UrlChecker.new
