@@ -6,7 +6,7 @@
 # Copyright (c) 2012-2015 Yang Li <yang.li@owasp.org>
 #++
 require "parallel"
-require "singleton"		# Implement singleton pattern to avoid race condition under parallel engine
+#require "singleton"		# Implement singleton pattern to avoid race condition under parallel engine
 
 
 # Class to handle the local host data repository file where lists of known hosts from discovery and past assessment efforts are stored
@@ -33,8 +33,8 @@ class Wmap::HostTracker
 
 	# Setter to load the known hosts from the local hosts file into a class instance
 	def load_known_hosts_from_file (f_hosts=@file_hosts)
-		puts "Loading local hosts from file: #{f_hosts} ..." if @verbose
-		begin
+		#begin
+			puts "Loading local hosts from file: #{f_hosts} ..." if @verbose
 			known_hosts=Hash.new
 			@alias = Hash.new
 			f=File.open(f_hosts, 'r')
@@ -58,16 +58,16 @@ class Wmap::HostTracker
 			end
 			f.close
 			return known_hosts
-		rescue => ee
-			puts "Exception on method #{__method__}: #{ee}"
-			return known_hosts
-		end
+		#rescue => ee
+		#	puts "Exception on method #{__method__}: #{ee}"
+		#	return known_hosts
+		#end
 	end
 
 	# Save the current local hosts hash table into a (random) data repository file
 	def save_known_hosts_to_file!(f_hosts=@file_hosts)
-		puts "Saving the local host repository from memory to file: #{f_hosts} ..."
-		begin
+		#begin
+			puts "Saving the local host repository from memory to file: #{f_hosts} ..."
 			timestamp=Time.now
 			f=File.open(f_hosts, 'w')
 			f.write "# local hosts file created by the #{self.class} class #{__method__} method at: #{timestamp}"
@@ -78,9 +78,9 @@ class Wmap::HostTracker
 			end
 			f.close
 			puts "local host repository is successfully saved to: #{f_hosts}"
-		rescue => ee
-			puts "Exception on method #{__method__}: #{ee}"
-		end
+		#rescue => ee
+		#	puts "Exception on method #{__method__}: #{ee}"
+		#end
 	end
 	alias_method :save!, :save_known_hosts_to_file!
 
@@ -145,8 +145,8 @@ class Wmap::HostTracker
 
 	# Setter to add host entry to the local hosts in batch (from an array)
 	def bulk_add(list, num=@max_parallel)
-		puts "Add entries to the local host repository: #{list}"
-		begin
+		#begin
+			puts "Add entries to the local host repository: #{list}"
 			results=Hash.new
 			if list.size > 0
 				puts "Start parallel host update processing on:\n #{list}" if @verbose
@@ -168,9 +168,9 @@ class Wmap::HostTracker
 				puts "Error: empty list - no entry is loaded. Please check your input list and try again."
 			end
 			return results
-		rescue => ee
-			puts "Exception on method #{__method__}: #{ee}"
-		end
+#		rescue => ee
+#			puts "Exception on method #{__method__}: #{ee}"
+#		end
 	end
 	alias_method :adds, :bulk_add
 
@@ -242,8 +242,8 @@ class Wmap::HostTracker
 
 	# Setter to refresh the entry from the cache one at a time
 	def refresh(host)
-		puts "Refresh the local host repository for host: #{host} "
-		begin
+		#begin
+			puts "Refresh the local host repository for host: #{host} "
 			host=host.strip.downcase
 			if @known_hosts.key?(host)
 				old_ip=@known_hosts[host]
@@ -266,15 +266,15 @@ class Wmap::HostTracker
 			else
 				puts "Error entry non exist: #{host}"
 			end
-		rescue => ee
-			puts "Exception on method #{__method__}: #{ee}"
-		end
+		#rescue => ee
+		#	puts "Exception on method #{__method__}: #{ee}"
+		#end
 	end
 
 	#	Refresh all the entries in the local hosts by querying the Internet
 	def refresh_all
 		puts "Refresh all the entries in the local host repository in one shot."
-		begin
+		#begin
 			changes=Hash.new
 			hosts=@known_hosts.keys
 			@known_hosts=Hash.new
@@ -290,9 +290,9 @@ class Wmap::HostTracker
 			#changes.map { |x| puts x }
 			puts "Done refreshing the local hosts."
 			return changes
-		rescue => ee
-			puts "Exception on method #{__method__}: #{ee}"
-		end
+		#rescue => ee
+		#	puts "Exception on method #{__method__}: #{ee}"
+		#end
 	end
 
 	# Extract known root domains from the local host repository @known_hosts

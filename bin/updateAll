@@ -24,9 +24,15 @@ sd.update_from_host_store!
 subs=sd.known_internet_sub_domains.keys
 sd=nil
 
+# Update Domain table
+dm=Wmap::DomainTracker.new
+domains=dm.known_internet_domains.keys
+dm=nil
+
 # Brute force sub-domains to detect sub-domain hosts
 bruter=Wmap::DnsBruter.new
 sub_hosts=bruter.brutes(subs).values.flatten
+hosts=bruter.brutes(domains).values.flatten
 
 # Update primary host store
 ph=Wmap::HostTracker::PrimaryHost.new
@@ -39,6 +45,7 @@ ph=nil
 h=Wmap::HostTracker.new
 h.refresh_all
 h.adds(sub_hosts)
+h.adds(hosts)
 h.save!
 h=nil
 

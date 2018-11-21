@@ -35,9 +35,9 @@ module Wmap
 
 		# Procedures to identify primary host-name from the site store SSL certificates. The assumption is that the CN used in the cert application must be primary hostname and used by the users.
 		def update_from_site_store!
-			puts "Invoke internal procedures to update the primary host-name table from the site store."
-			begin
-				# Step 1 - update the prime host table based on the SSL cert CN fields
+			#begin
+        puts "Invoke internal procedures to update the primary host-name table from the site store."
+        # Step 1 - update the prime host table based on the SSL cert CN fields
 				cns=Hash.new
 				checker=Wmap::UrlChecker.new(:data_dir=>@data_dir)
         my_tracker = Wmap::SiteTracker.new(:data_dir=>@data_dir)
@@ -62,12 +62,12 @@ module Wmap
 				self.save!
         checker=nil
         my_tracker=nil
-			rescue Exception => ee
-				puts "Exception on method #{__method__}: #{ee}" if @verbose
-        checker=nil
-        my_tracker=nil
-				return nil
-			end
+			#rescue Exception => ee
+			#	puts "Exception on method #{__method__}: #{ee}" if @verbose
+      #  checker=nil
+      #  my_tracker=nil
+			#	return nil
+			#end
 		end
 		alias_method :update!, :update_from_site_store!
 

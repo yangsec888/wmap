@@ -87,7 +87,7 @@ class Wmap::WpTracker
 				end
 			end
 			f.close
-			puts "Domain cache table is successfully saved: #{file_wps}"
+			puts "WordPress site cache table is successfully saved: #{file_wps}"
 		rescue => ee
 			puts "Exception on method #{__method__}: #{ee}" if @verbose
 		end
@@ -201,7 +201,7 @@ class Wmap::WpTracker
 
   # Wordpress detection checkpoint - readme.html
   def wp_readme?(site)
-    readme_url=site + "/readme.html"
+    readme_url=site + "readme.html"
     k=Wmap::UrlChecker.new
     if k.response_code(readme_url) == 200
       k=nil
@@ -220,7 +220,7 @@ class Wmap::WpTracker
 
   # Wordpress detection checkpoint - install.css
   def wp_css?(site)
-    css_url=site + "/wp-admin/css/install.css"
+    css_url=site + "wp-admin/css/install.css"
     k=Wmap::UrlChecker.new
     if k.response_code(css_url) == 200
       k=nil
@@ -259,7 +259,7 @@ class Wmap::WpTracker
 	# Wordpress detection checkpoint - wp-login
   def wp_login?(url)
 		site=url_2_site(url)
-		login_url=site + "/wp-login.php"
+		login_url=site + "wp-login.php"
     k=Wmap::UrlChecker.new
     if k.response_code(login_url) == 200
       k=nil
@@ -277,7 +277,7 @@ class Wmap::WpTracker
 	# Wordpress detection checkpoint - xml-rpc
   def wp_rpc?(url)
 		site=url_2_site(url)
-		rpc_url=site + "/xmlrpc.php"
+		rpc_url=site + "xmlrpc.php"
     k=Wmap::UrlChecker.new
 		#puts "res code", k.response_code(rpc_url)
     if k.response_code(rpc_url) == 405 # method not allowed
@@ -293,26 +293,32 @@ class Wmap::WpTracker
 			return wp_ver_readme(url)
 		elsif !wp_ver_meta(url).nil?
 			return wp_ver_meta(url)
-		elsif !wp_ver_login(url).nil?
-			return wp_ver_login(url)
+		elsif !wp_ver_login(url,"login.min.css").nil?
+			return wp_ver_login(url,"login.min.css")
+		elsif !wp_ver_login(url,"buttons.min.css").nil?
+			return wp_ver_login(url,"buttons.min.css")
+		elsif !wp_ver_login(url,"wp-admin.min.css").nil?
+			return wp_ver_login(url,"wp-admin.min.css")
 		else
 			return nil
 		end
 	end
 
 	# Identify wordpress version through the login page
-  def wp_ver_login(url)
+  def wp_ver_login(url,pattern)
+		puts "Check for #{pattern}" if @verbose
 		site=url_2_site(url)
-		login_url=site + "/wp-login.php"
+		login_url=site + "wp-login.php"
     k=Wmap::UrlChecker.new
+		#puts "Res code: #{k.response_code(login_url)}" if @verbose
     if k.response_code(login_url) == 200
       doc=read_url(login_url)
 			#puts doc.inspect
       links=doc.css('link')
-			#puts links.inspect
+			#puts links.inspect if @verbose
 			links.each do |tag|
-	      if tag.to_s =~ /login.min.css/i
-					puts tag.to_s
+	      if tag.to_s.include?(pattern)
+					puts tag.to_s if @verbose
 					k=nil
 	        return tag.to_s.scan(/[\d+\.]+\d+/).first
 	      end
@@ -346,13 +352,15 @@ class Wmap::WpTracker
 	# Wordpress version detection via - readme.html
   def wp_ver_readme(url)
 		site=url_2_site(url)
-    readme_url=site + "/readme.html"
+    readme_url=site + "readme.html"
     k=Wmap::UrlChecker.new
+		puts "Res code: #{k.response_code(readme_url)}" if @verbose
     if k.response_code(readme_url) == 200
       k=nil
       doc=read_url(readme_url)
+			puts doc if @verbose
       logo=doc.css('h1#logo')[0]
-      #puts logo.inspect
+      puts logo.inspect if @verbose
 			return logo.to_s.scan(/[\d+\.]+\d+/).first
     end
     k=nil
