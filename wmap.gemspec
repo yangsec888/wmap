@@ -56,6 +56,7 @@ Gem::Specification.new do |s|
 	s.add_dependency 'httpclient', '~> 2.0'
 	s.add_dependency 'open_uri_redirections', '>= 0.2'
 	s.add_dependency 'netaddr', '~> 1.5'
+	s.add_dependency 'minitest', '~> 5.10'
 
   s.rubyforge_project = "wmap"
   s.rubygems_version = "1.8.24"

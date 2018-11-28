@@ -17,8 +17,8 @@ if ARGV.length == 1
 elsif ARGV.length == 2
 	# Log to the instance running directory
 	Log_dir=ARGV[1] + '/logs/'
-	Dir.mkdir(Log_dir) unless Dir.exist?(Log_dir)
 end
+Dir.mkdir(Log_dir) unless Dir.exist?(Log_dir)
 
 Wmap.wlog("Execute the command: wmap #{ARGV[0]}","wmap",Log_dir+"wmap.log")
 print_usage unless (ARGV.length==1 or ARGV.length==2)
