@@ -176,9 +176,9 @@ class Wmap::UrlChecker
 
 	# Test the URL / site and return the redirection location (3xx response code only)
 	def redirect_location (url)
-		puts "Test the redirection location for the url: #{url}" if @verbose
-		location=""
 		begin
+			puts "Test the redirection location for the url: #{url}" if @verbose
+			location=""
 			raise "Invalid url: #{url}" unless is_url?(url)
 			url=url.strip.downcase
 			timeo = @http_timeout/1000.0
@@ -196,6 +196,7 @@ class Wmap::UrlChecker
 				end
 				request = Net::HTTP::Get.new(uri.request_uri)
 				response = http.request(request)
+				puts "Response: #{response}" if @verbose
 				case response
 				when Net::HTTPRedirection then
 					location = response['location']
@@ -213,9 +214,9 @@ class Wmap::UrlChecker
 
 	# Test the URL / site and return the web server type from the HTTP header "server" field
 	def get_server_header (url)
-		puts "Retrieve the server header field from the url: #{url}" if @verbose
-		server=String.new
 		begin
+			puts "Retrieve the server header field from the url: #{url}" if @verbose
+			server=String.new
 			raise "Invalid url: #{url}" unless is_url?(url)
 			url=url.strip.downcase
 			timeo = @http_timeout/1000.0
