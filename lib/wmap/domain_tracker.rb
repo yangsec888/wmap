@@ -6,13 +6,13 @@
 # Copyright (c) 2012-2015 Yang Li <yang.li@owasp.org>
 #++
 require "parallel"
-#require "singleton"
+require "singleton"
 
 
 # Class to track the known (trusted) Internet domains
-class Wmap::DomainTracker
+class Wmap::DomainTracker.instance
 	include Wmap::Utils
-	#include Singleton
+	include Singleton
 
 
 	attr_accessor :verbose, :max_parallel, :domains_file, :file_domains, :data_dir
@@ -110,6 +110,7 @@ class Wmap::DomainTracker
 	def add(host)
 		puts "Add entry to the local domains cache table: #{host}" if @verbose
 		#begin
+			return nil if host.nil? or host.empty?
 			host=host.strip.downcase
 			if @known_internet_domains.key?(host)
 				puts "Domain is already exist. Skipping: #{host}"
@@ -282,9 +283,9 @@ class Wmap::DomainTracker
 			#abort "Trusted Internet domain file not loaded properly! " if @known_internet_domains.nil? or @known_internet_sub_domains.nil?
 			domain=domain.strip.downcase unless domain.nil?
 			case self.class.name
-			when "Wmap::DomainTracker"
+			when "Wmap::DomainTracker.instance"
 				return @known_internet_domains.key?(domain)
-			when "Wmap::DomainTracker::SubDomain"
+			when "Wmap::DomainTracker.instance::SubDomain"
 				return @known_internet_sub_domains.key?(domain)
 			else
 				return nil

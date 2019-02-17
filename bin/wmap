@@ -67,10 +67,10 @@ end
 # second step - update the hosts repository
 if ARGV.length == 1
 	puts puts "Invoke the HostTracker."
-	host_tracker = Wmap::HostTracker.new(:verbose=>true)
+	host_tracker = Wmap::HostTracker.instance(:verbose=>true)
 elsif ARGV.length == 2
 	puts "Invoke the HostTracker with optional directory setter."
-	host_tracker = Wmap::HostTracker.new(:verbose=>true, :data_dir => ARGV[1])
+	host_tracker = Wmap::HostTracker.instance(:verbose=>true, :data_dir => ARGV[1])
 else
 	aborts "Error firing up HostTracker instance!"
 end
@@ -137,10 +137,10 @@ else
 	puts "Automatically save the discovery results into the site tracking data repository: "
 	if ARGV.length == 1
 		puts "Start the SiteTracker. "
-		inventory=Wmap::SiteTracker.new
+		inventory=Wmap::SiteTracker.instance
 	elsif ARGV.length == 2
 		puts "Start the SiteTracker with the optional directory setter. "
-		inventory=Wmap::SiteTracker.new(:data_dir => ARGV[1])
+		inventory=Wmap::SiteTracker.instance(:data_dir => ARGV[1])
 	else
 		aborts "Error firing up SiteTracker instance!"
 	end

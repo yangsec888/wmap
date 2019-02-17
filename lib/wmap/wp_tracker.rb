@@ -145,7 +145,7 @@ class Wmap::WpTracker
     #begin
 		  puts "Add entries to the local cache table from site tracker: " if @verbose
 			results=Hash.new
-			wps=Wmap::SiteTracker.new.known_sites.keys
+			wps=Wmap::SiteTracker.instance.known_sites.keys
 			if wps.size > 0
 				Parallel.map(wps, :in_processes => num) { |target|
 					add(target)

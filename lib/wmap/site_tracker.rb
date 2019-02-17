@@ -6,14 +6,14 @@
 # Copyright (c) 2012-2015 Yang Li <yang.li@owasp.org>
 #++
 require "parallel"
-#require "singleton"
+require "singleton"
 require "nokogiri"
 
 
 # Main class to automatically track the site inventory
 class Wmap::SiteTracker
 	include Wmap::Utils
-	#include Singleton
+	include Singleton
 
 	attr_accessor :sites_file, :max_parallel, :verbose, :data_dir
 	attr_reader :known_sites
@@ -125,7 +125,7 @@ class Wmap::SiteTracker
 				if root.nil?
 					raise "Invalid web site format. Please check your record again."
 				else
-					trusted=Wmap::DomainTracker.new(:data_dir=>@data_dir).domain_known?(root)
+					trusted=Wmap::DomainTracker.instance.new(:data_dir=>@data_dir).domain_known?(root)
 				end
 			end
 			# add record only if trusted
@@ -140,7 +140,7 @@ class Wmap::SiteTracker
 					raise "Site is currently down. Skip #{site}" if checker['code']==10000
 				end
 				raise "Exception on add method - Fail to resolve the host-name: Host - #{host}, IP - #{ip}. Skip #{site}" unless is_ip?(ip)
-				my_tracker = Wmap::HostTracker.new(:data_dir=>@data_dir)
+				my_tracker = Wmap::HostTracker.instance(:data_dir=>@data_dir)
 				# Update the local host table when necessary
 				if is_ip?(host)
 					# Case #1: Trusted site contains IP
@@ -156,7 +156,7 @@ class Wmap::SiteTracker
 						host1=ip_2_host(host)
 						puts "host1: #{host1}" if @verbose
 						if is_fqdn?(host1)
-							if Wmap::HostTracker.new(:data_dir=>@data_dir).domain_known?(host1)
+							if Wmap::HostTracker.instance(:data_dir=>@data_dir).domain_known?(host1)
 								# replace IP with host-name only if domain root is known
 								puts "Host found from the Internet reverse DNS lookup for #{ip}: #{host1}" if @verbose
 								host=host1
@@ -574,10 +574,10 @@ class Wmap::SiteTracker
 	def get_uniq_sites
 		puts "Getter to retrieve unique sites containing unique IP:PORT key identifier." if @verbose
 		begin
-			#primary_host_tracker=Wmap::HostTracker::PrimaryHost.new
+			#primary_host_tracker=Wmap::HostTracker::PrimaryHost.instance
 			sites=Hash.new
 			#uniqueness=Hash.new
-			my_tracker=Wmap::HostTracker.new(:data_dir=>@data_dir)
+			my_tracker=Wmap::HostTracker.instance(:data_dir=>@data_dir)
 			@known_sites.keys.map do |key|
 				port=url_2_port(key).to_s
 				host=url_2_host(key)
@@ -677,7 +677,7 @@ class Wmap::SiteTracker
 		begin
 			updates=Array.new
 			sites=get_ip_sites
-			my_tracker=Wmap::HostTracker.new(:data_dir=>@data_dir)
+			my_tracker=Wmap::HostTracker.instance(:data_dir=>@data_dir)
 			sites.map do |site|
 				puts "Work on resolve the IP site: #{site}" if @verbose
 				ip=url_2_host(site)
@@ -837,8 +837,8 @@ class Wmap::SiteTracker
 	def get_prim_uniq_sites
 		puts "Retrieve and prime unique sites in the site store. " if @verbose
 		#begin
-			host_tracker=Wmap::HostTracker.new(:data_dir=>@data_dir)
-			primary_host_tracker=Wmap::HostTracker::PrimaryHost.new(:data_dir=>@data_dir)
+			host_tracker=Wmap::HostTracker.instance(:data_dir=>@data_dir)
+			primary_host_tracker=Wmap::HostTracker::PrimaryHost.instance(:data_dir=>@data_dir)
 			# Step 1. Retrieve the unique site list first
 			sites=get_uniq_sites
 			prim_uniq_sites=Array.new

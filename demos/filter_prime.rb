@@ -3,7 +3,7 @@
 require	"wmap"
 
 puts "URL | Prime URL"
-my_tracker=Wmap::HostTracker::PrimaryHost.new
+my_tracker=Wmap::HostTracker::PrimaryHost.instance
 f_urls = File.open(ARGV[0], 'r')
 f_urls.each do |line|
 	url=line.chomp

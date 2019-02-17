@@ -5,7 +5,7 @@
 #
 # Copyright (c) 2012-2015 Yang Li <yang.li@owasp.org>
 #++
-#require "singleton"
+require "singleton"
 
 
 module Wmap
@@ -13,9 +13,9 @@ class DomainTracker
 
 # Class to differentiate the sub-domain from the top domain for the enterprise. This is needed for better managing
 # of the sub-domains and the associated entities
-class SubDomain < Wmap::DomainTracker
+class SubDomain < Wmap::DomainTracker.instance
 	include Wmap::Utils
-	#include Singleton
+	include Singleton
 
 	attr_accessor :verbose, :domains_file, :max_parallel, :data_dir
 	attr_reader :known_internet_sub_domains
@@ -90,7 +90,7 @@ class SubDomain < Wmap::DomainTracker
 		puts "Invoke internal procedures to update the sub-domain list from the host store."
 		begin
 			# Step 1 - obtain the latest sub-domains
-			subs = Wmap::HostTracker.new(:data_dir=>@data_dir).dump_sub_domains - [nil,""]
+			subs = Wmap::HostTracker.instance(:data_dir=>@data_dir).dump_sub_domains - [nil,""]
 			# Step 2 - update the sub-domain list
 			unless subs.empty?
 				#subs.map { |x| self.add(x) unless domain_known?(x) }

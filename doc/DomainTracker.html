@@ -622,9 +622,9 @@
                 <span class="ruby-comment">#abort &quot;Trusted Internet domain file not loaded properly! &quot; if @known_internet_domains.nil? or @known_internet_sub_domains.nil?</span>
                 <span class="ruby-identifier">domain</span>=<span class="ruby-identifier">domain</span>.<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">downcase</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">domain</span>.<span class="ruby-identifier">nil?</span>
                 <span class="ruby-keyword">case</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span>
-                <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;Wmap::DomainTracker&quot;</span>
+                <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;Wmap::DomainTracker.instance&quot;</span>
                         <span class="ruby-keyword">return</span> <span class="ruby-ivar">@known_internet_domains</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">domain</span>)
-                <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;Wmap::DomainTracker::SubDomain&quot;</span>
+                <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;Wmap::DomainTracker.instance::SubDomain&quot;</span>
                         <span class="ruby-keyword">return</span> <span class="ruby-ivar">@known_internet_sub_domains</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">domain</span>)
                 <span class="ruby-keyword">else</span>
                         <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>

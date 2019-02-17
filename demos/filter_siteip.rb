@@ -4,7 +4,7 @@ require	"wmap"
 
 def known?(ip)
 	ip=ip.chomp.strip
-	myDis = Wmap::SiteTracker.new
+	myDis = Wmap::SiteTracker.instance
 	known=false
 	if myDis.is_ip?(ip)
 		if myDis.siteip_known?(ip)

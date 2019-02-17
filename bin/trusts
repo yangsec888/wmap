@@ -11,7 +11,7 @@ print_usage
 Log_dir=File.dirname(__FILE__)+'/../logs/'
 Wmap.wlog("Execute the command: trust #{ARGV[0]}","trust",Log_dir+"wmap.log")
 
-dt=Wmap::DomainTracker.new
+dt=Wmap::DomainTracker.instance.new
 ct=Wmap::CidrTracker.new(:verbose=>true)
 abort "Incorrect program argument! Proper usage: trust [domain | netblock]" unless ARGV.length==1 && (File.exist?(ARGV[0]))
 

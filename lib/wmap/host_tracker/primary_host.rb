@@ -5,7 +5,7 @@
 #
 # Copyright (c) 2012-2015 Yang Li <yang.li@owasp.org>
 #++
-#require "singleton"		# Implement singleton pattern to avoid race condition under parallel engine
+require "singleton"		# Implement singleton pattern to avoid race condition under parallel engine
 
 
 module Wmap
@@ -14,7 +14,7 @@ module Wmap
 	# Class to differentiate the primary host-name from the potential aliases. This is needed in order to minimize the confusion on our final site inventory list, as it contains a large number of duplicates (aliases). More specifically, a filter could be built by using this class to track the primary url of a website.
 	class PrimaryHost < Wmap::HostTracker
 		include Wmap::Utils
-		#include Singleton
+		include Singleton
 
 		attr_accessor :hosts_file, :verbose, :data_dir
 		attr_reader :known_hosts, :known_ips
@@ -40,7 +40,7 @@ module Wmap
         # Step 1 - update the prime host table based on the SSL cert CN fields
 				cns=Hash.new
 				checker=Wmap::UrlChecker.new(:data_dir=>@data_dir)
-        my_tracker = Wmap::SiteTracker.new(:data_dir=>@data_dir)
+        my_tracker = Wmap::SiteTracker.instance(:data_dir=>@data_dir)
 				my_tracker.get_ssl_sites.map do |site|
 					puts "Exam SSL enabled site entry #{site} ..."
 					my_host=url_2_host(site)
@@ -75,7 +75,7 @@ module Wmap
 		def update_from_site_redirections!
 			puts "Invoke internal procedures to update the primary host-name table from the site store."
 			begin
-				urls=Wmap::SiteTracker.new(:data_dir=>@data_dir).get_redirection_urls
+				urls=Wmap::SiteTracker.instance(:data_dir=>@data_dir).get_redirection_urls
 				urls.map do |url|
 					if is_url?(url)
 						host=url_2_host(url)

@@ -6,7 +6,7 @@ require "wmap"
 
 # Create a known service map by parsing last quarter scan list
 def parse_old
-	host_tracker=Wmap::HostTracker.new
+	host_tracker=Wmap::HostTracker.instance
 	@services=Hash.new
 	f_site=File.open(ARGV[0],'r')
 	f_site.each do |line|
@@ -30,7 +30,7 @@ end
 
 # Go through the new scan list and look up for known service from last quarter
 def diff
-	host_tracker=Wmap::HostTracker.new
+	host_tracker=Wmap::HostTracker.instance
 	f_new = File.open(ARGV[1],'r')
 	f_new.each do |line|
 		site=line.chomp.strip

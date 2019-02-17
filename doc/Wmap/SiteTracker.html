@@ -1527,7 +1527,7 @@ format</p>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">get_uniq_sites</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Getter to retrieve unique sites containing unique IP:PORT key identifier.&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@verbose</span>
         <span class="ruby-keyword">begin</span>
-                <span class="ruby-comment">#primary_host_tracker=Wmap::HostTracker::PrimaryHost.new</span>
+                <span class="ruby-comment">#primary_host_tracker=Wmap::HostTracker::PrimaryHost.instance</span>
                 <span class="ruby-identifier">sites</span>=<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
                 <span class="ruby-comment">#uniqueness=Hash.new</span>
                 <span class="ruby-identifier">my_tracker</span>=<span class="ruby-constant">Wmap</span><span class="ruby-operator">::</span><span class="ruby-constant">HostTracker</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:data_dir=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@data_dir</span>)

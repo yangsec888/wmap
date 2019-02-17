@@ -39,9 +39,9 @@
 -	02/11/2015	A bug fix on the Wmap::SiteTracker.get_prim_uniq_sites method, where host resolved to multiple IPs could
 -				  cause exception in the rare case.
 -	02/10/2015	Implement the 'singleton' module in the Wmap::HostTracker::PrimaryHost class
--	02/05/2015	Implement singleton pattern on the Wmap::DomainTracker::SubDomain, Wmap::SiteTracker::DeactivatedSite class.  
+-	02/05/2015	Implement singleton pattern on the Wmap::DomainTracker.instance::SubDomain, Wmap::SiteTracker::DeactivatedSite class.  
 -	02/03/2015	Implement singleton pattern on the logger module, re-organize the log file structure and location.
--	01/30/2015	Implement the singleton pattern on the Wmap::SiteTracker, Wmap::DomainTracker class.
+-	01/30/2015	Implement the singleton pattern on the Wmap::SiteTracker, Wmap::DomainTracker.instance class.
 -	01/27/2015	Separate the logger sub-module and implement the singleton pattern on the logger.
 -	01/24/2015	Implement the 'singleton' module in the Wmap::HostTracker class, in order to avoid race condition
 -				  under the parallel engine

@@ -123,25 +123,25 @@ module Wmap
 	# Domain Tracking - check with the trust domain seed file locally, to determine if it's a new internet domain
 	# NOT to confuse with the Internet 'whois' lookup
 	def domain_known?(domain)
-		tracker=Wmap::DomainTracker.new
+		tracker=Wmap::DomainTracker.instance.new
 		tracker.domain_known?(domain)
 	end
 
 	# Host Tracking - check local hosts file to see if this is a hostname known from the host seed file
 	# NOT to confuse with a regular DNS lookup over the internet
 	def host_known?(host)
-		tracker=Wmap::HostTracker.new.host_known?(host)
+		tracker=Wmap::HostTracker.instance.host_known?(host)
 	end
 
 	# Sub-domain tracking - check local hosts file to see if the sub-domain is already known
 	def sub_domain_known?(host)
-		tracker=Wmap::HostTracker.new.sub_domain_known?(host)
+		tracker=Wmap::HostTracker.instance.sub_domain_known?(host)
 	end
 
 	# IP Tracking - check local hosts file to see if this is an IP known from the seed file
 	# NOT to confuse with a regular reverse DNS lookup over the internet
 	def ip_known?(ip)
-		tracker=Wmap::HostTracker.new.ip_known?(ip)
+		tracker=Wmap::HostTracker.instance.ip_known?(ip)
 	end
 
 	# DNS Brute Forcer
@@ -173,32 +173,32 @@ module Wmap
 
 	# Search the site repository for all entries that match the pattern
 	def search(pattern)
-		searcher=Wmap::SiteTracker.new
+		searcher=Wmap::SiteTracker.instance
 		searcher.search(pattern)
 	end
 
 	# Dump out the unique sites into a plain file
 	def dump(file)
-			store=Wmap::SiteTracker.new(:verbose=>true)
+			store=Wmap::SiteTracker.instance(:verbose=>true)
 			store.save_uniq_sites(file)
 	end
 
 	# Dump out the unique sites into a XML file
 	def dump_xml(file)
-			store=Wmap::SiteTracker.new
+			store=Wmap::SiteTracker.instance
 			store.save_uniq_sites_xml(file)
 	end
 
 	# Refresh the site information in the local data repository
 	def refresh(site)
-			store=Wmap::SiteTracker.new
+			store=Wmap::SiteTracker.instance
 			store.refresh(site)
 			store.save!
 	end
 
 	# Refresh the site information in the local data repository
 	def refresh_all
-			store=Wmap::SiteTracker.new
+			store=Wmap::SiteTracker.instance
 			store.refresh_all
 			store.save!
 	end
@@ -210,13 +210,13 @@ module Wmap
 
 	# Print a site's full information from the repository
 	def print(site)
-		searcher=Wmap::SiteTracker.new
+		searcher=Wmap::SiteTracker.instance
 		searcher.print_site(site)
 	end
 
 	# Print a site's full information from the repository
 	def print_all
-		searcher=Wmap::SiteTracker.new
+		searcher=Wmap::SiteTracker.instance
 		searcher.print_all_sites
 	end
 

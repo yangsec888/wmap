@@ -6,12 +6,12 @@
 # Copyright (c) 2012-2015 Yang Li <yang.li@owasp.org>
 #++
 require "parallel"
-#require "singleton"		# Implement singleton pattern to avoid race condition under parallel engine
+require "singleton"		# Implement singleton pattern to avoid race condition under parallel engine
 
 
 # Class to handle the local host data repository file where lists of known hosts from discovery and past assessment efforts are stored
 class Wmap::HostTracker
-	#include Singleton
+	include Singleton
 	include Wmap::Utils
 
 	attr_accessor :hosts_file, :max_parallel, :verbose, :data_dir
@@ -112,7 +112,7 @@ class Wmap::HostTracker
 				if is_ip?(ip)
 					# filter host to known domains only
 					root=get_domain_root(host)
-					if Wmap::DomainTracker.new(:data_dir=>@data_dir).domain_known?(root)
+					if Wmap::DomainTracker.instance.new(:data_dir=>@data_dir).domain_known?(root)
 						record[host]=ip
 						record[ip]=host
 						puts "Host data repository entry loaded: #{host} <=> #{ip}"
@@ -120,7 +120,7 @@ class Wmap::HostTracker
 						# add additional logic to update the sub-domain table as well, 02/10/2014
 						sub=get_sub_domain(host)
 						if sub!=root
-							tracker=Wmap::DomainTracker::SubDomain.new(:data_dir=>@data_dir)
+							tracker=Wmap::DomainTracker.instance::SubDomain.new(:data_dir=>@data_dir)
 							unless tracker.domain_known?(sub)
 								tracker.add(sub)
 								tracker.save!
@@ -439,7 +439,7 @@ class Wmap::HostTracker
 				sub = get_subdomain(hostname)
 				subs.push(sub) unless sub.nil?
 			end
-			subs.uniq!.sort!
+			subs.uniq!.sort! unless subs.empty?
 			puts "Found sub domains: #{subs}" if @verbose
 			return subs
 		rescue Exception => ee

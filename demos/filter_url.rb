@@ -4,7 +4,7 @@
 
 require "wmap"
 
-k=Wmap::DomainTracker.new
+k=Wmap::DomainTracker.instance.new
 #k.verbose=true
 f=File.open(ARGV[0],'r')
 f.each do |line|

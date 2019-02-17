@@ -11,7 +11,7 @@ print_usage
 Log_dir=File.dirname(__FILE__)+'/../logs/'
 Wmap.wlog("Execute the command: distrust #{ARGV[0]}","distrust",Log_dir+"wmap.log")
 
-dt=Wmap::DomainTracker.instance
+dt=Wmap::DomainTracker.instance.instance
 ct=Wmap::CidrTracker.new(:verbose=>false)
 abort "Incorrect program argument! Proper Usage: distrust [domain | netblock]" unless ARGV.length==1 && (dt.is_fqdn?(ARGV[0]) || ct.is_cidr?(ARGV[0]))
 

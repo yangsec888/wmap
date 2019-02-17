@@ -11,7 +11,7 @@ require "wmap"
 
 def load_keys (file)
 	puts "Load the key map from file: #{file}" if @verbose
-	host_tracker=Wmap::HostTracker.new
+	host_tracker=Wmap::HostTracker.instance
 	my_keys=Hash.new
 	#begin
 		f_old=File.open(file)
@@ -45,7 +45,7 @@ def load_keys (file)
 end
 
 old_keys=load_keys(ARGV[0])
-my_tracker=Wmap::HostTracker.new
+my_tracker=Wmap::HostTracker.instance
 f_new=File.open(ARGV[1],'r')
 f_new.each_line do |line|
 	ent=line.chomp.split(',')

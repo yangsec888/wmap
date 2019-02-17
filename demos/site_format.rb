@@ -4,7 +4,7 @@
 
 require "wmap"
 
-k=Wmap::SiteTracker.new
+k=Wmap::SiteTracker.instance
 f=File.open(ARGV[0],'r')
 f.each do |line|
 	url=line.chomp.strip.downcase

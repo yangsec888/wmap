@@ -7,7 +7,7 @@ require "wmap"
 @map=Hash.new
 
 def build_map (file)
-	k=Wmap::SiteTracker.new
+	k=Wmap::SiteTracker.instance
 	f=File.open(file,'r')
 	f.each do |line|
 		url=line.chomp.strip.downcase
@@ -23,7 +23,7 @@ end
 
 
 build_map(ARGV[0])
-s=Wmap::SiteTracker.new
+s=Wmap::SiteTracker.instance
 f=File.open(ARGV[1],'r')
 f.each do |line|
 	url=line.chomp.strip.downcase

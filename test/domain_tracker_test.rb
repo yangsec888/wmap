@@ -5,7 +5,7 @@
 #
 # Copyright (c) 2012-2015 Yang Li <yang.li@owasp.org>
 #++
-# Unit Test File for Wmap::DomainTracker class
+# Unit Test File for Wmap::DomainTracker.instance class
 
 require "minitest/autorun"
 require "Wmap"
@@ -14,18 +14,18 @@ class DomainTrackerTest < MiniTest::Unit::TestCase
 	include Wmap::Utils
 
 	def test_domain_known_case_1?
-		assert_equal false, Wmap::DomainTracker.new.domain_known?("yahoo.com")
+		assert_equal false, Wmap::DomainTracker.instance.new.domain_known?("yahoo.com")
 	end
 
 	def test_domain_known_case_2?
-		assert_equal true, Wmap::DomainTracker.new.domain_known?("YourDomain.co.uk")
+		assert_equal true, Wmap::DomainTracker.instance.new.domain_known?("YourDomain.co.uk")
 	end
 
 	def test_domain_known_case_3?
-		assert_equal false, Wmap::DomainTracker::SubDomain.new.domain_known?("mail.yahoo.com")
+		assert_equal false, Wmap::DomainTracker.instance::SubDomain.new.domain_known?("mail.yahoo.com")
 	end
 
 	def test_domain_known_case_4?
-		assert_equal true, Wmap::DomainTracker::SubDomain.new.domain_known?("YourHost.YourDomain.co.uk")
+		assert_equal true, Wmap::DomainTracker.instance::SubDomain.new.domain_known?("YourHost.YourDomain.co.uk")
 	end
 end
