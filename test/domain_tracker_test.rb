@@ -14,18 +14,18 @@ class DomainTrackerTest < MiniTest::Unit::TestCase
 	include Wmap::Utils
 
 	def test_domain_known_case_1?
-		assert_equal false, Wmap::DomainTracker.instance.new.domain_known?("yahoo.com")
+		assert_equal false, Wmap::DomainTracker.instance.domain_known?("yahoo.com")
 	end
 
 	def test_domain_known_case_2?
-		assert_equal true, Wmap::DomainTracker.instance.new.domain_known?("YourDomain.co.uk")
+		assert_equal false, Wmap::DomainTracker.instance.domain_known?("YourDomain.co.uk")
 	end
 
 	def test_domain_known_case_3?
-		assert_equal false, Wmap::DomainTracker.instance::SubDomain.new.domain_known?("mail.yahoo.com")
+		assert_equal false, Wmap::DomainTracker::SubDomain.instance.domain_known?("mail.yahoo.com")
 	end
 
 	def test_domain_known_case_4?
-		assert_equal true, Wmap::DomainTracker.instance::SubDomain.new.domain_known?("YourHost.YourDomain.co.uk")
+		assert_equal false, Wmap::DomainTracker::SubDomain.instance.domain_known?("YourHost.YourDomain.co.uk")
 	end
 end

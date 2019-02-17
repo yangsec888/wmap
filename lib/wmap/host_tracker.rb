@@ -76,6 +76,7 @@ class Wmap::HostTracker
 					f.write "\n#{key}\t#{@known_hosts[key]}"
 				end
 			end
+			f.write "\n"
 			f.close
 			puts "local host repository is successfully saved to: #{f_hosts}"
 		#rescue => ee
@@ -112,7 +113,8 @@ class Wmap::HostTracker
 				if is_ip?(ip)
 					# filter host to known domains only
 					root=get_domain_root(host)
-					if Wmap::DomainTracker.instance.new(:data_dir=>@data_dir).domain_known?(root)
+					puts "Domain root: #{root}" if @verbose
+					if Wmap::DomainTracker.instance.domain_known?(root)
 						record[host]=ip
 						record[ip]=host
 						puts "Host data repository entry loaded: #{host} <=> #{ip}"
@@ -120,7 +122,7 @@ class Wmap::HostTracker
 						# add additional logic to update the sub-domain table as well, 02/10/2014
 						sub=get_sub_domain(host)
 						if sub!=root
-							tracker=Wmap::DomainTracker.instance::SubDomain.new(:data_dir=>@data_dir)
+							tracker=Wmap::DomainTracker::SubDomain.instance
 							unless tracker.domain_known?(sub)
 								tracker.add(sub)
 								tracker.save!

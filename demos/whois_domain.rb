@@ -5,7 +5,7 @@
 require	"wmap"
 
 puts Wmap.banner
-dis=Wmap::DomainTracker.instance.new
+dis=Wmap::DomainTracker.instance
 dis.verbose=false
 puts "Domain Whois Lookup Summary Report"
 puts "Host | Domain | Primary Domain Name Server | Registrant Name | Registrant Oraganization | Registrant Address | Registrant Zip | Registrant City | Registrant State | Registration Country | Registration Contact Phone | Registration Contact Email | Technical Contact Name | Technical Contact Organization | Technical Contact Country | Technical Contract Phone | Technical Contact Email | Admin Contact Name | Admin Contact Organization | Domain Availability"
@@ -75,4 +75,4 @@ f_hosts.each do |line|
 	end
 end
 f_hosts.close
-dis=nil 
+dis=nil

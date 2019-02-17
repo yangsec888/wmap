@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Executable to remove entry from the ring of the trust. I.E. the trusted domain or CIDR 
+# Executable to remove entry from the ring of the trust. I.E. the trusted domain or CIDR
 require "wmap"
 
 def print_usage
@@ -11,14 +11,14 @@ print_usage
 Log_dir=File.dirname(__FILE__)+'/../logs/'
 Wmap.wlog("Execute the command: distrust #{ARGV[0]}","distrust",Log_dir+"wmap.log")
 
-dt=Wmap::DomainTracker.instance.instance
+dt=Wmap::DomainTracker.instance
 ct=Wmap::CidrTracker.new(:verbose=>false)
 abort "Incorrect program argument! Proper Usage: distrust [domain | netblock]" unless ARGV.length==1 && (dt.is_fqdn?(ARGV[0]) || ct.is_cidr?(ARGV[0]))
 
 puts "Start the demonizing ..."
 
 
-if dt.is_domain?(ARGV[0]) 
+if dt.is_domain?(ARGV[0])
 	result=dt.delete(ARGV[0])
 	unless result.nil?
 		dt.save!
@@ -35,4 +35,3 @@ if ct.is_cidr?(ARGV[0].to_s)
 	end
 end
 ct=nil
-

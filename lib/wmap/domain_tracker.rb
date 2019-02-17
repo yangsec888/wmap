@@ -10,7 +10,7 @@ require "singleton"
 
 
 # Class to track the known (trusted) Internet domains
-class Wmap::DomainTracker.instance
+class Wmap::DomainTracker
 	include Wmap::Utils
 	include Singleton
 
@@ -283,9 +283,9 @@ class Wmap::DomainTracker.instance
 			#abort "Trusted Internet domain file not loaded properly! " if @known_internet_domains.nil? or @known_internet_sub_domains.nil?
 			domain=domain.strip.downcase unless domain.nil?
 			case self.class.name
-			when "Wmap::DomainTracker.instance"
+			when "Wmap::DomainTracker"
 				return @known_internet_domains.key?(domain)
-			when "Wmap::DomainTracker.instance::SubDomain"
+			when "Wmap::DomainTracker::SubDomain"
 				return @known_internet_sub_domains.key?(domain)
 			else
 				return nil

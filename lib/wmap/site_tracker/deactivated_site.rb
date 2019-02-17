@@ -5,7 +5,7 @@
 #
 # Copyright (c) 2012-2015 Yang Li <yang.li@owasp.org>
 #++
-#require "singleton"
+require "singleton"
 
 
 # Class to trace de-activated site. This is need for basic state tracking for our sites.
@@ -15,7 +15,7 @@ class SiteTracker
 
 class DeactivatedSite < Wmap::SiteTracker
 	include Wmap::Utils
-	#include Singleton
+	include Singleton
 
 	attr_accessor :sites_file, :known_sites, :verbose, :data_dir
 

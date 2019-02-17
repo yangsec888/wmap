@@ -19,13 +19,13 @@ else
 	abort "You got it. Mission is successfully aborted. "
 end
 # Update sub-domain table
-sd=Wmap::DomainTracker.instance::SubDomain.new
+sd=Wmap::DomainTracker::SubDomain.instance
 sd.update_from_host_store!
 subs=sd.known_internet_sub_domains.keys
 sd=nil
 
 # Update Domain table
-dm=Wmap::DomainTracker.instance.new
+dm=Wmap::DomainTracker.instance
 domains=dm.known_internet_domains.keys
 dm=nil
 
@@ -52,7 +52,7 @@ h=nil
 # Update site store
 st=Wmap::SiteTracker.instance
 st.refresh_all
-dt=Wmap::SiteTracker::DeactivatedSite.new
+dt=Wmap::SiteTracker::DeactivatedSite.instance
 ds=dt.known_sites.keys
 st.adds(ds)					#double-check the de-activated sites in case the site is back on-line again
 st.save!

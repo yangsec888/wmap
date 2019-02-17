@@ -13,7 +13,7 @@ class DomainTracker
 
 # Class to differentiate the sub-domain from the top domain for the enterprise. This is needed for better managing
 # of the sub-domains and the associated entities
-class SubDomain < Wmap::DomainTracker.instance
+class SubDomain < Wmap::DomainTracker
 	include Wmap::Utils
 	include Singleton
 
