@@ -44,18 +44,18 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.required_ruby_version = Gem::Requirement.new(">= 2.1")
 
- 	s.add_dependency 'dnsruby', '~> 1.52'
-	s.add_dependency 'geoip', '~> 1.0'
-	s.add_dependency 'net-ping', '~> 2.0'
-	s.add_dependency 'nokogiri', '~> 1.10'
-	s.add_dependency 'css_parser', '~> 1.6'
-	s.add_dependency 'openssl', '~> 2.0'
-	s.add_dependency 'parallel', '~> 1.0'
-	s.add_dependency 'whois', '~> 2.7'
+	s.add_dependency 'dnsruby', '>= 1.52'
+	s.add_dependency 'geoip', '>= 1.0'
+	s.add_dependency 'minitest', '>= 5.0'
+	s.add_dependency 'net-ping', '>= 2.0'
+	s.add_dependency 'nokogiri', '>= 1.6'
+	s.add_dependency 'css_parser', '>= 1.6'
+	s.add_dependency 'openssl', '>= 2.0'
+	s.add_dependency 'parallel', '>= 1.0'
+	s.add_dependency 'whois', '>= 2.7'
 	s.add_dependency 'httpclient', '~> 2.0'
-	s.add_dependency 'open_uri_redirections', '~> 0.2.1'
+	s.add_dependency 'open_uri_redirections', '>= 0.2'
 	s.add_dependency 'netaddr', '~> 1.5'
-	s.add_dependency 'minitest', '~> 5.10'
 
   s.rubyforge_project = "wmap"
   s.rubygems_version = "1.8.24"

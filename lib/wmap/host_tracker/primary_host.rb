@@ -40,7 +40,8 @@ module Wmap
         # Step 1 - update the prime host table based on the SSL cert CN fields
 				cns=Hash.new
 				checker=Wmap::UrlChecker.new(:data_dir=>@data_dir)
-        my_tracker = Wmap::SiteTracker.instance(:data_dir=>@data_dir)
+        my_tracker = Wmap::SiteTracker.instance
+        my_tracker.data_dir = @data_dir
 				my_tracker.get_ssl_sites.map do |site|
 					puts "Exam SSL enabled site entry #{site} ..."
 					my_host=url_2_host(site)
@@ -75,7 +76,10 @@ module Wmap
 		def update_from_site_redirections!
 			puts "Invoke internal procedures to update the primary host-name table from the site store."
 			begin
-				urls=Wmap::SiteTracker.instance(:data_dir=>@data_dir).get_redirection_urls
+				my_tracker=Wmap::SiteTracker.instance
+        my_tracker.data_dir=@data_dir
+        urls = my_tracker.get_redirection_urls
+        my_tracker = nil 
 				urls.map do |url|
 					if is_url?(url)
 						host=url_2_host(url)

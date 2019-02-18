@@ -16,7 +16,7 @@ if ARGV.length == 1
 	Log_dir=File.dirname(__FILE__)+'/../logs/'
 elsif ARGV.length == 2
 	# Log to the instance running directory
-	Log_dir=ARGV[1] + '/logs/'
+	Log_dir=File.dirname(__FILE__)+'/../logs/'+ARGV[1]
 end
 Dir.mkdir(Log_dir) unless Dir.exist?(Log_dir)
 
@@ -67,10 +67,13 @@ end
 # second step - update the hosts repository
 if ARGV.length == 1
 	puts puts "Invoke the HostTracker."
-	host_tracker = Wmap::HostTracker.instance(:verbose=>true)
+	host_tracker = Wmap::HostTracker.instance
+	host_tracker.verbose=true
 elsif ARGV.length == 2
 	puts "Invoke the HostTracker with optional directory setter."
-	host_tracker = Wmap::HostTracker.instance(:verbose=>true, :data_dir => ARGV[1])
+	host_tracker = Wmap::HostTracker.instance
+	host_tracker.verbose=true
+	host_tracker.data_dir = ARGV[1]
 else
 	aborts "Error firing up HostTracker instance!"
 end
@@ -140,7 +143,8 @@ else
 		inventory=Wmap::SiteTracker.instance
 	elsif ARGV.length == 2
 		puts "Start the SiteTracker with the optional directory setter. "
-		inventory=Wmap::SiteTracker.instance(:data_dir => ARGV[1])
+		inventory=Wmap::SiteTracker.instance
+		inventory.data_dir = ARGV[1]
 	else
 		aborts "Error firing up SiteTracker instance!"
 	end

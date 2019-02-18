@@ -90,7 +90,10 @@ class SubDomain < Wmap::DomainTracker
 		puts "Invoke internal procedures to update the sub-domain list from the host store."
 		begin
 			# Step 1 - obtain the latest sub-domains
-			subs = Wmap::HostTracker.instance(:data_dir=>@data_dir).dump_sub_domains - [nil,""]
+			my_tracker = Wmap::HostTracker.instance
+			my_tracker.data_dir=@data_dir
+			subs = my_tracker.dump_sub_domains - [nil,""]
+			my_tracker = nil 
 			# Step 2 - update the sub-domain list
 			unless subs.empty?
 				#subs.map { |x| self.add(x) unless domain_known?(x) }

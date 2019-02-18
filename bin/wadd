@@ -4,16 +4,35 @@
 require "wmap"
 
 def print_usage
-	puts "Program to add an entry into the local data repository. Usage: wadd [site]"
+	puts "Program to add an entry into the local data repository. Usage: wadd <site> [data_dir]"
 end
 
 puts Wmap.banner
 print_usage
-Log_dir=File.dirname(__FILE__)+'/../logs/'
+if ARGV.length == 1
+	# Log the command entry
+	Log_dir = File.dirname(__FILE__) + '/../logs/'
+elsif ARGV.length == 2
+	# Log to the instance running directory
+	Log_dir = File.dirname(__FILE__) + '/../logs/' + ARGV[1]
+else
+	Log_dir = File.dirname(__FILE__) + '/../logs/'
+end
+Dir.mkdir(Log_dir) unless Dir.exist?(Log_dir)
 Wmap.wlog("Execute the command: wadd #{ARGV[0]}","wadd",Log_dir+"wmap.log")
 
-st=Wmap::SiteTracker.instance
-abort "Incorrect program argument!" unless ARGV.length==1
+if ARGV.length == 1
+	puts puts "Invoke the SiteTracker."
+	st=Wmap::SiteTracker.instance
+	st.verbose=false
+elsif ARGV.length == 2
+	puts puts "Invoke the SiteTracker."
+	st=Wmap::SiteTracker.instance
+	st.verbose=false
+	st.data_dir=ARGV[1]
+else
+	aborts "Error firing up SiteTracker instance!"
+end
 
 # Evaluate the argument and update the data store accordingly
 if st.is_site?(ARGV[0])

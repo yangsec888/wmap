@@ -114,7 +114,10 @@ class Wmap::HostTracker
 					# filter host to known domains only
 					root=get_domain_root(host)
 					puts "Domain root: #{root}" if @verbose
-					if Wmap::DomainTracker.instance.domain_known?(root)
+					domain_tracker=Wmap::DomainTracker.instance
+					domain_tracker.data_dir=@data_dir
+					if domain_tracker.instance.domain_known?(root)
+						domain_tracker=nil
 						record[host]=ip
 						record[ip]=host
 						puts "Host data repository entry loaded: #{host} <=> #{ip}"
@@ -123,6 +126,7 @@ class Wmap::HostTracker
 						sub=get_sub_domain(host)
 						if sub!=root
 							tracker=Wmap::DomainTracker::SubDomain.instance
+							tracker.data_dir=@data_dir
 							unless tracker.domain_known?(sub)
 								tracker.add(sub)
 								tracker.save!
@@ -132,6 +136,7 @@ class Wmap::HostTracker
 						@known_hosts.merge!(record)
 						return record
 					else
+						domain_tracker=nil
 						puts "Error - host #{host} has an untrusted internet root domain: #{root}\nPlease update the trusted domain seeds file first if necessary."
 					end
 				else

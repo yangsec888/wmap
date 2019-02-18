@@ -123,7 +123,7 @@ module Wmap
 	# Domain Tracking - check with the trust domain seed file locally, to determine if it's a new internet domain
 	# NOT to confuse with the Internet 'whois' lookup
 	def domain_known?(domain)
-		tracker=Wmap::DomainTracker.instance.new
+		tracker=Wmap::DomainTracker.instance
 		tracker.domain_known?(domain)
 	end
 
@@ -179,7 +179,8 @@ module Wmap
 
 	# Dump out the unique sites into a plain file
 	def dump(file)
-			store=Wmap::SiteTracker.instance(:verbose=>true)
+			store=Wmap::SiteTracker.instance
+      store.verbose=true
 			store.save_uniq_sites(file)
 	end
 

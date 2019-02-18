@@ -296,7 +296,8 @@ class Wmap::SiteTracker
 		puts "Remove entry from the site store: #{site} " if @verbose
 		begin
 			# Additional logic to deactivate the site properly, by moving it to the DeactivatedSite list, 02/07/2014
-			deact=Wmap::SiteTracker::DeactivatedSite.instance(:data_dir=>@data_dir)
+			deact=Wmap::SiteTracker::DeactivatedSite.instance
+			deact.data_dir=@data_dir
 			site=site.strip.downcase
 			site=url_2_site(site)
 			if @known_sites.key?(site)
@@ -585,7 +586,8 @@ class Wmap::SiteTracker
 			#primary_host_tracker=Wmap::HostTracker::PrimaryHost.instance
 			sites=Hash.new
 			#uniqueness=Hash.new
-			my_tracker=Wmap::HostTracker.instance(:data_dir=>@data_dir)
+			my_tracker=Wmap::HostTracker.instance
+			my_tracker.data_dir=@data_dir
 			@known_sites.keys.map do |key|
 				port=url_2_port(key).to_s
 				host=url_2_host(key)
@@ -685,7 +687,8 @@ class Wmap::SiteTracker
 		begin
 			updates=Array.new
 			sites=get_ip_sites
-			my_tracker=Wmap::HostTracker.instance(:data_dir=>@data_dir)
+			my_tracker=Wmap::HostTracker.instance
+			my_tracker.data_dir=@data_dir
 			sites.map do |site|
 				puts "Work on resolve the IP site: #{site}" if @verbose
 				ip=url_2_host(site)
@@ -845,8 +848,10 @@ class Wmap::SiteTracker
 	def get_prim_uniq_sites
 		puts "Retrieve and prime unique sites in the site store. " if @verbose
 		#begin
-			host_tracker=Wmap::HostTracker.instance(:data_dir=>@data_dir)
-			primary_host_tracker=Wmap::HostTracker::PrimaryHost.instance(:data_dir=>@data_dir)
+			host_tracker=Wmap::HostTracker.instance
+			host_tracker.data_dir=@data_dir
+			primary_host_tracker=Wmap::HostTracker::PrimaryHost.instance
+			primary_host_tracker.data_dir=@data_dir
 			# Step 1. Retrieve the unique site list first
 			sites=get_uniq_sites
 			prim_uniq_sites=Array.new

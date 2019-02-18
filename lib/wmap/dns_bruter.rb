@@ -163,7 +163,8 @@ class Wmap::DnsBruter
 		begin
 			host=host.strip
 			valid_hosts = Array.new
-			my_host_tracker = Wmap::HostTracker.instance(:data_dir=>@data_dir)
+			my_host_tracker = Wmap::HostTracker.instance
+			my_host_tracker.data_dir=@data_dir
 			# build the host dictionary for the brute force method
 			dict = Array.new
 			if File.exists?(@hosts_dict)
@@ -247,7 +248,8 @@ class Wmap::DnsBruter
 		puts "Start the parallel brute-forcing all domains with maximum child processes: #{num}"
 		begin
 			hosts=Array.new
-			my_dis=Wmap::HostTracker.instance(:data_dir=>@data_dir)
+			my_dis=Wmap::HostTracker.instance
+			my_dis.data_dir=@data_dir
 			known_domains=my_dis.dump_root_domains
 			hosts=dns_brute_domains(num, known_domains)
 			my_dis.adds(hosts)
