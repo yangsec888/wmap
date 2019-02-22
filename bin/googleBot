@@ -14,7 +14,7 @@ Wmap.wlog("Execute the command: googleBot","googleBot",Log_dir+"wmap.log")
 abort "Incorrect program argument - no argument needed! Proper Usage: googleBot " unless ARGV.length==0
 
 puts "Start the Google search scraper. This may take a while, please be patient ..."
-dis=Wmap::GoogleSearchScraper.new
+dis=Wmap::GoogleSearchScraper.new(:verbose=>false)
 dis.workers
 sites=dis.discovered_sites_from_scraper.keys
 puts "Update Google search results into the data repository:"

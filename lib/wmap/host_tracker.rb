@@ -104,8 +104,8 @@ class Wmap::HostTracker
 
 	# Setter to add host entry to the cache once at a time
 	def add(host)
-		puts "Add entry to the local host repository: #{host}"
-		#begin
+		begin
+			puts "Add entry to the local host repository: #{host}"
 			host=host.strip.downcase unless host.nil?
 			unless @known_hosts.key?(host)
 				ip=host_2_ip(host)
@@ -116,7 +116,7 @@ class Wmap::HostTracker
 					puts "Domain root: #{root}" if @verbose
 					domain_tracker=Wmap::DomainTracker.instance
 					domain_tracker.data_dir=@data_dir
-					if domain_tracker.instance.domain_known?(root)
+					if domain_tracker.domain_known?(root)
 						domain_tracker=nil
 						record[host]=ip
 						record[ip]=host
@@ -145,14 +145,14 @@ class Wmap::HostTracker
 			else
 				puts "Host is already exist. Skip: #{host}"
 			end
-		#rescue => ee
-		#	puts "Exception on method #{__method__}: #{ee}" if @verbose
-		#end
+		rescue => ee
+			puts "Exception on method #{__method__}: #{ee}" if @verbose
+		end
 	end
 
 	# Setter to add host entry to the local hosts in batch (from an array)
 	def bulk_add(list, num=@max_parallel)
-		#begin
+		begin
 			puts "Add entries to the local host repository: #{list}"
 			results=Hash.new
 			if list.size > 0
@@ -175,9 +175,9 @@ class Wmap::HostTracker
 				puts "Error: empty list - no entry is loaded. Please check your input list and try again."
 			end
 			return results
-#		rescue => ee
-#			puts "Exception on method #{__method__}: #{ee}"
-#		end
+		rescue => ee
+			puts "Exception on method #{__method__}: #{ee}"
+		end
 	end
 	alias_method :adds, :bulk_add
 
@@ -249,7 +249,7 @@ class Wmap::HostTracker
 
 	# Setter to refresh the entry from the cache one at a time
 	def refresh(host)
-		#begin
+		begin
 			puts "Refresh the local host repository for host: #{host} "
 			host=host.strip.downcase
 			if @known_hosts.key?(host)
@@ -273,15 +273,15 @@ class Wmap::HostTracker
 			else
 				puts "Error entry non exist: #{host}"
 			end
-		#rescue => ee
-		#	puts "Exception on method #{__method__}: #{ee}"
-		#end
+		rescue => ee
+			puts "Exception on method #{__method__}: #{ee}"
+		end
 	end
 
 	#	Refresh all the entries in the local hosts by querying the Internet
 	def refresh_all
-		puts "Refresh all the entries in the local host repository in one shot."
-		#begin
+		begin
+			puts "Refresh all the entries in the local host repository in one shot."
 			changes=Hash.new
 			hosts=@known_hosts.keys
 			@known_hosts=Hash.new
@@ -297,15 +297,15 @@ class Wmap::HostTracker
 			#changes.map { |x| puts x }
 			puts "Done refreshing the local hosts."
 			return changes
-		#rescue => ee
-		#	puts "Exception on method #{__method__}: #{ee}"
-		#end
+		rescue => ee
+			puts "Exception on method #{__method__}: #{ee}"
+		end
 	end
 
 	# Extract known root domains from the local host repository @known_hosts
 	def get_root_domains
-		puts "Dump out all active root domains from the cache."
 		begin
+			puts "Dump out all active root domains from the cache."
 			zones=Array.new
 			(@known_hosts.keys-["",nil]).map do |hostname|
 				next if is_ip?(hostname)

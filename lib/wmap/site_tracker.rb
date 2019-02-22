@@ -103,11 +103,14 @@ class Wmap::SiteTracker
 
 	# Setter to add site entry to the cache one at a time
 	def add(site)
-		puts "Add entry to the site store: #{site}"
 		begin
+			puts "Add entry to the site store: #{site}"
 			# Preliminary sanity check
 			site=site.strip.downcase unless site.nil?
-			raise "Site is already exist. Skip #{site}" if site_known?(site)
+			if site_known?(site)
+				puts  "Site is already exist. Skip #{site}"
+				return nil
+			end
 			site=normalize_url(site) if is_url?(site)
 			site=url_2_site(site) if is_url?(site)
 			puts "Site in standard format: #{site}" if @verbose
@@ -226,16 +229,20 @@ class Wmap::SiteTracker
 				end
 				deact=nil
 				my_tracker=nil
+				host_tracker=nil
 				return checker
 			else
 				puts "Problem found: untrusted Internet domain or IP. Skip #{site}"
 				deact=nil
 				my_tracker=nil
+				host_tracker=nil
 				return nil
 			end
 		rescue => ee
 			puts "Exception on method #{__method__}: #{ee}"
+			checker=nil
 			deact=nil
+			host_tracker=nil 
 			return nil
 		end
 	end

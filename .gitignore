@@ -1,3 +1,6 @@
+# ignore user settings
+settings/*
+
 # no user data
 data/*
 
