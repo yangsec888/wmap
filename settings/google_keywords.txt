@@ -2,19 +2,4 @@
 # Used by the Wmap::GoogleSearchScraper class
 
 # Official whole name
-Penguin Random House
-
-# 2014 purchase
-Random House
-
-# Parent company
-Bertelsmann
-
-# Division
-Crown Books
-
-# Division
-Dorling Kindersley
-
-# Division
-Penguin Random House Canada
+Google Inc.
