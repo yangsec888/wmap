@@ -32,8 +32,8 @@ class Wmap::UrlChecker
 
 	# Main worker method to perform various checks on the URL / site
 	def url_worker (url)
-		puts "Checking out an unknown URL: #{url}" if @verbose
 		begin
+			puts "Checking out an unknown URL: #{url}" if @verbose
 			url=url.strip.downcase
 			raise "Invalid URL format: #{url}" unless is_url?(url)
 			timestamp=Time.now
@@ -46,10 +46,10 @@ class Wmap::UrlChecker
 			else
 				code=response_code(url)
 			end
-			if @url_redirection.key?(url)
-				loc=@url_redirection[url]
+			if code>=300 && code < 400
+				loc=landing_location(4,url)
 			else
-				loc=redirect_location(url)
+				loc=nil
 			end
 			if @url_finger_print.key?(url)
 				fp=@url_finger_print[url]
@@ -211,6 +211,26 @@ class Wmap::UrlChecker
 		end
 	end
 	alias_method :location, :redirect_location
+
+	# Test the URL / Site and return the landing url location (recursive with the depth = 4 )
+	def landing_location (depth=4, url)
+		begin
+			depth -= 1
+			return url if depth < 1
+			timeo = @http_timeout/1000.0
+			uri = URI.parse(url)
+			code = response_code (url)
+			if code >= 300 && code < 400
+				url = redirect_location (url)
+				url = landing_location(depth,url)
+			else
+				return url
+			end
+			return url
+		rescue Exception => ee
+			puts "Exception on method #{__method__} on URL #{url}: #{ee}" if @verbose
+		end
+	end
 
 	# Test the URL / site and return the web server type from the HTTP header "server" field
 	def get_server_header (url)

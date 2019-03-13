@@ -71,7 +71,7 @@ class Wmap::WpTracker
 		end
 	end
 
-	# Save the current domain hash table into a file
+	# Save the current hash table into a file
 	def save_to_file!(file_wps=@file_wps, wps=@known_wp_sites)
 		puts "Saving the current wordpress site table from memory to file: #{file_wps} ..." if @verbose
 		begin

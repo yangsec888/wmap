@@ -143,7 +143,7 @@ class Wmap::DomainTracker
 					@known_internet_domains.merge!(record)
 					return record
 				else
-					puts "Problem add domain #{host} - please use legal root domain or sub domain only."
+					puts "Problem add domain #{host}: unknown domain format - please use legal root domain or sub domain only."
 				end
 			end
 		rescue => ee

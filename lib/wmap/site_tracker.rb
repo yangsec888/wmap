@@ -108,7 +108,7 @@ class Wmap::SiteTracker
 			# Preliminary sanity check
 			site=site.strip.downcase unless site.nil?
 			if site_known?(site)
-				puts  "Site is already exist. Skip #{site}"
+				puts  "Site already exists. Skip it: #{site}"
 				return nil
 			end
 			site=normalize_url(site) if is_url?(site)
@@ -242,7 +242,7 @@ class Wmap::SiteTracker
 			puts "Exception on method #{__method__}: #{ee}"
 			checker=nil
 			deact=nil
-			host_tracker=nil 
+			host_tracker=nil
 			return nil
 		end
 	end
