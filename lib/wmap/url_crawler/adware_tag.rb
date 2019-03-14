@@ -37,7 +37,7 @@ module Wmap
 
     # load the known tag signatures into an instance variable
   	def load_from_file (file, lc=true)
-  		#begin
+  		begin
         puts "Loading data file: #{file}"	if @verbose
   			data_store=Hash.new
   			f = File.open(file, 'r')
@@ -58,15 +58,15 @@ module Wmap
   			end
   			f.close
   			return data_store
-  		#rescue => ee
-  		#	puts "Exception on method #{__method__}: #{ee}" if @verbose
-  		#	return nil
-  		#end
+  		rescue => ee
+  			puts "Exception on method #{__method__}: #{ee}" if @verbose
+  			return nil
+  		end
   	end
 
     # load the known tag store cache into an instance variable
   	def load_tag_from_file (file, lc=true)
-  		#begin
+  		begin
         puts "Loading tag data file: #{file}"	if @verbose
   			data_store=Hash.new
   			f = File.open(file, 'r')
@@ -87,15 +87,15 @@ module Wmap
   			end
   			f.close
   			return data_store
-  		#rescue => ee
-  		#	puts "Exception on method #{__method__}: #{ee}" if @verbose
-  		#	return nil
-  		#end
+  		rescue => ee
+  			puts "Exception on method #{__method__}: #{ee}" if @verbose
+  			return nil
+  		end
   	end
 
     # Save the current tag store hash table into a file
   	def save_to_file!(file_tag=@tag_file, tags=@tag_store)
-      #begin
+      begin
         puts "Saving the current wordpress site table from memory to file: #{file_tag} ..." if @verbose
   			timestamp=Time.now
   			f=File.open(file_tag, 'w')
@@ -106,21 +106,21 @@ module Wmap
   			end
   			f.close
   			puts "Tag store cache table is successfully saved: #{file_tag}"
-  		#rescue => ee
-  		#	puts "Exception on method #{__method__}: #{ee}" if @verbose
-  		#end
+  		rescue => ee
+  			puts "Exception on method #{__method__}: #{ee}" if @verbose
+  		end
   	end
   	alias_method :save!, :save_to_file!
 
     # add tag entries (from the sitetracker list)
-  	def refresh (num=@max_parallel)
+  	def refresh (num=@max_parallel,use_cache=true)
       begin
   		  puts "Add entries to the local cache table from site tracker: " if @verbose
   			results=Hash.new
   			tags=Wmap::SiteTracker.instance.known_sites.keys
   			if tags.size > 0
   				Parallel.map(tags, :in_processes => num) { |target|
-  					check_adware(target)
+  					check_adware(target,use_cache)
   				}.each do |process|
   					if !process
   						next
@@ -139,15 +139,16 @@ module Wmap
   			return results
   		rescue => ee
   			puts "Exception on method #{__method__}: #{ee}" if @verbose
+        return false
   		end
   	end
 
     # Give a  site, locate the landing page, then sift out the adware tag if found
-  	def check_adware(site)
+  	def check_adware(site,use_cache=true)
       begin
   		  puts "Check the site for known Adware tags: #{site}" if @verbose
-  			if @tag_store.key?(site)
-  				puts "Site entry already exist. Skipping: #{site}" if @verbose
+  			if use_cache && @tag_store.key?(site)
+				  puts "Site entry already exist. Skipping: #{site}" if @verbose
           return nil
   			else
   				record=Hash.new
@@ -191,7 +192,7 @@ module Wmap
 
     # Search the page for known tag signatures. If found return them in a string deliminated by '|'
   	def find_tags(url)
-  		#begin
+  		begin
   			puts "Search and return tags within the url: #{url}" if @verbose
   			tag_list = []
         doc = Nokogiri::HTML(open(url))
@@ -206,10 +207,10 @@ module Wmap
         else
           return false
         end
-      #rescue => ee
-      #  puts "Exception on method #{__method__}: #{ee}" if @verbose
-      #  return false
-  		#end
+      rescue => ee
+        puts "Exception on method #{__method__}: #{ee}" if @verbose
+        return false
+  		end
     end
 
 

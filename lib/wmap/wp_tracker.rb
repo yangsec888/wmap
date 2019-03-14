@@ -95,11 +95,11 @@ class Wmap::WpTracker
 	alias_method :save!, :save_to_file!
 
   # 'setter' to add wordpress entry to the cache one at a time
-	def add(url)
+	def add(url, use_cache=true)
     begin
 		  puts "Add entry to the local cache table: #{url}" if @verbose
       site=url_2_site(url)
-			if @known_wp_sites.key?(site)
+			if use_cache && @known_wp_sites.key?(site)
 				puts "Site is already exist. Skipping: #{site}"
 			else
 				record=Hash.new
@@ -141,14 +141,14 @@ class Wmap::WpTracker
 	end
 
   # add wordpress site entries (from a sitetracker list)
-	def refresh (num=@max_parallel)
+	def refresh (num=@max_parallel,use_cache=true)
     #begin
 		  puts "Add entries to the local cache table from site tracker: " if @verbose
 			results=Hash.new
 			wps=Wmap::SiteTracker.instance.known_sites.keys
 			if wps.size > 0
 				Parallel.map(wps, :in_processes => num) { |target|
-					add(target)
+					add(target,use_cache)
 				}.each do |process|
 					if process.nil?
 						next
