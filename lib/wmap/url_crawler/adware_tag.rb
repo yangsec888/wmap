@@ -31,7 +31,6 @@ module Wmap
       File.write(file2, "") unless File.exist?(@tag_file)
       # load the known tag store
       @tag_store=load_tag_from_file(file2)
-
 		end
 
 
@@ -81,9 +80,8 @@ module Wmap
   				if data_store.key?(entry[0])
   					next
   				else
-  					data_store[entry[0]]=[entry[1].strip, entry[2].strip]
+  					data_store[entry[0]]=[entry[1].strip, entry[2].strip, entry[3]]
   				end
-
   			end
   			f.close
   			return data_store
@@ -100,9 +98,9 @@ module Wmap
   			timestamp=Time.now
   			f=File.open(file_tag, 'w')
   			f.write "# Local tag file created by class #{self.class} method #{__method__} at: #{timestamp}\n"
-  			f.write "# Site, Landing URL, Detected Adware Tags\n"
+  			f.write "# Site, Landing URL, Detected Adware Tag, Tag Version, Tag Description\n"
   			tags.each do |key, val|
-  				f.write "#{key}, #{val[0]}, #{val[1]}\n"
+  				f.write "#{key}, #{val[0]}, #{val[1]}, #{val[2]}, #{val[3]}\n"
   			end
   			f.close
   			puts "Tag store cache table is successfully saved: #{file_tag}"
@@ -114,7 +112,7 @@ module Wmap
 
     # add tag entries (from the sitetracker list)
   	def refresh (num=@max_parallel,use_cache=true)
-      begin
+      #begin
   		  puts "Add entries to the local cache table from site tracker: " if @verbose
   			results=Hash.new
   			tags=Wmap::SiteTracker.instance.known_sites.keys
@@ -137,35 +135,40 @@ module Wmap
   			end
         tags=nil
   			return results
-  		rescue => ee
-  			puts "Exception on method #{__method__}: #{ee}" if @verbose
-        return false
-  		end
+  		#rescue => ee
+  		#	puts "Exception on method #{__method__}: #{ee}" if @verbose
+  		#end
   	end
 
     # Give a  site, locate the landing page, then sift out the adware tag if found
   	def check_adware(site,use_cache=true)
-      begin
+      #begin
   		  puts "Check the site for known Adware tags: #{site}" if @verbose
+        record = Hash.new
   			if use_cache && @tag_store.key?(site)
 				  puts "Site entry already exist. Skipping: #{site}" if @verbose
-          return nil
   			else
-  				record=Hash.new
           url = fast_landing(site)
-          tags=find_tags(url)
+          tags = find_tags(url)
+          return record if tags.size==0
+          tag_vers=tags.map do |tag|
+            get_ver(url,tag)
+          end
+          tag_descs=tags.map do |tag|
+            Base64.urlsafe_encode64(get_desc(url,tag))
+          end
   				if tags
-            record[site]=[url, tags]
+            record[site]=[url, tags.join("|"), tag_vers.join("|"), tag_descs.join("|")]
             @tag_store.merge!(record)
             puts "Tag entry loaded: #{record}" if @verbose
           else
             puts "No tag found. Skip site #{site}" if @verbose
           end
-          return record
   			end
-      rescue => ee
-  			puts "Exception on method #{__method__}: #{ee}: #{site}" if @verbose
-  		end
+        return record
+      #rescue => ee
+  		#	puts "Exception on method #{__method__}: #{ee}: #{site}" if @verbose
+  		#end
   	end
 
     # Given a site, determine the landing url
@@ -190,10 +193,10 @@ module Wmap
       return url
     end
 
-    # Search the page for known tag signatures. If found return them in a string deliminated by '|'
+    # Search the page for known tag signatures. If found return them in an array
   	def find_tags(url)
   		begin
-  			puts "Search and return tags within the url: #{url}" if @verbose
+  			puts "Search and return tags within the url payload: #{url}" if @verbose
   			tag_list = []
         doc = Nokogiri::HTML(open(url))
         doc.text.each_line do |line|
@@ -202,17 +205,74 @@ module Wmap
             tag_list.push(tag) if my_line.include?(tag)
           end
         end
-        if tag_list.size > 0
-          return tag_list.join("|")
-        else
-          return false
-        end
+        doc = nil
+        return tag_list
       rescue => ee
         puts "Exception on method #{__method__}: #{ee}" if @verbose
-        return false
+        return []
   		end
     end
 
+    # Search the url payload for known tag version identifier. If found return a string, else empty string.
+  	def get_ver(url,tag)
+      puts "Search and return tag version within the url payload: #{url}, #{tag}" if @verbose
+      tag_ver=""
+      doc = Nokogiri::HTML(open(url))
+      case tag
+      when "utag.js"          # sample: ...,"code_release_version":"cb20190312032612",...
+        doc.text.each_line do |line|
+          my_line = line.downcase
+          if my_line.include?("code_release_version")
+            puts "Extract tag version from line: #{my_line}" if @verbose
+            m = my_line.match(/\"code\_release\_version\"\:\"(?<ver>[a-z]+\d+)\"/)
+            tag_ver = m[:ver]
+            break
+          end
+        end
+      when "analytics.js"          # sample:   ga('create', 'UA-19175804-2', 'knopfdoubleday.com');
+        doc.text.each_line do |line|
+          my_line = line.downcase
+          if my_line.include?("ga(") && my_line.include?("create")
+            puts "Extract tag version from line: #{my_line}" if @verbose
+            m = my_line.match(/[\'|\"]create[\'|\"]\s*\,\s*[\'|\"](?<ver>\w+\-\d+\-\d+)[\'|\"]\s*\,/)
+            tag_ver = m[:ver]
+            break
+          end
+        end
+      when "all.js"          # sample:    appId      : '749936668352954',
+        doc.text.each_line do |line|
+          my_line = line.downcase
+          if my_line.include?("appid") && my_line.include?(":")
+            puts "Extract tag version from line: #{my_line}" if @verbose
+            m = my_line.match(/appid\s+\:\s+[\'|\"](?<ver>\d+)[\'|\"]\s*\,/)
+            tag_ver = m[:ver]
+            break
+          end
+        end
+
+      else
+        puts "Unknown Adware Tag: #{tag}"
+        # do nothing
+      end
+      doc = nil
+      return tag_ver
+    end
+
+    # Search the url payload for known tag. If found return the base64 encode whole script snippet.
+  	def get_desc(url,tag)
+      puts "Search and return tag script in url payload: #{url}, #{tag}" if @verbose
+      recording=false
+      tag_found=false
+      tag_desc=""
+      doc = Nokogiri::HTML(open(url))
+      doc.search('script').map do |script|
+        if script.text.include?(tag)
+          return script.text
+        end
+      end
+      doc = nil
+      return tag_desc
+    end
 
 
 
