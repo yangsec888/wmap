@@ -259,7 +259,7 @@ module Wmap
       tag_desc=""
       doc = Nokogiri::HTML(open(url))
       doc.search('script').map do |script|
-        if script.text.include?(tag)
+        if script.text.include?(tag) && script.text.length < 65535
           return script.text
         end
       end
