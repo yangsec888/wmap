@@ -5,11 +5,12 @@
 #
 # Copyright (c) 2012-2015 Yang Li <yang.li@owasp.org>
 #++
-# require "uri"
+require "watir"
+require "selenium-webdriver"
 
 module Wmap
- module Utils	
-  module UrlMagic	
+ module Utils
+  module UrlMagic
 	extend self
 
 	# Simple sanity check on a 'claimed' URL string.
@@ -33,7 +34,7 @@ module Wmap
 			return false
 		end
 	end
-	
+
 	# Simple sanity check on a 'claimed' SSL enabled URL string
 	def is_ssl?(url)
 		puts "Validate if SSL is enabled on: #{url}" if @verbose
@@ -49,8 +50,8 @@ module Wmap
 			return false
 		end
 	end
-	alias_method :is_https?, :is_ssl? 
-	
+	alias_method :is_https?, :is_ssl?
+
 	# Simple sanity check on a 'claimed' web site base string.
 	def is_site?(url)
 		puts "Validate the website string format for: #{url}" if @verbose
@@ -61,7 +62,7 @@ module Wmap
 					return true
 				else
 					return false
-				end			
+				end
 			else
 				puts "Unknown site format: #{url}" if @verbose
 				return false
@@ -71,7 +72,7 @@ module Wmap
 			return nil
 		end
 	end
-	
+
 	# Check if URL is an absolute one
 	#def is_absolute?(url)
 	#	puts "Validate if the url is absolute: #{url}" if @verbose
@@ -83,7 +84,7 @@ module Wmap
 	#		return false
 	#	end
 	#end
-	
+
 	# Check if URL is relative one
 	#def is_relative?(url)
 	#	begin
@@ -93,18 +94,18 @@ module Wmap
 	#		puts "Exception on method #{__method__} for #{url}: #{ee}" if @verbose
 	#		return false
 	#	end
-	#end	
-	
+	#end
+
 	# Extract the web server host's Fully Qualified Domain Name (FQDN) from the url. For example: "https://login.yahoo.com/email/help" -> "login.yahoo.com"
 	def url_2_host (url)
 		begin
 			url = url.strip.downcase.gsub(/(http:\/\/|https:\/\/)/, "")
 			record1 = url.split('/')
 			if record1[0].nil?
-				puts "Error process url: #{url}" 
+				puts "Error process url: #{url}"
 				return nil
 			else
-				record2 = record1[0].split(':')		
+				record2 = record1[0].split(':')
 				return record2[0]
 			end
 		rescue => ee
@@ -120,8 +121,8 @@ module Wmap
 			ssl = (url =~ /https/i)
 			url = url.downcase.gsub(/(http:\/\/|https:\/\/)/, "")
 			record1 = url.split('/')
-			record2 = record1[0].split(':')	
-			if (record2.length == 2) 
+			record2 = record1[0].split(':')
+			if (record2.length == 2)
 				puts "The service port: #{record2[1]}" if @verbose
 				return record2[1].to_i
 			elsif ssl
@@ -164,13 +165,13 @@ module Wmap
 			unless is_fqdn?(host)
 				case host
 					# "https://letmechoose.barclays.co.uk?source=btorganic/" => "https://letmechoose.barclays.co.uk"
-					when /\?|\#/	
+					when /\?|\#/
 						host=host.split(%r{\?|\#})[0]
 					else
 						#do nothing
 				end
 			end
-			# step 2, put the host:port pair back to the normal site format 
+			# step 2, put the host:port pair back to the normal site format
 			prot="https:" if port==443
 			if port==80 || port==443
 				site=prot+"//"+host+"/"
@@ -180,7 +181,7 @@ module Wmap
 			if site=~ /http/i
 				#puts "Base found: #{site}" if @verbose
 				return site
-			else	
+			else
 				raise "Problem encountered on method url_2_site: Unable to convert #{url}"
 				return nil
 			end
@@ -202,9 +203,9 @@ module Wmap
 		rescue => ee
 			puts "Exception on method #{__method__} for #{url}: #{ee}" if @verbose
 		end
-	
+
 	end
-	
+
 	# Test if the two URLs are both under the same domain: http://login.yahoo.com, http://mail.yahoo.com => true
 	def urls_on_same_domain?(url1, url2)
 		puts "Determine if two URLs under the same domain: #{url1}, #{url2}" if @verbose
@@ -216,14 +217,14 @@ module Wmap
 			puts "Error searching the object content: #{ee}" if @verbose
             return nil
         end
-    end	
+    end
 
 	# Input is host and open port, output is a URL for valid http response code or nil
 	def host_2_url (host,port=80)
 		puts "Perform simple http(s) service detection on host #{host}, port #{port}" if @verbose
 		begin
 			host=host.strip
-			if port.to_i == 80 
+			if port.to_i == 80
 				url_1 = "http://" + host + "/"
 			elsif port.to_i ==443
 				url_1 = "https://" + host + "/"
@@ -232,7 +233,7 @@ module Wmap
 				url_2 = "https://" + host + ":" + port.to_s + "/"
 			end
 			puts "Please ensure your internet connection is active before running this method: #{__method__}" if @verbose
-			checker=Wmap::UrlChecker.new 
+			checker=Wmap::UrlChecker.new
 			if checker.response_code(url_1) != 10000
 				puts "Found URL: #{url_1}" if @verbose
 				return url_1
@@ -247,8 +248,8 @@ module Wmap
 			puts "Exception on method #{__method__}: #{ee}" if @verbose
 			return nil
 		end
-	end	
-	
+	end
+
 	# Convert a relative URL to an absolute one. For example, from URL base 'http://games.yahoo.com/' and file path '/game/the-magic-snowman-flash.html' => 'http://games.yahoo.com/game/the-magic-snowman-flash.html'
 	def make_absolute(base, relative_url)
         puts "Determine and return the absolute URL:\n Base: #{base}, Relative: #{relative_url} " if @verbose
@@ -266,12 +267,12 @@ module Wmap
             return nil
         end
     end
-    
+
 	# Create / construct the absolute URL from a known URL and relative file path. For example, 'http://images.search.yahoo.com/images' + '/search/images?p=raiders' => 'http://images.search.yahoo.com/search/images?p=raiders'
 	def create_absolute_url_from_base(potential_base, relative_url)
         begin
 			#puts "Determine the absolute URL from potential base #{potential_base} and relative URL #{relative_url}" if @verbose
-			naked_base = url_2_site(potential_base).strip.chop        
+			naked_base = url_2_site(potential_base).strip.chop
 			puts "Found absolute URL: #{naked_base+relative_url}" if @verbose
 			return naked_base + relative_url
         rescue => ee
@@ -309,19 +310,19 @@ module Wmap
             return nil
         end
     end
-	
+
 	# Normalize the URL to a consistent manner in order to determine if a link has been visited or cached before
 	# See http://en.wikipedia.org/wiki/URL_normalization for more explanation
 	def normalize_url(url)
 		begin
 			url.strip!
-			# Converting the scheme and host to lower case in the process, i.e. 'HTTP://www.Example.com/' => 'http://www.example.com/'  
+			# Converting the scheme and host to lower case in the process, i.e. 'HTTP://www.Example.com/' => 'http://www.example.com/'
 			# Normalize the base
-			base=url_2_site(url) 
+			base=url_2_site(url)
 			# Case#1, remove the trailing dot after the hostname, i.e, 'http://www.yahoo.com./' => 'http://www.yahoo.com/'
 			base=base.sub(/\.\/$/,'/')
 			# Normalize the relative path, case#1
-			# retrieve the file path and remove the first '/' or '.', 
+			# retrieve the file path and remove the first '/' or '.',
 			# i.e. 'http://www.example.com/mypath' or 'http://www.example.com/./mypath' => 'mypath'
 			path=url_2_path(url).sub(/^(\/|\.)*/,'')
 			# Normalize the relative path, case#2
@@ -337,7 +338,30 @@ module Wmap
 			return url
 		end
 	end
-	 
+
+  # Given an URL, open the page, then return the DOM text from a normal user perspective
+  def open_page(url)
+    doc = Nokogiri::HTML(open(url))
+    if doc.text.include?("Please enable JavaScript to view the page content")
+      puts "Invoke headless chrome through webdriver ..." if @verbose
+      #Selenium::WebDriver::Chrome.path = "/usr/local/bin/chromedriver"
+      #driver = Selenium::WebDriver.for :chrome
+      # http://watir.com/guides/chrome/
+      args = ['--ignore-certificate-errors', '--disable-popup-blocking', '--disable-translate']
+      browser = Watir::Browser.new :chrome, headless: true, options: {args: args}  #driver
+      browser.goto(url)
+      sleep(2) # wait for the loading
+      doc = Nokogiri::HTML(browser.html)
+      browser.close
+    end
+    puts doc.text if @verbose
+    return doc
+  rescue => ee
+    puts "Exception on method #{__method__} for #{url}: #{ee}"
+    browser.close unless browser.nil?
+    return doc.text
+  end
+
   end
  end
 end

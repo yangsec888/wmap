@@ -107,8 +107,9 @@ module Wmap
     # add tag entries (from the sitetracker list)
   	def refresh (num=@max_parallel,use_cache=true)
 		  puts "Add entries to the local cache table from site tracker: " if @verbose
-			results=Hash.new
-			tags=Wmap::SiteTracker.instance.known_sites.keys
+      @landings = Hash.new # cache landing page to reduce redundant browsing
+			results = Hash.new
+			tags = Wmap::SiteTracker.instance.known_sites.keys
 			if tags.size > 0
 				Parallel.map(tags, :in_processes => num) { |target|
 					check_adware(target,use_cache)
@@ -121,12 +122,12 @@ module Wmap
 				end
 				@tag_store.merge!(results)
 				puts "Done loading entries."
-        tags=nil
+        tags = nil
 				return results
 			else
 				puts "Error: no entry is loaded. Please check your list and try again."
 			end
-      tags=nil
+      tags = nil
 			return results
 		rescue => ee
 			puts "Exception on method #{__method__}: #{ee}" if @verbose
@@ -140,6 +141,10 @@ module Wmap
 			  puts "Site entry already exist. Skipping: #{site}" if @verbose
 			else
         url = fast_landing(site)
+        if @landings.key?(url)
+          record[site] = @landings[url]
+          return record
+        end
         tags = find_tags(url)
         return record if tags.size==0
         tag_vers=tags.map do |tag|
@@ -149,7 +154,8 @@ module Wmap
           Base64.urlsafe_encode64(get_desc(url,tag))
         end
 				if tags
-          record[site]=[url, tags.join("|"), tag_vers.join("|"), tag_descs.join("|")]
+          record[site] = [url, tags.join("|"), tag_vers.join("|"), tag_descs.join("|")]
+          @landings[url] = [url, tags.join("|"), tag_vers.join("|"), tag_descs.join("|")]
           @tag_store.merge!(record)
           puts "Tag entry loaded: #{record}" if @verbose
         else
@@ -189,14 +195,13 @@ module Wmap
   	def find_tags(url)
 			puts "Search and return tags within the url payload: #{url}" if @verbose
 			tag_list = []
-      doc = Nokogiri::HTML(open(url))
+      doc = open_page(url)
       doc.text.each_line do |line|
         my_line = line.downcase
         @tag_signatures.keys.map do |tag|
           tag_list.push(tag) if my_line.include?(tag)
         end
       end
-      doc = nil
       return tag_list
     rescue => ee
       puts "Exception on method #{__method__}: #{ee}" if @verbose
@@ -207,7 +212,7 @@ module Wmap
   	def get_ver(url,tag)
       puts "Search and return tag version within the url payload: #{url}, #{tag}" if @verbose
       tag_ver=""
-      doc = Nokogiri::HTML(open(url))
+      doc = open_page(url)
       case tag
       when "utag.js"          # sample: ...,"code_release_version":"cb20190312032612",...
         doc.text.each_line do |line|
@@ -219,12 +224,23 @@ module Wmap
             break
           end
         end
-      when "analytics.js"          # sample:   ga('create', 'UA-19175804-2', 'knopfdoubleday.com');
+      when "analytics.js"         # sample:   ga('create', 'UA-19175804-2', 'knopfdoubleday.com');
         doc.text.each_line do |line|
           my_line = line.downcase
           if my_line.include?("ga(") && my_line.include?("create")
             puts "Extract tag version from line: #{my_line}" if @verbose
             m = my_line.match(/[\'|\"]create[\'|\"]\s*\,\s*[\'|\"](?<ver>\w+\-\d+\-\d+)[\'|\"]\s*\,/)
+            tag_ver = m[:ver]
+            break
+          end
+        end
+      when "ga.js"         # sample:   _gaq.push(['_setAccount', 'UA-13205363-65']);
+        doc.text.each_line do |line|
+          my_line = line.downcase
+          puts my_line if @verbose
+          if my_line.include?("push") && my_line.include?("_setaccount")
+            puts "Extract tag version from line: #{my_line}" if @verbose
+            m = my_line.match(/[\'|\"]\_setaccount[\'|\"]\s*\,\s*[\'|\"](?<ver>\w+\-\d+\-\d+)[\'|\"]/)
             tag_ver = m[:ver]
             break
           end
@@ -241,11 +257,11 @@ module Wmap
         end
 
       else
-        puts "Unknown Adware Tag: #{tag}"
+        puts "Don't know how to locate Adware Tag version: #{tag}"
         # do nothing
       end
       doc = nil
-      return tag_ver
+      return tag_ver.upcase
     rescue => ee
       puts "Exception on method #{__method__}: #{ee}: #{url} : #{tag}" if @verbose
       return tag_ver
@@ -257,7 +273,7 @@ module Wmap
       recording=false
       tag_found=false
       tag_desc=""
-      doc = Nokogiri::HTML(open(url))
+      doc = open_page(url)
       doc.search('script').map do |script|
         if script.text.include?(tag) && script.text.length < 65535
           return script.text

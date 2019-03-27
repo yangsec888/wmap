@@ -56,6 +56,9 @@ Gem::Specification.new do |s|
 	s.add_dependency 'httpclient', '~> 2.0'
 	s.add_dependency 'open_uri_redirections', '>= 0.2'
 	s.add_dependency 'netaddr', '~> 1.5'
+	s.add_dependency 'watir', '~> 6.16.5' # Handle JS generated DOM
+	s.add_dependency 'selenium-webdriver', '~> 3.141.0' #Ruby bindings for WebDriver; http://watir.com/guides/drivers/
+	#Note by default you would need headless chrome binary, from http://chromedriver.storage.googleapis.com/index.html, then put it under the PATH for webdriver
 
   s.rubyforge_project = "wmap"
   s.rubygems_version = "1.8.24"
