@@ -213,7 +213,7 @@ class Wmap::UrlChecker
 	alias_method :location, :redirect_location
 
 	# Test the URL / Site and return the landing url location (recursive with the depth = 4 )
-	def landing_location (depth=4, url)
+	def landing_location (depth=5, url)
 		begin
 			depth -= 1
 			return url if depth < 1

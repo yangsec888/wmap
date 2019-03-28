@@ -20,8 +20,6 @@ class Wmap::WpTracker
 
 	attr_accessor :http_timeout, :max_parallel, :verbose, :sites_wp, :data_dir
   attr_reader :known_wp_sites
-  # set hard stop limit of http time-out to 8 seconds, in order to avoid severe performance penalty for certain 'weird' site(s)
-	Max_http_timeout=8000
 
   # WordPress checker instance default variables
 	def initialize (params = {})
@@ -170,42 +168,13 @@ class Wmap::WpTracker
 		#end
 	end
 
-  # Wrapper to use OpenURI method 'read' to return url body contents
-	def read_url(url)
-    begin
-      puts "Wrapper to return the OpenURI object for url: #{url}" if @verbose
-			url_object=open_url(url)
-			html_body=url_object.read
-      doc = Nokogiri::HTML(html_body)
-      return doc
-    rescue => ee
-      puts "Exception on method #{__method__}: #{ee}" if @verbose
-      return nil
-    end
-	end
-
-  # Wrapper for the OpenURI open method - create an open_uri object and return the reference upon success
-	def open_url(url)
-		#url_object = nil
-		puts "Open url #{url} by creating an open_uri object. Return the reference upon success." if @verbose
-		if url =~ /http\:/i
-			# patch for allow the 'un-safe' URL redirection i.e. https://www.example.com -> http://www.example.com
-			url_object = open(url, :allow_redirections=>:safe, :read_timeout=>Max_http_timeout/1000)
-		elsif url =~ /https\:/i
-			url_object = open(url,:ssl_verify_mode => 0, :allow_redirections =>:safe, :read_timeout=>Max_http_timeout/1000)
-		else
-			raise "Invalid URL format - please specify the protocol prefix http(s) in the URL: #{url}"
-		end
-		return url_object
-  end
-
   # Wordpress detection checkpoint - readme.html
   def wp_readme?(site)
     readme_url=site + "readme.html"
     k=Wmap::UrlChecker.new
     if k.response_code(readme_url) == 200
       k=nil
-      doc=read_url(readme_url)
+      doc=open_page(readme_url)
       title=doc.css('title')
       if title.to_s =~ /wordpress/i
         return true
@@ -245,7 +214,7 @@ class Wmap::WpTracker
     k=Wmap::UrlChecker.new
     if k.response_code(site) == 200
       k=nil
-      doc=read_url(site)
+      doc=open_page(site)
       meta=doc.css('meta')
       if meta.to_s =~ /wordpress/i
         return true
@@ -263,7 +232,7 @@ class Wmap::WpTracker
     k=Wmap::UrlChecker.new
     if k.response_code(login_url) == 200
       k=nil
-      doc=read_url(login_url)
+      doc=open_page(login_url)
       links=doc.css('link')
       if links.to_s =~ /login.min.css/i
         return true
@@ -312,7 +281,7 @@ class Wmap::WpTracker
     k=Wmap::UrlChecker.new
 		#puts "Res code: #{k.response_code(login_url)}" if @verbose
     if k.response_code(login_url) == 200
-      doc=read_url(login_url)
+      doc=open_page(login_url)
 			#puts doc.inspect
       links=doc.css('link')
 			#puts links.inspect if @verbose
@@ -333,7 +302,7 @@ class Wmap::WpTracker
 		site=url_2_site(url)
     k=Wmap::UrlChecker.new
     if k.response_code(site) == 200
-      doc=read_url(site)
+      doc=open_page(site)
 			#puts doc.inspect
       meta=doc.css('meta')
 			#puts meta.inspect
@@ -357,7 +326,7 @@ class Wmap::WpTracker
 		puts "Res code: #{k.response_code(readme_url)}" if @verbose
     if k.response_code(readme_url) == 200
       k=nil
-      doc=read_url(readme_url)
+      doc=open_page(readme_url)
 			puts doc if @verbose
       logo=doc.css('h1#logo')[0]
       puts logo.inspect if @verbose

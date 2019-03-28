@@ -13,6 +13,9 @@ module Wmap
   module UrlMagic
 	extend self
 
+  # set hard stop limit of http time-out to 8 seconds, in order to avoid severe performance penalty for certain 'weird' site(s)
+  Max_http_timeout=8000
+
 	# Simple sanity check on a 'claimed' URL string.
 	def is_url?(url)
 		puts "Validate the URL format is valid: #{url}" if @verbose
@@ -341,14 +344,15 @@ module Wmap
 
   # Given an URL, open the page, then return the DOM text from a normal user perspective
   def open_page(url)
-    doc = Nokogiri::HTML(open(url))
+    args = {ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE, allow_redirections: :safe, read_timeout: Max_http_timeout/1000}
+    doc = Nokogiri::HTML(open(url, args))
     if doc.text.include?("Please enable JavaScript to view the page content")
       puts "Invoke headless chrome through webdriver ..." if @verbose
       #Selenium::WebDriver::Chrome.path = "/usr/local/bin/chromedriver"
       #driver = Selenium::WebDriver.for :chrome
       # http://watir.com/guides/chrome/
       args = ['--ignore-certificate-errors', '--disable-popup-blocking', '--disable-translate']
-      browser = Watir::Browser.new :chrome, headless: true, options: {args: args}  #driver
+      browser = Watir::Browser.new :chrome, headless: true, options: {args: args}
       browser.goto(url)
       sleep(2) # wait for the loading
       doc = Nokogiri::HTML(browser.html)

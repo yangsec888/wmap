@@ -31,6 +31,7 @@ module Wmap
       File.write(file2, "") unless File.exist?(@tag_file)
       # load the known tag store
       @tag_store=load_tag_from_file(file2)
+      @landings = Hash.new  # cache landing page to reduce redundant browsing
 		end
 
 
@@ -107,7 +108,6 @@ module Wmap
     # add tag entries (from the sitetracker list)
   	def refresh (num=@max_parallel,use_cache=true)
 		  puts "Add entries to the local cache table from site tracker: " if @verbose
-      @landings = Hash.new # cache landing page to reduce redundant browsing
 			results = Hash.new
 			tags = Wmap::SiteTracker.instance.known_sites.keys
 			if tags.size > 0
@@ -224,26 +224,32 @@ module Wmap
             break
           end
         end
-      when "analytics.js"         # sample:   ga('create', 'UA-19175804-2', 'knopfdoubleday.com');
+      when "analytics.js"         # sample #1:   ga('create', 'UA-19175804-2', 'knopfdoubleday.com');
         doc.text.each_line do |line|
           my_line = line.downcase
-          if my_line.include?("ga(") && my_line.include?("create")
+          if my_line.include?("ga") && my_line.include?("create")   #sample #2: __gaTracker('create', 'UA-121313929-1', 'auto');
             puts "Extract tag version from line: #{my_line}" if @verbose
             m = my_line.match(/[\'|\"]create[\'|\"]\s*\,\s*[\'|\"](?<ver>\w+\-\d+\-\d+)[\'|\"]\s*\,/)
             tag_ver = m[:ver]
             break
           end
         end
-      when "ga.js"         # sample:   _gaq.push(['_setAccount', 'UA-13205363-65']);
+      when "ga.js"
         doc.text.each_line do |line|
           my_line = line.downcase
           puts my_line if @verbose
-          if my_line.include?("push") && my_line.include?("_setaccount")
-            puts "Extract tag version from line: #{my_line}" if @verbose
+          if my_line.include?("push") && my_line.include?("_setaccount")  # # sample #1:   _gaq.push(['_setAccount', 'UA-13205363-65']);
             m = my_line.match(/[\'|\"]\_setaccount[\'|\"]\s*\,\s*[\'|\"](?<ver>\w+\-\d+\-\d+)[\'|\"]/)
             tag_ver = m[:ver]
             break
           end
+          if my_line.include?("_gettracker")  # sample #2: var pageTracker = _gat._getTracker("UA-12487327-1");
+            puts "Extract tag version from line: #{my_line}" if @verbose
+            m = my_line.match(/\_gettracker\s*\(\s*[\'|\"](?<ver>\w+\-\d+\-\d+)[\'|\"]/)
+            tag_ver = m[:ver]
+            break
+          end
+
         end
       when "all.js"          # sample:    appId      : '749936668352954',
         doc.text.each_line do |line|
