@@ -39,137 +39,130 @@ class Wmap::WpTracker
   # 'setter' to load the known wordpress sites into an instance variable
 	def load_from_file (file=@file_stores, lc=true)
 		puts "Loading trusted file: #{file}"	if @verbose
-		begin
-			known_wp_sites=Hash.new
-			f_wp_sites=File.open(file, 'r')
-			f_wp_sites.each_line do |line|
-				puts "Processing line: #{line}" if @verbose
-				line=line.chomp.strip
-				next if line.nil?
-				next if line.empty?
-				next if line =~ /^\s*#/
-				line=line.downcase if lc==true
-				entry=line.split(',')
-				if known_wp_sites.key?(entry[0])
-					next
+		known_wp_sites=Hash.new
+		f_wp_sites=File.open(file, 'r')
+		f_wp_sites.each_line do |line|
+			puts "Processing line: #{line}" if @verbose
+			line=line.chomp.strip
+			next if line.nil?
+			next if line.empty?
+			next if line =~ /^\s*#/
+			line=line.downcase if lc==true
+			entry=line.split(',')
+			if known_wp_sites.key?(entry[0])
+				next
+			else
+				if entry[1] =~ /yes/i
+					known_wp_sites[entry[0]]=true
 				else
-					if entry[1] =~ /yes/i
-						known_wp_sites[entry[0]]=true
-					else
-						known_wp_sites[entry[0]]=false
-					end
+					known_wp_sites[entry[0]]=false
 				end
-
 			end
-			f_wp_sites.close
-			return known_wp_sites
-		rescue => ee
-			puts "Exception on method #{__method__}: #{ee}" if @verbose
-			return nil
+
 		end
+		f_wp_sites.close
+		return known_wp_sites
+	rescue => ee
+		puts "Exception on method #{__method__}: #{ee}" if @verbose
+		return Hash.new
 	end
 
 	# Save the current hash table into a file
 	def save_to_file!(file_wps=@file_wps, wps=@known_wp_sites)
 		puts "Saving the current wordpress site table from memory to file: #{file_wps} ..." if @verbose
-		begin
-			timestamp=Time.now
-			f=File.open(file_wps, 'w')
-			f.write "# Local wps file created by class #{self.class} method #{__method__} at: #{timestamp}\n"
-			f.write "# domain name, free zone transfer detected?\n"
-			wps.keys.sort.map do |key|
-				if wps[key]
-					f.write "#{key}, yes\n"
-				else
-					f.write "#{key}, no\n"
-				end
+		timestamp=Time.now
+		f=File.open(file_wps, 'w')
+		f.write "# Local wps file created by class #{self.class} method #{__method__} at: #{timestamp}\n"
+		f.write "# domain name, free zone transfer detected?\n"
+		wps.keys.sort.map do |key|
+			if wps[key]
+				f.write "#{key}, yes\n"
+			else
+				f.write "#{key}, no\n"
 			end
-			f.close
-			puts "WordPress site cache table is successfully saved: #{file_wps}"
-		rescue => ee
-			puts "Exception on method #{__method__}: #{ee}" if @verbose
 		end
+		f.close
+		puts "WordPress site cache table is successfully saved: #{file_wps}"
+	rescue => ee
+		puts "Exception on method #{__method__}: #{ee}" if @verbose
 	end
 	alias_method :save!, :save_to_file!
 
   # 'setter' to add wordpress entry to the cache one at a time
 	def add(url, use_cache=true)
-    begin
-		  puts "Add entry to the local cache table: #{url}" if @verbose
-      site=url_2_site(url)
-			if use_cache && @known_wp_sites.key?(site)
-				puts "Site is already exist. Skipping: #{site}"
-			else
-				record=Hash.new
-				if is_wp?(site)
-          record[site]=true
-        else
-          record[site]=false
-        end
-				puts "Entry loaded: #{record}"
-			end
-      @known_wp_sites.merge!(record)
-      return record
-		rescue => ee
-			puts "Exception on method #{__method__}: #{ee}: #{url}" if @verbose
+	  puts "Add entry to the local cache table: #{url}" if @verbose
+    site=url_2_site(url)
+		if use_cache && @known_wp_sites.key?(site)
+			puts "Site is already exist. Skipping: #{site}"
+		else
+			record=Hash.new
+			if is_wp?(site)
+        record[site]=true
+      else
+        record[site]=false
+      end
+			puts "Entry loaded: #{record}"
 		end
+    @known_wp_sites.merge!(record)
+    return record
+	rescue => ee
+		puts "Exception on method #{__method__}: #{ee}: #{url}" if @verbose
 	end
 
   # logic to determin if it's a wordpress site
   def is_wp?(url)
-		#begin
-			site=url_2_site(url)
-			if wp_readme?(site)
-				found=true
-			elsif wp_css?(site)
-				found=true
-			elsif wp_meta?(site)
-				found=true
-			elsif wp_login?(site)
-				found=true
-			elsif wp_rpc?(site)
-				found=true
-			else
-				found=false
-			end
-			return found
-		#rescue => ee
-		#	puts "Exception on method #{__method__}: #{ee}: #{url}" if @verbose
-		#end
+		site=url_2_site(url)
+		if wp_readme?(site)
+			found=true
+		elsif wp_css?(site)
+			found=true
+		elsif wp_meta?(site)
+			found=true
+		elsif wp_login?(site)
+			found=true
+		elsif wp_rpc?(site)
+			found=true
+		else
+			found=false
+		end
+		return found
+	rescue => ee
+		puts "Exception on method #{__method__}: #{ee}: #{url}" if @verbose
 	end
 
   # add wordpress site entries (from a sitetracker list)
 	def refresh (num=@max_parallel,use_cache=true)
-    #begin
-		  puts "Add entries to the local cache table from site tracker: " if @verbose
-			results=Hash.new
-			wps=Wmap::SiteTracker.instance.known_sites.keys
-			if wps.size > 0
-				Parallel.map(wps, :in_processes => num) { |target|
-					add(target,use_cache)
-				}.each do |process|
-					if process.nil?
-						next
-					elsif process.empty?
-						#do nothing
-					else
-						results.merge!(process)
-					end
+	  puts "Add entries to the local cache table from site tracker: " if @verbose
+		results=Hash.new
+		wps=Wmap::SiteTracker.instance.known_sites.keys
+		if wps.size > 0
+			Parallel.map(wps, :in_processes => num) { |target|
+				add(target,use_cache)
+			}.each do |process|
+				if process.nil?
+					next
+				elsif process.empty?
+					#do nothing
+				else
+					results.merge!(process)
 				end
-				@known_wp_sites.merge!(results)
-				puts "Done loading entries."
-				return results
-			else
-				puts "Error: no entry is loaded. Please check your list and try again."
 			end
+			@known_wp_sites.merge!(results)
+			puts "Done loading entries."
 			return results
-		#rescue => ee
-		#	puts "Exception on method #{__method__}: #{ee}" if @verbose
-		#end
+		else
+			puts "Error: no entry is loaded. Please check your list and try again."
+		end
+		wps=nil
+		return results
+	rescue => ee
+		puts "Exception on method #{__method__}: #{ee}" if @verbose
+		return Hash.new
 	end
 
   # Wordpress detection checkpoint - readme.html
-  def wp_readme?(site)
+  def wp_readme?(url)
+		site = url_2_site(url)
     readme_url=site + "readme.html"
     k=Wmap::UrlChecker.new
     if k.response_code(readme_url) == 200
@@ -185,11 +178,15 @@ class Wmap::WpTracker
       k=nil
       return false
     end
+	rescue => ee
+		puts "Exception on method #{__method__} for site #{url}: #{ee}" if @verbose
+		return false
   end
 
   # Wordpress detection checkpoint - install.css
-  def wp_css?(site)
-    css_url=site + "wp-admin/css/install.css"
+  def wp_css?(url)
+		site = url_2_site(url)
+    css_url = site + "wp-admin/css/install.css"
     k=Wmap::UrlChecker.new
     if k.response_code(css_url) == 200
       k=nil
@@ -206,6 +203,9 @@ class Wmap::WpTracker
       return false
     end
     return false
+	rescue => ee
+		puts "Exception on method #{__method__} for site #{url}: #{ee}" if @verbose
+		return false
   end
 
   # Wordpress detection checkpoint - meta generator
@@ -222,6 +222,9 @@ class Wmap::WpTracker
         return false
       end
     end
+		return false
+	rescue => ee
+		puts "Exception on method #{__method__} for url #{url}: #{ee}" if @verbose
 		return false
   end
 
@@ -241,6 +244,9 @@ class Wmap::WpTracker
       end
     end
 		return false
+	rescue => ee
+		puts "Exception on method #{__method__} for url #{url}: #{ee}" if @verbose
+		return false
   end
 
 	# Wordpress detection checkpoint - xml-rpc
@@ -253,6 +259,9 @@ class Wmap::WpTracker
       k=nil
       return true
     end
+		return false
+	rescue => ee
+		puts "Exception on method #{__method__} for url #{url}: #{ee}" if @verbose
 		return false
   end
 
@@ -271,6 +280,9 @@ class Wmap::WpTracker
 		else
 			return nil
 		end
+	rescue => ee
+		puts "Exception on method #{__method__} for url #{url}: #{ee}" if @verbose
+		return nil
 	end
 
 	# Identify wordpress version through the login page
@@ -295,6 +307,9 @@ class Wmap::WpTracker
     end
     k=nil
     return nil
+	rescue => ee
+		puts "Exception on method #{__method__} for url #{url}: #{ee}" if @verbose
+		return nil
   end
 
 	# Identify wordpress version through the meta link
@@ -316,6 +331,9 @@ class Wmap::WpTracker
     end
     k=nil
     return nil
+	rescue => ee
+		puts "Exception on method #{__method__} for url #{url}: #{ee}" if @verbose
+		return nil
   end
 
 	# Wordpress version detection via - readme.html
@@ -334,6 +352,9 @@ class Wmap::WpTracker
     end
     k=nil
     return nil
+	rescue => ee
+		puts "Exception on method #{__method__} for url #{url}: #{ee}" if @verbose
+		return nil
 	end
 
 
