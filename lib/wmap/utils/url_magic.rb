@@ -76,29 +76,6 @@ module Wmap
 		end
 	end
 
-	# Check if URL is an absolute one
-	#def is_absolute?(url)
-	#	puts "Validate if the url is absolute: #{url}" if @verbose
-	#	begin
-	#		url.strip!
-	#		URI.absolute?(url)
-	#	rescue => ee
-	#		puts "Exception on method #{__method__} for #{url}: #{ee}" if @verbose
-	#		return false
-	#	end
-	#end
-
-	# Check if URL is relative one
-	#def is_relative?(url)
-	#	begin
-	#		url.strip!
-	#		!is_absolute?(url)
-	#	rescue => ee
-	#		puts "Exception on method #{__method__} for #{url}: #{ee}" if @verbose
-	#		return false
-	#	end
-	#end
-
 	# Extract the web server host's Fully Qualified Domain Name (FQDN) from the url. For example: "https://login.yahoo.com/email/help" -> "login.yahoo.com"
 	def url_2_host (url)
 		begin
@@ -212,15 +189,13 @@ module Wmap
 	# Test if the two URLs are both under the same domain: http://login.yahoo.com, http://mail.yahoo.com => true
 	def urls_on_same_domain?(url1, url2)
 		puts "Determine if two URLs under the same domain: #{url1}, #{url2}" if @verbose
-		begin
-			host1=url_2_host(url1)
-			host2=url_2_host(url2)
-			return get_domain_root(host1) == get_domain_root(host2)
-        rescue => ee
-			puts "Error searching the object content: #{ee}" if @verbose
-            return nil
-        end
-    end
+		host1=url_2_host(url1)
+		host2=url_2_host(url2)
+		return get_domain_root(host1) == get_domain_root(host2)
+  rescue => ee
+		puts "Error searching the object content: #{ee}" if @verbose
+    return nil
+  end
 
 	# Input is host and open port, output is a URL for valid http response code or nil
 	def host_2_url (host,port=80)
@@ -365,6 +340,59 @@ module Wmap
     browser.close unless browser.nil?
     return doc.text
   end
+
+  # Test the URL / site and return the redirection location (3xx response code only)
+	def redirect_location (url)
+		puts "Test the redirection location for the url: #{url}" if @verbose
+		location=""
+		raise "Invalid url: #{url}" unless is_url?(url)
+		url=url.strip.downcase
+		timeo = Max_http_timeout/1000.0
+		uri = URI.parse(url)
+		code = response_code (url)
+		if code >= 300 && code < 400
+			http = Net::HTTP.new(uri.host, uri.port)
+			http.open_timeout = timeo
+			http.read_timeout = timeo
+			if (url =~ /https\:/i)
+				http.use_ssl = true
+				# Bypass the remote web server cert validation test
+				http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+				http.ssl_version = @ssl_version
+			end
+			request = Net::HTTP::Get.new(uri.request_uri)
+			response = http.request(request)
+			puts "Response: #{response}" if @verbose
+			case response
+			when Net::HTTPRedirection then
+				location = response['location']
+			end
+		end
+		return location
+	rescue Exception => ee
+		puts "Exception on method redirect_location for URL #{url}: #{ee}" if @verbose
+		return ""
+	end
+	alias_method :location, :redirect_location
+
+  # Test the URL / Site and return the landing url location (recursive with the depth = 4 )
+	def landing_location (depth=5, url)
+		depth -= 1
+		return url if depth < 1
+		timeo = Max_http_timeout/1000.0
+		uri = URI.parse(url)
+		code = response_code (url)
+		if code >= 300 && code < 400
+			url = redirect_location (url)
+			url = landing_location(depth,url)
+		else
+			return url
+		end
+		return url
+	rescue Exception => ee
+		puts "Exception on method #{__method__} on URL #{url}: #{ee}" if @verbose
+	end
+
 
   end
  end

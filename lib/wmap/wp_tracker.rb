@@ -96,7 +96,8 @@ class Wmap::WpTracker
 			puts "Site is already exist. Skipping: #{site}"
 		else
 			record=Hash.new
-			if is_wp?(site)
+			landing_site = landing_location(site)
+			if is_wp?(landing_site)
         record[site]=true
       else
         record[site]=false

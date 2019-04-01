@@ -168,6 +168,7 @@ class Wmap::UrlChecker
 	end
 	alias_method :query, :response_code
 
+=begin
 	# Test the URL / site and return the redirection location (3xx response code only)
 	def redirect_location (url)
 		puts "Test the redirection location for the url: #{url}" if @verbose
@@ -220,6 +221,7 @@ class Wmap::UrlChecker
 	rescue Exception => ee
 		puts "Exception on method #{__method__} on URL #{url}: #{ee}" if @verbose
 	end
+=end
 
 	# Test the URL / site and return the web server type from the HTTP header "server" field
 	def get_server_header (url)
