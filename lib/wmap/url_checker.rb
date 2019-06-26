@@ -118,10 +118,11 @@ class Wmap::UrlChecker
 	end
 	alias_method :checks, :url_workers
 
+=begin
 	# Test the URL and return the response code
 	def response_code (url)
 		puts "Check the http response code on the url: #{url}" if @verbose
-		response_code = 10000	# All unknown url connection exceptions go here
+		code = 10000	# All unknown url connection exceptions go here
 		raise "Invalid url: #{url}" unless is_url?(url)
 		url=url.strip.downcase
 		timeo = @http_timeout/1000.0
@@ -138,37 +139,35 @@ class Wmap::UrlChecker
 		request = Net::HTTP::Get.new(uri.request_uri)
 		response = http.request(request)
 		puts "Server response the following: #{response}" if @verbose
-		response_code = response.code.to_i
+		code = response.code.to_i
 		#response.finish if response.started?()
-		@url_code[url]=response_code
-		puts "Response code on #{url}: #{response_code}" if @verbose
-		return response_code
+		@url_code[url]=code
+		puts "Response code on #{url}: #{code}" if @verbose
+		return code
 	rescue Exception => ee
 		puts "Exception on method #{__method__} for #{url}: #{ee}" if @verbose
 		case ee
 		# rescue "Connection reset by peer" error type
 		when Errno::ECONNRESET
-			response_code=104
+			code=104
 		when Errno::ECONNABORTED,Errno::ETIMEDOUT
-			#response_code=10000
+			#code=10000
 		when Timeout::Error				# Quick fix
 			if (url =~ /https\:/i)		# try again for ssl timeout session, in case of default :TLSv1 failure
 				http.ssl_version = :SSLv3
 				response = http.request(request)
-				response_code = response.code.to_i
-				unless response_code.nil?
+				code = response.code.to_i
+				unless code.nil?
 					@ssl_version = http.ssl_version
 				end
 			end
 		else
-			#response_code=10000
+			#code=10000
 		end
-		@url_code[url]=response_code
-		return response_code
+		@url_code[url]=code
+		return code
 	end
-	alias_method :query, :response_code
 
-=begin
 	# Test the URL / site and return the redirection location (3xx response code only)
 	def redirect_location (url)
 		puts "Test the redirection location for the url: #{url}" if @verbose

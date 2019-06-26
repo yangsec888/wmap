@@ -131,14 +131,19 @@ class Wmap::WpTracker
 		puts "Exception on method #{__method__}: #{ee}: #{url}" if @verbose
 	end
 
-  # add wordpress site entries (from a sitetracker list)
-	def refresh (num=@max_parallel,use_cache=true)
+	# Refresh one site entry then update the instance variable (cache)
+	def refresh (target,use_cache=false)
+		return add(target,use_cache)
+	end
+
+  # Refresh wordpress site entries within the sitetracker list
+	def refreshs (num=@max_parallel,use_cache=false)
 	  puts "Add entries to the local cache table from site tracker: " if @verbose
 		results=Hash.new
 		wps=Wmap::SiteTracker.instance.known_sites.keys
 		if wps.size > 0
 			Parallel.map(wps, :in_processes => num) { |target|
-				add(target,use_cache)
+				refresh(target,use_cache)
 			}.each do |process|
 				if process.nil?
 					next

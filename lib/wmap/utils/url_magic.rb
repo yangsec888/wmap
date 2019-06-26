@@ -317,6 +317,58 @@ module Wmap
 		end
 	end
 
+
+	# Test the URL and return the response code
+	def response_code (url)
+		puts "Check the http response code on the url: #{url}" if @verbose
+		code = 10000	# All unknown url connection exceptions go here
+		raise "Invalid url: #{url}" unless is_url?(url)
+		url=url.strip.downcase
+		timeo = Max_http_timeout/1000.0
+		uri = URI.parse(url)
+		http = Net::HTTP.new(uri.host, uri.port)
+		http.open_timeout = timeo
+		http.read_timeout = timeo
+		if (url =~ /https\:/i)
+			http.use_ssl = true
+			#http.ssl_version = :SSLv3
+			# Bypass the remote web server cert validation test
+			http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+		end
+		request = Net::HTTP::Get.new(uri.request_uri)
+		response = http.request(request)
+		puts "Server response the following: #{response}" if @verbose
+		code = response.code.to_i
+		#response.finish if response.started?()
+		@url_code=Hash.new unless @url_code
+    @url_code[url]=code
+		puts "Response code on #{url}: #{code}" if @verbose
+		return code
+	rescue Exception => ee
+		puts "Exception on method #{__method__} for #{url}: #{ee}" if @verbose
+		case ee
+		# rescue "Connection reset by peer" error type
+		when Errno::ECONNRESET
+			code=104
+		when Errno::ECONNABORTED,Errno::ETIMEDOUT
+			#code=10000
+		when Timeout::Error				# Quick fix
+			if (url =~ /https\:/i)		# try again for ssl timeout session, in case of default :TLSv1 failure
+				http.ssl_version = :SSLv3
+				response = http.request(request)
+				code = response.code.to_i
+				unless code.nil?
+					@ssl_version = http.ssl_version
+				end
+			end
+		else
+			#code=10000
+		end
+    @url_code=Hash.new unless @url_code
+		@url_code[url]=code
+		return code
+	end
+
   # Given an URL, open the page, then return the DOM text from a normal user perspective
   def open_page(url)
     args = {ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE, allow_redirections: :safe, read_timeout: Max_http_timeout/1000}
