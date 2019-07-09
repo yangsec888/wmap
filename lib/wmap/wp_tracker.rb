@@ -49,14 +49,14 @@ class Wmap::WpTracker
 			next if line =~ /^\s*#/
 			line=line.downcase if lc==true
 			entry=line.split(',')
-			if known_wp_sites.key?(entry[0])
+			site = entry[0].strip()
+			if known_wp_sites.key?(site)
 				next
 			else
-				if entry[1] =~ /yes/i
-					known_wp_sites[entry[0]]=true
-				else
-					known_wp_sites[entry[0]]=false
-				end
+				known_wp_sites[site] = Hash.new
+				known_wp_sites[site]['site'] = site
+				known_wp_sites[site]['version'] = entry[1].strip()
+				known_wp_sites[site]['redirection'] = entry[2].strip()
 			end
 
 		end
@@ -73,13 +73,9 @@ class Wmap::WpTracker
 		timestamp=Time.now
 		f=File.open(file_wps, 'w')
 		f.write "# Local wps file created by class #{self.class} method #{__method__} at: #{timestamp}\n"
-		f.write "# domain name, free zone transfer detected?\n"
+		f.write "# WP Site URL, WP Version, Redirection \n"
 		wps.keys.sort.map do |key|
-			if wps[key]
-				f.write "#{key}, yes\n"
-			else
-				f.write "#{key}, no\n"
-			end
+			f.write "#{key}, #{wps[key]['version']}, #{wps[key]['redirection']}\n"
 		end
 		f.close
 		puts "WordPress site cache table is successfully saved: #{file_wps}"
@@ -96,15 +92,16 @@ class Wmap::WpTracker
 			puts "Site is already exist. Skipping: #{site}"
 		else
 			record=Hash.new
-			landing_site = landing_location(site)
-			if is_wp?(landing_site)
-        record[site]=true
-      else
-        record[site]=false
-      end
-			puts "Entry loaded: #{record}"
+			redirection = landing_location(site)
+			if is_wp?(redirection)
+				version = wp_ver(site)
+        record['site'] = site
+				record['version'] = version
+				record['redirection'] = redirection
+				@known_wp_sites[site]=record
+				puts "Entry loaded: #{record}"
+			end
 		end
-    @known_wp_sites.merge!(record)
     return record
 	rescue => ee
 		puts "Exception on method #{__method__}: #{ee}: #{url}" if @verbose
@@ -150,7 +147,8 @@ class Wmap::WpTracker
 				elsif process.empty?
 					#do nothing
 				else
-					results.merge!(process)
+					site = process['site']
+					results[site] = process
 				end
 			end
 			@known_wp_sites.merge!(results)
