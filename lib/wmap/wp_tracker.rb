@@ -283,15 +283,20 @@ class Wmap::WpTracker
 	# Extract the WordPress version
 	def wp_ver(url)
 		if !wp_ver_readme(url).nil?
+			puts "WordPress version found by wp_ver_readme method. " if @verbose
 			return wp_ver_readme(url)
-		elsif !wp_ver_meta(url).nil?
-			return wp_ver_meta(url)
 		elsif !wp_ver_login(url,"login.min.css").nil?
+			puts "WordPress version found by login.min.css file. " if @verbose
 			return wp_ver_login(url,"login.min.css")
 		elsif !wp_ver_login(url,"buttons.min.css").nil?
+			puts "WordPress version found by buttons.min.css file. " if @verbose
 			return wp_ver_login(url,"buttons.min.css")
 		elsif !wp_ver_login(url,"wp-admin.min.css").nil?
+			puts "WordPress version found by wp-admin.min.css file. " if @verbose
 			return wp_ver_login(url,"wp-admin.min.css")
+		elsif !wp_ver_meta(url).nil?
+			puts "WordPress version found by wp_ver_meta method. " if @verbose
+			return wp_ver_meta(url)
 		else
 			return nil
 		end
@@ -337,10 +342,10 @@ class Wmap::WpTracker
       meta=doc.css('meta')
 			#puts meta.inspect
 			meta.each do |tag|
-	      if tag.to_s =~ /wordpress/i
+	      if tag['content'].to_s =~ /wordpress/i
 					#puts tag.to_s
 					k=nil
-	        return tag.to_s.scan(/[\d+\.]+\d+/).first
+	        return tag['content'].to_s.scan(/[\d+\.]+\d+/).first
 	      end
 			end
     end
