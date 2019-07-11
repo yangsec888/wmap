@@ -50,6 +50,7 @@ class Wmap::WpTracker
 			line=line.downcase if lc==true
 			entry=line.split(',')
 			site = entry[0].strip()
+			next if site.nil?
 			if known_wp_sites.key?(site)
 				next
 			else
@@ -74,7 +75,7 @@ class Wmap::WpTracker
 		f=File.open(file_wps, 'w')
 		f.write "# Local wps file created by class #{self.class} method #{__method__} at: #{timestamp}\n"
 		f.write "# WP Site URL, WP Version, Redirection \n"
-		wps.keys.sort.map do |key|
+		(wps.keys - [nil,'']).sort.map do |key|
 			f.write "#{key}, #{wps[key]['version']}, #{wps[key]['redirection']}\n"
 		end
 		f.close
@@ -84,7 +85,7 @@ class Wmap::WpTracker
 	end
 	alias_method :save!, :save_to_file!
 
-  # 'setter' to add wordpress entry to the cache one at a time
+  # Add wordpress entry to the cache one at a time
 	def add(url, use_cache=true)
 	  puts "Add entry to the local cache table: #{url}" if @verbose
     site=url_2_site(url)
@@ -93,13 +94,23 @@ class Wmap::WpTracker
 		else
 			record=Hash.new
 			redirection = landing_location(site)
-			if is_wp?(redirection)
-				version = wp_ver(site)
-        record['site'] = site
-				record['version'] = version
-				record['redirection'] = redirection
-				@known_wp_sites[site]=record
-				puts "Entry loaded: #{record}"
+			if not [nil, ''].include?(redirection)
+				if is_wp?(redirection)
+					version = wp_ver(redirection)
+	        record['site'] = site
+					record['version'] = version
+					record['redirection'] = redirection
+					@known_wp_sites[site]=record
+					puts "Entry added: #{record}"
+				end
+			else
+				if is_wp?(site)
+					version = wp_ver(site)
+					record['version'] = version
+					record['redirection'] = redirection
+					@known_wp_sites[site]=record
+					puts "Entry added: #{record}"
+				end
 			end
 		end
     return record
