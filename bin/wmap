@@ -11,12 +11,12 @@ end
 
 # preparing - spit out the program banner
 puts Wmap.banner
-if ARGV.length == 1
-	# Log the command entry
-	Log_dir=File.dirname(__FILE__)+'/../logs/'
-elsif ARGV.length == 2
+if ARGV.length == 2
 	# Log to the instance running directory
 	Log_dir=File.dirname(__FILE__)+'/../logs/'+ARGV[1]
+else
+	# Log the command entry
+	Log_dir=File.dirname(__FILE__)+'/../logs/'
 end
 Dir.mkdir(Log_dir) unless Dir.exist?(Log_dir)
 

@@ -3,6 +3,7 @@ settings/*
 
 # no user data
 data/*
+prh_data
 
 # no user logs
 logs/*
