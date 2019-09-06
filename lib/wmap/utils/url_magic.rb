@@ -378,7 +378,7 @@ module Wmap
       #Selenium::WebDriver::Chrome.path = "/usr/local/bin/chromedriver"
       #driver = Selenium::WebDriver.for :chrome
       # http://watir.com/guides/chrome/
-      args = ['--ignore-certificate-errors', '--disable-popup-blocking', '--disable-translate']
+      args = ['--ignore-certificate-errors', '--disable-popup-blocking', '--disable-translate', '--disk-cache-size 8192']
       browser = Watir::Browser.new :chrome, headless: true, options: {args: args}
       browser.goto(url)
       sleep(2) # wait for the loading

@@ -1,0 +1,4 @@
+# local hosts file created by the Wmap::HostTracker class save_known_hosts_to_file! method at: 2019-09-04 11:16:45 -0400
+cloud.google.com	172.217.10.46
+translate.google.com	172.217.12.142
+www.google.com	172.217.12.196
