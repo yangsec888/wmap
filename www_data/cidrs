@@ -1,6 +1,0 @@
-# Local cidrs file created by Wmap::CidrTracker.save method at: 2018-11-20 21:25:32 -0500
-Network CIDR, CIDR RIPE Reference Text, CIDR NETNAME
-10.0.0.0/8,Internet Assigned Numbers Authority,PRIVATE-ADDRESS-ABLK-RFC1918-IANA-RESERVED
-192.168.0.0/16,Internet Assigned Numbers Authority,PRIVATE-ADDRESS-ABLK-RFC1918-IANA-RESERVED
-172.16.0.0/12, Internet Assigned Numbers Authority,PRIVATE-ADDRESS-ABLK-RFC1918-IANA-RESERVED
-172.217.0.0/16, https://rdap.arin.net/registry/ip/172.217.0.0, GOOGLE
