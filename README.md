@@ -3,11 +3,11 @@
 
 - [What's this program for?](#whats-this-program-for)
 - [WMAP in Motion](#wmap-in-motion)
-- [Program Version](#program-version)
-- [Author Contact](#author-contact)
 - [Installation](#installation)
 - [Before Using This Program](#before-using-this-program)
 - [More Document(s)](#more-documents)
+- [Program Version](#program-version)
+- [Author Contact](#author-contact)
 - [Bug Report or Feature Request](#bug-report-or-feature-request)
 - [Legal Disclaimer](#legal-disclaimer)
 
@@ -21,14 +21,6 @@ to cover the gaps of a similar commercial product. Over the time it grows to be 
 
 ## WMAP in Motion
 Use the demo web app build on top of wmap gem: http://wmap.io
-
-
-## Program Version
-The latest release is version 2.4.5. as of fall 2018. Please refer to the CHANGELOG.md for the program's history information.
-
-
-## Author Contact
-This program is designed and developed by Yang Li. You can reach him by Email: <yang.li@owasp.org>
 
 
 ## Installation
@@ -78,7 +70,7 @@ network block in the CIDR format.
 To add your Internet domain into the scope, use the build-in shell command below:
 ```sh
      trust XYZ.COM
-``
+```
 To add your public network block into the scope (note current support of IPv4 only):
 ```sh
      trust x.x.x.x/x
@@ -112,6 +104,13 @@ The software comes with the Ruby doc during your installation as shown above. Fo
 
 If you need additional documentation / information other than this README file and the Ruby document package, please be patient - as I'm still working on it :)
 
+
+## Program Version
+The latest release is version 2.4.5. as of fall 2018. Please refer to the CHANGELOG.md for the program's history information.
+
+
+## Author Contact
+This program is designed and developed by Yang Li. You can reach him by Email: <yang.li@owasp.org>
 ## Bug Report or Feature Request?
 Contact the author Sam Li directly at email 'yang.li@owasp.org'.
 
