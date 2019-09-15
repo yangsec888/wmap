@@ -106,13 +106,13 @@ If you need additional documentation / information other than this README file a
 
 
 ## Program Version
-The latest release is version 2.4.5. as of fall 2018. Please refer to the CHANGELOG.md for the program's history information.
+The latest release is version [2.5.5](version.txt). as of fall 2018. Please refer to the [CHANGELOG.md](CHANGELOG.md) for more history information.
 
 
 ## Author Contact
 This program is designed and developed by Yang Li. You can reach him by Email: <yang.li@owasp.org>
 ## Bug Report or Feature Request?
-Contact the author Sam Li directly at email 'yang.li@owasp.org'.
+Contact the author Sam (Yang) Li directly at email 'yang.li@owasp.org'.
 
 
 ## Legal Disclaimer:
