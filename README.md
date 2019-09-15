@@ -106,7 +106,7 @@ If you need additional documentation / information other than this README file a
 
 
 ## Program Version
-The latest release is version [2.5.5](version.txt). as of fall 2018. Please refer to the [CHANGELOG.md](CHANGELOG.md) for more history information.
+The latest release is version [2.5.5+](version.txt). as of fall 2018. Please refer to the [CHANGELOG.md](CHANGELOG.md) for more history information.
 
 
 ## Author Contact
