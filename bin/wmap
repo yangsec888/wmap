@@ -5,22 +5,25 @@
 # Usage: wmap <Target Host | URL | IP | CIDR | or a seed file with any of the above combo> <Optional Discovery Result Directory>
 require "wmap"
 
+# program helper
 def print_usage
 	abort "Program to perform website asset discovery and tracking. \nUsage: wmap <Target Host | URL | IP | CIDR | or a seed file with any of the above combo> <Optional Discovery Result Directory>"
 end
-
-# preparing - spit out the program banner
+# print program banner
 puts Wmap.banner
+
+# Preparing - check out the working logs directory
 if ARGV.length == 2
 	# Log to the instance running directory
-	Log_dir=File.dirname(__FILE__)+'/../logs/'+ARGV[1]
+	Log_dir = Pathname.new(ARGV[1]).join('logs')
 else
 	# Log the command entry
-	Log_dir=File.dirname(__FILE__)+'/../logs/'
+	Log_dir=Pathname.new(Gem.loaded_specs['wmap'].full_gem_path).join('logs')
 end
 Dir.mkdir(Log_dir) unless Dir.exist?(Log_dir)
 
-Wmap.wlog("Execute the command: wmap #{ARGV[0]}","wmap",Log_dir+"wmap.log")
+# Start wmap logging
+Wmap.wlog("Execute the command: wmap #{ARGV[0]}","wmap",Log_dir.join("wmap.log").to_s)
 print_usage unless (ARGV.length==1 or ARGV.length==2)
 urls = Array.new
 # first step - construct the host list
@@ -64,38 +67,16 @@ else
 	print_usage
 end
 
-# second step - update the hosts repository
-if ARGV.length == 1
-	puts puts "Invoke the HostTracker."
-	host_tracker = Wmap::HostTracker.instance
-	host_tracker.verbose=true
-elsif ARGV.length == 2
-	puts "Invoke the HostTracker with optional directory setter."
-	host_tracker = Wmap::HostTracker.instance
-	host_tracker.verbose=true
-	host_tracker.data_dir = ARGV[1]
-else
-	aborts "Error firing up HostTracker instance!"
-end
-hosts.uniq!
-if hosts.size > 0
-	hostnames=hosts.dup.delete_if { |h| host_tracker.is_ip?(h) }
-	if hostnames.size > 0
-		puts "Update the local hosts data repository."
-		new_hosts=host_tracker.adds(hostnames)
-		host_tracker.save! if new_hosts.size>0
-	end
-end
-host_tracker=nil
 
-# third step - port discovery on the above host list, and to build the URL seeds
+# second step - port discovery on the above host list, and to build the URL seeds
 puts "Build up URL list for the web crawler ..."
 urls0=scanner.scans(hosts)
 urls+=urls0
 urls.uniq!
 scanner=nil
 
-# fourth step - crawling on the URL seeds
+
+# third step - crawling on the URL seeds
 if ARGV.length == 1
 	puts "Fire up the crawler."
 	crawler = Wmap::UrlCrawler.new(:verbose=>false)
@@ -125,14 +106,16 @@ else
 	dis_sites.keys.map {|x| puts x}
 end
 
-# fifth step - trace the discovery results into a local log file for debugging and other purposes
+
+# fourth step - trace the discovery results into a local log file for debugging and other purposes
 Wmap.wlog(dis_urls.keys, "wmap", Log_dir+"discovered_urls.log") unless dis_urls.empty?
 Wmap.wlog(dis_sites.keys, "wmap", Log_dir+"discovered_sites.log") unless dis_sites.empty?
 #crawler.wlog(c_start.keys,Log_dir+"crawler.log")
 #crawler.wlog(c_done.keys,Log_dir+"crawler.log")
 crawler=nil
 
-# sixth step - save discovery results into the inventory data repository
+
+# fifth step - save discovery results into the inventory data repository
 case dis_sites.keys
 when nil,[]
 	puts "No new site found. There is no change to the site tracking data repository. "
@@ -145,6 +128,8 @@ else
 		puts "Start the SiteTracker with the optional directory setter. "
 		inventory=Wmap::SiteTracker.instance
 		inventory.data_dir = ARGV[1]
+		inventory.sites_file = inventory.data_dir + "sites"
+		inventory.load_site_stores_from_file
 	else
 		aborts "Error firing up SiteTracker instance!"
 	end
@@ -153,3 +138,32 @@ else
 	inventory=nil
 	puts "Done! New found sites are successfully saved. " if new_sites.size > 0
 end
+
+
+# seventh step - update the hosts repository
+if ARGV.length == 1
+	puts puts "Invoke the HostTracker."
+	host_tracker = Wmap::HostTracker.instance
+	host_tracker.verbose=true
+elsif ARGV.length == 2
+	puts "Invoke the HostTracker with optional directory setter."
+	host_tracker = Wmap::HostTracker.instance
+	host_tracker.verbose=true
+	host_tracker.data_dir = ARGV[1]
+	host_tracker.hosts_file = host_tracker.data_dir + "hosts"
+	host_tracker.load_known_hosts_from_file
+else
+	aborts "Error firing up HostTracker instance!"
+end
+new_hosts = dis_sites.keys.map {|x| host_tracker.url_2_host(x)}
+hosts += new_hosts
+hosts.uniq!
+if hosts.size > 0
+	hostnames=hosts.dup.delete_if { |h| host_tracker.is_ip?(h) }
+	if hostnames.size > 0
+		puts "Update the local hosts data repository with: #{hostnames}"
+		new_hosts=host_tracker.adds(hostnames)
+		host_tracker.save! if new_hosts.size>0
+	end
+end
+host_tracker=nil

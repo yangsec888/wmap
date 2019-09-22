@@ -16,19 +16,17 @@ module Wmap
 		include Wmap::Utils
 		include Singleton
 
-		attr_accessor :hosts_file, :verbose, :data_dir
-		attr_reader :known_hosts, :known_ips
+		attr_accessor :hosts_file, :verbose, :data_dir, :known_hosts, :known_ips
 
 		# Initialize the instance variables
 		def initialize (params = {})
 			@verbose=params.fetch(:verbose, false)
       @data_dir=params.fetch(:data_dir, File.dirname(__FILE__)+'/../../../data/')
 			# Set default instance variables
-			@file_hosts=@data_dir + 'prime_hosts'
-			file=params.fetch(:hosts_file, @file_hosts)
+			@hosts_file=params.fetch(:hosts_file, @data_dir + 'prime_hosts')
 			# Initialize the instance variables
-      File.write(@file_hosts, "") unless File.exist?(@file_hosts)
-			@known_hosts=load_known_hosts_from_file(file)
+      File.write(@hosts_file, "") unless File.exist?(@hosts_file)
+			@known_hosts=load_known_hosts_from_file(@hosts_file)
 			@known_ips=Hash.new
 			de_duplicate
 		end
@@ -41,7 +39,8 @@ module Wmap
 				cns=Hash.new
 				checker=Wmap::UrlChecker.new(:data_dir=>@data_dir)
         my_tracker = Wmap::SiteTracker.instance
-        my_tracker.data_dir = @data_dir
+        my_tracker.sites_file = @data_dir + "sites"
+        my_tracker.load_site_stores_from_file
 				my_tracker.get_ssl_sites.map do |site|
 					puts "Exam SSL enabled site entry #{site} ..."
 					my_host=url_2_host(site)
@@ -77,9 +76,10 @@ module Wmap
 			puts "Invoke internal procedures to update the primary host-name table from the site store."
 			begin
 				my_tracker=Wmap::SiteTracker.instance
-        my_tracker.data_dir=@data_dir
+        my_tracker.sites_file=@data_dir + "sites"
+        my_tracker.load_site_stores_from_file
         urls = my_tracker.get_redirection_urls
-        my_tracker = nil 
+        my_tracker = nil
 				urls.map do |url|
 					if is_url?(url)
 						host=url_2_host(url)

@@ -37,7 +37,7 @@ Gem::Specification.new do |s|
   s.email = info["email"]
   s.executables = ["wmap","wscan","wadd","wadds","wdel","wcheck","wdump","spiderBot","googleBot","updateAll","prime","deprime","refresh","trust","distrust","run_tests"]
   s.files = ["CHANGELOG.md", "TODO", "settings/discovery_ports","data/","LICENSE.txt",
-							"version.txt","README.rdoc", "wmap.gemspec"]
+							"version.txt","README.md", "wmap.gemspec"]
   s.files += Dir['lib/*.rb'] + Dir['lib/wmap/*.rb'] + Dir['lib/wmap/**/*'] + Dir['bin/*'] + Dir['settings/*'] + Dir['demos/*'] + Dir['test/*'] + Dir['ruby_whois_patches/*'] + Dir['dicts/*']
   #s.homepage = "none"
   s.post_install_message = "*"*80 + "\n\nThank you for installing the wmap gem - a pure Ruby library for Internet web application discovery and tracking. Please refer to the README.rdoc for more information of using this gem.  \n\n" + "*"*80 + "\n"

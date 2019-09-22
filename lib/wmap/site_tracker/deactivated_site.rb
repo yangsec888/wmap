@@ -23,12 +23,11 @@ class DeactivatedSite < Wmap::SiteTracker
 	def initialize (params = {})
 		# Initialize the instance variables
 		@data_dir=params.fetch(:data_dir, File.dirname(__FILE__)+'/../../../data/')
-		@f_sites=@data_dir + 'deactivated_sites'
-		@file_stores=params.fetch(:sites_file, @f_sites)
+		@sites_file=params.fetch(:sites_file, @data_dir + 'deactivated_sites')
 		@verbose=params.fetch(:verbose, false)
 		# Hash table to hold the site store
-		File.write(@file_stores, "") unless File.exist?(@file_stores)
-		@known_sites=load_site_stores_from_file(@file_stores)
+		File.write(@sites_file, "") unless File.exist?(@sites_file)
+		@known_sites=load_site_stores_from_file(@sites_file)
 	end
 
 	# Deactivate obsolete entrance from the live site store. Note this method is used by the parent class only
