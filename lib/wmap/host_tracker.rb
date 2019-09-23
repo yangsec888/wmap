@@ -35,6 +35,7 @@ class Wmap::HostTracker
 		puts "Loading local hosts from file: #{f_hosts} ..." if @verbose
 		@known_hosts=Hash.new
 		@alias = Hash.new
+		File.write(f_hosts, "") unless File.exist?(f_hosts)
 		f=File.open(f_hosts, 'r')
 		f.each do |line|
 			next unless line =~ /\d+\.\d+\.\d+\.\d+/

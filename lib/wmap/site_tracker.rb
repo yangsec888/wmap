@@ -34,6 +34,7 @@ class Wmap::SiteTracker
 	def load_site_stores_from_file (file=@sites_file)
 		puts "Loading the site store data repository from file: #{file} " if @verbose
 		@known_sites=Hash.new
+		File.write(file, "") unless File.exist?(file)
 		f=File.open(file, 'r')
 		f.each do |line|
 			line=line.chomp.strip
