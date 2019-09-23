@@ -40,7 +40,7 @@ Gem::Specification.new do |s|
 							"version.txt","README.md", "wmap.gemspec"]
   s.files += Dir['lib/*.rb'] + Dir['lib/wmap/*.rb'] + Dir['lib/wmap/**/*'] + Dir['bin/*'] + Dir['settings/*'] + Dir['demos/*'] + Dir['test/*'] + Dir['ruby_whois_patches/*'] + Dir['dicts/*']
   #s.homepage = "none"
-  s.post_install_message = "*"*80 + "\n\nThank you for installing the wmap gem - a pure Ruby library for Internet web application discovery and tracking. Please refer to the README.rdoc for more information of using this gem.  \n\n" + "*"*80 + "\n"
+  s.post_install_message = "*"*80 + "\n\nThank you for installing the wmap gem - a pure Ruby library for Internet web \napplication discovery and tracking. Please refer to the README.md for more \ninformation of using this gem.  \n\n" + "*"*80 + "\n"
   s.require_paths = ["lib"]
   s.required_ruby_version = Gem::Requirement.new(">= 2.1")
 
