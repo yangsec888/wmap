@@ -128,8 +128,8 @@ else
 		puts "Start the SiteTracker with the optional directory setter. "
 		inventory=Wmap::SiteTracker.instance
 		inventory.data_dir = ARGV[1]
-		inventory.sites_file = inventory.data_dir + "sites"
-		inventory.load_site_stores_from_file
+		inventory.sites_file = inventory.data_dir + "/" + "sites"
+		inventory.load_site_stores_from_file(inventory.sites_file)
 	else
 		aborts "Error firing up SiteTracker instance!"
 	end
@@ -150,8 +150,8 @@ elsif ARGV.length == 2
 	host_tracker = Wmap::HostTracker.instance
 	host_tracker.verbose=true
 	host_tracker.data_dir = ARGV[1]
-	host_tracker.hosts_file = host_tracker.data_dir + "hosts"
-	host_tracker.load_known_hosts_from_file
+	host_tracker.hosts_file = host_tracker.data_dir + "/" + "hosts"
+	host_tracker.load_known_hosts_from_file(host_tracker.hosts_file)
 else
 	aborts "Error firing up HostTracker instance!"
 end

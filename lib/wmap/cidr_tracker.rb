@@ -63,8 +63,10 @@ class Wmap::CidrTracker
 		# Sort the blocks in order once for better performance. Update 10/29/2018 to support Netaddr 2.x syntax
 		#@known_cidr_blks_desc_index=NetAddr.sort(@known_cidr_blks.keys, :Desc=>true)
 		#@known_cidr_blks_asce_index=NetAddr.sort(@known_cidr_blks.keys, :Desc=>false)
-		@known_cidr_blks_asce_index=@known_cidr_blks.keys.sort
-		@known_cidr_blks_desc_index=@known_cidr_blks_asce_index.reverse
+		if @known_cidr_blks
+			@known_cidr_blks_asce_index=@known_cidr_blks.keys.sort
+			@known_cidr_blks_desc_index=@known_cidr_blks_asce_index.reverse
+		end
 	#rescue => ee
 	#	puts "Exception on method #{__method__}: #{ee}" # if @verbose
 	end
@@ -82,6 +84,7 @@ class Wmap::CidrTracker
 			netname=whois.get_netname(ip)
 			whois=nil
 		end
+		@known_cidr_blks = Hash.new unless @known_cidr_blks
 		if @known_cidr_blks.key?(cidr)
 			puts "Skip! Entry is already exist: #{cidr}"
 			return nil
