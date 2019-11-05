@@ -3,8 +3,8 @@
 ###############################################################################
 package = wmap
 # wmap version 2.0 == web_discovery version 1.5.3
-version = 2.6.1
-date = 2019-09-25
+version = 2.6.2
+date = 2019-11-05
 
 author = Sam (Yang) Li
 email = yang.li@owasp.org

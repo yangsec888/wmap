@@ -78,7 +78,7 @@ To add your public network block into the scope (note current support of IPv4 on
 
 ### Automatic Discovery and Tracking
 ```sh
-    wmap <seed file | target host | target url | target IP or network cidr>
+    wmap -t <seed file | target host | target url | target IP or network cidr>
 ```
 The above utility is intelligent enough to take argument as either a seed file, or a string such as a host, an IP, a network block, or a URL. The new discoveries will be automatically tracked in the data file 'lib/wmap/data/target_sites'.
   Note: seed file - mix of url, cidr and domain seed, one entry per line.

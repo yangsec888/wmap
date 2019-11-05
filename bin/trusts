@@ -12,7 +12,7 @@ Log_dir=File.dirname(__FILE__)+'/../logs/'
 Wmap.wlog("Execute the command: trust #{ARGV[0]}","trust",Log_dir+"wmap.log")
 
 dt=Wmap::DomainTracker.instance
-ct=Wmap::CidrTracker.new(:verbose=>true)
+ct=Wmap::CidrTracker.new(:verbose=>false)
 abort "Incorrect program argument! Proper usage: trust [domain | netblock]" unless ARGV.length==1 && (File.exist?(ARGV[0]))
 
 puts "Start the baptizing process ..."

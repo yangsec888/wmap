@@ -112,7 +112,7 @@ class Wmap::SiteTracker
 		ip=host_2_ip(host)
 		# Additional logic to refresh deactivated site, 02/12/2014
 		deact=Wmap::SiteTracker::DeactivatedSite.instance
-		deact.sites_file=@data_dir + 'deactivated_sites'
+		deact.sites_file=@data_dir + "/" + "deactivated_sites"
 		File.write(deact.sites_file, "") unless File.exist?(deact.sites_file)
 		deact.load_site_stores_from_file
 		# only trust either the domain or IP we know

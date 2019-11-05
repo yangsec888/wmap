@@ -181,7 +181,7 @@ module Wmap
 	# Dump out the unique sites into a plain file
 	def dump(file)
 			store=Wmap::SiteTracker.instance
-      store.verbose=true
+      store.verbose=false
 			store.save_uniq_sites(file)
 	end
 
