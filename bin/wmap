@@ -154,8 +154,12 @@ else
 	else
 		abort "Error firing up SiteTracker instance!"
 	end
-	new_sites=inventory.adds(dis_sites.keys)
-	inventory.save! if new_sites.size>0
+	new_sites=inventory.adds(dis_sites.keys-["",nil])
+	if new_sites.size>0 && options[:data_dir]
+		inventory.save!(inventory.sites_file)
+	elsif new_sites.size>0
+		inventory.save!
+	end
 	inventory=nil
 	puts "Done! New found sites are successfully saved. " if new_sites.size > 0
 end
@@ -183,8 +187,12 @@ if hosts.size > 0
 	hostnames=hosts.dup.delete_if { |h| host_tracker.is_ip?(h) }
 	if hostnames.size > 0
 		puts "Update the local hosts data repository with: #{hostnames}"
-		new_hosts=host_tracker.adds(hostnames)
-		host_tracker.save! if new_hosts.size>0
+		new_hosts=host_tracker.adds(hostnames-["",nil])
+		if new_hosts.size>0 && options[:data_dir]
+			host_tracker.save!(host_tracker.hosts_file)
+		elsif new_hosts.size>0
+			host_tracker.save!
+		end
 	end
 end
 host_tracker=nil

@@ -81,46 +81,33 @@ class Wmap::PortScanner
 
 	# Parallel scanner - by utilizing fork manager 'parallel' to spawn numbers of child processes on multiple hosts/IPs simultaneously
 	def scans (targets,num=@max_parallel)
-		begin
-			urls=Array.new
-			# 10/5/2013 add additional logic to eliminate invalid /duplicate target(s)
-			targets -= ["", nil]
-			uniq_hosts=Hash.new
-			targets.dup.map do |target|
-				if is_fqdn?(target) or is_ip?(target)
-					ip=host_2_ip(target).to_s
-					if uniq_hosts.key?(ip)
-						targets.delete(target)
-					else
-						uniq_hosts[ip]=true
-					end
-				end
-			end
-			if targets.size > 0
-				puts "Start the parallel port scan on the target list:\n #{targets}"
-				Parallel.map(targets.shuffle, :in_processes => num) { |target|
-					scan(target)
-				}.each do |process|
-					if process.nil?
-						next
-					elsif process.empty?
-						#do nothing
-					else
-						process.map do |url|
-							unless @discovered_urls.key?(url)
-								@discovered_urls[url]=true
-							end
+		all_urls=Array.new
+		# 10/5/2013 add additional logic to eliminate invalid /duplicate target(s)
+		targets = targets - ["", nil]
+		if targets.size > 0
+			puts "Start the parallel port scan on the target list:\n #{targets}"
+			Parallel.map(targets.shuffle, :in_processes => num) { |target|
+				scan(target)
+			}.each do |process|
+				if process.nil?
+					next
+				elsif process.empty?
+					#do nothing
+				else
+					process.map do |url|
+						unless @discovered_urls.key?(url)
+							@discovered_urls[url]=true
 						end
-						urls+=process
 					end
+					all_urls+=process
 				end
 			end
-			puts "Port scanning done successfully with the found web services: #{urls}"
-			return urls
-		rescue Exception => ee
-			puts "Exception on method #{__method__}: #{ee}" if @verbose
-			return nil
 		end
+		puts "Port scanning done successfully with the found web services: #{all_urls}"
+		return all_urls
+	rescue Exception => ee
+		puts "Exception on method #{__method__}: #{ee}" if @verbose
+		return nil
 	end
 
 	# Parallel scans on a list of CIDRs from the input file, return the findings as the website construct within an array

@@ -231,12 +231,12 @@ class Wmap::SiteTracker
 			host_tracker=nil
 			return nil
 		end
-	#rescue => ee
-	#	puts "Exception on method #{__method__}: #{ee}"
-	#	checker=nil
-	#	deact=nil
-	#	host_tracker=nil
-	#	return nil
+	rescue => ee
+		puts "Exception on method #{__method__}: #{ee}"
+		checker=nil
+		deact=nil
+		host_tracker=nil
+		return nil
 	end
 
 	# Setter to add site entry to the cache table in batch (from a file)
@@ -256,6 +256,7 @@ class Wmap::SiteTracker
 	def bulk_add(list,num=@max_parallel)
 		puts "Add entries to the local site store from list:\n #{list}"
 		results=Hash.new
+		list = list - [nil,""]
 		if list.size > 0
 			puts "Start parallel adding on the sites:\n #{list}"
 			Parallel.map(list, :in_processes => num) { |target|
