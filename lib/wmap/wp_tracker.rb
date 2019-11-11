@@ -26,20 +26,19 @@ class Wmap::WpTracker
 		@verbose=params.fetch(:verbose, false)
 		@data_dir=params.fetch(:data_dir, File.dirname(__FILE__)+'/../../data/')
 		Dir.mkdir(@data_dir) unless Dir.exist?(@data_dir)
-    wp_sites=@data_dir+'wp_sites'
-    @file_wps=params.fetch(:sites_wp, wp_sites)
+    @sites_wp=params.fetch(:sites_wp, @data_dir+"wp_sites")
 		@http_timeout=params.fetch(:http_timeout, 5000)
 		@max_parallel=params.fetch(:max_parallel, 40)
 		Dir.mkdir(@data_dir) unless Dir.exist?(@data_dir)
 		@log_file=@data_dir + "wp_checker.log"
-    @known_wp_sites=load_from_file(@file_wps)
+		File.write(@sites_wp, "") unless File.exist?(@sites_wp)
+    load_from_file(@sites_wp)
 	end
-
 
   # 'setter' to load the known wordpress sites into an instance variable
 	def load_from_file (file=@file_stores, lc=true)
 		puts "Loading trusted file: #{file}"	if @verbose
-		known_wp_sites=Hash.new
+		@known_wp_sites=Hash.new
 		f_wp_sites=File.open(file, 'r')
 		f_wp_sites.each_line do |line|
 			puts "Processing line: #{line}" if @verbose
@@ -51,25 +50,24 @@ class Wmap::WpTracker
 			entry=line.split(',')
 			site = entry[0].strip()
 			next if site.nil?
-			if known_wp_sites.key?(site)
+			if @known_wp_sites.key?(site)
 				next
 			else
-				known_wp_sites[site] = Hash.new
-				known_wp_sites[site]['site'] = site
-				known_wp_sites[site]['version'] = entry[1].strip()
-				known_wp_sites[site]['redirection'] = entry[2].strip()
+				@known_wp_sites[site] = Hash.new
+				@known_wp_sites[site]['site'] = site
+				@known_wp_sites[site]['version'] = entry[1].strip()
+				@known_wp_sites[site]['redirection'] = entry[2].strip()
 			end
-
 		end
 		f_wp_sites.close
-		return known_wp_sites
+		return @known_wp_sites
 	rescue => ee
 		puts "Exception on method #{__method__}: #{ee}" if @verbose
 		return Hash.new
 	end
 
 	# Save the current hash table into a file
-	def save_to_file!(file_wps=@file_wps, wps=@known_wp_sites)
+	def save_to_file!(file_wps=@sites_wp, wps=@known_wp_sites)
 		puts "Saving the current wordpress site table from memory to file: #{file_wps} ..." if @verbose
 		timestamp=Time.now
 		f=File.open(file_wps, 'w')
@@ -148,7 +146,7 @@ class Wmap::WpTracker
 	def refreshs (num=@max_parallel,use_cache=false)
 	  puts "Add entries to the local cache table from site tracker: " if @verbose
 		results=Hash.new
-		wps=Wmap::SiteTracker.instance.known_sites.keys
+		wps=@known_wp_sites.keys
 		if wps.size > 0
 			Parallel.map(wps, :in_processes => num) { |target|
 				refresh(target,use_cache)
@@ -170,9 +168,9 @@ class Wmap::WpTracker
 		end
 		wps=nil
 		return results
-	rescue => ee
-		puts "Exception on method #{__method__}: #{ee}" if @verbose
-		return Hash.new
+	#rescue => ee
+	#	puts "Exception on method #{__method__}: #{ee}" if @verbose
+	#	return Hash.new
 	end
 
   # Wordpress detection checkpoint - readme.html

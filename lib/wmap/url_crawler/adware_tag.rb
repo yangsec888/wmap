@@ -12,8 +12,8 @@ module Wmap
 
 	# Class to identify and track adware within the site store
 	include Wmap::Utils
-	attr_accessor :signature_file, :tag_file, :verbose, :data_dir, :data_store
-	attr_reader :tag_store, :tag_signatures
+	attr_accessor :signature_file, :tag_file, :verbose, :data_dir, :data_store, :tag_store
+	attr_reader :tag_signatures
 
 
   class AdwareTag < Wmap::UrlCrawler
