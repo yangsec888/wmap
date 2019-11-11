@@ -343,8 +343,8 @@ class Wmap::SiteTracker
 		else
 			puts "Error: no entry is loaded. Please check your list and try again."
 		end
-	rescue => ee
-		puts "Exception on method #{__method__}: #{ee}" if @verbose
+	#rescue => ee
+	#	puts "Exception on method #{__method__}: #{ee}" if @verbose
 	end
 	alias_method :dels, :bulk_delete
 

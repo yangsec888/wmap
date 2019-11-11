@@ -3,24 +3,70 @@
 # This is useful as site information may change over the time
 ## Usage: refresh [a site|all]
 require "wmap"
+require "optparse"
 
+# program helper
 def print_usage
-	puts "Program to refresh the website entry in the local data repository. Usage: refresh [a site|all]"
+	puts "Program to refresh the website entry in the local data repository. Usage: refresh --target [a site|all] --data_dir [path ]"
+end
+
+# program command line options
+options = {:data_dir => nil, :target => nil}
+parser = OptionParser.new do|opts|
+	opts.banner = Wmap.banner
+	opts.on('-d', '--data_dir data_dir', 'Web Mapper local cache data directory') do |data_dir|
+		options[:data_dir] = data_dir;
+	end
+	opts.on('-t', '--target target', 'Web Mapper target') do |target|
+		options[:target] = target;
+	end
+	opts.on('-h', '--help', 'Displays Help') do
+		print Wmap.banner,"\n"
+		print_usage
+		exit 0
+	end
+end
+parser.parse!
+
+# print program banner
+puts Wmap.banner
+print_usage unless options[:target]
+store=Wmap::SiteTracker.instance
+store.verbose = true
+
+# Preparing - check out the working logs directory
+if options[:data_dir]
+	# Log to the instance running directory
+	Log_dir = Pathname.new(options[:data_dir]).join('logs')
+	store.data_dir = options[:data_dir]
+	sites_file = options[:data_dir] + '/' + 'sites'
+	#puts "sites_file: #{sites_file}"
+	store.load_site_stores_from_file(sites_file)
+else
+	# Log the command entry
+	Log_dir=Pathname.new(Gem.loaded_specs['wmap'].full_gem_path).join('logs')
 end
 
 puts Wmap.banner
 print_usage
-Log_dir=File.dirname(__FILE__)+'/../logs/'
+# Log_dir=File.dirname(__FILE__)+'/../logs/'
 Wmap.wlog("Execute the command: refresh #{ARGV[0]}","refresh",Log_dir+"wmap.log")
 
-abort "Incorrect program argument! Proper Usage: refresh [site]" unless ARGV.length==1
+#puts "Captured command argument"
+if options[:target]
+	if options[:target]=="all"
+		# magic token 'all' to refresh all sites in the store
+		# puts "Refresh all sites: #{store.known_sites.keys}"
+		store.refresh_all
+	else
+		# abort "Error: incorrect site syntax! It must be in http(s):://xxx.xxx/ format." unless Wmap::SiteTracker.instance.is_site?(ARGV[0])
+		store.refresh(options[:target])
+	end
+end
 
-#puts "Captured command argument: #{ARGV[0]}"
-if ARGV[0]=="all"
-	# magic token 'all' to refresh all sites in the store
-	Wmap.refresh_all
+# please
+if options[:data_dir]
+	store.save!(sites_file)
 else
-	abort "Error: incorrect site syntax! It must be in http(s):://xxx.xxx/ format." unless Wmap::SiteTracker.instance.is_site?(ARGV[0])
-st=nil
-	Wmap.refresh(ARGV[0])
+	store.save!
 end

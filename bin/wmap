@@ -10,24 +10,23 @@ require "optparse"
 def print_usage
 	abort "Program to perform website asset discovery and tracking. \nUsage: wmap -t <Target Host | URL | IP | CIDR | or a seed file with any of the above combo> -d <Optional Discovery Result Directory>"
 end
-options = {:data_dir => nil, :target => nil}
 
+# program command line options
+options = {:data_dir => nil, :target => nil}
 parser = OptionParser.new do|opts|
 	opts.banner = Wmap.banner
 	opts.on('-d', '--data_dir data_dir', 'Web Mapper local cache data directory') do |data_dir|
 		options[:data_dir] = data_dir;
 	end
-
 	opts.on('-t', '--target target', 'Web Mapper target') do |target|
 		options[:target] = target;
 	end
-
 	opts.on('-h', '--help', 'Displays Help') do
-		Wmap.banner
+		print Wmap.banner,"\n"
 		print_usage
+		exit 0
 	end
 end
-
 parser.parse!
 
 # print program banner
