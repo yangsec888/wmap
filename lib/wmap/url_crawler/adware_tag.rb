@@ -12,8 +12,8 @@ module Wmap
 
 	# Class to identify and track adware within the site store
 	include Wmap::Utils
-	attr_accessor :signature_file, :tag_file, :verbose, :data_dir, :data_store, :tag_store
-	attr_reader :tag_signatures
+	attr_accessor :signature_file, :tag_file, :verbose, :data_dir, :data_store
+	attr_reader :tag_signatures, :tag_store
 
 
   class AdwareTag < Wmap::UrlCrawler
@@ -22,15 +22,14 @@ module Wmap
 		def initialize (params = {})
 			@verbose=params.fetch(:verbose, false)
       @data_dir=params.fetch(:data_dir, File.dirname(__FILE__)+'/../../../data/')
-      @tag_file=@data_dir + 'tag_sites'
 			# Set default instance variables
 			@signature_file=File.dirname(__FILE__) + '/../../../settings/' + 'tag_signatures'
 			file=params.fetch(:signature_file, @signature_file)
 			@tag_signatures=load_from_file(file)
-      file2=params.fetch(:tag_file, @tag_file)
+      @tag_file=params.fetch(:tag_file, @data_dir + 'tag_sites')
       File.write(file2, "") unless File.exist?(@tag_file)
       # load the known tag store
-      @tag_store=load_tag_from_file(file2)
+      load_tag_from_file(@tag_file)
       @landings = Hash.new  # cache landing page to reduce redundant browsing
 		end
 
@@ -65,7 +64,7 @@ module Wmap
     # load the known tag store cache into an instance variable
   	def load_tag_from_file (file, lc=false)
       puts "Loading tag data file: #{file}"	if @verbose
-			data_store=Hash.new
+			@tag_store=Hash.new
 			f = File.open(file, 'r')
 			f.each_line do |line|
 				puts "Processing line: #{line}" if @verbose
@@ -75,14 +74,14 @@ module Wmap
 				next if line =~ /^\s*#/
 				line=line.downcase if lc==true
 				entry=line.split(',')
-				if data_store.key?(entry[0])
+				if @tag_store.key?(entry[0])
 					next
 				else
-					data_store[entry[0]]=[entry[1].strip, entry[2].strip, entry[3], entry[4]]
+					@tag_store[entry[0]]=[entry[1].strip, entry[2].strip, entry[3], entry[4]]
 				end
 			end
 			f.close
-			return data_store
+			return @tag_store
 		rescue => ee
 			puts "Exception on method #{__method__}: #{ee}" if @verbose
 			return nil
