@@ -23,6 +23,7 @@ class DeactivatedSite < Wmap::SiteTracker
 	def initialize (params = {})
 		# Initialize the instance variables
 		@data_dir=params.fetch(:data_dir, File.dirname(__FILE__)+'/../../../data/')
+		Dir.mkdir(@data_dir) unless Dir.exist?(@data_dir)
 		@sites_file=params.fetch(:sites_file, @data_dir + 'deactivated_sites')
 		@verbose=params.fetch(:verbose, false)
 		# Hash table to hold the site store

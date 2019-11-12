@@ -21,6 +21,7 @@ class Wmap::UrlChecker
 		# Set default instance variables
 		@verbose=params.fetch(:verbose, false)
 		@data_dir=params.fetch(:data_dir, File.dirname(__FILE__)+'/../../data/')
+		Dir.mkdir(@data_dir) unless Dir.exist?(@data_dir)
 		@http_timeout=params.fetch(:http_timeout, 5000)
 		@max_parallel=params.fetch(:max_parallel, 40)
 		@ssl_version=nil

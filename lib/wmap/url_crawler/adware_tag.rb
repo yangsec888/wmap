@@ -22,12 +22,13 @@ module Wmap
 		def initialize (params = {})
 			@verbose=params.fetch(:verbose, false)
       @data_dir=params.fetch(:data_dir, File.dirname(__FILE__)+'/../../../data/')
+      Dir.mkdir(@data_dir) unless Dir.exist?(@data_dir)
 			# Set default instance variables
 			@signature_file=File.dirname(__FILE__) + '/../../../settings/' + 'tag_signatures'
 			file=params.fetch(:signature_file, @signature_file)
 			@tag_signatures=load_from_file(file)
       @tag_file=params.fetch(:tag_file, @data_dir + 'tag_sites')
-      File.write(file2, "") unless File.exist?(@tag_file)
+      File.write(@tag_file, "") unless File.exist?(@tag_file)
       # load the known tag store
       load_tag_from_file(@tag_file)
       @landings = Hash.new  # cache landing page to reduce redundant browsing
