@@ -12,7 +12,7 @@ module Wmap
 
 	# Class to identify and track adware within the site store
 	include Wmap::Utils
-	attr_accessor :signature_file, :tag_file, :verbose, :data_dir, :data_store
+	attr_accessor :signature_file, :tag_file, :verbose, :data_dir
 	attr_reader :tag_signatures, :tag_store
 
 
@@ -26,7 +26,7 @@ module Wmap
 			# Set default instance variables
 			@signature_file=File.dirname(__FILE__) + '/../../../settings/' + 'tag_signatures'
 			file=params.fetch(:signature_file, @signature_file)
-			@tag_signatures=load_from_file(file)
+			@tag_signatures=load_sig_from_file(file)
       @tag_file=params.fetch(:tag_file, @data_dir + 'tag_sites')
       File.write(@tag_file, "") unless File.exist?(@tag_file)
       # load the known tag store
@@ -34,9 +34,8 @@ module Wmap
       @landings = Hash.new  # cache landing page to reduce redundant browsing
 		end
 
-
     # load the known tag signatures into an instance variable
-  	def load_from_file (file, lc=true)
+  	def load_sig_from_file (file, lc=true)
       puts "Loading data file: #{file}"	if @verbose
 			data_store=Hash.new
 			f = File.open(file, 'r')
@@ -53,7 +52,6 @@ module Wmap
 				else
 					data_store[entry[0]]=entry[1].strip
 				end
-
 			end
 			f.close
 			return data_store
@@ -105,11 +103,11 @@ module Wmap
   	end
   	alias_method :save!, :save_to_file!
 
-    # add tag entries (from the sitetracker list)
+    # Refresh adware tag store signatures
   	def refresh (num=@max_parallel,use_cache=true)
 		  puts "Add entries to the local cache table from site tracker: " if @verbose
 			results = Hash.new
-			tags = Wmap::SiteTracker.instance.known_sites.keys
+			tags = @tag_store.keys
 			if tags.size > 0
 				Parallel.map(tags, :in_processes => num) { |target|
 					check_adware(target,use_cache)
