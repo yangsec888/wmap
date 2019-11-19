@@ -57,9 +57,9 @@ class Wmap::HostTracker
 		end
 		f.close
 		return @known_hosts
-	#rescue => ee
-	#	puts "Exception on method #{__method__}: #{ee}"
-	#	return known_hosts
+	rescue => ee
+		puts "Exception on method #{__method__}: #{ee}"
+		return known_hosts
 	end
 
 	# Save the current local hosts hash table into a (random) data repository file

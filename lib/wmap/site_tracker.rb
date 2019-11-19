@@ -282,8 +282,8 @@ class Wmap::SiteTracker
 			puts "No new entry added. "
 		end
 		return results
-	#rescue => ee
-		#puts "Exception on method #{__method__}: #{ee}" if @verbose
+	rescue => ee
+		puts "Exception on method #{__method__}: #{ee}" if @verbose
 	end
 	alias_method :adds, :bulk_add
 

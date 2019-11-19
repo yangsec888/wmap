@@ -15,3 +15,6 @@ logs/*
 # ignore specific loading utility
 bin/wmaps
 bin/RHPG
+
+# rebuild script
+rebuild.sh

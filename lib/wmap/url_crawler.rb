@@ -66,210 +66,196 @@ class Wmap::UrlCrawler
 	# A web crawler to crawl a known website and search for html links within the same root domain. For example,
     # by crawling 'http://www.yahoo.com/' it could discover 'http://login.yahoo.com/'
 	def crawl(url)
-		begin
-			puts "Start web crawling on #{url}"
-			result=Array.new
-			url=url.chomp.strip
-			result.push(url_2_site(url))
-			raise "Error! Invalid url format: #{urls}" unless is_url?(url)
-			# Add logic to profile the web server before crawling; this is used to optimize the crawling speed
-			pre_crawl(url)
-			status = Timeout::timeout(Crawl_timeout/1000) {
-				result+=crawl_worker(url).keys
-			}
-			puts "Web crawling time-out on #{url}: #{status}" if @verbose
-			return result
-		rescue => ee
-			puts "Exception on method #{__method__} for URL #{url}: #{ee}"
-			return result
-		end
+		puts "Start web crawling on #{url}"
+		result=Array.new
+		url=url.chomp.strip
+		result.push(url_2_site(url))
+		raise "Error! Invalid url format: #{urls}" unless is_url?(url)
+		# Add logic to profile the web server before crawling; this is used to optimize the crawling speed
+		pre_crawl(url)
+		status = Timeout::timeout(Crawl_timeout/1000) {
+			result+=crawl_worker(url).keys
+		}
+		puts "Web crawling time-out on #{url}: #{status}" if @verbose
+		return result
+	rescue => ee
+		puts "Exception on method #{__method__} for URL #{url}: #{ee}"
+		return result
 	end
 	alias_method :query, :crawl
 
     # The worker instance of crawler who perform the labour work
 	def crawl_worker(url0)
-		begin
-			puts "Please be aware that it may take a while to crawl #{url0}, depending on the site's responsiveness and the amount of contents."
-			# Input URL sanity check first
-			if is_url?(url0)
-				host=url_2_host(url0)
-				ip=host_2_ip(host).to_s
-				raise "Invalid IP address: #{url0}" if ip.nil?
-				port=url_2_port(url0).to_s
-				raise "Invalid port number: #{url0}" if port.nil?
-			else
-				raise "Invalid URL: #{url0}. Please check it out with your browser again."
-			end
-			log_info=Hash.new
-			log_info[1]="Start working on #{url0}"
-			url_stores=Hash.new
-			url_stores[url0]=true unless url_stores.key?(url0)
-			@discovered_urls_by_crawler[url0]=true unless @discovered_urls_by_crawler.key?(url0)
-			@crawl_start[url0]=true unless @crawl_start.key?(url0)
+		puts "Please be aware that it may take a while to crawl #{url0}, depending on the site's responsiveness and the amount of contents."
+		# Input URL sanity check first
+		if is_url?(url0)
+			host=url_2_host(url0)
+			ip=host_2_ip(host).to_s
+			raise "Invalid IP address: #{url0}" if ip.nil?
+			port=url_2_port(url0).to_s
+			raise "Invalid port number: #{url0}" if port.nil?
+		else
+			raise "Invalid URL: #{url0}. Please check it out with your browser again."
+		end
+		log_info=Hash.new
+		log_info[1]="Start working on #{url0}"
+		url_stores=Hash.new
+		url_stores[url0]=true unless url_stores.key?(url0)
+		@discovered_urls_by_crawler[url0]=true unless @discovered_urls_by_crawler.key?(url0)
+		@crawl_start[url0]=true unless @crawl_start.key?(url0)
 #			$discovered_urls[url0]=true unless $discovered_urls.key?(url0)
-			@crawl_depth.times do
-				url_stores.keys.each do |url|
-					# 10/01/2013 add logic to avoid unnecessary crawling within the same child instance
-					next if @visited_urls_by_crawler.key?(url)
-					url_object = open_url(url)
-					next if url_object == nil
-					url = update_url_if_redirected(url, url_object)
-					url_body = read_url(url)
-					# Protection code - to avoid parsing failure on the empty or nil object
-					next if url_body.nil? or url_body.empty?
-					url_stores[url]=true unless url_stores.key?(url)
-					@discovered_urls_by_crawler[url]=true unless @discovered_urls_by_crawler.key?(url)
+		@crawl_depth.times do
+			url_stores.keys.each do |url|
+				# 10/01/2013 add logic to avoid unnecessary crawling within the same child instance
+				next if @visited_urls_by_crawler.key?(url)
+				url_object = open_url(url)
+				next if url_object == nil
+				url = update_url_if_redirected(url, url_object)
+				url_body = read_url(url)
+				# Protection code - to avoid parsing failure on the empty or nil object
+				next if url_body.nil? or url_body.empty?
+				url_stores[url]=true unless url_stores.key?(url)
+				@discovered_urls_by_crawler[url]=true unless @discovered_urls_by_crawler.key?(url)
 #					$discovered_urls[url]=true unless $discovered_urls.key?(url)
-					doc = Nokogiri::HTML(url_body)
-					next if doc == nil
-					if url_stores.size >= @crawl_page_limit
-						#@visited_urls_by_crawler.merge!(url_stores)
-						@discovered_urls_by_crawler.merge!(url_stores)
+				doc = Nokogiri::HTML(url_body)
+				next if doc == nil
+				if url_stores.size >= @crawl_page_limit
+					#@visited_urls_by_crawler.merge!(url_stores)
+					@discovered_urls_by_crawler.merge!(url_stores)
 #						$discovered_urls.merge!(url_stores)
-						puts "Finish web crawling the url: #{url0}"
-						return url_stores
-					end
-					page_urls = find_urls_on_page(doc, url)
-					page_urls.uniq!
-					page_urls.map do |y|
-						y=normalize_url(y)
-						url_stores[y]=true unless url_stores.key?(y)
-						@discovered_urls_by_crawler[y]=true unless @discovered_urls_by_crawler.key?(y)
+					puts "Finish web crawling the url: #{url0}"
+					return url_stores
+				end
+				page_urls = find_urls_on_page(doc, url)
+				page_urls.uniq!
+				page_urls.map do |y|
+					y=normalize_url(y)
+					url_stores[y]=true unless url_stores.key?(y)
+					@discovered_urls_by_crawler[y]=true unless @discovered_urls_by_crawler.key?(y)
 #						$discovered_urls[y]=true unless $discovered_urls.key?(y)
-					end
 				end
 			end
-			puts "Finish web crawling on: #{url0}"
-			log_info[2]="Finish working on: #{url0}"
-			wlog(log_info, "UrlCrawler", @log_file)
-			@crawl_done[url0]=true unless @crawl_done.key?(url0)
-			return url_stores
-		rescue => ee
-			puts "Exception on method #{__method__} for URL #{url0}: #{ee}" if @verbose
-			log_info[3]="Exception on #{url0}"
-			wlog(log_info,"UrlCrawler",@log_file)
-			return url_stores
 		end
+		puts "Finish web crawling on: #{url0}"
+		log_info[2]="Finish working on: #{url0}"
+		wlog(log_info, "UrlCrawler", @log_file)
+		@crawl_done[url0]=true unless @crawl_done.key?(url0)
+		return url_stores
+	rescue => ee
+		puts "Exception on method #{__method__} for URL #{url0}: #{ee}" if @verbose
+		log_info[3]="Exception on #{url0}"
+		wlog(log_info,"UrlCrawler",@log_file)
+		return url_stores
 	end
 
 	# Fast crawling by utilizing fork manager parallel to spawn numbers of child processes at the same time
 	# each child process will continuously work on the target pool until all the works are done
 	def crawl_workers (targets,num=@max_parallel)
-		begin
-			raise "Input error - expecting targets in an array format: #{targets}" unless targets.kind_of? Array
-			puts "Sanitize the URL seeds to eliminate the unnecessary duplication(s) ..." if @verbose
-			#puts "This could be awhile depending on the list size. Please be patient ..."
-			# 09/30/2013 Add additional logic to eliminate the duplicate target site(s) before the crawlers are invoked.
-			targets -= ["", nil]
-			uniq_sites=Hash.new
-			targets.dup.map do |target|
-				if is_url?(target)
-					host=url_2_host(target)
-					ip=host_2_ip(host).to_s
-					next if ip.nil?
-					port=url_2_port(target).to_s
-					next if port.nil?
-					site_key=ip+":"+port
-					unless uniq_sites.key?(site_key)
-						uniq_sites[site_key]=target
-					end
+		raise "Input error - expecting targets in an array format: #{targets}" unless targets.kind_of? Array
+		puts "Sanitize the URL seeds to eliminate the unnecessary duplication(s) ..." if @verbose
+		#puts "This could be awhile depending on the list size. Please be patient ..."
+		# 09/30/2013 Add additional logic to eliminate the duplicate target site(s) before the crawlers are invoked.
+		targets -= ["", nil]
+		uniq_sites=Hash.new
+		targets.dup.map do |target|
+			if is_url?(target)
+				host=url_2_host(target)
+				ip=host_2_ip(host).to_s
+				next if ip.nil?
+				port=url_2_port(target).to_s
+				next if port.nil?
+				site_key=ip+":"+port
+				unless uniq_sites.key?(site_key)
+					uniq_sites[site_key]=target
 				end
 			end
-			puts "Sanitization done! " if @verbose
-			puts "Start the parallel engine on the normalized crawling list:\n #{targets} "
-			puts "Maximum number of web crawling sessions allowed: #{num}" #if @verbose
-			raise "Error: target list is empty!" if targets.size < 1
-			Parallel.map(uniq_sites.values, :in_processes => num) { |target|
-				puts "Working on #{target} ..." if @verbose
-				crawl(target)
-			}.dup.each do |process|
-				puts "process.inspect: #{process}" if @verbose
-				urls=process
-				urls-=["",nil] unless urls.nil?
-				if urls.nil?
-					next
-				elsif urls.empty?
-					next
-					#do nothing
-				else
-					urls.map do |url|
-						url.strip!
-						@discovered_urls_by_crawler[url]=true unless @discovered_urls_by_crawler.key?(url)
-						#$discovered_urls[url]=true unless $discovered_urls.key?(url)
-					end
-				end
-			end
-			#return sites
-			return @discovered_urls_by_crawler.keys
-		rescue Exception => ee
-			puts "Exception on method #{__method__}: #{ee}" if @verbose
-			return nil
 		end
+		puts "Sanitization done! " if @verbose
+		puts "Start the parallel engine on the normalized crawling list:\n #{targets} "
+		puts "Maximum number of web crawling sessions allowed: #{num}" #if @verbose
+		raise "Error: target list is empty!" if targets.size < 1
+		Parallel.map(uniq_sites.values, :in_processes => num) { |target|
+			puts "Working on #{target} ..." if @verbose
+			crawl(target)
+		}.dup.each do |process|
+			puts "process.inspect: #{process}" if @verbose
+			urls=process
+			urls-=["",nil] unless urls.nil?
+			if urls.nil?
+				next
+			elsif urls.empty?
+				next
+				#do nothing
+			else
+				urls.map do |url|
+					url.strip!
+					@discovered_urls_by_crawler[url]=true unless @discovered_urls_by_crawler.key?(url)
+					#$discovered_urls[url]=true unless $discovered_urls.key?(url)
+				end
+			end
+		end
+		#return sites
+		return @discovered_urls_by_crawler.keys
+	rescue Exception => ee
+		puts "Exception on method #{__method__}: #{ee}" if @verbose
+		return nil
 	end
 	alias_method :crawls, :crawl_workers
 
 	# Fast crawling method - build the target pool from the input file
 	def crawl_workers_on_file (file)
-		begin
-			puts "Web crawl the list of targets from file: #{file}"
-			targets=file_2_list(file)
-			sites=crawl_workers(targets,num=@max_parallel)
-			return sites
-		rescue => ee
-      puts "Exception on method #{__method__}: #{ee}" if @verbose
-      return nil
-		end
+		puts "Web crawl the list of targets from file: #{file}"
+		targets=file_2_list(file)
+		sites=crawl_workers(targets,num=@max_parallel)
+		return sites
+	rescue => ee
+    puts "Exception on method #{__method__}: #{ee}" if @verbose
+    return nil
 	end
 	alias_method :query_file, :crawl_workers_on_file
 	alias_method :crawl_file, :crawl_workers_on_file
 
   # Wrapper for the OpenURI open method - create an open_uri object and return the reference upon success
 	def open_url(url)
-    begin
-			puts "Open url #{url} by creating an open_uri object. Return the reference upon success." if @verbose
-			if url =~ /http\:/i
-				# patch for allow the 'un-safe' URL redirection i.e. https://www.example.com -> http://www.example.com
-				url_object = open(url, :allow_redirections=>:safe, :read_timeout=>Max_http_timeout/1000)
-				#url_object = open(url)
-			elsif url =~ /https\:/i
-				url_object = open(url,:ssl_verify_mode => 0, :allow_redirections =>:safe, :read_timeout=>Max_http_timeout/1000)
-				#url_object = open(url,:ssl_verify_mode => 0)
-			else
-				raise "Invalid URL format - please specify the protocol prefix http(s) in the URL: #{url}"
-			end
-			return url_object
-    rescue => ee
-      puts "Exception on method #{__method__} for #{url}: #{ee}" if @verbose
-      return nil
-    end
+		puts "Open url #{url} by creating an open_uri object. Return the reference upon success." if @verbose
+		if url =~ /http\:/i
+			# patch for allow the 'un-safe' URL redirection i.e. https://www.example.com -> http://www.example.com
+			url_object = open(url, :allow_redirections=>:safe, :read_timeout=>Max_http_timeout/1000)
+			#url_object = open(url)
+		elsif url =~ /https\:/i
+			url_object = open(url,:ssl_verify_mode => 0, :allow_redirections =>:safe, :read_timeout=>Max_http_timeout/1000)
+			#url_object = open(url,:ssl_verify_mode => 0)
+		else
+			raise "Invalid URL format - please specify the protocol prefix http(s) in the URL: #{url}"
+		end
+		return url_object
+  rescue => ee
+    puts "Exception on method #{__method__} for #{url}: #{ee}" if @verbose
+    return nil
   end
 
 	# Wrapper to use OpenURI method 'read' to return url body contents
 	def read_url(url)
-		begin
-			puts "Wrapper to return the OpenURI object for url: #{url}" if @verbose
-			url_object=open_url(url)
-			@visited_urls_by_crawler[url]=true unless @visited_urls_by_crawler.key?(url)
-			body=url_object.read
-			return body
-  	rescue => ee
-      puts "Exception on method #{__method__}: #{ee}" if @verbose
-      return nil
-    end
+		puts "Wrapper to return the OpenURI object for url: #{url}" if @verbose
+		url_object=open_url(url)
+		@visited_urls_by_crawler[url]=true unless @visited_urls_by_crawler.key?(url)
+		body=url_object.read
+		return body
+	rescue => ee
+    puts "Exception on method #{__method__}: #{ee}" if @verbose
+    return nil
 	end
 
     # Return the destination url in case of url re-direct
 	def update_url_if_redirected(url, url_object)
-		begin
-			#puts "Comparing the original URL with the return object base_uri. Return the one where the true content is found. " if @verbose
-			if url != url_object.base_uri.to_s
-				return url_object.base_uri.to_s
-			end
-			return url
-    rescue => ee
-      puts "Exception on method #{__method__}: #{ee}" if @verbose
-      return nil
-    end
+		#puts "Comparing the original URL with the return object base_uri. Return the one where the true content is found. " if @verbose
+		if url != url_object.base_uri.to_s
+			return url_object.base_uri.to_s
+		end
+		return url
+  rescue => ee
+    puts "Exception on method #{__method__}: #{ee}" if @verbose
+    return nil
   end
 
 =begin
@@ -290,90 +276,82 @@ class Wmap::UrlCrawler
 
   # Search 'current_url' and return found URLs under the same domain
 	def find_urls_on_page(doc, current_url)
-		begin
-			puts "Search and return URLs within the doc: #{doc}" if @verbose
-			urls_list = []
-			# case 1 - search embedded HTML tag <a href='url'> for the url elements
-			links=doc.css('a')
-			links.map do |x|
-				#puts "x: #{x}"
-				new_url = x.attribute('href').to_s
-				unless new_url == nil
-					if new_url.match("http")
-						#if urls_on_same_domain?(new_url,current_url)
-							urls_list.push(new_url)
-						#end
-					else
-						new_url = make_absolute(current_url, new_url)
+		puts "Search and return URLs within the doc: #{doc}" if @verbose
+		urls_list = []
+		# case 1 - search embedded HTML tag <a href='url'> for the url elements
+		links=doc.css('a')
+		links.map do |x|
+			#puts "x: #{x}"
+			new_url = x.attribute('href').to_s
+			unless new_url == nil
+				if new_url.match("http")
+					#if urls_on_same_domain?(new_url,current_url)
 						urls_list.push(new_url)
-					end
+					#end
+				else
+					new_url = make_absolute(current_url, new_url)
+					urls_list.push(new_url)
 				end
 			end
-			# case 2 - search client side redirect - <meta http-equiv="refresh" content="5;URL='http://example.com/'">
-			elements=doc.css("meta[http-equiv]")
-			unless elements.size == 0
-				link=elements.attr("content").value.split(/url\=/i)[1]
-				unless link.nil?
-					new_url = make_absolute(current_url, link)
-					urls_list.push(new_url) unless new_url.nil?
-				end
-			end
-			#puts "Found URLs under page #{current_url}:\n#{urls_list}" if @verbose
-			return urls_list.uniq-["",nil]
-    rescue => ee
-      puts "Exception on method #{__method__}: #{ee}" if @verbose
-      return nil
 		end
+		# case 2 - search client side redirect - <meta http-equiv="refresh" content="5;URL='http://example.com/'">
+		elements=doc.css("meta[http-equiv]")
+		unless elements.size == 0
+			link=elements.attr("content").value.split(/url\=/i)[1]
+			unless link.nil?
+				new_url = make_absolute(current_url, link)
+				urls_list.push(new_url) unless new_url.nil?
+			end
+		end
+		#puts "Found URLs under page #{current_url}:\n#{urls_list}" if @verbose
+		return urls_list.uniq-["",nil]
+  rescue => ee
+    puts "Exception on method #{__method__}: #{ee}" if @verbose
+    return nil
   end
 
 	# Method to print out discovery URL result
 	def print_discovered_urls_by_crawler
-		begin
-			puts "Print discovered url by the crawler. " if @verbose
-			puts "\nSummary Report of Discovered URLs from the Crawler:"
-			@discovered_urls_by_crawler.keys.each do |url|
-				puts url
-			end
-			puts "Total: #{@discovered_urls_by_crawler.keys.size}"
-			puts "End of the summary"
-    rescue => ee
-      puts "Exception on method #{__method__}: #{ee}" if @verbose
-      return nil
-    end
+		puts "Print discovered url by the crawler. " if @verbose
+		puts "\nSummary Report of Discovered URLs from the Crawler:"
+		@discovered_urls_by_crawler.keys.each do |url|
+			puts url
+		end
+		puts "Total: #{@discovered_urls_by_crawler.keys.size}"
+		puts "End of the summary"
+  rescue => ee
+    puts "Exception on method #{__method__}: #{ee}" if @verbose
+    return nil
 	end
 	alias_method :print, :print_discovered_urls_by_crawler
 
 	# Method to save URL discovery  result
 	def save_discovered_urls (file)
-		begin
-			puts "Save discovered urls by the crawler to file: #{file} "
-			list_2_file(@discovered_urls_by_crawler.keys, file)
-			puts "Done!"
-    rescue => ee
-      puts "Exception on method #{__method__}: #{ee}" if @verbose
-      return nil
-    end
+		puts "Save discovered urls by the crawler to file: #{file} "
+		list_2_file(@discovered_urls_by_crawler.keys, file)
+		puts "Done!"
+  rescue => ee
+    puts "Exception on method #{__method__}: #{ee}" if @verbose
+    return nil
 	end
 	alias_method :save, :save_discovered_urls
 
 	# Method to retrieve discovery site result
 	def get_discovered_sites_by_crawler
-		begin
-			puts "Print summary report of discovered sites. " if @verbose
-			puts "\nSummary Report of Discovered Sites from the Crawler:"
-			sites = Hash.new
-			@discovered_urls_by_crawler.keys.each do |url|
-				site=url_2_site(url)
-				sites[site]=true unless sites.key?(site)
-			end
-			sites.keys.map { |site| puts site }
-			puts "Total: #{sites.size}"
-			puts "End of the summary"
-			return sites.keys
-    rescue => ee
-			puts "Exception on method #{__method__}: #{ee}" if @verbose
-      return nil
-    end
+		puts "Print summary report of discovered sites. " if @verbose
+		puts "\nSummary Report of Discovered Sites from the Crawler:"
+		sites = Hash.new
+		@discovered_urls_by_crawler.keys.each do |url|
+			site=url_2_site(url)
+			sites[site]=true unless sites.key?(site)
+		end
+		sites.keys.map { |site| puts site }
+		puts "Total: #{sites.size}"
+		puts "End of the summary"
+		return sites.keys
+  rescue => ee
+		puts "Exception on method #{__method__}: #{ee}" if @verbose
+    return nil
 	end
 	alias_method :get_sites, :get_discovered_sites_by_crawler
 
