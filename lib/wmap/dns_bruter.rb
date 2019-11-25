@@ -13,7 +13,7 @@ require "parallel"
 class Wmap::DnsBruter
 	include Wmap::Utils
 
-	attr_accessor :hosts_dict, :verbose, :max_parallel, :data_dir
+	attr_accessor :hosts_dict, :verbose, :max_parallel, :data_dir, :file_hosts
 	attr_reader :discovered_hosts_from_dns_bruter, :fail_domain_cnt
 
 	# Set default instance variables
@@ -22,11 +22,9 @@ class Wmap::DnsBruter
 		@data_dir=params.fetch(:data_dir, File.dirname(__FILE__)+'/../../data/')
 		Dir.mkdir(@data_dir) unless Dir.exist?(@data_dir)
 		@file_hosts = @data_dir + 'hosts'
-		@file_hosts_dict = File.dirname(__FILE__)+'/../../dicts/hostnames-dict.txt'
-
 		@verbose=params.fetch(:verbose, false)
 		@discovered_hosts_from_dns_bruter=Hash.new
-		@hosts_dict=params.fetch(:hosts_dict, @file_hosts_dict)
+		@hosts_dict=params.fetch(:hosts_dict, File.dirname(__FILE__)+'/../../dicts/hostnames-dict.txt')
 		@max_parallel=params.fetch(:max_parallel, 30)
 		@fail_domain_cnt=Hash.new
 	end

@@ -136,6 +136,7 @@ class Wmap::SiteTracker
 			# Add logic to check site status before adding it
 			checker=Wmap::UrlChecker.new(:data_dir=>@data_dir).check(site)
 			raise "Site is currently down. Skip #{site}" if checker.nil?
+			raise "Site is time-out. Skip #{site}" if checker["code"] == 10000
 			# Skip the http site if it's un-responsive; for the https we'll keep it because we're interested in analysing the SSL layer later
 			if is_https?(site)
 				# do nothing

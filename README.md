@@ -15,12 +15,13 @@
 
 
 ## What's this program for?
-This program is designed for the web application asset discovery and tracking. It was originally developed to
-to cover the gaps of a similar commercial product. Over the time it grows to be a more capable and complete replacement (IMHO).
+This program is part of the [OWASP Web Mapper Project](https://www.owasp.org/index.php/OWASP_Web_Mapper_Project). It's designed for the web application asset discovery and tracking. It was originally developed to cover the gaps of a similar commercial offering. Over the time it grows to be a more capable and complete replacement (IMHO).
+
+Note that program is mainly operating on Command Line Interface (CLI). For better user experience, you might want to use the [Web Mapper Portal Application](https://github.com/yangsec888/www_wmap) instead.
 
 
 ## WMAP in Motion
-Use the demo web app build on top of wmap gem: http://wmap.io
+You can try out the complete [demo web app](http://wmap.io/) deployed in the DigitalOcean cloud: http://wmap.io/
 
 
 ## Installation
@@ -35,7 +36,8 @@ Nokogiri is a native xml/html parser used by the project. It's fast and powerful
 ### Dependency
 You need the Ruby 2.1.0 or above in order to use this program. In my test environment, I was able to set it up with <a href="https://rvm.io/">RVM</a>. Please refer to this page for more installation information: https://www.ruby-lang.org/en/documentation/installation/
 
-In addition, the following Ruby GEM dependency are needed by different components of this software. The should be installed automatically:
+In addition, the following Ruby GEM dependency are needed by different features of this software. They should be installed automatically when you install the 'wmap' gem above.
+```
       require "dnsruby"
       require "geoip"
       require "minitest/autorun"
@@ -48,11 +50,13 @@ In addition, the following Ruby GEM dependency are needed by different component
       require "parallel"
       require "whois"
       require 'httpclient'
-
+```
 
 In case you want to install the above gems separately, use the command below:
-
+```sh
       gem install dnsruby geoip minitest net-ping netaddr nokogiri css_parser open_uri_redirections openssl parallel whois httpclient
+```
+
 
 ### Ruby-whois Gem Patches
 This software depends on a patched version of Ruby gem ruby-whois (http://www.ruby-whois.org/) for the domain whois lookup feature. For better result, you could manually add the patches into your local whois gem installation directory as shown below:
@@ -106,7 +110,7 @@ If you need additional documentation / information other than this README file a
 
 
 ## Program Version
-The latest release is version [2.5.5+](version.txt). as of fall 2018. Please refer to the [CHANGELOG.md](CHANGELOG.md) for more history information.
+The latest release is version [2.6.5+](version.txt). as of fall 2019. Please refer to the [CHANGELOG.md](CHANGELOG.md) for more history information.
 
 
 ## Author Contact

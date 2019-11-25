@@ -28,7 +28,7 @@ parser.parse!
 
 # print program banner
 puts Wmap.banner
-print_usage unless options[:target]
+# print_usage unless options[:target]
 
 # Preparing - check out the working logs directory
 if options[:data_dir]

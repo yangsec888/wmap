@@ -36,7 +36,7 @@ class Wmap::WpTracker
 	end
 
   # 'setter' to load the known wordpress sites into an instance variable
-	def load_from_file (file=@file_stores, lc=true)
+	def load_from_file (file=@sites_wp, lc=true)
 		puts "Loading trusted file: #{file}"	if @verbose
 		@known_wp_sites=Hash.new
 		f_wp_sites=File.open(file, 'r')

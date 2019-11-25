@@ -1,14 +1,41 @@
 #!/usr/bin/env ruby
 # the up to date program to refresh all local cache tables in one shot. Note it requires an uninterrupted Internet connection to perform the job. It also takes a long time so patient is needed. Lastly, don't forget to backup the existing 'data' folder before execute this command, cause any unexpected interruption may wreak havoc on the existing data file!!!
-
+#
+#
+# Usage: updateAll -d <Optional Data Directory>
 require "wmap"
+require "optparse"
+
+# program command line options
+options = {:data_dir => nil, :target => nil, :verbose => false}
+parser = OptionParser.new do|opts|
+	opts.banner = Wmap.banner
+	opts.on('-d', '--data_dir data_dir', 'Web Mapper local cache data directory') do |data_dir|
+		options[:data_dir] = data_dir;
+	end
+	opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
+		options[:verbose] = v;
+	end
+	opts.on('-h', '--help', 'Displays Help') do
+		puts opts
+		exit 0
+	end
+end
+parser.parse!
 
 puts Wmap.banner
 puts "Program to refresh the local data repository."
-Log_dir=File.dirname(__FILE__)+'/../logs/'
+# Preparing - check out the working logs directory
+if options[:data_dir]
+	# Log to the instance running directory
+	Log_dir = Pathname.new(options[:data_dir]).join('logs')
+else
+	# Log the command entry
+	Log_dir=Pathname.new(Gem.loaded_specs['wmap'].full_gem_path).join('logs')
+end
+Dir.mkdir(Log_dir) unless Dir.exist?(Log_dir)
 Wmap.wlog("Execute the command: updateAll","updateAll",Log_dir+"wmap.log")
 
-abort "Incorrect program argument - no argument needed! Proper Usage: updateAll" unless ARGV.length==0
 =begin
 puts "You're about to update Wmap data repository. It'll take a long time. And the Internet connection must be un-interrupted during the process. You're also expected to backup the data folder before proceeding. Are you ready? (Yes/No)"
 STDOUT.flush
@@ -21,22 +48,41 @@ end
 =end
 # Update sub-domain table
 sd=Wmap::DomainTracker::SubDomain.instance
+if options[:data_dir]
+  sd.data_dir=options[:data_dir]
+  sd.sub_domains_file = sd.data_dir + "/" + "sub_domains"
+  sd.known_internet_sub_domains = sd.load_domains_from_file(sd.sub_domains_file)
+end
 sd.update_from_host_store!
 subs=sd.known_internet_sub_domains.keys
 sd=nil
 
 # Update Domain table
 dm=Wmap::DomainTracker.instance
+if options[:data_dir]
+  dm.data_dir=options[:data_dir]
+  dm.domains_file=dm.data_dir + "/" + "domains"
+  dm.load_domains_from_file(dm.domains_file)
+end
 domains=dm.known_internet_domains.keys
 dm=nil
 
 # Brute force sub-domains to detect sub-domain hosts
-bruter=Wmap::DnsBruter.new
+bruter=Wmap::DnsBruter.new(:verbose => options[:verbose])
+if options[:data_dir]
+  bruter.data_dir=options[:data_dir]
+  bruter.file_hosts = bruter.data_dir + "/" + "hosts"
+end
 sub_hosts=bruter.brutes(subs).values.flatten
 hosts=bruter.brutes(domains).values.flatten
 
 # Update primary host store
 ph=Wmap::HostTracker::PrimaryHost.instance
+if options[:data_dir]
+  ph.data_dir=options[:data_dir]
+  ph.hosts_file = ph.data_dir + "/" + "prime_hosts"
+  ph.load_known_hosts_from_file(ph.hosts_file)
+end
 ph.update_from_site_store!
 ph.refresh_all
 ph.save!
@@ -44,6 +90,11 @@ ph=nil
 
 # Update host store
 h=Wmap::HostTracker.instance
+if options[:data_dir]
+  h.data_dir=options[:data_dir]
+  h.hosts_file=h.data_dir + "/" +"hosts"
+  h.load_known_hosts_from_file(h.hosts_file)
+end
 h.refresh_all
 h.adds(sub_hosts)
 h.adds(hosts)
@@ -52,10 +103,21 @@ h=nil
 
 # Update site store
 st=Wmap::SiteTracker.instance
+if options[:data_dir]
+  st.data_dir=options[:data_dir]
+  st.sites_file=st.data_dir + "/" +"sites"
+  st.load_site_stores_from_file(st.sites_file)
+end
 st.refresh_all
+# double-check the de-activated sites in case the site is back on-line again
 dt=Wmap::SiteTracker::DeactivatedSite.instance
+if options[:data_dir]
+  dt.data_dir = options[:data_dir]
+  dt.sites_file = dt.data_dir + "/" + "deactivated_sites"
+  dt.known_sites = dt.load_site_stores_from_file(dt.sites_file)
+end
 ds=dt.known_sites.keys
-st.adds(ds)					#double-check the de-activated sites in case the site is back on-line again
+st.adds(ds)
 st.save!
 st=nil
 dt=nil

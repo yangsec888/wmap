@@ -23,6 +23,7 @@ class SubDomain < Wmap::DomainTracker
 	def initialize (params = {})
 		@verbose=params.fetch(:verbose, false)
 		@data_dir=params.fetch(:data_dir, File.dirname(__FILE__)+'/../../../data/')
+		Dir.mkdir(@data_dir) unless Dir.exist?(@data_dir)
 		@max_parallel=params.fetch(:max_parallel, 40)
 		# Hash table to hold the trusted domains
 		@sub_domains_file=params.fetch(:sub_domains_file, @data_dir + 'sub_domains')
@@ -85,7 +86,9 @@ class SubDomain < Wmap::DomainTracker
 		puts "Invoke internal procedures to update the sub-domain list from the host store."
 		# Step 1 - obtain the latest sub-domains
 		my_tracker = Wmap::HostTracker.instance
-		my_tracker.data_dir=@data_dir
+		my_tracker.data_dir = @data_dir
+		my_tracker.hosts_file = my_tracker.data_dir + "/" + "hosts"
+		my_tracker.load_known_hosts_from_file(my_tracker.hosts_file)
 		subs = my_tracker.dump_sub_domains - [nil,""]
 		my_tracker = nil
 		# Step 2 - update the sub-domain list
@@ -133,4 +136,4 @@ class SubDomain < Wmap::DomainTracker
 
 end
 end
-end 
+end
