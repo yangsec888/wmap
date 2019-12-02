@@ -67,9 +67,17 @@ module Wmap
 		string = "-"*80 + "\n" + art + "\n" + "Version: " + ver["version"] + "\tRelease Date: " + ver["date"] + "\nDesigned and developed by: " + ver["author"] + "\nEmail: " + ver["email"] + "\tLinkedIn: " + ver["linkedin"] + "\n" + "-"*80
 	end
 
+  def data_dir(data_path)
+    @data_dir=data_path.to_s
+  end
+
 	# Explorer to discover and inventory web application / service automatically
 	def wmap(seed)
-		cmd="bin/wmap" + " " + seed
+    if @data_dir
+      cmd = "bin/wmap" + " -d " + @data_dir + " -t " + seed
+    else
+		    cmd="bin/wmap" + " -t " + seed
+    end
 		system(cmd)
 	end
 
@@ -118,6 +126,11 @@ module Wmap
 	# Check if the IP is within the range of the known CIDR blocks
 	def ip_trusted?(ip)
 		tracker=Wmap::CidrTracker.new
+    if @data_dir
+      tracker.data_dir=@data_dir
+      tracker.cidr_seeds=tracker.data_dir + "/" + "cidrs"
+      tracker.load_cidr_blks_from_file(tracker.cidr_seeds)
+    end
 		tracker.ip_trusted?(ip)
 	end
 
@@ -125,24 +138,47 @@ module Wmap
 	# NOT to confuse with the Internet 'whois' lookup
 	def domain_known?(domain)
 		tracker=Wmap::DomainTracker.instance
+    if @data_dir
+      tracker.data_dir=@data_dir
+      tracker.domains_file=tracker.data_dir + "/" + "domains"
+      tracker.load_domains_from_file(tracker.domains_file)
+    end
 		tracker.domain_known?(domain)
 	end
 
 	# Host Tracking - check local hosts file to see if this is a hostname known from the host seed file
 	# NOT to confuse with a regular DNS lookup over the internet
 	def host_known?(host)
-		tracker=Wmap::HostTracker.instance.host_known?(host)
+		tracker=Wmap::HostTracker.instance
+    if @data_dir
+      tracker.data_dir = data_dir
+      tracker.hosts_file = tracker.data_dir + "/" + "hosts"
+      tracker.load_known_hosts_from_file(tracker.hosts_file)
+    end
+    tracker.host_known?(host)
 	end
 
 	# Sub-domain tracking - check local hosts file to see if the sub-domain is already known
 	def sub_domain_known?(host)
-		tracker=Wmap::HostTracker.instance.sub_domain_known?(host)
+		tracker=Wmap::HostTracker.instance
+    if @data_dir
+      tracker.data_dir = data_dir
+      tracker.hosts_file = tracker.data_dir + "/" + "hosts"
+      tracker.load_known_hosts_from_file(tracker.hosts_file)
+    end
+    tracker.sub_domain_known?(host)
 	end
 
 	# IP Tracking - check local hosts file to see if this is an IP known from the seed file
 	# NOT to confuse with a regular reverse DNS lookup over the internet
 	def ip_known?(ip)
-		tracker=Wmap::HostTracker.instance.ip_known?(ip)
+		tracker=Wmap::HostTracker.instance
+    if @data_dir
+      tracker.data_dir = data_dir
+      tracker.hosts_file = tracker.data_dir + "/" + "hosts"
+      tracker.load_known_hosts_from_file(tracker.hosts_file)
+    end
+    tracker.ip_known?(ip)
 	end
 
 	# DNS Brute Forcer
@@ -175,25 +211,44 @@ module Wmap
 	# Search the site repository for all entries that match the pattern
 	def search(pattern)
 		searcher=Wmap::SiteTracker.instance
+    if @data_dir
+      searcher.data_dir = @data_dir
+      searcher.sites_file = searcher.data_dir + "/" + "sites"
+      searcher.load_site_stores_from_file(searcher.sites_file)
+    end
 		searcher.search(pattern)
 	end
 
 	# Dump out the unique sites into a plain file
 	def dump(file)
 			store=Wmap::SiteTracker.instance
-      store.verbose=false
+      if @data_dir
+        store.data_dir = @data_dir
+        store.sites_file = searcher.data_dir + "/" + "sites"
+        store.load_site_stores_from_file(searcher.sites_file)
+      end
 			store.save_uniq_sites(file)
 	end
 
 	# Dump out the unique sites into a XML file
 	def dump_xml(file)
 			store=Wmap::SiteTracker.instance
-			store.save_uniq_sites_xml(file)
+      if @data_dir
+        store.data_dir = @data_dir
+        store.sites_file = searcher.data_dir + "/" + "sites"
+        store.load_site_stores_from_file(searcher.sites_file)
+      end
+      store.save_uniq_sites_xml(file)
 	end
 
 	# Refresh the site information in the local data repository
 	def refresh(site)
 			store=Wmap::SiteTracker.instance
+      if @data_dir
+        store.data_dir = @data_dir
+        store.sites_file = searcher.data_dir + "/" + "sites"
+        store.load_site_stores_from_file(searcher.sites_file)
+      end
 			store.refresh(site)
 			store.save!
 	end
@@ -201,6 +256,11 @@ module Wmap
 	# Refresh the site information in the local data repository
 	def refresh_all
 			store=Wmap::SiteTracker.instance
+      if @data_dir
+        store.data_dir = @data_dir
+        store.sites_file = searcher.data_dir + "/" + "sites"
+        store.load_site_stores_from_file(searcher.sites_file)
+      end
 			store.refresh_all
 			store.save!
 	end
@@ -219,7 +279,12 @@ module Wmap
 	# Print a site's full information from the repository
 	def print_all
 		searcher=Wmap::SiteTracker.instance
-		searcher.print_all_sites
+    if @data_dir
+      searcher.data_dir = @data_dir
+      searcher.sites_file = searcher.data_dir + "/" + "sites"
+      searcher.load_site_stores_from_file(searcher.sites_file)
+    end
+    searcher.print_all_sites
 	end
 
   private

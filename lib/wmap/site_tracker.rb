@@ -554,7 +554,8 @@ class Wmap::SiteTracker
 		sites=Hash.new
 		#uniqueness=Hash.new
 		host_tracker=Wmap::HostTracker.instance
-		host_tracker.hosts_file=@data_dir + 'hosts'
+		host_tracker.data_dir=@data_dir
+		host_tracker.hosts_file=host_tracker.data_dir + '/' + 'hosts'
 		host_tracker.load_known_hosts_from_file
 		@known_sites.keys.map do |key|
 			port=url_2_port(key).to_s
@@ -649,6 +650,8 @@ class Wmap::SiteTracker
 		sites=get_ip_sites
 		host_tracker=Wmap::HostTracker.instance
 		host_tracker.data_dir=@data_dir
+		host_tracker.hosts_file = host_tracker.data_dir + "/" + "hosts"
+		host_tracker.load_known_hosts_from_file
 		sites.map do |site|
 			puts "Work on resolve the IP site: #{site}" if @verbose
 			ip=url_2_host(site)
@@ -804,6 +807,8 @@ class Wmap::SiteTracker
 		host_tracker.data_dir=@data_dir
 		primary_host_tracker=Wmap::HostTracker::PrimaryHost.instance
 		primary_host_tracker.data_dir=@data_dir
+		primary_host_tracker.hosts_file = primary_host_tracker.data_dir + "/" + "prime_hosts"
+		primary_host_tracker.known_hosts=primary_host_tracker.load_known_hosts_from_file(@hosts_file)
 		# Step 1. Retrieve the unique site list first
 		sites=get_uniq_sites
 		prim_uniq_sites=Array.new
