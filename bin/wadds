@@ -1,40 +1,52 @@
 #!/usr/bin/env ruby
 # Executable to bulk add sites into the tracking data repository
 require "wmap"
+require "optparse"
 
-def print_usage
-	puts "Program to add sites from a file into local data repository. Usage: wadds [file_sites]"
+# program command line options
+options = {:data_dir => nil, :target => nil, :verbose => false}
+parser = OptionParser.new do|opts|
+	opts.banner = Wmap.banner
+	opts.on('-d', '--data_dir data_dir', 'Web Mapper local cache data directory') do |data_dir|
+		options[:data_dir] = data_dir;
+	end
+	opts.on('-t', '--target target', 'Web Mapper target') do |target|
+		options[:target] = target;
+	end
+	opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
+		options[:verbose] = v;
+	end
+	opts.on('-h', '--help', 'Displays Help') do
+		puts opts
+		exit 0
+	end
 end
-
+parser.parse!
 puts Wmap.banner
-print_usage
-abort "Incorrect program argument!" unless File.exist?(ARGV[0])
 
-if ARGV.length == 1
+if options[:data_dir]
 	# Log the command entry
-	Log_dir = File.dirname(__FILE__)+'/../logs/'
-elsif ARGV.length == 2
-	# Log to the instance running directory
-	Log_dir = File.dirname(__FILE__)+'/../logs/' + ARGV[1]
+	Log_dir = Pathname.new(options[:data_dir]).join('logs')
+else
+	Log_dir=Pathname.new(Gem.loaded_specs['wmap'].full_gem_path).join('logs')
 end
 Dir.mkdir(Log_dir) unless Dir.exist?(Log_dir)
-Wmap.wlog("Execute the command: wadds #{ARGV[0]}","wadds",Log_dir+"wmap.log")
 
-if ARGV.length == 1
+Wmap.wlog("Execute the command: wadds #{options[:target]}","wadds",Log_dir+"wmap.log")
+
+if File.exist?(options[:target]) && options[:data_dir]
 	puts puts "Invoke the SiteTracker."
 	st=Wmap::SiteTracker.instance
-	st.verbose=false
-elsif ARGV.length == 2
-	puts puts "Invoke the SiteTracker."
-	st=Wmap::SiteTracker.instance
-	st.verbose=false
-	st.data_dir=ARGV[1]
+	st.verbose=options[:verbose]
+	st.data_dir = options[:data_dir]
+	st.sites_file = st.data_dir + "/" + "sites"
+	st.load_site_stores_from_file(st.sites_file)
 else
 	aborts "Error firing up SiteTracker instance!"
 end
 
 # Evaluate the argument and update the data store accordingly
-sites=st.file_2_list(ARGV[0]).map { |x| st.url_2_site(x) }
+sites=st.file_2_list(options[:target]).map { |x| st.url_2_site(x) }
 if sites.length > 0
 	news=st.adds(sites)
 	puts news
@@ -42,5 +54,5 @@ if sites.length > 0
 	st=nil
 else
 	st=nil
-	abort "No site entry found in file: #{ARGV[0]}. Please check your file format to ensure one site per line."
+	abort "No site entry found in file: #{options[:target]}. Please check your file format to ensure one site per line."
 end
