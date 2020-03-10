@@ -1,38 +1,75 @@
 #!/usr/bin/env ruby
 require "wmap"
-# Executable to add seed entry into ring of the trust. I.E. the trusted domain or CIDR
+require "optparse"
 
-def print_usage
-	puts "Program to add trust authority entry. Usage: trust [domain|CIDR]"
+# program command line options
+options = {:data_dir => nil, :target => nil, :verbose => false}
+parser = OptionParser.new do|opts|
+	opts.banner = Wmap.banner
+	opts.on('-d', '--data_dir data_dir', 'Web Mapper local cache data directory') do |data_dir|
+		options[:data_dir] = data_dir;
+	end
+	opts.on('-t', '--target target', 'Web Mapper target') do |target|
+		options[:target] = target;
+	end
+	opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
+		options[:verbose] = v;
+	end
+	opts.on('-h', '--help', 'Displays Help') do
+		puts opts
+		exit 0
+	end
 end
+parser.parse!
 
+# print program banner
 puts Wmap.banner
-print_usage
-Log_dir=File.dirname(__FILE__)+'/../logs/'
-Wmap.wlog("Execute the command: trust #{ARGV[0]}","trust",Log_dir+"wmap.log")
+# print_usage unless options[:target]
+
+# Preparing - check out the working logs directory
+if options[:data_dir]
+	# Log to the instance running directory
+	Log_dir = Pathname.new(options[:data_dir]).join('logs')
+else
+	# Log the command entry
+	Log_dir=Pathname.new(Gem.loaded_specs['wmap'].full_gem_path).join('logs')
+end
+Dir.mkdir(Log_dir) unless Dir.exist?(Log_dir)
+Wmap.wlog("Execute the command: trust #{options[:target]}","trust",Log_dir+"wmap.log")
 
 dt=Wmap::DomainTracker.instance
-ct=Wmap::CidrTracker.new(:verbose=>false)
-abort "Incorrect program argument! Proper usage: trust [domain | netblock]" unless ARGV.length==1 && (dt.is_fqdn?(ARGV[0]) || ct.is_cidr?(ARGV[0]))
+ct=Wmap::CidrTracker.new
+if options[:data_dir]
+	dt.verbose=options[:verbose]
+	dt.data_dir = options[:data_dir]
+	dt.domains_file = dt.data_dir + "/" + "domains"
+	dt.load_domains_from_file(dt.domains_file)
+	ct.verbose=options[:verbose]
+	ct.data_dir = options[:data_dir]
+	ct.cidr_seeds = ct.data_dir + "/" + "cidrs"
+	ct.load_cidr_blks_from_file(ct.cidr_seeds)
+end
+
+abort "Incorrect program argument! Proper usage: trust [domain | netblock]" unless (dt.is_fqdn?(options[:target]) || ct.is_cidr?(options[:target]))
 
 puts "Start the baptizing process ..."
 
 # Add entry into the local repository
 
-if dt.is_domain?(ARGV[0])
-	result=dt.add(ARGV[0])
+if dt.is_domain?(options[:target])
+	result=dt.add(options[:target])
 	unless result.nil?
 		dt.save!
-		abort "Domain #{ARGV[0]} is successfully baptized!"
+		abort "Domain #{options[:target]} is successfully baptized!"
 	end
 end
 dt=nil
 
-if ct.is_cidr?(ARGV[0])
-	result=ct.add(ARGV[0])
+if ct.is_cidr?(options[:target])
+	result=ct.add(options[:target])
 	unless result.nil?
 		ct.save!
-		abort "Net block #{ARGV[0]} is successfully baptized!"
+		abort "Net block #{options[:target]} is successfully baptized!"
 	end
 end
 ct=nil

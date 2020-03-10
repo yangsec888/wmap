@@ -1,35 +1,71 @@
 #!/usr/bin/env ruby
 # Executable to add seed entries into ring of the trust. I.E. the trusted domain or CIDR
 require "wmap"
-include Wmap::Utils
-def print_usage
-	puts "Program to add trust authority entries. Usage: trust [domain|CIDR list in a file]"
-end
+require "optparse"
 
+# program command line options
+options = {:data_dir => nil, :target => nil, :verbose => false}
+parser = OptionParser.new do|opts|
+	opts.banner = Wmap.banner
+	opts.on('-d', '--data_dir data_dir', 'Web Mapper local cache data directory') do |data_dir|
+		options[:data_dir] = data_dir;
+	end
+	opts.on('-t', '--target file', 'Web Mapper target file') do |target|
+		options[:target] = target;
+	end
+	opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
+		options[:verbose] = v;
+	end
+	opts.on('-h', '--help', 'Displays Help') do
+		puts opts
+		exit 0
+	end
+end
+parser.parse!
+
+# print program banner
 puts Wmap.banner
-print_usage
-Log_dir=File.dirname(__FILE__)+'/../logs/'
-Wmap.wlog("Execute the command: trust #{ARGV[0]}","trust",Log_dir+"wmap.log")
+
+# Preparing - check out the working logs directory
+if options[:data_dir]
+	# Log to the instance running directory
+	Log_dir = Pathname.new(options[:data_dir]).join('logs')
+else
+	# Log the command entry
+	Log_dir=Pathname.new(Gem.loaded_specs['wmap'].full_gem_path).join('logs')
+end
+Dir.mkdir(Log_dir) unless Dir.exist?(Log_dir)
+Wmap.wlog("Execute the command: trust #{options[:target]}","trust",Log_dir+"wmap.log")
 
 dt=Wmap::DomainTracker.instance
-ct=Wmap::CidrTracker.new(:verbose=>false)
-abort "Incorrect program argument! Proper usage: trust [domain | netblock]" unless ARGV.length==1 && (File.exist?(ARGV[0]))
+ct=Wmap::CidrTracker.new
+if options[:data_dir]
+	dt.verbose=options[:verbose]
+	dt.data_dir = options[:data_dir]
+	dt.domains_file = dt.data_dir + "/" + "domains"
+	dt.load_domains_from_file(dt.domains_file)
+	ct.verbose=options[:verbose]
+	ct.data_dir = options[:data_dir]
+	ct.cidr_seeds = ct.data_dir + "/" + "cidrs"
+	ct.load_cidr_blks_from_file(ct.cidr_seeds)
+end
 
-puts "Start the baptizing process ..."
-
-file_2_list(ARGV[0]).map do |target|
-	# Add entry into the local repository
-	if dt.is_domain?(target)
-		result=dt.add(target)
-		unless result.nil?
-			dt.save!
-			puts "Domain #{target} is successfully baptized!"
-		end
-	elsif ct.is_cidr?(target)
-		result=ct.add(target)
-		unless result.nil?
-			ct.save!
-			puts "Net block #{target} is successfully baptized!"
+if options[:target]
+	puts "Start the baptizing process ..."
+	dt.file_2_list(options[:target]).map do |target|
+		# Add entry into the local repository
+		if dt.is_domain?(target)
+			result=dt.add(target)
+			unless result.nil?
+				dt.save!
+				puts "Domain #{target} is successfully baptized!"
+			end
+		elsif ct.is_cidr?(target)
+			result=ct.add(target)
+			unless result.nil?
+				ct.save!
+				puts "Net block #{target} is successfully baptized!"
+			end
 		end
 	end
 end
