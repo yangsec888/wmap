@@ -27,7 +27,7 @@ You can try out the complete [demo web app](http://wmap.io/) deployed in the Dig
 ## Installation
 To take full power of this program, you would need an *nix flavor machine with direct Internet access. I have installed it successfully on both Mac and Linux machines. You'll also need the Ruby environment being setup properly. The easiest way to install OWASP Web Mapper is by using Ruby Gems. You can install it from command line:
 ```sh
-  gem install wmap
+$ gem install wmap
 ```
 
 ### Specific Installation Problem with Nokogiri
@@ -54,18 +54,8 @@ In addition, the following Ruby GEM dependency are needed by different features 
 
 In case you want to install the above gems separately, use the command below:
 ```sh
-      gem install dnsruby geoip minitest net-ping netaddr nokogiri css_parser open_uri_redirections openssl parallel whois httpclient
+$ gem install dnsruby geoip minitest net-ping netaddr nokogiri css_parser open_uri_redirections openssl parallel whois httpclient
 ```
-
-
-### Ruby-whois Gem Patches
-This software depends on a patched version of Ruby gem ruby-whois (http://www.ruby-whois.org/) for the domain whois lookup feature. For better result, you could manually add the patches into your local whois gem installation directory as shown below:
-```sh
-      cp whois_patches/* [Your_ruby_whois_gem_path]/whois/lib/whois/record/parser/
-```
-
-Or you can directly download the branched whois gem from this repository - https://github.com/yangsec888/whois
-
 
 ### Before Using This Program
 You need to define a scope for the program to run successful. The scope includes both your legitimate Internet domain, and your public
@@ -73,11 +63,15 @@ network block in the CIDR format.
 
 To add your Internet domain into the scope, use the build-in shell command below:
 ```sh
-     trust XYZ.COM
+$ trust --target XYZ.COM
 ```
 To add your public network block into the scope (note current support of IPv4 only):
 ```sh
-     trust x.x.x.x/x
+$ trust --target x.x.x.x/x
+```
+Use command switch '--help' for more information
+```sh
+$ trust --help
 ```
 
 ### Automatic Discovery and Tracking
@@ -94,7 +88,7 @@ The above utility is intelligent enough to take argument as either a seed file, 
 ### Dump Out Discovery Database
 You can dump out the program output by using the build-in utility 'wdump' as shown below:
 ```sh
-    wdump [output file name from you]
+$ wdump [output file name from you]
 ```
 The above utility will dump out the discovery database into a single file as program output. Currently, the supported file format is Comma-separated Value (.csv) and Extensible Markup Language (.xml)
 
@@ -114,7 +108,7 @@ The latest release is version [2.6.5+](version.txt). as of fall 2019. Please ref
 
 
 ## Author Contact
-This program is designed and developed by Yang Li. You can reach him by Email: <yang.li@owasp.org>
+This program is designed and developed by Sam (Yang) Li. You can reach him by Email: <yang.li@owasp.org>
 ## Bug Report or Feature Request?
 Contact the author Sam (Yang) Li directly at email 'yang.li@owasp.org'.
 
