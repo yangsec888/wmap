@@ -117,6 +117,41 @@ class WpTracker < Wmap::SiteTracker
 		puts "Exception on method #{__method__}: #{ee}: #{url}" if @verbose
 	end
 
+	# Method to load wp sites in parallel
+	def bulk_add(list,num=@max_parallel,use_cache=true)
+		puts "Add entries to the local wp_site store from list:\n #{list}"
+		results=Hash.new
+		list = list - [nil,""]
+		if list.size > 0
+			puts "Start parallel adding on the sites:\n #{list}"
+			Parallel.map(list, :in_processes => num) { |target|
+				add(target,use_cache)
+			}.each do |process|
+				if process.nil?
+					next
+				elsif process.empty?
+					next #do nothing
+				else
+					results[process['site']]=Hash.new
+					results[process['site']]=process
+				end
+			end
+			@known_wp_sites.merge!(results)
+		else
+			puts "Error: no entry is added. Please check your list and try again."
+		end
+		puts "Done adding site entries."
+		if results.size>0
+			puts "New entries added: #{results}"
+		else
+			puts "No new entry added. "
+		end
+		return results
+	rescue => ee
+		puts "Exception on method #{__method__}: #{ee}" if @verbose
+	end
+	alias_method :adds, :bulk_add
+
   # logic to determin if it's a wordpress site
   def is_wp?(url)
 		site=url_2_site(url)
