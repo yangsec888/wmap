@@ -12,9 +12,10 @@ require "open_uri_redirections"
 require "nokogiri"
 require "css_parser"
 
+module Wmap
+class SiteTracker
 
-# Main class to automatically track the site inventory
-class Wmap::WpTracker
+class WpTracker < Wmap::SiteTracker
 	include Wmap::Utils
 	#include Singleton
 
@@ -24,7 +25,7 @@ class Wmap::WpTracker
   # WordPress checker instance default variables
 	def initialize (params = {})
 		@verbose=params.fetch(:verbose, false)
-		@data_dir=params.fetch(:data_dir, File.dirname(__FILE__)+'/../../data/')
+		@data_dir=params.fetch(:data_dir, File.dirname(__FILE__)+'/../../../data/')
 		Dir.mkdir(@data_dir) unless Dir.exist?(@data_dir)
     @sites_wp=params.fetch(:sites_wp, @data_dir+"wp_sites")
 		@http_timeout=params.fetch(:http_timeout, 5000)
@@ -375,5 +376,6 @@ class Wmap::WpTracker
 		return nil
 	end
 
-
+end
+end
 end
