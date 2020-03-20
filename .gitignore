@@ -18,3 +18,6 @@ bin/RHPG
 
 # rebuild script
 rebuild.sh
+
+# no whois patches
+ruby_whois_patches/*

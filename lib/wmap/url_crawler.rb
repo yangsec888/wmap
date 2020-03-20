@@ -41,7 +41,7 @@ class Wmap::UrlCrawler
 		@crawl_start=Hash.new
 		@crawl_done=Hash.new
 		Dir.mkdir(@data_dir) unless Dir.exist?(@data_dir)
-		@log_file=@data_dir + "crawler.log"
+		@log_file=@data_dir + "/../logs/crawler.log"
 	end
 
 	# Pre-crawl profiler, to be used for network profiling to maximum the crawler performance.

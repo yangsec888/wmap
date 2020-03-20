@@ -189,13 +189,11 @@ class Wmap::SiteTracker
 						old_ip=host_tracker.local_host_2_ip(host)
 						if old_ip != ip
 							host_tracker.refresh(host)
-							host_tracker.save!
 						else
 							puts "Host resolve to the same IP #{ip} - no need to update the local host table." if @verbose
 						end
 					else
 						host_tracker.add(host)
-						host_tracker.save!
 					end
 				end
 			else
@@ -214,13 +212,11 @@ class Wmap::SiteTracker
 					old_ip=host_tracker.local_host_2_ip(host)
 					if old_ip != ip
 						host_tracker.refresh(host)
-						host_tracker.save!
 					else
 						# Skip - no need to update the local hosts table
 					end
 				else
 					host_tracker.add(host)
-					host_tracker.save!
 				end
 			end
 			deact=nil
@@ -229,6 +225,7 @@ class Wmap::SiteTracker
 		else
 			puts "Problem found: untrusted Internet domain or IP. Skip #{site}"
 			deact=nil
+			host_tracker.save!
 			host_tracker=nil
 			return nil
 		end

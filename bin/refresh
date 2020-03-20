@@ -37,11 +37,11 @@ store.verbose = true
 # Preparing - check out the working logs directory
 if options[:data_dir]
 	# Log to the instance running directory
-	Log_dir = Pathname.new(options[:data_dir]).join('logs')
+	Log_dir = Pathname.new(options[:data_dir]).join('/../logs')
 	store.data_dir = options[:data_dir]
-	sites_file = options[:data_dir] + '/' + 'sites'
+	store.sites_file = options[:data_dir] + '/' + 'sites'
 	#puts "sites_file: #{sites_file}"
-	store.load_site_stores_from_file(sites_file)
+	store.load_site_stores_from_file(store.sites_file)
 else
 	# Log the command entry
 	Log_dir=Pathname.new(Gem.loaded_specs['wmap'].full_gem_path).join('logs')
@@ -50,7 +50,7 @@ end
 puts Wmap.banner
 print_usage
 # Log_dir=File.dirname(__FILE__)+'/../logs/'
-Wmap.wlog("Execute the command: refresh #{ARGV[0]}","refresh",Log_dir+"wmap.log")
+Wmap.wlog("Execute the command: refresh #{ARGV[0]}","refresh",Log_dir.to_s+"wmap.log")
 
 #puts "Captured command argument"
 if options[:target]
@@ -66,7 +66,7 @@ end
 
 # please
 if options[:data_dir]
-	store.save!(sites_file)
+	store.save!(store.sites_file)
 else
 	store.save!
 end
