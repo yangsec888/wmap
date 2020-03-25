@@ -263,7 +263,7 @@ module Wmap
 		return absolute_url
   rescue => ee
 		puts "Exception on method #{__method__}: #{ee}" if @verbose
-          return nil
+    return nil
   end
 
 	# Normalize the URL to a consistent manner in order to determine if a link has been visited or cached before
@@ -291,7 +291,6 @@ module Wmap
 		puts "Exception on method #{__method__} for #{url}: #{ee}" if @verbose
 		return url
 	end
-
 
 	# Test the URL and return the response code
 	def response_code (url)
@@ -343,6 +342,38 @@ module Wmap
 		@url_code[url]=code
 		return code
 	end
+
+	# Test the URL and return the response headers
+	def response_headers (url)
+		puts "Check the http response headers on the url: #{url}" if @verbose
+		raise "Invalid url: #{url}" unless is_url?(url)
+    headers = Hash.new
+		url=url.strip.downcase
+		timeo = Max_http_timeout/1000.0
+		uri = URI.parse(url)
+		http = Net::HTTP.new(uri.host, uri.port)
+		http.open_timeout = timeo
+		http.read_timeout = timeo
+		if (url =~ /https\:/i)
+			http.use_ssl = true
+			#http.ssl_version = :SSLv3
+			# Bypass the remote web server cert validation test
+			http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+		end
+		request = Net::HTTP::Get.new(uri.request_uri)
+		response = http.request(request)
+		puts "Server response the following: #{response}" if @verbose
+		response.each_header do |key,val|
+      puts "#{key} => #{val}" if @verbose
+      headers.merge!({key => val})
+    end
+		puts "Response headers on #{url}: #{headers}" if @verbose
+		return headers
+  rescue => ee
+		puts "Exception on method #{__method__}: #{ee}" if @verbose
+    return nil
+  end
+
 
   # Given an URL, open the page, then return the DOM text from a normal user perspective
   def open_page(url)

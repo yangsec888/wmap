@@ -8,6 +8,7 @@
 require 'wmap/utils/domain_root'
 require 'wmap/utils/url_magic'
 require 'wmap/utils/logger'
+require 'wmap/utils/wp_detect'
 require 'wmap/utils/utils'
 require 'wmap/cidr_tracker'
 require 'wmap/domain_tracker'

@@ -7,16 +7,14 @@
 #++
 require "parallel"
 #require "singleton"
-require "open-uri"
-require "open_uri_redirections"
-require "nokogiri"
-require "css_parser"
+
 
 module Wmap
 class SiteTracker
 
 class WpTracker < Wmap::SiteTracker
 	include Wmap::Utils
+	include Wmap::Utils::WpDetect
 	#include Singleton
 
 	attr_accessor :http_timeout, :max_parallel, :verbose, :sites_wp, :data_dir
@@ -152,27 +150,6 @@ class WpTracker < Wmap::SiteTracker
 	end
 	alias_method :adds, :bulk_add
 
-  # logic to determin if it's a wordpress site
-  def is_wp?(url)
-		site=url_2_site(url)
-		if wp_readme?(site)
-			found=true
-		elsif wp_css?(site)
-			found=true
-		elsif wp_meta?(site)
-			found=true
-		elsif wp_login?(site)
-			found=true
-		elsif wp_rpc?(site)
-			found=true
-		else
-			found=false
-		end
-		return found
-	rescue => ee
-		puts "Exception on method #{__method__}: #{ee}: #{url}" if @verbose
-	end
-
 	# Refresh one site entry then update the instance variable (cache)
 	def refresh (target,use_cache=false)
 		return add(target,use_cache)
@@ -209,207 +186,6 @@ class WpTracker < Wmap::SiteTracker
 	#	return Hash.new
 	end
 
-  # Wordpress detection checkpoint - readme.html
-  def wp_readme?(url)
-		site = url_2_site(url)
-    readme_url=site + "readme.html"
-    k=Wmap::UrlChecker.new
-    if k.response_code(readme_url) == 200
-      k=nil
-      doc=open_page(readme_url)
-      title=doc.css('title')
-      if title.to_s =~ /wordpress/i
-        return true
-      else
-        return false
-      end
-    else
-      k=nil
-      return false
-    end
-	rescue => ee
-		puts "Exception on method #{__method__} for site #{url}: #{ee}" if @verbose
-		return false
-  end
-
-  # Wordpress detection checkpoint - install.css
-  def wp_css?(url)
-		site = url_2_site(url)
-    css_url = site + "wp-admin/css/install.css"
-    k=Wmap::UrlChecker.new
-    if k.response_code(css_url) == 200
-      k=nil
-      parser = CssParser::Parser.new
-      parser.load_uri!(css_url)
-      rule = parser.find_by_selector('#logo a')
-      if rule.length >0
-        if rule[0] =~ /wordpress/i
-          return true
-        end
-      end
-    else
-      k=nil
-      return false
-    end
-    return false
-	rescue => ee
-		puts "Exception on method #{__method__} for site #{url}: #{ee}" if @verbose
-		return false
-  end
-
-  # Wordpress detection checkpoint - meta generator
-  def wp_meta?(url)
-		site=url_2_site(url)
-    k=Wmap::UrlChecker.new
-    if k.response_code(site) == 200
-      k=nil
-      doc=open_page(site)
-      meta=doc.css('meta')
-      if meta.to_s =~ /wordpress/i
-        return true
-      else
-        return false
-      end
-    end
-		return false
-	rescue => ee
-		puts "Exception on method #{__method__} for url #{url}: #{ee}" if @verbose
-		return false
-  end
-
-	# Wordpress detection checkpoint - wp-login
-  def wp_login?(url)
-		site=url_2_site(url)
-		login_url=site + "wp-login.php"
-    k=Wmap::UrlChecker.new
-    if k.response_code(login_url) == 200
-      k=nil
-      doc=open_page(login_url)
-      links=doc.css('link')
-      if links.to_s =~ /login.min.css/i
-        return true
-      else
-        return false
-      end
-    end
-		return false
-	rescue => ee
-		puts "Exception on method #{__method__} for url #{url}: #{ee}" if @verbose
-		return false
-  end
-
-	# Wordpress detection checkpoint - xml-rpc
-  def wp_rpc?(url)
-		site=url_2_site(url)
-		rpc_url=site + "xmlrpc.php"
-    k=Wmap::UrlChecker.new
-		#puts "res code", k.response_code(rpc_url)
-    if k.response_code(rpc_url) == 405 # method not allowed
-      k=nil
-      return true
-    end
-		return false
-	rescue => ee
-		puts "Exception on method #{__method__} for url #{url}: #{ee}" if @verbose
-		return false
-  end
-
-	# Extract the WordPress version
-	def wp_ver(url)
-		if !wp_ver_readme(url).nil?
-			puts "WordPress version found by wp_ver_readme method. " if @verbose
-			return wp_ver_readme(url)
-		elsif !wp_ver_login(url,"login.min.css").nil?
-			puts "WordPress version found by login.min.css file. " if @verbose
-			return wp_ver_login(url,"login.min.css")
-		elsif !wp_ver_login(url,"buttons.min.css").nil?
-			puts "WordPress version found by buttons.min.css file. " if @verbose
-			return wp_ver_login(url,"buttons.min.css")
-		elsif !wp_ver_login(url,"wp-admin.min.css").nil?
-			puts "WordPress version found by wp-admin.min.css file. " if @verbose
-			return wp_ver_login(url,"wp-admin.min.css")
-		elsif !wp_ver_meta(url).nil?
-			puts "WordPress version found by wp_ver_meta method. " if @verbose
-			return wp_ver_meta(url)
-		else
-			return nil
-		end
-	rescue => ee
-		puts "Exception on method #{__method__} for url #{url}: #{ee}" if @verbose
-		return nil
-	end
-
-	# Identify wordpress version through the login page
-  def wp_ver_login(url,pattern)
-		puts "Check for #{pattern}" if @verbose
-		site=url_2_site(url)
-		login_url=site + "wp-login.php"
-    k=Wmap::UrlChecker.new
-		#puts "Res code: #{k.response_code(login_url)}" if @verbose
-    if k.response_code(login_url) == 200
-      doc=open_page(login_url)
-			#puts doc.inspect
-      links=doc.css('link')
-			#puts links.inspect if @verbose
-			links.each do |tag|
-	      if tag.to_s.include?(pattern)
-					puts tag.to_s if @verbose
-					k=nil
-	        return tag.to_s.scan(/[\d+\.]+\d+/).first
-	      end
-			end
-    end
-    k=nil
-    return nil
-	rescue => ee
-		puts "Exception on method #{__method__} for url #{url}: #{ee}" if @verbose
-		return nil
-  end
-
-	# Identify wordpress version through the meta link
-  def wp_ver_meta(url)
-		site=url_2_site(url)
-    k=Wmap::UrlChecker.new
-    if k.response_code(site) == 200
-      doc=open_page(site)
-			#puts doc.inspect
-      meta=doc.css('meta')
-			#puts meta.inspect
-			meta.each do |tag|
-	      if tag['content'].to_s =~ /wordpress/i
-					#puts tag.to_s
-					k=nil
-	        return tag['content'].to_s.scan(/[\d+\.]+\d+/).first
-	      end
-			end
-    end
-    k=nil
-    return nil
-	rescue => ee
-		puts "Exception on method #{__method__} for url #{url}: #{ee}" if @verbose
-		return nil
-  end
-
-	# Wordpress version detection via - readme.html
-  def wp_ver_readme(url)
-		site=url_2_site(url)
-    readme_url=site + "readme.html"
-    k=Wmap::UrlChecker.new
-		puts "Res code: #{k.response_code(readme_url)}" if @verbose
-    if k.response_code(readme_url) == 200
-      k=nil
-      doc=open_page(readme_url)
-			puts doc if @verbose
-      logo=doc.css('h1#logo')[0]
-      puts logo.inspect if @verbose
-			return logo.to_s.scan(/[\d+\.]+\d+/).first
-    end
-    k=nil
-    return nil
-	rescue => ee
-		puts "Exception on method #{__method__} for url #{url}: #{ee}" if @verbose
-		return nil
-	end
 
 end
 end
