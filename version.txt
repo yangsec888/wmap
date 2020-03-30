@@ -3,7 +3,7 @@
 ###############################################################################
 package = wmap
 # wmap version 2.0 == web_discovery version 1.5.3
-version = 2.7.8
+version = 2.7.9
 date = 2020-03-30
 
 author = Sam (Yang) Li

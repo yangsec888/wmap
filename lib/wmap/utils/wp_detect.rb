@@ -239,7 +239,11 @@ module Wmap
   	      if tag.to_s.include?(pattern)
   					puts tag.to_s if @verbose
   					k=nil
-  	        return tag.to_s.scan(/[\d+\.]+\d+/).first
+            if tag.to_s.scan(/[\d+\.]+\d+/).first =~ /\d+\./
+  	           return tag.to_s.scan(/[\d+\.]+\d+/).first
+             else
+               return nil
+             end
   	      end
   			end
       end
