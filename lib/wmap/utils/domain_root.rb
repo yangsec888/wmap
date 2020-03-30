@@ -192,7 +192,7 @@ module Wmap
 	# Function to print instance variable - General top level domain list
 	def print_gtld
 		puts @gtld
-    return @gtld 
+    return @gtld
 	end
 
 	# Function to print instance variable - Country code top-level domain list

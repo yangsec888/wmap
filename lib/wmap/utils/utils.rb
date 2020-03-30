@@ -159,20 +159,18 @@ module Wmap
 	# Simple test a host string format. Return true if it contains a valid internet domain sub-string. Note: Don't be confused with another method 'valid_dns_record?', which is a stricter and time-consuming test on the DNS server for a resolvable internet host.
 	def is_fqdn? (host)
 		puts "Validate the host-name format is valid: #{host}" if @verbose
-		begin
-			return false if is_ip?(host) or is_url?(host)
-			domain=get_domain_root(host)
-			if domain.nil?
-				return false
-			elsif is_domain_root?(domain)
-				return true
-			else
-				return false
-			end
-		rescue => ee
-			puts "Exception on method is_fqdn? for #{host}: #{ee}" if @verbose
+		return false if is_ip?(host) or is_url?(host)
+		domain=get_domain_root(host)
+		if domain.nil?
+			return false
+		elsif is_domain_root?(domain)
+			return true
+		else
 			return false
 		end
+#	rescue => ee
+#		puts "Exception on method is_fqdn? for #{host}: #{ee}" if @verbose
+#		return false
 	end
 	alias_method :is_host?, :is_fqdn?
 

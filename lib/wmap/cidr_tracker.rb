@@ -99,8 +99,8 @@ class Wmap::CidrTracker
 		#@known_cidr_blks_asce_index=NetAddr.sort(@known_cidr_blks.keys, :Desc=>false)
 		@known_cidr_blks_asce_index=@known_cidr_blks.keys.sort
 		@known_cidr_blks_desc_index=@known_cidr_blks_asce_index.reverse
-	#rescue => ee
-	#	puts "Exception on method #{__method__}: #{ee}" # if @verbose
+	rescue => ee
+		puts "Exception on method #{__method__}: #{ee}" # if @verbose
 	end
 
 	# 'setter' to remove an entry to CIDR store @known_cidr_blks
@@ -167,6 +167,7 @@ class Wmap::CidrTracker
 			known = cidr4.contains?(ip+'/32')
 			break if known
 		end
+		return known
 	rescue => ee
 		puts "Exception on method #{__method__}: #{ee}" if @verbose
 		return false
