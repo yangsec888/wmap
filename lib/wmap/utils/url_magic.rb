@@ -15,6 +15,7 @@ module Wmap
 
   # set hard stop limit of http time-out to 8 seconds, in order to avoid severe performance penalty for certain 'weird' site(s)
   Max_http_timeout=15000
+  User_agent = "OWASP WMAP Spider"
 
 	# Simple sanity check on a 'claimed' URL string.
 	def is_url?(url)
@@ -377,7 +378,8 @@ module Wmap
 
   # Given an URL, open the page, then return the DOM text from a normal user perspective
   def open_page(url)
-    args = {ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE, allow_redirections: :safe, read_timeout: Max_http_timeout/1000}
+    args = {ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE, allow_redirections: :safe, \
+      read_timeout: Max_http_timeout/1000, "User-Agent"=>User_agent}
     doc = Nokogiri::HTML(open(url, args))
     if doc.text.include?("Please enable JavaScript to view the page content")
       puts "Invoke headless chrome through webdriver ..." if @verbose
@@ -385,7 +387,7 @@ module Wmap
       #driver = Selenium::WebDriver.for :chrome
       # http://watir.com/guides/chrome/
       args = ['--ignore-certificate-errors', '--disable-popup-blocking', '--disable-translate', '--disk-cache-size 8192']
-      browser = Watir::Browser.new :chrome, headless: true, options: {args: args}
+      browser = Watir::Browser.new :chrome, headless: true, switches: %w[--user-agent=OWASP\ WMAP\ Spider]
       browser.goto(url)
       sleep(2) # wait for the loading
       doc = Nokogiri::HTML(browser.html)

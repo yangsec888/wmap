@@ -17,7 +17,8 @@ require "parallel"
 class Wmap::UrlCrawler
 	include Wmap::Utils
 
-	attr_accessor :http_timeout, :crawl_page_limit, :crawl_depth, :max_parallel, :verbose, :data_dir
+	attr_accessor :http_timeout, :crawl_page_limit, :crawl_depth, :max_parallel, \
+				:verbose, :data_dir, :user_agent
 	attr_reader :discovered_urls_by_crawler, :visited_urls_by_crawler, :crawl_start, :crawl_done
 	# Global variable used to store the combined result of all the forked child processes. Note that class variable
 	# would not be able to pass the result due the limitation of IO Pipe communication mechanism used by 'parallel' fork manager
@@ -35,13 +36,16 @@ class Wmap::UrlCrawler
 		@crawl_depth=params.fetch(:crawl_depth, 4)
 		@crawl_page_limit=params.fetch(:crawl_page_limit, 1000)
 		@max_parallel=params.fetch(:max_parallel, 40)
+		@user_agent=params.fetch(:user_agent, "OWASP WMAP Spider")
 		# Discovered data store
 		@discovered_urls_by_crawler=Hash.new
 		@visited_urls_by_crawler=Hash.new
 		@crawl_start=Hash.new
 		@crawl_done=Hash.new
 		Dir.mkdir(@data_dir) unless Dir.exist?(@data_dir)
-		@log_file=@data_dir + "/../logs/crawler.log"
+		@log_dir=@data_dir + "/../logs/"
+		Dir.mkdir(@log_dir) unless Dir.exist?(@log_dir)
+		@log_file=@log_dir + "crawler.log"
 	end
 
 	# Pre-crawl profiler, to be used for network profiling to maximum the crawler performance.
@@ -216,14 +220,14 @@ class Wmap::UrlCrawler
 	alias_method :crawl_file, :crawl_workers_on_file
 
   # Wrapper for the OpenURI open method - create an open_uri object and return the reference upon success
-	def open_url(url)
+	def open_url(url,user_agent=@user_agent)
 		puts "Open url #{url} by creating an open_uri object. Return the reference upon success." if @verbose
 		if url =~ /http\:/i
 			# patch for allow the 'un-safe' URL redirection i.e. https://www.example.com -> http://www.example.com
-			url_object = open(url, :allow_redirections=>:safe, :read_timeout=>Max_http_timeout/1000)
+			url_object = open(url, :allow_redirections=>:safe, :read_timeout=>Max_http_timeout/1000, "User-Agent"=>user_agent)
 			#url_object = open(url)
 		elsif url =~ /https\:/i
-			url_object = open(url,:ssl_verify_mode => 0, :allow_redirections =>:safe, :read_timeout=>Max_http_timeout/1000)
+			url_object = open(url, :ssl_verify_mode=>0, :allow_redirections=>:safe, :read_timeout=>Max_http_timeout/1000, "User-Agent"=>user_agent)
 			#url_object = open(url,:ssl_verify_mode => 0)
 		else
 			raise "Invalid URL format - please specify the protocol prefix http(s) in the URL: #{url}"
@@ -257,22 +261,6 @@ class Wmap::UrlCrawler
     puts "Exception on method #{__method__}: #{ee}" if @verbose
     return nil
   end
-
-=begin
-    # Wrapper for the Nokogiri DOM parser
-	def parse_html(html_body)
-		begin
-			#puts "Parsing the html content: #{html_body}. Return DOM " if @verbose
-      doc = Nokogiri::HTML(html_body)
-			#puts "Successfully crawling the url: #{url_object.base_uri.to_s}" if @verbose
-			#puts "doc: #{doc}" if @verbose
-			return doc
-    rescue => ee
-      puts "Exception on method #{__method__}: #{ee}" if @verbose
-      return nil
-    end
-	end
-=end
 
   # Search 'current_url' and return found URLs under the same domain
 	def find_urls_on_page(doc, current_url)

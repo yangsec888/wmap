@@ -29,6 +29,10 @@ parser.parse!
 # print program banner
 puts Wmap.banner
 # print_usage unless options[:target]
+unless options[:target]
+	puts "Usage:   $ wmap -h"
+	exit 1
+end
 
 # Preparing - check out the working logs directory
 if options[:data_dir]
