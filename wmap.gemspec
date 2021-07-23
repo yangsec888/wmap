@@ -36,7 +36,7 @@ Gem::Specification.new do |s|
   s.description = "wmap is written to perform Internet web application / service discovery. The discovery results are designed to be automatically tracked by the software."
   s.email = info["email"]
   s.executables = ["wmap","wscan","wadd","wadds","wdel","wcheck","wdump","spiderBot","googleBot","updateAll","prime","deprime","refresh","trust","trusts","distrust","run_tests"]
-  s.files = ["CHANGELOG.md", "TODO", "settings/discovery_ports","data/","LICENSE.txt",
+  s.files = ["CHANGELOG.md", "TODO", "settings/discovery_ports", "LICENSE.txt",
 							"version.txt","README.md", "wmap.gemspec"]
   s.files += Dir['lib/*.rb'] + Dir['lib/wmap/*.rb'] + Dir['lib/wmap/**/*'] + Dir['bin/*'] + Dir['settings/*'] + Dir['demos/*'] + Dir['test/*'] + Dir['dicts/*']
   #s.homepage = "none"

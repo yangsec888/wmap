@@ -13,7 +13,7 @@ parser = OptionParser.new do|opts|
 	opts.on('-d', '--data_dir data_dir', 'Web Mapper local cache data directory') do |data_dir|
 		options[:data_dir] = data_dir;
 	end
-	opts.on('-t', '--target target', 'Web Mapper target') do |target|
+	opts.on('-t', '--target target', 'Web Mapper target / seed for discovery') do |target|
 		options[:target] = target;
 	end
 	opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
@@ -133,6 +133,10 @@ Wmap.wlog(dis_urls.keys, "wmap", Log_dir+"discovered_urls.log") unless dis_urls.
 Wmap.wlog(dis_sites.keys, "wmap", Log_dir+"discovered_sites.log") unless dis_sites.empty?
 #crawler.wlog(c_start.keys,Log_dir+"crawler.log")
 #crawler.wlog(c_done.keys,Log_dir+"crawler.log")
+
+
+# Save the current disovery urls only to a specific file, patched 07/23/2021
+crawler.save_discovered_urls(Log_dir+"cur_urls.log")
 crawler=nil
 
 

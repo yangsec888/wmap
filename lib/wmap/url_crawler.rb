@@ -43,7 +43,7 @@ class Wmap::UrlCrawler
 		@crawl_start=Hash.new
 		@crawl_done=Hash.new
 		Dir.mkdir(@data_dir) unless Dir.exist?(@data_dir)
-		@log_dir=@data_dir + "/../logs/"
+		@log_dir=@data_dir + "/logs/"
 		Dir.mkdir(@log_dir) unless Dir.exist?(@log_dir)
 		@log_file=@log_dir + "crawler.log"
 	end
