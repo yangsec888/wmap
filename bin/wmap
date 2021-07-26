@@ -171,17 +171,17 @@ end
 
 
 # seventh step - update the hosts repository
+puts "Invoke the HostTracker with optional directory setter."
+host_tracker = Wmap::HostTracker.instance
 if options[:target] && options[:data_dir]
-	puts "Invoke the HostTracker with optional directory setter."
-	host_tracker = Wmap::HostTracker.instance
+	puts puts "Invoke the HostTracker with options: #{options[:data_dir]}, #{options[:target]}"
 	host_tracker.verbose=options[:verbose]
 	host_tracker.data_dir = options[:data_dir]
 	host_tracker.hosts_file = host_tracker.data_dir + "/" + "hosts"
 	host_tracker.load_known_hosts_from_file(host_tracker.hosts_file)
 elsif options[:target]
-	puts puts "Invoke the HostTracker."
-	host_tracker = Wmap::HostTracker.instance
-	host_tracker.verbose=options[:verbose]
+	puts puts "Invoke the HostTracker with option: #{options[:target]}."
+	#host_tracker.verbose=options[:verbose]
 else
 	abort "Error firing up HostTracker instance!"
 end
