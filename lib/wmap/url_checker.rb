@@ -88,9 +88,9 @@ class Wmap::UrlChecker
 		checker['redirection']=nil
 		checker['timestamp']=timestamp
 		return checker
-	rescue Exception => ee
-		puts "Exception on method #{__method__} for #{url}: #{ee}" # if @verbose
-		return nil
+	#rescue Exception => ee
+	#	puts "Exception on method #{__method__} for #{url}: #{ee}" # if @verbose
+	#	return nil
 	end
 	alias_method :check, :url_worker
 

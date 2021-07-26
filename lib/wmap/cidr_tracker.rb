@@ -18,7 +18,7 @@ class Wmap::CidrTracker
 		@verbose=params.fetch(:verbose, false)
 		@data_dir=params.fetch(:data_dir, File.dirname(__FILE__)+'/../../data/')
 		Dir.mkdir(@data_dir) unless Dir.exist?(@data_dir)
-		@cidr_seeds=params.fetch(:cidr_seeds, @data_dir + 'cidrs')
+		@cidr_seeds=params.fetch(:cidr_seeds, @data_dir + '/' + 'cidrs')
 		File.write(@cidr_seeds, "") unless File.exist?(@cidr_seeds)
 		load_cidr_blks_from_file(@cidr_seeds)
 	end
