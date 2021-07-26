@@ -90,7 +90,7 @@ class Wmap::UrlCrawler
 
     # The worker instance of crawler who perform the labour work
 	def crawl_worker(url0)
-		puts "Please be aware that it may take a while to crawl #{url0}, depending on the site's responsiveness and the amount of contents."
+		puts "Please be aware that it may take a while to crawl #{url0}, depending on the site's responsiveness and discovery contents."
 		# Input URL sanity check first
 		if is_url?(url0)
 			host=url_2_host(url0)

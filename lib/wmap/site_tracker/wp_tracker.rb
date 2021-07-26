@@ -174,7 +174,7 @@ class WpTracker < Wmap::SiteTracker
 				end
 			end
 			@known_wp_sites.merge!(results)
-			puts "Done loading entries."
+			puts "Done loading wp entries."
 			return results
 		else
 			puts "Error: no entry is loaded. Please check your list and try again."

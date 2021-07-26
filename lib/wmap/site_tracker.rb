@@ -77,7 +77,9 @@ class Wmap::SiteTracker
 		f.write "# Local site store created by class #{self.class} method #{__method__} at: #{timestamp}\n"
 		f.write "# Website,Primary IP,Port,Hosting Status,Server,Response Code,MD5 Finger-print,Redirection,Timestamp\n"
 		@known_sites.keys.sort.map do |key|
-			f.write "#{key},#{@known_sites[key]['ip']},#{@known_sites[key]['port']},#{@known_sites[key]['status']},#{@known_sites[key]['server']},#{@known_sites[key]['code']},#{@known_sites[key]['md5']},#{@known_sites[key]['redirection']},#{@known_sites[key]['timestamp']}\n"
+			if is_trusted?(key)
+				f.write "#{key},#{@known_sites[key]['ip']},#{@known_sites[key]['port']},#{@known_sites[key]['status']},#{@known_sites[key]['server']},#{@known_sites[key]['code']},#{@known_sites[key]['md5']},#{@known_sites[key]['redirection']},#{@known_sites[key]['timestamp']}\n"
+			end
 		end
 		f.close
 		puts "site store table is successfully saved: #{file_sites}"
@@ -92,6 +94,24 @@ class Wmap::SiteTracker
 		return @known_sites.size
 	rescue => ee
 		puts "Exception on method #{__method__}: #{ee}"
+	end
+
+	# determine site is trusted based on the known domains
+	def is_trusted?(site)
+		trusted=false
+		host=url_2_host(site)
+		root=get_domain_root(host)
+		domain_tracker=Wmap::DomainTracker.instance
+		domain_tracker.data_dir=@data_dir
+		domain_tracker.domains_file=@data_dir + "/" + "domains"
+		File.write(domain_tracker.domains_file, "") unless File.exist?(domain_tracker.domains_file)
+		domain_tracker.load_domains_from_file(domain_tracker.domains_file)
+		trusted=domain_tracker.domain_known?(root)
+		domain_tracker=nil
+		return trusted
+	rescue => ee
+		puts "Exception on method #{__method__}: #{ee}"
+		return trusted
 	end
 
 	# Setter to add site entry to the cache one at a time
@@ -132,6 +152,10 @@ class Wmap::SiteTracker
 			end
 		end
 		# add record only if trusted
+		host_tracker = Wmap::HostTracker.instance
+		host_tracker.data_dir= @data_dir
+		host_tracker.hosts_file = host_tracker.data_dir + "/" + "hosts"
+		host_tracker.load_known_hosts_from_file(host_tracker.hosts_file)
 		if trusted
 			# Add logic to check site status before adding it
 			checker=Wmap::UrlChecker.new(:data_dir=>@data_dir).check(site)
@@ -144,10 +168,6 @@ class Wmap::SiteTracker
 				raise "Site is currently down. Skip #{site}" if checker['code']==10000
 			end
 			raise "Exception on add method - Fail to resolve the host-name: Host - #{host}, IP - #{ip}. Skip #{site}" unless is_ip?(ip)
-			host_tracker = Wmap::HostTracker.instance
-			host_tracker.data_dir= @data_dir
-			host_tracker.hosts_file = host_tracker.data_dir + "/" + "hosts"
-			host_tracker.load_known_hosts_from_file(host_tracker.hosts_file)
 			# Update the local host table when necessary
 			if is_ip?(host)
 				# Case #1: Trusted site contains IP
@@ -341,8 +361,8 @@ class Wmap::SiteTracker
 		else
 			puts "Error: no entry is loaded. Please check your list and try again."
 		end
-	#rescue => ee
-	#	puts "Exception on method #{__method__}: #{ee}" if @verbose
+	rescue => ee
+		puts "Exception on method #{__method__}: #{ee}" if @verbose
 	end
 	alias_method :dels, :bulk_delete
 

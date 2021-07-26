@@ -164,7 +164,7 @@ class Wmap::HostTracker
 				end
 			end
 			@known_hosts.merge!(results)
-			puts "Done loading entries."
+			puts "Done loading host entries."
 			return results
 		else
 			puts "Error: empty list - no entry is loaded. Please check your input list and try again."

@@ -119,7 +119,7 @@ module Wmap
 					end
 				end
 				@tag_store.merge!(results)
-				puts "Done loading entries."
+				puts "Done loading adware entries."
         tags = nil
 				return results
 			else

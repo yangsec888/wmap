@@ -169,7 +169,7 @@ class Wmap::DomainTracker
 				end
 			end
 			@known_internet_domains.merge!(results)
-			puts "Done loading entries."
+			puts "Done loading domain entries."
 			return results
 		else
 			puts "Error: no entry is loaded. Please check your list and try again."
@@ -262,7 +262,7 @@ class Wmap::DomainTracker
 		when "Wmap::DomainTracker::SubDomain"
 			return @known_internet_sub_domains.key?(domain)
 		else
-			return nil
+			return false
 		end
 	rescue => ee
 		puts "Exception on method #{__method__}: #{ee}" if @verbose

@@ -70,7 +70,7 @@ class SubDomain < Wmap::DomainTracker
 				end
 			end
 			@known_internet_sub_domains.merge!(results)
-			puts "Done loading entries."
+			puts "Done loading sub_domain entries."
 			return results
 		else
 			puts "Error: no entry is loaded. Please check your list and try again."

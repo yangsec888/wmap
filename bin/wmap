@@ -146,22 +146,23 @@ when nil,[]
 	puts "No new site found. There is no change to the site tracking data repository. "
 else
 	puts "Automatically save the discovery results into the site tracking data repository: "
+	inventory = Wmap::SiteTracker.instance
 	if options[:target] && options[:data_dir]
 		puts "Start the SiteTracker with the optional directory setter. "
-		inventory=Wmap::SiteTracker.instance
 		inventory.data_dir = options[:data_dir]
+		#inventory.verbose = true
 		inventory.sites_file = inventory.data_dir + "/" + "sites"
 		inventory.load_site_stores_from_file(inventory.sites_file)
 	elsif options[:target]
 		puts "Start the SiteTracker. "
-		inventory=Wmap::SiteTracker.instance
 	else
 		abort "Error firing up SiteTracker instance!"
 	end
 	new_sites=inventory.adds(dis_sites.keys-["",nil])
-	if new_sites.size>0 && options[:data_dir]
+	puts "Newly discovery sties: #{new_sites}"
+	if options[:data_dir]
 		inventory.save!(inventory.sites_file)
-	elsif new_sites.size>0
+	else
 		inventory.save!
 	end
 	inventory=nil
