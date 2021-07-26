@@ -27,13 +27,13 @@ class Wmap::HostTracker
 		@max_parallel=params.fetch(:max_parallel, 40)
 		# Initialize the instance variables
 		File.write(@hosts_file, "") unless File.exist?(@hosts_file)
-		load_known_hosts_from_file(@hosts_file)
+		@known_hosts=load_known_hosts_from_file(@hosts_file)
 	end
 
 	# Setter to load the known hosts from the local hosts file into a class instance
 	def load_known_hosts_from_file (f_hosts=@hosts_file)
 		puts "Loading local hosts from file: #{f_hosts} ..." if @verbose
-		@known_hosts=Hash.new
+		known_hosts=Hash.new
 		@alias = Hash.new
 		File.write(f_hosts, "") unless File.exist?(f_hosts)
 		f=File.open(f_hosts, 'r')
@@ -43,11 +43,11 @@ class Wmap::HostTracker
 			key=entry[0].downcase
 			value=entry[1]
 			puts "Loading key value pair: #{key} - #{value}" if @verbose
-			@known_hosts[key] = Hash.new unless @known_hosts.key?(key)
-			@known_hosts[key]= value
+			known_hosts[key] = Hash.new unless known_hosts.key?(key)
+			known_hosts[key]= value
 			# For reverse host lookup
-			@known_hosts[value] = Hash.new unless @known_hosts.key?(value)
-			@known_hosts[value] = key
+			known_hosts[value] = Hash.new unless known_hosts.key?(value)
+			known_hosts[value] = key
 			# Count the number of alias for the recorded IP
 			if @alias.key?(value)
 				@alias[value]+=1
@@ -56,11 +56,12 @@ class Wmap::HostTracker
 			end
 		end
 		f.close
-		return @known_hosts
-	rescue => ee
-		puts "Exception on method #{__method__}: #{ee}"
 		return known_hosts
+		#rescue => ee
+		#	puts "Exception on method #{__method__}: #{ee}"
+		#	return known_hosts
 	end
+	alias_method :load, :load_known_hosts_from_file
 
 	# Save the current local hosts hash table into a (random) data repository file
 	def save_known_hosts_to_file!(f_hosts=@hosts_file)
@@ -96,30 +97,42 @@ class Wmap::HostTracker
 		puts "Exception on method #{__method__}: #{ee}"
 	end
 
+  # determine if host is part of trusted (known) root domains
+	def is_trusted?(host)
+		puts "Determin if host #{host} is part of trusted root domains" if @verbose
+		root=get_domain_root(host)
+		puts "Domain root: #{root}" if @verbose
+		domain_tracker=Wmap::DomainTracker.instance
+		domain_tracker.data_dir=@data_dir
+		domain_tracker.domains_file = domain_tracker.data_dir + "/" + "domains"
+		domain_tracker.load_domains_from_file
+		if domain_tracker.domain_known?(root)
+			domain_tracker=nil
+			return true
+		else
+			domain_tracker=nil
+			return false
+		end
+	end
+
 	# Setter to add host entry to the cache once at a time
 	def add(host)
 		puts "Add entry to the local host repository: #{host}"
 		host=host.strip.downcase unless host.nil?
+		root=get_domain_root(host)
 		unless @known_hosts.key?(host)
 			ip=host_2_ip(host)
 			record=Hash.new
 			if is_ip?(ip)
 				# filter host to known domains only
-				root=get_domain_root(host)
-				puts "Domain root: #{root}" if @verbose
-				domain_tracker=Wmap::DomainTracker.instance
-				domain_tracker.data_dir=@data_dir
-				domain_tracker.domains_file = domain_tracker.data_dir + "domains"
-				domain_tracker.load_domains_from_file
-				if domain_tracker.domain_known?(root)
-					domain_tracker=nil
+				if is_trusted?(host)
 					record[host]=ip
 					record[ip]=host
 					puts "Host data repository entry loaded: #{host} <=> #{ip}"
 					# Replace instance with the class variable to avoid potential race condition under parallel engine
 					# add additional logic to update the sub-domain table as well, 02/10/2014
 					sub=get_sub_domain(host)
-					if sub!=root
+					if sub!=nil
 						tracker=Wmap::DomainTracker::SubDomain.instance
 						tracker.data_dir=@data_dir
 						tracker.sub_domains_file = tracker.data_dir + "sub_domains"
@@ -142,8 +155,8 @@ class Wmap::HostTracker
 		else
 			puts "Host is already exist. Skip: #{host}"
 		end
-	rescue => ee
-		puts "Exception on method #{__method__}: #{ee}" if @verbose
+	#rescue => ee
+	#	puts "Exception on method #{__method__}: #{ee}" if @verbose
 	end
 
 	# Setter to add host entry to the local hosts in batch (from an array)
