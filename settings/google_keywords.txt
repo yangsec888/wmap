@@ -1,20 +1,15 @@
 # Default list of Google search keywords (known company legal names, for example) for the service discovery, one entry at per line
 # Used by the Wmap::GoogleSearchScraper class
+Google llc
 
 # Official whole name
-Penguin Random House
 
 # 2014 purchase
-Random House
 
 # Parent company
-Bertelsmann
 
 # Division
-Crown Books
 
 # Division
-Dorling Kindersley
 
 # Division
-Penguin Random House Canada
