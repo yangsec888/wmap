@@ -21,7 +21,7 @@ Note that program is mainly operating on Command Line Interface (CLI). For bette
 
 
 ## WMAP in Motion
-You can try out the complete [demo web app](http://wmap.io/) deployed in the DigitalOcean cloud: http://wmap.io/
+You can try out the complete [demo web app](https://www.wmap.cloud/) deployed in the DigitalOcean cloud: https://www.wmap.cloud/
 
 
 ## Installation
