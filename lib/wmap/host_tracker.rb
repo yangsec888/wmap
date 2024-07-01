@@ -26,7 +26,7 @@ class Wmap::HostTracker
 		@hosts_file=params.fetch(:hosts_file, @data_dir + 'hosts')
 		@max_parallel=params.fetch(:max_parallel, 40)
 		# Initialize the instance variables
-		File.write(@hosts_file, "") unless File.exist?(@hosts_file)
+		File.new(@hosts_file, "w") unless File.exist?(@hosts_file)
 		@known_hosts=load_known_hosts_from_file(@hosts_file)
 	end
 
@@ -35,7 +35,7 @@ class Wmap::HostTracker
 		puts "Loading local hosts from file: #{f_hosts} ..." if @verbose
 		known_hosts=Hash.new
 		@alias = Hash.new
-		File.write(f_hosts, "") unless File.exist?(f_hosts)
+		File.new(f_hosts, "w") unless File.exist?(f_hosts)
 		f=File.open(f_hosts, 'r')
 		f.each do |line|
 			next unless line =~ /\d+\.\d+\.\d+\.\d+/

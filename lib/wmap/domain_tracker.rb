@@ -25,7 +25,7 @@ class Wmap::DomainTracker
 		@domains_file=params.fetch(:domains_file, @data_dir+'domains')
 		@max_parallel=params.fetch(:max_parallel, 40)
 		# Hash table to hold the trusted domains
-		File.write(@domains_file, "") unless File.exist?(@domains_file)
+		File.new(@domains_file, "w") unless File.exist?(@domains_file)
 		load_domains_from_file(@domains_file)
 	end
 

@@ -27,7 +27,7 @@ class DeactivatedSite < Wmap::SiteTracker
 		@sites_file=params.fetch(:sites_file, @data_dir + 'deactivated_sites')
 		@verbose=params.fetch(:verbose, false)
 		# Hash table to hold the site store
-		File.write(@sites_file, "") unless File.exist?(@sites_file)
+		File.new(@sites_file, "w") unless File.exist?(@sites_file)
 		@known_sites=load_site_stores_from_file(@sites_file)
 	end
 

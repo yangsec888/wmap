@@ -166,7 +166,7 @@ else
 		inventory.save!
 	end
 	inventory=nil
-	puts "Done! New found sites are successfully saved. " if new_sites.size > 0
+	puts "Done! New found sites are successfully saved. " unless new_sites.nil? or new_sites.empty?
 end
 
 

@@ -27,7 +27,7 @@ class SubDomain < Wmap::DomainTracker
 		@max_parallel=params.fetch(:max_parallel, 40)
 		# Hash table to hold the trusted domains
 		@sub_domains_file=params.fetch(:sub_domains_file, @data_dir + 'sub_domains')
-		File.write(@sub_domains_file, "") unless File.exist?(@sub_domains_file)
+		File.new(@sub_domains_file, "w") unless File.exist?(@sub_domains_file)
 		@known_internet_sub_domains=load_domains_from_file(@sub_domains_file) #unless @known_internet_sub_domains.size>0
 	end
 

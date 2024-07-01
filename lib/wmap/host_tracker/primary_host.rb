@@ -21,11 +21,11 @@ module Wmap
 		# Initialize the instance variables
 		def initialize (params = {})
 			@verbose=params.fetch(:verbose, false)
-      @data_dir=params.fetch(:data_dir, File.dirname(__FILE__)+'/../../../data/')
+      		@data_dir=params.fetch(:data_dir, File.dirname(__FILE__)+'/../../../data/')
 			# Set default instance variables
 			@hosts_file=params.fetch(:hosts_file, @data_dir + 'prime_hosts')
 			# Initialize the instance variables
-      File.write(@hosts_file, "") unless File.exist?(@hosts_file)
+      		File.new(@hosts_file, "w") unless File.exist?(@hosts_file)
 			@known_hosts=load_known_hosts_from_file(@hosts_file)
 			@known_ips=Hash.new
 			de_duplicate

@@ -28,7 +28,7 @@ module Wmap
 			file=params.fetch(:signature_file, @signature_file)
 			@tag_signatures=load_sig_from_file(file)
       @tag_file=params.fetch(:tag_file, @data_dir + 'tag_sites')
-      File.write(@tag_file, "") unless File.exist?(@tag_file)
+      File.new(@tag_file, "w") unless File.exist?(@tag_file)
       # load the known tag store
       load_tag_from_file(@tag_file)
       @landings = Hash.new  # cache landing page to reduce redundant browsing

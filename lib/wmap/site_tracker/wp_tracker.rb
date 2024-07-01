@@ -25,13 +25,13 @@ class WpTracker < Wmap::SiteTracker
 		@verbose=params.fetch(:verbose, false)
 		@data_dir=params.fetch(:data_dir, File.dirname(__FILE__)+'/../../../data/')
 		Dir.mkdir(@data_dir) unless Dir.exist?(@data_dir)
-    @sites_wp=params.fetch(:sites_wp, @data_dir+"wp_sites")
+    	@sites_wp=params.fetch(:sites_wp, @data_dir+"wp_sites")
 		@http_timeout=params.fetch(:http_timeout, 5000)
 		@max_parallel=params.fetch(:max_parallel, 40)
 		Dir.mkdir(@data_dir) unless Dir.exist?(@data_dir)
 		@log_file=@data_dir + "wp_checker.log"
-		File.write(@sites_wp, "") unless File.exist?(@sites_wp)
-    load_from_file(@sites_wp)
+		File.new(@sites_wp, "w") unless File.exist?(@sites_wp)
+    	load_from_file(@sites_wp)
 	end
 
   # 'setter' to load the known wordpress sites into an instance variable

@@ -25,7 +25,7 @@ class Wmap::SiteTracker
 		@sites_file=params.fetch(:sites_file, @data_dir+'sites')
 		@verbose=params.fetch(:verbose, false)
 		@max_parallel=params.fetch(:max_parallel, 30)
-		File.write(@sites_file, "") unless File.exist?(@sites_file)
+		File.new(@sites_file, "w") unless File.exist?(@sites_file)
 		# Hash table to hold the site store
 		load_site_stores_from_file(@sites_file)
 	end
@@ -34,7 +34,7 @@ class Wmap::SiteTracker
 	def load_site_stores_from_file (file=@sites_file)
 		puts "Loading the site store data repository from file: #{file} " if @verbose
 		@known_sites=Hash.new
-		File.write(file, "") unless File.exist?(file)
+		File.new(file, "w") unless File.exist?(file)
 		f=File.open(file, 'r')
 		f.each do |line|
 			line=line.chomp.strip
@@ -104,7 +104,7 @@ class Wmap::SiteTracker
 		domain_tracker=Wmap::DomainTracker.instance
 		domain_tracker.data_dir=@data_dir
 		domain_tracker.domains_file=@data_dir + "/" + "domains"
-		File.write(domain_tracker.domains_file, "") unless File.exist?(domain_tracker.domains_file)
+		File.new(domain_tracker.domains_file, "w") unless File.exist?(domain_tracker.domains_file)
 		domain_tracker.load_domains_from_file(domain_tracker.domains_file)
 		trusted=domain_tracker.domain_known?(root)
 		domain_tracker=nil
@@ -133,7 +133,7 @@ class Wmap::SiteTracker
 		# Additional logic to refresh deactivated site, 02/12/2014
 		deact=Wmap::SiteTracker::DeactivatedSite.instance
 		deact.sites_file=@data_dir + "/" + "deactivated_sites"
-		File.write(deact.sites_file, "") unless File.exist?(deact.sites_file)
+		File.new(deact.sites_file, "w") unless File.exist?(deact.sites_file)
 		deact.load_site_stores_from_file
 		# only trust either the domain or IP we know
 		if is_ip?(host)
@@ -145,7 +145,7 @@ class Wmap::SiteTracker
 			else
 				domain_tracker=Wmap::DomainTracker.instance
 				domain_tracker.domains_file=@data_dir + "/" + "domains"
-				File.write(domain_tracker.domains_file, "") unless File.exist?(domain_tracker.domains_file)
+				File.new(domain_tracker.domains_file, "w") unless File.exist?(domain_tracker.domains_file)
 				domain_tracker.load_domains_from_file(domain_tracker.domains_file)
 				trusted=domain_tracker.domain_known?(root)
 				domain_tracker=nil
@@ -311,7 +311,7 @@ class Wmap::SiteTracker
 		# Additional logic to deactivate the site properly, by moving it to the DeactivatedSite list, 02/07/2014
 		deact=Wmap::SiteTracker::DeactivatedSite.instance
 		deact.sites_file=@data_dir + 'deactivated_sites'
-		File.write(deact.sites_file, "") unless File.exist?(deact.sites_file)
+		File.new(deact.sites_file, "w") unless File.exist?(deact.sites_file)
 		site=site.strip.downcase
 		site=url_2_site(site)
 		if @known_sites.key?(site)
