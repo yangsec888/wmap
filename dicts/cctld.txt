@@ -1,4 +1,4 @@
-# Country code top-level domain list
+# Country code top-level domain list as of 2025 Feb
 # Refer to: http://en.wikipedia.org/wiki/Country_code_top-level_domain
 ac
 ad
@@ -27,12 +27,15 @@ bg
 bh
 bi
 bj
+bl
 bm
 bn
 bo
 br
+bq
 bs
 bt
+bv
 bw
 by
 bz
@@ -49,11 +52,14 @@ cm
 cn
 co
 cr
+cs
 cu
 cv
+cw
 cx
 cy
 cz
+dd
 de
 dj
 dk
@@ -63,6 +69,7 @@ dz
 ec
 ee
 eg
+eh
 er
 es
 et
@@ -74,6 +81,7 @@ fm
 fo
 fr
 ga
+gb
 gd
 ge
 gf
@@ -137,6 +145,7 @@ ma
 mc
 md
 me
+mf
 mg
 mh
 mk
@@ -175,6 +184,7 @@ pg
 ph
 pk
 pl
+pm
 pn
 pr
 ps
@@ -195,15 +205,18 @@ se
 sg
 sh
 si
+sj
 sk
 sl
 sm
 sn
 so
 sr
+ss
 st
 su
 sv
+sx
 sy
 sz
 tc
@@ -217,6 +230,7 @@ tl
 tm
 tn
 to
+tp
 tr
 tt
 tv
@@ -225,6 +239,7 @@ tz
 ua
 ug
 uk
+um
 us
 uy
 uz
@@ -238,6 +253,9 @@ vu
 wf
 ws
 ye
+yt
+yu
 za
 zm
+zr
 zw
