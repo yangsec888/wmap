@@ -52,11 +52,6 @@ In addition, the following Ruby GEM dependency are needed by different features 
       require 'httpclient'
 ```
 
-In case you want to install the above gems separately, use the command below:
-```sh
-$ gem install dnsruby geoip minitest net-ping netaddr nokogiri css_parser open_uri_redirections openssl parallel whois httpclient
-```
-
 ### Before Using This Program
 You need to define a scope for the program to run successful. The scope includes both your legitimate Internet domain, and your public
 network block in the CIDR format.
